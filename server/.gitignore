@@ -1,0 +1,3 @@
+node_modules
+request.http
+src/database/connectionString.ts
