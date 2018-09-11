@@ -8,7 +8,8 @@
     "semicolon": [true, "never"],
     "no-console": false,
     "arrow-parens": [true, "ban-single-arg-parens"],
-    "trailing-comma": false
+    "trailing-comma": false,
+    "object-literal-sort-keys": false
   },
   "rulesDirectory": []
 }
