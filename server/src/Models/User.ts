@@ -4,14 +4,22 @@ import { Document, Model, model, Schema } from 'mongoose'
 import * as validator from 'validator'
 import { salt } from '../jwt/jwt'
 
+interface IJwt {
+  id: string
+}
+
 export interface IUser extends Document {
   firstName: string
   lastName: string
   email: string
   password: string
-  generateToken(): string
-  verifyToken(token: string): object | string
-  comparePassword(password: string): Promise<boolean>
+  generateToken: () => string
+  verifyToken: (token: string) => any
+  comparePassword: (password: string) => Promise<boolean>
+}
+
+interface IUserModel extends Model<IUser> {
+  findByToken: (token: string) => IUser
 }
 
 const userSchema: Schema = new Schema({
@@ -49,12 +57,10 @@ const userSchema: Schema = new Schema({
   }
 })
 
-userSchema.methods.test = () => console.log('aihoten')
 userSchema.methods.generateToken = function(): string {
-  return jwt.sign(this.id, salt)
+  return jwt.sign({ id: this.id }, salt)
 }
-userSchema.methods.verifyToken = (token: string): object | string =>
-  jwt.verify(token, salt)
+userSchema.methods.verifyToken = (token: string): any => jwt.verify(token, salt)
 
 userSchema.methods.comparePassword = async function(
   plainPassword: string
@@ -62,7 +68,12 @@ userSchema.methods.comparePassword = async function(
   return bcrypt.compare(plainPassword, this.password)
 }
 
-const User: Model<IUser> = model<IUser>('User', userSchema)
+userSchema.statics.findByToken = async function(token: string): Promise<IUser> {
+  const verifiedToken: any = jwt.verify(token, salt)
+  return this.findById(verifiedToken.id)
+}
+
+const User: IUserModel = model<IUser, IUserModel>('User', userSchema)
 
 userSchema.pre<IUser>('save', async function() {
   const user = await User.findOne({ email: this.email })

@@ -1,7 +1,10 @@
 import 'jest'
+import * as jwt from 'jsonwebtoken'
 import * as supertest from 'supertest'
+
 import app from '../src/app'
 import dbConnection from '../src/database/connection'
+import { salt } from '../src/jwt/jwt'
 import { IUser, User } from '../src/Models/User'
 
 let server
@@ -78,6 +81,8 @@ describe.only('---- USER ----', () => {
       const user = await User.create(userData)
       const token = user.generateToken()
       expect(typeof token).toBe('string')
+      const verifiedToken: any = jwt.verify(token, salt)
+      expect(verifiedToken.id).toBe(user.id)
     })
 
     test('compare password', async () => {
@@ -87,6 +92,13 @@ describe.only('---- USER ----', () => {
       )
       const isValidPassword = await user.comparePassword(userData.password)
       expect(isValidPassword).toBe(true)
+    })
+
+    test('get user by token', async () => {
+      const newUser = await User.create(userData)
+      const token = newUser.generateToken()
+      const user = await User.findByToken(token)
+      expect(user.firstName).toBe(userData.firstName)
     })
   })
 })
