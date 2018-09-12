@@ -2,11 +2,11 @@ import { Context } from 'koa'
 import * as Router from 'koa-router'
 import { IUser, User } from '../Models/User'
 
-const router = new Router({
+const usersRoutes = new Router({
   prefix: '/users'
 })
 
-router.post('/', async ctx => {
+usersRoutes.post('/', async ctx => {
   const body = ctx.request.body
   const newUser = await new User(body).save()
   const { password, ...rest } = newUser.toObject()
@@ -16,4 +16,4 @@ router.post('/', async ctx => {
   ctx.body = rest
 })
 
-export default router
+export default usersRoutes

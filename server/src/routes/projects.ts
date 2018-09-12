@@ -1,6 +1,11 @@
 import * as Router from 'koa-router'
 import { IProject, Project } from '../Models/Project'
 
+interface IProjectForm {
+  name: string
+  date?: Date
+}
+
 const router = new Router({
   prefix: '/projects'
 })
@@ -9,16 +14,13 @@ const router = new Router({
 //   ctx.body = await Project.find()
 // })
 
-// router.post('/', async ctx => {
-//   const newUserData = {
-//     name: 'p1' + Math.random() * 100,
-//     date: new Date()
-//   }
+router.post('/', async ctx => {
+  const data = ctx.request.body
 
-//   const newProject: IProject = new Project(newUserData)
-//   const p = await newProject.save()
-//   ctx.status = 201
-//   ctx.body = p
-// })
+  const newProject: IProject = new Project(data)
+  const p = await newProject.save()
+  ctx.status = 201
+  ctx.body = p
+})
 
 export default router

@@ -1,9 +1,8 @@
 import * as Koa from 'koa'
 import * as bodyParser from 'koa-bodyparser'
 import * as Router from 'koa-router'
-import dbConnection from './Database/connection'
 import projectRoutes from './routes/projects'
-import users from './routes/users'
+import usersRoutes from './routes/users'
 
 const app = new Koa()
 const router = new Router()
@@ -24,9 +23,6 @@ router.get('/', async ctx => {
 
 app.use(router.routes())
 app.use(projectRoutes.routes())
-app.use(users.routes())
+app.use(usersRoutes.routes())
 
-app.listen(4000, () => {
-  console.log('server is on 4000')
-  dbConnection.then(() => console.log('DB')).catch(e => console.log(e))
-})
+export default app

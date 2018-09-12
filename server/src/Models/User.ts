@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt'
 import { Document, Model, model, Schema } from 'mongoose'
+import * as validator from 'validator'
 
 export interface IUser extends Document {
   firstName: string
@@ -21,22 +22,34 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    required: [true, 'email is required']
+    required: [true, 'email is required'],
+    validate: {
+      validator(v: string) {
+        return validator.isEmail(v)
+      },
+      message: () => 'invalid email'
+    }
   },
   password: {
     type: String,
     required: true,
-    min: [6, 'password is too short'],
     select: false
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 })
 
-export const User: Model<IUser> = model<IUser>('users', userSchema)
+export const User: Model<IUser> = model<IUser>('User', userSchema)
 
 userSchema.pre<IUser>('save', async function() {
   const user = await User.findOne({ email: this.email })
   if (user) {
     throw new Error('email is already taken')
+  }
+  if (this.password.length < 6) {
+    throw new Error('password is too short')
   }
   this.password = await bcrypt.hash(this.password, 10)
 })
