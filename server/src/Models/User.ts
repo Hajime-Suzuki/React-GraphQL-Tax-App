@@ -30,6 +30,9 @@ const userSchema = new Schema({
       message: () => 'invalid email'
     }
   },
+  phone: {
+    type: String
+  },
   password: {
     type: String,
     required: true,
