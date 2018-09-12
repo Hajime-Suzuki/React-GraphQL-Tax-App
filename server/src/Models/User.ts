@@ -9,9 +9,12 @@ export interface IUser extends Document {
   lastName: string
   email: string
   password: string
+  generateToken(): string
+  verifyToken(token: string): object | string
+  comparePassword(password: string): Promise<boolean>
 }
 
-const userSchema = new Schema({
+const userSchema: Schema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -46,7 +49,20 @@ const userSchema = new Schema({
   }
 })
 
-export const User: Model<IUser> = model<IUser>('User', userSchema)
+userSchema.methods.test = () => console.log('aihoten')
+userSchema.methods.generateToken = function(): string {
+  return jwt.sign(this.id, salt)
+}
+userSchema.methods.verifyToken = (token: string): object | string =>
+  jwt.verify(token, salt)
+
+userSchema.methods.comparePassword = async function(
+  plainPassword: string
+): Promise<boolean> {
+  return bcrypt.compare(plainPassword, this.password)
+}
+
+const User: Model<IUser> = model<IUser>('User', userSchema)
 
 userSchema.pre<IUser>('save', async function() {
   const user = await User.findOne({ email: this.email })
@@ -59,9 +75,4 @@ userSchema.pre<IUser>('save', async function() {
   this.password = await bcrypt.hash(this.password, 10)
 })
 
-userSchema.methods.generateToken = function(): string {
-  return jwt.sign(this.id, salt)
-}
-
-userSchema.methods.verifyToken = (token: string): object | string =>
-  jwt.verify(token, salt)
+export { User }

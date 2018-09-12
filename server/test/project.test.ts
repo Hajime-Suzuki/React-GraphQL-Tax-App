@@ -14,7 +14,7 @@ const projectData = {
 }
 
 describe('---- Project ----', () => {
-  test.only('add a project', async () => {
+  test('add a project', async () => {
     const project: IProject = await request
       .post('/projects')
       .send(projectData)
@@ -23,7 +23,8 @@ describe('---- Project ----', () => {
 
     expect(project.name).toBe('project')
   })
-  test.only('add a project and user, and get user', async () => {
+
+  test('add a project and user, and get user', async () => {
     const user: IUser = await User.create({
       firstName: 'asht',
       lastName: 'qdrw',
