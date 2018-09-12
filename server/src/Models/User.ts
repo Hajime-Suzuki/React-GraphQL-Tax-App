@@ -1,6 +1,8 @@
 import * as bcrypt from 'bcrypt'
+import * as jwt from 'jsonwebtoken'
 import { Document, Model, model, Schema } from 'mongoose'
 import * as validator from 'validator'
+import { salt } from '../jwt/jwt'
 
 export interface IUser extends Document {
   firstName: string
@@ -56,3 +58,10 @@ userSchema.pre<IUser>('save', async function() {
   }
   this.password = await bcrypt.hash(this.password, 10)
 })
+
+userSchema.methods.generateToken = function(): string {
+  return jwt.sign(this.id, salt)
+}
+
+userSchema.methods.verifyToken = (token: string): object | string =>
+  jwt.verify(token, salt)

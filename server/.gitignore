@@ -1,4 +1,5 @@
 node_modules/
 dist/
 request.http
-src/database/connectionString.ts
+**/database/connectionString.ts
+**/jwt

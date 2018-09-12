@@ -12,6 +12,8 @@ beforeAll(async () => {
     dbConnection.then(() => console.log('DB')).catch(e => console.log(e))
   })
   request = supertest(server)
+})
+beforeEach(async () => {
   await User.deleteMany({})
 })
 
@@ -23,6 +25,16 @@ const userData = {
 }
 
 describe('---- USER ----', () => {
+  test.only('can add a new user', async () => {
+    const user: IUser = await request
+      .post('/users')
+      .send(userData)
+      .expect(201)
+      .then(({ body }) => body)
+
+    expect(user.firstName).toBe('first')
+  })
+
   test('can add a new user', async () => {
     const user: IUser = await request
       .post('/users')
@@ -64,5 +76,16 @@ describe('---- USER ----', () => {
       .expect(500)
 
     expect(res.error.text).toBe('password is too short')
+  })
+})
+
+describe('---- User Login ----', () => {
+  test('find user and generate token', async () => {
+    const newUser = await User.create({
+      firstName: 'first',
+      lastName: 'last',
+      email: 'supertest@test.com',
+      password: 'password'
+    })
   })
 })
