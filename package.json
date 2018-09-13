@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "bcrypt": "^3.0.0"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^2.0.0"
-  }
-}

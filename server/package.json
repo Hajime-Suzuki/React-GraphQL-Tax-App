@@ -4,16 +4,26 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@types/validator": "^9.4.1",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "mongoose": "^5.2.14",
     "ts-node": "^7.0.1",
     "typescript": "2.9.2",
-    "validator": "^10.7.1"
+    "validator": "^10.7.1",
+    "bcrypt": "^3.0.0",
+    "koa-passport": "^4.1.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "@types/validator": "^9.4.1",
+    "@types/bcrypt": "^2.0.0",
+    "@types/passport": "^0.4.6",
+    "@types/passport-jwt": "^3.0.1",
+    "@types/koa-passport": "^4.0.2",
+    "@types/passport-local": "^1.0.33",
     "@types/jest": "^23.3.2",
     "@types/koa": "^2.0.46",
     "@types/koa-bodyparser": "^5.0.1",
@@ -32,7 +42,8 @@
   "scripts": {
     "dev": "nodemon --watch src/**/*.ts --exec ts-node src/starter.ts",
     "test-w": "cross-env NODE_ENV=test jest --watch",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts"
   },
   "jest": {
     "transform": {

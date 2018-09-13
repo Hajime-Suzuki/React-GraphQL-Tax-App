@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Document, Model, model, Schema } from 'mongoose'
 import * as validator from 'validator'
-import { salt } from '../jwt/jwt'
+import { secret } from '../jwt/jwt'
 
 interface IJwt {
   id: string
@@ -26,12 +26,12 @@ const userSchema: Schema = new Schema({
   firstName: {
     type: String,
     required: true,
-    min: [2, 'first name is too short']
+    minlength: [2, 'first name is too short']
   },
   lastName: {
     type: String,
     required: true,
-    min: [2, 'last name is too short']
+    minlength: [2, 'last name is too short']
   },
   email: {
     type: String,
@@ -58,9 +58,10 @@ const userSchema: Schema = new Schema({
 })
 
 userSchema.methods.generateToken = function(): string {
-  return jwt.sign({ id: this.id }, salt)
+  return jwt.sign({ id: this.id }, secret, { expiresIn: '10 days' })
 }
-userSchema.methods.verifyToken = (token: string): any => jwt.verify(token, salt)
+userSchema.methods.verifyToken = (token: string): any =>
+  jwt.verify(token, secret)
 
 userSchema.methods.comparePassword = async function(
   plainPassword: string
@@ -69,7 +70,7 @@ userSchema.methods.comparePassword = async function(
 }
 
 userSchema.statics.findByToken = async function(token: string): Promise<IUser> {
-  const verifiedToken: any = jwt.verify(token, salt)
+  const verifiedToken: any = jwt.verify(token, secret)
   return this.findById(verifiedToken.id)
 }
 
