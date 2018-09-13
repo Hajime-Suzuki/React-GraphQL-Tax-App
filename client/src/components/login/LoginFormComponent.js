@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import LoginForm from './LoginForm'
 import { connect } from 'react-redux'
-import { loginRequest } from '../../redux/modules/login/login'
+
 import WithErrorMessage from '../UI/WithErrorMessage'
 import { Redirect } from 'react-router-dom'
+import { loginRequest } from '../../redux/modules/signupLogin/singupLogin'
+
 class LoginFormComponent extends Component {
   submit = values => {
     this.props.loginRequest(values)
@@ -12,16 +14,24 @@ class LoginFormComponent extends Component {
   render() {
     if (this.props.user) return <Redirect to="/" />
     return (
-      <WithErrorMessage showError={this.props.error} message={this.props.error}>
-        <LoginForm onSubmit={this.submit} />
-      </WithErrorMessage>
+      <Fragment>
+        <h1>Login Page</h1>
+        <WithErrorMessage
+          showError={
+            this.props.loginState && this.props.loginState !== 'pending'
+          }
+          message={this.props.loginState}
+        >
+          <LoginForm onSubmit={this.submit} />
+        </WithErrorMessage>
+      </Fragment>
     )
   }
 }
 
 const mapSateToProps = state => ({
-  error: state.login.message,
-  user: state.login.user
+  loginState: state.signup_login,
+  user: state.user
 })
 
 export default connect(
