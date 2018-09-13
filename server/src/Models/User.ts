@@ -58,7 +58,7 @@ const userSchema: Schema = new Schema({
 })
 
 userSchema.methods.generateToken = function(): string {
-  return jwt.sign({ id: this.id }, secret)
+  return jwt.sign({ id: this.id }, secret, { expiresIn: '10 days' })
 }
 userSchema.methods.verifyToken = (token: string): any =>
   jwt.verify(token, secret)

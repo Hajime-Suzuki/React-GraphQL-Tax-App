@@ -27,14 +27,13 @@ passport.use(
 passport.use(
   new JWTStrategy(
     {
-      jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
+      jwtFromRequest: ExtractJwt.fromHeader('authorization'),
       secretOrKey: secret
     },
-    (jwtPayload, done) => {
-      console.log(jwtPayload)
-      done(null, jwtPayload)
-    }
+    (jwtPayload, done) => done(null, { jwtPayload })
   )
 )
+
+export const authMiddleware = passport.authenticate('jwt', { session: false })
 
 export default passport

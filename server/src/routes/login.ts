@@ -1,6 +1,6 @@
 import * as Router from 'koa-router'
 import { IUser, User } from '../Models/User'
-import passport from '../passport/passport'
+import passport, { authMiddleware } from '../passport/passport'
 
 const usersRoutes = new Router({
   prefix: '/login'
@@ -14,6 +14,9 @@ usersRoutes.post(
     ctx.body = { jwt: user.generateToken() }
   }
 )
-// usersRoutes.post('/', ctx => (ctx.body = 'login'))
+
+usersRoutes.get('/test', authMiddleware, (ctx: any) => {
+  ctx.body = ctx.req.user.jwtPayload
+})
 
 export default usersRoutes
