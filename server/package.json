@@ -32,7 +32,8 @@
   "scripts": {
     "dev": "nodemon --watch src/**/*.ts --exec ts-node src/starter.ts",
     "test-w": "cross-env NODE_ENV=test jest --watch",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts"
   },
   "jest": {
     "transform": {

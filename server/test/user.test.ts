@@ -4,7 +4,7 @@ import * as supertest from 'supertest'
 
 import app from '../src/app'
 import dbConnection from '../src/database/connection'
-import { salt } from '../src/jwt/jwt'
+import { secret } from '../src/jwt/jwt'
 import { IUser, User } from '../src/Models/User'
 
 let server
@@ -81,7 +81,7 @@ describe.only('---- USER ----', () => {
       const user = await User.create(userData)
       const token = user.generateToken()
       expect(typeof token).toBe('string')
-      const verifiedToken: any = jwt.verify(token, salt)
+      const verifiedToken: any = jwt.verify(token, secret)
       expect(verifiedToken.id).toBe(user.id)
     })
 

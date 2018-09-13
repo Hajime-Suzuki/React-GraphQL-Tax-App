@@ -1,4 +1,3 @@
-import { Context } from 'koa'
 import * as Router from 'koa-router'
 import { IUser, User } from '../Models/User'
 

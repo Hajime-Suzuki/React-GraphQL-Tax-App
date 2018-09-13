@@ -1,8 +1,16 @@
 {
   "dependencies": {
-    "bcrypt": "^3.0.0"
+    "@types/koa-passport": "^4.0.2",
+    "@types/passport-local": "^1.0.33",
+    "bcrypt": "^3.0.0",
+    "koa-passport": "^4.1.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^2.0.0"
+    "@types/bcrypt": "^2.0.0",
+    "@types/passport": "^0.4.6",
+    "@types/passport-jwt": "^3.0.1"
   }
 }
