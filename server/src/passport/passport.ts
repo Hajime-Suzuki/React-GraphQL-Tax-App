@@ -13,12 +13,13 @@ passport.use(
     async (email, password, done) => {
       const user = await User.findOne({ email }).select('+password')
 
-      if (!user) return done('incorrect username / password')
-
-      if (!user.comparePassword(password)) {
-        return done('incorrect username / password')
+      if (!user) {
+        return done({ message: 'incorrect username / password' })
       }
 
+      if (!(await user.comparePassword(password))) {
+        return done({ message: 'incorrect username / password' })
+      }
       return done(null, user)
     }
   )
