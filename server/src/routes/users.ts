@@ -11,8 +11,7 @@ usersRoutes.post('/', async ctx => {
   const { password, ...rest } = newUser.toObject()
 
   ctx.status = 201
-
-  ctx.body = rest
+  ctx.body = { user: rest, jwt: newUser.generateToken() }
 })
 
 export default usersRoutes

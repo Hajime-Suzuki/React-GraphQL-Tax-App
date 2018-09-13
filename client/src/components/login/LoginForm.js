@@ -1,24 +1,14 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import styled from 'styled-components'
+import { renderTextField } from '../../libs/forms/renderTextField'
+import { StyledGridFormItem } from '../../styles/forms'
 
-const renderTextField = ({ input, meta: { touched, error }, ...custom }) => (
-  <TextField {...input} {...custom} />
-)
-
-const StyledGrid = styled(Grid)`
-  .item {
-    margin-bottom: 2em;
-  }
-`
-
-const LoginForm = props => {
+const LoginForm = ({ handleSubmit }) => {
   return (
-    <form onSubmit={props.handleSubmit}>
-      <StyledGrid container direction="column">
+    <form onSubmit={handleSubmit}>
+      <StyledGridFormItem container direction="column">
         <Grid item className="item">
           <Field component={renderTextField} name="email" label="email" />
         </Grid>
@@ -30,7 +20,7 @@ const LoginForm = props => {
             label="password"
           />
         </Grid>
-      </StyledGrid>
+      </StyledGridFormItem>
 
       <Button type="submit" variant="contained" color="primary">
         submit
