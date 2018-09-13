@@ -2,10 +2,12 @@ import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
 import projects from './projects/projects'
-import login from './login/login'
+import user from './user/user'
+import singupLogin from './signupLogin/singupLogin'
 
 export default combineReducers({
   projects,
-  login,
+  user,
+  signup_login: singupLogin,
   form: formReducer
 })

@@ -30,14 +30,19 @@ const userData = {
 describe.only('---- USER ----', () => {
   describe('---- USER CREATE ----', () => {
     test('can add a new user correctly', async () => {
-      const user: IUser = await request
+      const data = await request
         .post('/users')
         .send(userData)
         .expect(201)
         .then(({ body }) => body)
 
+      const user: IUser = data.user
+      const token = data.jwt
+      const decoded: any = jwt.verify(token, secret)
+
       expect(user.firstName).toBe('first')
       expect(user.password).not.toBe('password')
+      expect(decoded.id).toBe(user.id)
     })
 
     test('cannot add a user with duplicate email', async () => {
