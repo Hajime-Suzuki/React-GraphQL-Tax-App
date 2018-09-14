@@ -12,10 +12,6 @@ const router = new Router({
   prefix: '/projects'
 })
 
-// router.get('/', async ctx => {
-//   ctx.body = await Project.find()
-// })
-
 router.post('/', authMiddleware, async ctx => {
   const jwtPayload: IJwtPayload = (ctx.req as any).user
 
