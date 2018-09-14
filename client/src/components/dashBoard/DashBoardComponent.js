@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DashBoard from './DashBoard'
 import { connect } from 'react-redux'
-import { getUserData } from '../../redux/modules/user/user'
+import { getUserData } from '../../redux/modules/data/data'
 
 class DashBoardComponent extends Component {
   componentDidMount() {
