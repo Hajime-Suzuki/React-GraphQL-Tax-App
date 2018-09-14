@@ -4,6 +4,12 @@ import { Strategy as localStrategy } from 'passport-local'
 import { secret } from '../jwt/jwt'
 import { User } from '../Models/User'
 
+export interface IJwtPayload {
+  id: string
+  iat: number
+  exp: number
+}
+
 passport.use(
   new localStrategy(
     {
@@ -31,7 +37,7 @@ passport.use(
       jwtFromRequest: ExtractJwt.fromHeader('authorization'),
       secretOrKey: secret
     },
-    (jwtPayload, done) => done(null, { jwtPayload })
+    (user: IJwtPayload, done) => done(null, user)
   )
 )
 
