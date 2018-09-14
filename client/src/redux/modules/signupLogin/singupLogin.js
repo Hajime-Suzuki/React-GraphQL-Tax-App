@@ -1,14 +1,16 @@
 import { loginAxios } from '../../../axios'
 import { userAxios } from '../../../axios'
-import { decodeJwt } from '../../../libs/jwt'
+import { decodeJwt, storeJwt } from '../../../libs/jwt'
 
-const LOGIN_REQUEST = 'message/LOGIN_REQUEST'
-const LOGIN_FAILED = 'message/LOGIN_FAILED'
-export const LOGIN_SUCCESS = 'message/LOGIN_SUCCESS'
+const LOGIN_REQUEST = 'signupLogin/LOGIN_REQUEST'
+const LOGIN_FAILED = 'signupLogin/LOGIN_FAILED'
+export const LOGIN_SUCCESS = 'signupLogin/LOGIN_SUCCESS'
 
-const SIGNUP_REQUEST = 'message/SIGNUP_REQUEST'
-const SIGNUP_FAILED = 'message/SIGNUP_FAILED'
-export const SIGNUP_SUCCESS = 'signup/SIGNUP_SUCCESS'
+const SIGNUP_REQUEST = 'signupLogin/SIGNUP_REQUEST'
+const SIGNUP_FAILED = 'signupLogin/SIGNUP_FAILED'
+export const SIGNUP_SUCCESS = 'signupLogin/SIGNUP_SUCCESS'
+
+export const LOGOUT = 'signupLogin/LOGOUT'
 
 export const loginRequest = userData => async dispatch => {
   try {
@@ -18,6 +20,9 @@ export const loginRequest = userData => async dispatch => {
     const token = await loginAxios
       .post('/', userData)
       .then(({ data }) => data.jwt)
+
+    storeJwt(token)
+
     const decoded = decodeJwt(token)
     dispatch({
       type: LOGIN_SUCCESS,
@@ -45,7 +50,8 @@ export const signupRequest = userData => async dispatch => {
     const { user, jwt } = await userAxios
       .post('/', userData)
       .then(({ data }) => data)
-    console.log(user)
+
+    storeJwt(jwt)
 
     dispatch({
       type: SIGNUP_SUCCESS,
@@ -65,6 +71,11 @@ export const signupRequest = userData => async dispatch => {
   }
 }
 
+export const logOut = () => {
+  localStorage.removeItem('jwt')
+  return { type: LOGOUT }
+}
+
 const messageReducer = (state = null, { type, payload } = {}) => {
   switch (type) {
     case LOGIN_REQUEST:
@@ -72,6 +83,8 @@ const messageReducer = (state = null, { type, payload } = {}) => {
     case SIGNUP_REQUEST:
       return 'pending'
     case LOGIN_FAILED:
+      return payload.error
+    case SIGNUP_FAILED:
       return payload.error
     case LOGIN_SUCCESS:
       return null
