@@ -8,7 +8,6 @@ import styled from 'styled-components'
 import Icon from '@material-ui/core/Icon'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-// import MenuIcon from '@material-ui/icons/Menu'
 import { logOut } from '../../redux/modules/signupLogin/singupLogin'
 
 const StyledAppBar = styled(AppBar)`
@@ -27,7 +26,7 @@ const StyledAppBar = styled(AppBar)`
   }
 `
 
-const NavBar = props => {
+const NavBar = ({ user, logOut }) => {
   return (
     <StyledAppBar position="static">
       <Toolbar>
@@ -37,11 +36,22 @@ const NavBar = props => {
         <Typography className="logo" variant="headline">
           Tax!
         </Typography>
-        <Link to="/login">
-          <Button>Login</Button>
-        </Link>
-        <Button>Signup</Button>
-        <Button onClick={props.logOut}>Logout</Button>
+        {!user && (
+          <Link to="/login">
+            <Button>Login</Button>
+          </Link>
+        )}
+        {!user && (
+          <Link to="/signup">
+            <Button>Signup</Button>
+          </Link>
+        )}
+        {user && (
+          <Link to={`/dashboard/${user}`}>
+            <Button>DashBoard</Button>
+          </Link>
+        )}
+        {user && <Button onClick={logOut}>Logout</Button>}
       </Toolbar>
     </StyledAppBar>
   )

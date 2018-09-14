@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import SignupForm from './SignupForm'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { signupRequest } from '../../redux/modules/signupLogin/singupLogin'
 import WithErrorMessage from '../UI/WithErrorMessage'
 import Typography from '@material-ui/core/Typography'
@@ -10,14 +11,14 @@ class SignupComponent extends Component {
     this.props.signupRequest(values)
   }
   render() {
+    const { user, loginState } = this.props
+    if (user) return <Redirect to={`/dashboard/${user}`} />
     return (
       <Fragment>
         <Typography variant="display2">Sign Up</Typography>
         <WithErrorMessage
-          showError={
-            this.props.loginState && this.props.loginState !== 'pending'
-          }
-          message={this.props.loginState}
+          showError={loginState && loginState !== 'pending'}
+          message={loginState}
         >
           <SignupForm onSubmit={this.submit} />
         </WithErrorMessage>

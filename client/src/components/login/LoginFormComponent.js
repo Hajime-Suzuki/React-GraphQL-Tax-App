@@ -12,15 +12,14 @@ class LoginFormComponent extends Component {
   }
 
   render() {
-    if (this.props.user) return <Redirect to="/" />
+    const { user, loginState } = this.props
+    if (user) return <Redirect to={`/dashboard/${user}`} />
     return (
       <Fragment>
         <Typography variant="display2">Login</Typography>
         <WithErrorMessage
-          showError={
-            this.props.loginState && this.props.loginState !== 'pending'
-          }
-          message={this.props.loginState}
+          showError={loginState && loginState !== 'pending'}
+          message={loginState}
         >
           <LoginForm onSubmit={this.submit} />
         </WithErrorMessage>
