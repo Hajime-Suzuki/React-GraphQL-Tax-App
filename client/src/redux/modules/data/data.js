@@ -46,6 +46,8 @@ export const getUserData = userId => async dispatch => {
 
 const projectReducer = (state = {}, { type, payload } = {}) => {
   switch (type) {
+    case FETCHING_DATA_REQUEST:
+      return {}
     case FETCHING_DATA_SUCCESS:
       return payload.projects
     default:
@@ -55,6 +57,8 @@ const projectReducer = (state = {}, { type, payload } = {}) => {
 
 const userReducer = (state = {}, { type, payload } = {}) => {
   switch (type) {
+    case FETCHING_DATA_REQUEST:
+      return {}
     case FETCHING_DATA_SUCCESS:
       return payload.userData
     default:

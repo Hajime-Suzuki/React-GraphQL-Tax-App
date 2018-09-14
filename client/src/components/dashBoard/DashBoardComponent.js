@@ -8,12 +8,13 @@ class DashBoardComponent extends Component {
     this.props.getUserData(this.props.userId)
   }
   render() {
-    return <DashBoard />
+    return <DashBoard projects={this.props.projects} />
   }
 }
 
 const mapSateToProps = state => ({
-  userId: state.userId
+  userId: state.userId,
+  projects: Object.values(state.data.projects)
 })
 
 export default connect(
