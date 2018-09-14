@@ -12,8 +12,8 @@ class LoginFormComponent extends Component {
   }
 
   render() {
-    const { user, loginState } = this.props
-    if (user) return <Redirect to={`/dashboard/${user}`} />
+    const { userId, loginState } = this.props
+    if (userId) return <Redirect to={`/dashboard/${userId}`} />
     return (
       <Fragment>
         <Typography variant="display2">Login</Typography>
@@ -30,7 +30,7 @@ class LoginFormComponent extends Component {
 
 const mapSateToProps = state => ({
   loginState: state.signup_login,
-  user: state.user
+  userId: state.userId
 })
 
 export default connect(

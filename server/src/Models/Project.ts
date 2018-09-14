@@ -53,6 +53,10 @@ const projectSchema: Schema = new Schema({
   }
 })
 
+projectSchema.set('toJSON', {
+  virtuals: true
+})
+
 export const Project: Model<IProject> = model<IProject>(
   'Project',
   projectSchema

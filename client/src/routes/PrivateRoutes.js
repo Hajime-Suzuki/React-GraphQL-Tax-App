@@ -10,6 +10,6 @@ const PrivateRoutes = props => {
 }
 
 const mapSateToProps = state => ({
-  user: state.user
+  user: state.userId
 })
 export default connect(mapSateToProps)(PrivateRoutes)
