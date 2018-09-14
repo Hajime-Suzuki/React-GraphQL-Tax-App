@@ -16,11 +16,9 @@ usersRoutes.post('/', async ctx => {
 })
 
 usersRoutes.get('/:id', authMiddleware, async ctx => {
-  const data = await User.findById(ctx.params.id).populate('project')
-  console.log(data)
-
+  const user = await User.findById(ctx.params.id).populate('projects')
   ctx.status = 200
-  ctx.body = 'asht'
+  ctx.body = { user }
 })
 
 export default usersRoutes
