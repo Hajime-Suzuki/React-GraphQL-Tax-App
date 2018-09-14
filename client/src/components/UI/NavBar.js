@@ -26,7 +26,7 @@ const StyledAppBar = styled(AppBar)`
   }
 `
 
-const NavBar = ({ userId, logOut }) => {
+const NavBar = ({ user, userId, logOut }) => {
   return (
     <StyledAppBar position="static">
       <Toolbar>
@@ -46,6 +46,12 @@ const NavBar = ({ userId, logOut }) => {
             <Button>Signup</Button>
           </Link>
         )}
+
+        {user && (
+          <Typography>
+            {user.firstName} {user.lastName}
+          </Typography>
+        )}
         {userId && (
           <Link to={`/dashboard/${userId}`}>
             <Button>DashBoard</Button>
@@ -58,7 +64,8 @@ const NavBar = ({ userId, logOut }) => {
 }
 
 const mapSateToProps = state => ({
-  userId: state.userId
+  userId: state.userId,
+  user: state.data.user[state.userId]
 })
 
 export default connect(
