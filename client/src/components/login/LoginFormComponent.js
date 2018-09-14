@@ -1,10 +1,10 @@
+import Typography from '@material-ui/core/Typography'
 import React, { Component, Fragment } from 'react'
-import LoginForm from './LoginForm'
 import { connect } from 'react-redux'
-
-import WithErrorMessage from '../UI/WithErrorMessage'
 import { Redirect } from 'react-router-dom'
 import { loginRequest } from '../../redux/modules/signupLogin/singupLogin'
+import WithErrorMessage from '../UI/WithErrorMessage'
+import LoginForm from './LoginForm'
 
 class LoginFormComponent extends Component {
   submit = values => {
@@ -12,15 +12,14 @@ class LoginFormComponent extends Component {
   }
 
   render() {
-    if (this.props.user) return <Redirect to="/" />
+    const { user, loginState } = this.props
+    if (user) return <Redirect to={`/dashboard/${user}`} />
     return (
       <Fragment>
-        <h1>Login Page</h1>
+        <Typography variant="display2">Login</Typography>
         <WithErrorMessage
-          showError={
-            this.props.loginState && this.props.loginState !== 'pending'
-          }
-          message={this.props.loginState}
+          showError={loginState && loginState !== 'pending'}
+          message={loginState}
         >
           <LoginForm onSubmit={this.submit} />
         </WithErrorMessage>
