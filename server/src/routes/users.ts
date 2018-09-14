@@ -1,5 +1,6 @@
 import * as Router from 'koa-router'
 import { IUser, User } from '../Models/User'
+import { authMiddleware } from '../passport/passport'
 
 const usersRoutes = new Router({
   prefix: '/users'
@@ -12,6 +13,14 @@ usersRoutes.post('/', async ctx => {
 
   ctx.status = 201
   ctx.body = { user: rest, jwt: newUser.generateToken() }
+})
+
+usersRoutes.get('/:id', authMiddleware, async ctx => {
+  const user = await User.findById(ctx.params.id).populate('projects')
+  if (!user) return ctx.throw(404, 'user not found')
+
+  ctx.status = 200
+  ctx.body = { user }
 })
 
 export default usersRoutes

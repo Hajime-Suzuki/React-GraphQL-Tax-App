@@ -7,3 +7,5 @@ export const decodeJwt = token => {
 export const storeJwt = token => {
   localStorage.setItem('jwt', token)
 }
+
+export const getJwt = () => localStorage.getItem('jwt')
