@@ -11,8 +11,8 @@ class SignupComponent extends Component {
     this.props.signupRequest(values)
   }
   render() {
-    const { user, loginState } = this.props
-    if (user) return <Redirect to={`/dashboard/${user}`} />
+    const { userId, loginState } = this.props
+    if (userId) return <Redirect to={`/dashboard/${userId}`} />
     return (
       <Fragment>
         <Typography variant="display2">Sign Up</Typography>
@@ -29,7 +29,7 @@ class SignupComponent extends Component {
 
 const mapSateToProps = state => ({
   loginState: state.signup_login,
-  user: state.user
+  userId: state.userId
 })
 
 export default connect(
