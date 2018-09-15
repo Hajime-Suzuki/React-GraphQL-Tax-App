@@ -1,3 +1,4 @@
+import { Record } from 'immutable'
 import { loginAxios } from '../../../axios'
 import { userAxios } from '../../../axios'
 import { decodeJwt, storeJwt } from '../../../libs/jwt'

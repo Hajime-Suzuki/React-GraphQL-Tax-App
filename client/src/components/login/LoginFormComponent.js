@@ -29,10 +29,12 @@ class LoginFormComponent extends Component {
   }
 }
 
-const mapSateToProps = state => ({
-  loginState: state.signup_login,
-  userId: state.userId
-})
+const mapSateToProps = state => {
+  return {
+    loginState: state.signup_login,
+    userId: state.userId
+  }
+}
 
 export default connect(
   mapSateToProps,
