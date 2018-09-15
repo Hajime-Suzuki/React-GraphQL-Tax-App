@@ -1,3 +1,4 @@
+import { Record } from 'immutable'
 import { decodeJwt } from '../../../libs/jwt'
 import {
   LOGIN_SUCCESS,
