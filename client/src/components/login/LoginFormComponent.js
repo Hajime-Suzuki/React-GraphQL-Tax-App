@@ -31,8 +31,8 @@ class LoginFormComponent extends Component {
 
 const mapSateToProps = state => {
   return {
-    loginState: state.signup_login,
-    userId: state.userId
+    loginState: state.signup_login
+    // userId: state.userId
   }
 }
 

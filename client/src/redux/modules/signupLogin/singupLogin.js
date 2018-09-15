@@ -1,6 +1,7 @@
 import { Record } from 'immutable'
 import { loginAxios } from '../../../axios'
 import { userAxios } from '../../../axios'
+import { toJS } from 'immutable'
 import { decodeJwt, storeJwt } from '../../../libs/jwt'
 
 const LOGIN_REQUEST = 'signupLogin/LOGIN_REQUEST'
@@ -18,9 +19,11 @@ export const loginRequest = userData => async dispatch => {
     dispatch({
       type: LOGIN_REQUEST
     })
+
     const token = await loginAxios
       .post('/', userData)
       .then(({ data }) => data.jwt)
+    console.log(token)
 
     storeJwt(token)
 
@@ -32,6 +35,8 @@ export const loginRequest = userData => async dispatch => {
       }
     })
   } catch (e) {
+    console.log(e)
+
     console.log(e.response.data)
     dispatch({
       type: LOGIN_FAILED,
