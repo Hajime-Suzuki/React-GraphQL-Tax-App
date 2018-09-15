@@ -28,6 +28,8 @@ const StyledAppBar = styled(AppBar)`
 `
 
 const NavBar = ({ user, userId, logOut }) => {
+  console.log(userId)
+
   return (
     <StyledAppBar position="static">
       <Toolbar>
@@ -73,7 +75,7 @@ const NavBar = ({ user, userId, logOut }) => {
 }
 
 const mapSateToProps = state => ({
-  // userId: state.userId,
+  userId: state.user.userId
   // user: state.data.user[state.userId]
 })
 

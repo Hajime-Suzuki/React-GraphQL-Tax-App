@@ -1,4 +1,4 @@
-import { Record } from 'immutable'
+import { Record, Collection } from 'immutable'
 
 import { decodeJwt } from '../../../libs/jwt'
 import {
@@ -11,16 +11,19 @@ const token = localStorage.getItem('jwt')
 const userId = token ? decodeJwt(token).id : null
 
 const userRecord = Record({
-  id: userId
+  userId
 })
 
-class User extends userRecord {
+export class User extends userRecord {
+  getUserId() {
+    return this.userId
+  }
   setUserId(payload) {
     return this.set(userId, payload)
   }
 }
 
-const userReducer = (state = new User(), { type, payload } = {}) => {
+const userReducer = (state, { type, payload } = {}) => {
   switch (type) {
     case LOGIN_SUCCESS:
       return state.setUserId(payload)
