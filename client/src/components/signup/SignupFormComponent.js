@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { signupRequest } from '../../redux/modules/signupLogin/singupLogin'
 import WithErrorMessage from '../UI/WithErrorMessage'
 import Typography from '@material-ui/core/Typography'
+import { routes } from '../../routes/constants'
 
 class SignupComponent extends Component {
   submit = values => {
@@ -12,7 +13,7 @@ class SignupComponent extends Component {
   }
   render() {
     const { userId, loginState } = this.props
-    if (userId) return <Redirect to={`/dashboard/${userId}`} />
+    if (userId) return <Redirect to={routes.dashboard} />
     return (
       <Fragment>
         <Typography variant="display2">Sign Up</Typography>
