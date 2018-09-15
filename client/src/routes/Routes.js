@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import DashBoard from '../components/dashBoard/DashBoard'
+import DashBoardComponent from '../components/dashBoard/DashBoardComponent'
 import LoginFormComponent from '../components/login/LoginFormComponent'
+import ProjectsListComponent from '../components/project/ProjectsListComponent'
 import SignupFormComponent from '../components/signup/SignupFormComponent'
 import TopPage from '../components/topPage/TopPage'
 import PrivateRoutes from './PrivateRoutes'
-import DashBoardComponent from '../components/dashBoard/DashBoardComponent'
 
 class Routes extends Component {
   render() {
     return (
       <Switch>
         <Route path="/" exact component={TopPage} />
+        <PrivateRoutes path="/dashboard" exact component={DashBoardComponent} />
         <PrivateRoutes
-          path="/dashboard/:id"
+          path="/projects"
           exact
-          component={DashBoardComponent}
+          component={ProjectsListComponent}
         />
         <Route path="/login" exact component={LoginFormComponent} />
         <Route path="/signup" exact component={SignupFormComponent} />
