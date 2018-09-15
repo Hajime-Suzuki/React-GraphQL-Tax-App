@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import DashBoard from './DashBoard'
 import { connect } from 'react-redux'
 import { getUserData } from '../../redux/modules/data/data'
+import ProjectsList from './ProjectsList'
 
-class DashBoardComponent extends Component {
+class ProjectsListComponent extends Component {
   componentDidMount() {
     this.props.getUserData(this.props.userId)
   }
   render() {
-    return <DashBoard />
+    return <ProjectsList projects={this.props.projects} />
   }
 }
 
@@ -20,4 +20,4 @@ const mapSateToProps = state => ({
 export default connect(
   mapSateToProps,
   { getUserData }
-)(DashBoardComponent)
+)(ProjectsListComponent)

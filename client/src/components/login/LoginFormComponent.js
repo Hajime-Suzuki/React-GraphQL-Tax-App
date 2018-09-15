@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { loginRequest } from '../../redux/modules/signupLogin/singupLogin'
 import WithErrorMessage from '../UI/WithErrorMessage'
 import LoginForm from './LoginForm'
+import { routes } from '../../routes/constants'
 
 class LoginFormComponent extends Component {
   submit = values => {
@@ -13,7 +14,7 @@ class LoginFormComponent extends Component {
 
   render() {
     const { userId, loginState } = this.props
-    if (userId) return <Redirect to={`/dashboard/${userId}`} />
+    if (userId) return <Redirect to={routes.dashboard} />
     return (
       <Fragment>
         <Typography variant="display2">Login</Typography>

@@ -9,6 +9,7 @@ import Icon from '@material-ui/core/Icon'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logOut } from '../../redux/modules/signupLogin/singupLogin'
+import { routes } from '../../routes/constants'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -37,12 +38,13 @@ const NavBar = ({ user, userId, logOut }) => {
           Tax!
         </Typography>
         {!userId && (
-          <Link to="/login">
+          <Link to={routes.login}>
             <Button>Login</Button>
           </Link>
         )}
+
         {!userId && (
-          <Link to="/signup">
+          <Link to={routes.signup}>
             <Button>Signup</Button>
           </Link>
         )}
@@ -52,8 +54,15 @@ const NavBar = ({ user, userId, logOut }) => {
             {user.firstName} {user.lastName}
           </Typography>
         )}
+
         {userId && (
-          <Link to={`/dashboard/${userId}`}>
+          <Link to={routes.projects}>
+            <Button>Projects</Button>
+          </Link>
+        )}
+
+        {userId && (
+          <Link to={routes.dashboard}>
             <Button>DashBoard</Button>
           </Link>
         )}
