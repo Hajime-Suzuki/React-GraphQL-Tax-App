@@ -1,5 +1,4 @@
 import { Record, Collection } from 'immutable'
-
 import { decodeJwt } from '../../../libs/jwt'
 import {
   LOGIN_SUCCESS,
@@ -13,24 +12,20 @@ const userId = token ? decodeJwt(token).id : null
 const userRecord = Record({
   userId
 })
-
 export class User extends userRecord {
-  getUserId() {
-    return this.userId
-  }
-  setUserId(payload) {
-    return this.set(userId, payload)
+  setId(val) {
+    return this.set('userId', val)
   }
 }
 
 const userReducer = (state, { type, payload } = {}) => {
   switch (type) {
     case LOGIN_SUCCESS:
-      return state.setUserId(payload)
+      return state.setId(payload.id)
     case SIGNUP_SUCCESS:
-      return state.setUserId(payload)
+      return state.setId(payload.id)
     case LOGOUT:
-      return state.setUserId(null)
+      return state.setId(null)
     default:
       return state
   }

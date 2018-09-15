@@ -35,13 +35,11 @@ export const loginRequest = userData => async dispatch => {
       }
     })
   } catch (e) {
-    console.log(e)
-
-    console.log(e.response.data)
+    console.log(e.response && e.response.data)
     dispatch({
       type: LOGIN_FAILED,
       payload: {
-        error: e.response.data
+        error: (e.response && e.response.data) || 'unknown error'
       }
     })
   }
