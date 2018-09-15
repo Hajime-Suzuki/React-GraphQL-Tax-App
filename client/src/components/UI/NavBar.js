@@ -73,8 +73,8 @@ const NavBar = ({ user, userId, logOut }) => {
 }
 
 const mapSateToProps = state => ({
-  userId: state.userId,
-  user: state.data.user[state.userId]
+  // userId: state.userId,
+  // user: state.data.user[state.userId]
 })
 
 export default connect(
