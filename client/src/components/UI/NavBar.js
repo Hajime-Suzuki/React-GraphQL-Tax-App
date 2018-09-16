@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import Icon from '@material-ui/core/Icon'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logOut } from '../../redux/modules/signupLogin/singupLogin'
+import { logOut } from '../../redux/modules/signupLogin/signupLogin'
 import { routes } from '../../routes/constants'
 
 const StyledAppBar = styled(AppBar)`

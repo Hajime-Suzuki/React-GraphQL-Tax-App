@@ -2,10 +2,11 @@ import Typography from '@material-ui/core/Typography'
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { loginRequest } from '../../redux/modules/signupLogin/singupLogin'
+// import { loginRequest } from '../../redux/modules/signupLogin/signupLogin'
 import WithErrorMessage from '../UI/WithErrorMessage'
 import LoginForm from './LoginForm'
 import { routes } from '../../routes/constants'
+import { loginRequest } from '../../redux/modules/user/user'
 
 class LoginFormComponent extends Component {
   submit = values => {
@@ -31,7 +32,7 @@ class LoginFormComponent extends Component {
 
 const mapSateToProps = state => {
   return {
-    loginState: state.signup_login
+    loginState: state.signupLogin
     // userId: state.userId
   }
 }
