@@ -8,26 +8,34 @@ import { routes } from '../../routes/constants'
 import { loginOrSignup } from '../../redux/modules/user'
 import { userStatusType } from '../../redux/modules/user/model'
 import PropTypes from 'prop-types'
-// import { UserType } from '../../redux/modules/user/model'
+import SignupForm from './SignupForm'
 
-class LoginFormComponent extends Component {
+class LoginAndSignupForm extends Component {
   static propTypes = {
     userId: PropTypes.string,
     loginSignupStatus: userStatusType.isRequired
   }
 
   submit = values => {
-    this.props.loginOrSignup('login', values)
+    const type = this.props.match.path === '/signup' ? 'signup' : 'login'
+    this.props.loginOrSignup(type, values)
   }
 
   render() {
-    const { userId, loginSignupStatus } = this.props
+    const { userId, loginSignupStatus, match } = this.props
+
     if (userId) return <Redirect to={routes.dashboard} />
     return (
       <Fragment>
-        <Typography variant="display2">Login</Typography>
+        <Typography variant="display2">
+          {match.path === '/signup' ? 'Signup' : 'Login'}
+        </Typography>
         <WithErrorMessage message={loginSignupStatus.message}>
-          <LoginForm onSubmit={this.submit} />
+          {match.path === '/signup' ? (
+            <SignupForm onSubmit={this.submit} />
+          ) : (
+            <LoginForm onSubmit={this.submit} />
+          )}
         </WithErrorMessage>
       </Fragment>
     )
@@ -44,4 +52,4 @@ const mapSateToProps = state => {
 export default connect(
   mapSateToProps,
   { loginOrSignup }
-)(LoginFormComponent)
+)(LoginAndSignupForm)
