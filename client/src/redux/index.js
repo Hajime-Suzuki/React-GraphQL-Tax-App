@@ -1,9 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
-
 import reducers from './modules'
-import { Map, Record } from 'immutable'
-import { User, userRecord } from './modules/user/user'
 
 const enhancer = compose(
   applyMiddleware(thunk),

@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react'
 import SignupForm from './SignupForm'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { signupRequest } from '../../redux/modules/signupLogin/signupLogin'
 import WithErrorMessage from '../UI/WithErrorMessage'
 import Typography from '@material-ui/core/Typography'
 import { routes } from '../../routes/constants'
+import { loginOrSignup } from '../../redux/modules/user'
 
 class SignupComponent extends Component {
   submit = values => {
@@ -35,5 +35,5 @@ const mapSateToProps = state => ({
 
 export default connect(
   mapSateToProps,
-  { signupRequest }
+  { loginOrSignup }
 )(SignupComponent)

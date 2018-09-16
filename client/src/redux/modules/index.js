@@ -1,9 +1,7 @@
-import { Record } from 'immutable'
-import { reducer as formReducer } from 'redux-form'
 import { combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 // import { combineReducers } from 'redux-immutable'
-import user, { User } from './user/user'
-import signupLogin from './signupLogin/signupLogin'
+import user from './user'
 
 export default combineReducers(
   {

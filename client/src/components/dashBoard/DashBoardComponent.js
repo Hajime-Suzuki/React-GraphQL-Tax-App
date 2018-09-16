@@ -5,17 +5,14 @@ import { getUserData } from '../../redux/modules/data/data'
 
 class DashBoardComponent extends Component {
   componentDidMount() {
-    this.props.getUserData(this.props.userId)
+    // this.props.getUserData(this.props.userId)
   }
   render() {
     return <DashBoard />
   }
 }
 
-const mapSateToProps = state => ({
-  userId: state.userId,
-  projects: Object.values(state.data.projects)
-})
+const mapSateToProps = state => ({})
 
 export default connect(
   mapSateToProps,
