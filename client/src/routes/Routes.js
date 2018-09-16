@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import DashBoardComponent from '../components/dashBoard/DashBoardComponent'
-import LoginFormComponent from '../components/login/LoginFormComponent'
+import LoginAndSignupForm from '../components/loginAndSignup/LoginAndSignupForm'
 import ProjectsListComponent from '../components/project/ProjectsListComponent'
-import SignupFormComponent from '../components/signup/SignupFormComponent'
 import TopPage from '../components/topPage/TopPage'
 import PrivateRoutes from './PrivateRoutes'
 
@@ -18,8 +17,8 @@ class Routes extends Component {
           exact
           component={ProjectsListComponent}
         />
-        <Route path="/login" exact component={LoginFormComponent} />
-        <Route path="/signup" exact component={SignupFormComponent} />
+        <Route path="/login" exact component={LoginAndSignupForm} />
+        <Route path="/signup" exact component={LoginAndSignupForm} />
       </Switch>
     )
   }
