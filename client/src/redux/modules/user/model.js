@@ -28,6 +28,7 @@ class User extends Record(initialState) {
       s.setIn(['_status', 'fetching'], true).setIn(['_status', 'message'], null)
     })
   }
+
   loginSignupSuccess(userId) {
     return this.withMutations(s => {
       s.set('userId', userId)
