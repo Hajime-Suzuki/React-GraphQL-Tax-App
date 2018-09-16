@@ -2,27 +2,30 @@ import Typography from '@material-ui/core/Typography'
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-// import { loginRequest } from '../../redux/modules/signupLogin/signupLogin'
 import WithErrorMessage from '../UI/WithErrorMessage'
 import LoginForm from './LoginForm'
 import { routes } from '../../routes/constants'
-import { loginRequest } from '../../redux/modules/user/user'
+import { loginOrSignup } from '../../redux/modules/user'
+import PropTypes from 'prop-types'
+// import { UserType } from '../../redux/modules/user/model'
 
 class LoginFormComponent extends Component {
+  // static propTypes = {
+  //   loginErrorMessage: PropTypes.string
+  // }
+
   submit = values => {
-    this.props.loginRequest(values)
+    this.props.loginOrSignup('login', values)
   }
 
   render() {
-    const { userId, loginState } = this.props
+    const { userId, loginSignupStatus } = this.props
+
     if (userId) return <Redirect to={routes.dashboard} />
     return (
       <Fragment>
         <Typography variant="display2">Login</Typography>
-        <WithErrorMessage
-          showError={loginState && loginState !== 'pending'}
-          message={loginState}
-        >
+        <WithErrorMessage message={loginSignupStatus.message}>
           <LoginForm onSubmit={this.submit} />
         </WithErrorMessage>
       </Fragment>
@@ -32,12 +35,12 @@ class LoginFormComponent extends Component {
 
 const mapSateToProps = state => {
   return {
-    loginState: state.signupLogin
-    // userId: state.userId
+    userId: state.user.getId(),
+    loginSignupStatus: state.user.getStatus()
   }
 }
 
 export default connect(
   mapSateToProps,
-  { loginRequest }
+  { loginOrSignup }
 )(LoginFormComponent)

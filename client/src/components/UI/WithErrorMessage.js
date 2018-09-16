@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 
-const WithErrorMessage = ({ children, message, showError }) => {
+const WithErrorMessage = ({ children, message }) => {
   return (
     <Fragment>
-      {showError ? <p>{message}</p> : null}
+      {message ? <p>{message}</p> : null}
       {children}
     </Fragment>
   )

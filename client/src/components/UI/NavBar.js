@@ -8,8 +8,8 @@ import styled from 'styled-components'
 import Icon from '@material-ui/core/Icon'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logOut } from '../../redux/modules/signupLogin/signupLogin'
 import { routes } from '../../routes/constants'
+import { logout } from '../../redux/modules/user'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -27,9 +27,7 @@ const StyledAppBar = styled(AppBar)`
   }
 `
 
-const NavBar = ({ user, userId, logOut }) => {
-  console.log(userId)
-
+const NavBar = ({ user, userId, logout }) => {
   return (
     <StyledAppBar position="static">
       <Toolbar>
@@ -68,7 +66,7 @@ const NavBar = ({ user, userId, logOut }) => {
             <Button>DashBoard</Button>
           </Link>
         )}
-        {userId && <Button onClick={logOut}>Logout</Button>}
+        {userId && <Button onClick={logout}>Logout</Button>}
       </Toolbar>
     </StyledAppBar>
   )
@@ -81,5 +79,5 @@ const mapSateToProps = state => ({
 
 export default connect(
   mapSateToProps,
-  { logOut }
+  { logout }
 )(NavBar)
