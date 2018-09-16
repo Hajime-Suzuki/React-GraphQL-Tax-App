@@ -4,7 +4,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
   SIGNUP_SUCCESS
-} from '../signupLogin/singupLogin'
+} from '../signupLogin/signupLogin'
 
 // const token = localStorage.getItem('jwt')
 // const initialState = token ? decodeJwt(token).id : null
