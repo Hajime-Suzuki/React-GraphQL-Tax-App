@@ -50,11 +50,7 @@ class User extends Record(initialState) {
 
 export default User
 
-// export const UserType = PropTypes.shape({
-//   userId: PropTypes.string,
-//   _status: PropTypes.shape({
-//     fetching: PropTypes.bool,
-//     message: PropTypes.message,
-//     something: 'asht'
-//   })
-// })
+export const userStatusType = PropTypes.shape({
+  fetching: PropTypes.bool,
+  message: PropTypes.string
+})
