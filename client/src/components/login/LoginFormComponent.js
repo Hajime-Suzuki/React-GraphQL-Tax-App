@@ -6,13 +6,15 @@ import WithErrorMessage from '../UI/WithErrorMessage'
 import LoginForm from './LoginForm'
 import { routes } from '../../routes/constants'
 import { loginOrSignup } from '../../redux/modules/user'
+import { userStatusType } from '../../redux/modules/user/model'
 import PropTypes from 'prop-types'
 // import { UserType } from '../../redux/modules/user/model'
 
 class LoginFormComponent extends Component {
-  // static propTypes = {
-  //   loginErrorMessage: PropTypes.string
-  // }
+  static propTypes = {
+    userId: PropTypes.string,
+    loginSignupStatus: userStatusType.isRequired
+  }
 
   submit = values => {
     this.props.loginOrSignup('login', values)
@@ -20,7 +22,6 @@ class LoginFormComponent extends Component {
 
   render() {
     const { userId, loginSignupStatus } = this.props
-
     if (userId) return <Redirect to={routes.dashboard} />
     return (
       <Fragment>
