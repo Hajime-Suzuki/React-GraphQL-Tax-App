@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { baseUrl } from '../constants'
+import { getJwt } from '../libs/jwt'
 
 const loginAxios = axios.create({
   baseURL: `${baseUrl}/login`
@@ -17,3 +18,8 @@ export const loginOrSignupAndGetJwt = async (type, userData) => {
   }
   return null
 }
+
+export const getEntitiesRequest = async userId =>
+  userAxios
+    .get(`/${userId}`, { headers: { Authorization: getJwt() } })
+    .then(({ data }) => data)
