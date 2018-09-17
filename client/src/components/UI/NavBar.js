@@ -73,7 +73,8 @@ const NavBar = ({ user, userId, logout }) => {
 }
 
 const mapSateToProps = state => ({
-  userId: state.user.getId()
+  userId: state.user.getId(),
+  user: state.entities.user
   // user: state.data.user[state.userId]
 })
 

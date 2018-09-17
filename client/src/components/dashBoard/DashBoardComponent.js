@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
 import DashBoard from './DashBoard'
 import { connect } from 'react-redux'
-import { getUserData } from '../../redux/modules/data/data'
+import { getEntities, test } from '../../redux/modules/entities'
 
 class DashBoardComponent extends Component {
   componentDidMount() {
-    // this.props.getUserData(this.props.userId)
+    this.props.getEntities(this.props.userId)
   }
   render() {
-    return <DashBoard />
+    return (
+      <div>
+        <h1 onClick={this.props.test}>test</h1>
+        <DashBoard />
+      </div>
+    )
   }
 }
 
-const mapSateToProps = state => ({})
+const mapSateToProps = state => ({
+  userId: state.user.getId()
+})
 
 export default connect(
   mapSateToProps,
-  { getUserData }
+  { getEntities, test }
 )(DashBoardComponent)
