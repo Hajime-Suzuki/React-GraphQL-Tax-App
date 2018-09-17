@@ -1,30 +1,26 @@
-import { Record, fromJS } from 'immutable'
+import { Record, fromJS, Map } from 'immutable'
 
-const initalState = {
-  user: null
+let initialState = {
+  id: undefined,
+  firstName: undefined,
+  lastName: undefined,
+  email: undefined,
+  projects: undefined,
+  createdAt: undefined
 }
 
-class User extends Record(initalState) {
-  // constructor() {
-  //   super()
-  //   this.test = 1324
-  // }
+class User extends Record(initialState) {
   setUser(data) {
-    return this.set('user', fromJS(data.entities.user))
+    const userId = data.result
+    const userData = data.entities.user[userId]
+    return new User(userData)
   }
   test() {
-    // this.user.get('5b9bbb1fb048de0758baf461').forEach(v => {
-    //   console.log(v)
-    // })
-    const [...keys] = this.user.keys()
-    console.log(keys[0])
-
-    // console.log()
-
-    return this.user.setIn(
-      ['5b9bbb1fb048de0758baf461', 'firstName'],
-      'ashtashtasht'
-    )
+    return this.withMutations(s => {
+      s.setIn(['firstName'], 'ashtashtasht').updateIn(['projects'], p =>
+        p.push('something!!!!!')
+      )
+    })
   }
 }
 
