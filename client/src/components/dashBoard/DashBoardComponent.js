@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 import DashBoard from './DashBoard'
 import { connect } from 'react-redux'
-import { getEntities } from '../../redux/modules/entities'
+import { getEntities, test } from '../../redux/modules/entities'
 
 class DashBoardComponent extends Component {
   componentDidMount() {
     this.props.getEntities(this.props.userId)
   }
   render() {
-    return <DashBoard />
+    return (
+      <div>
+        <h1 onClick={this.props.test}>test</h1>
+        <DashBoard />
+      </div>
+    )
   }
 }
 
@@ -18,5 +23,5 @@ const mapSateToProps = state => ({
 
 export default connect(
   mapSateToProps,
-  { getEntities }
+  { getEntities, test }
 )(DashBoardComponent)
