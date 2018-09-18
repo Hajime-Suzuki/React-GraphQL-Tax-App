@@ -8,11 +8,11 @@ const ProjectsList = props => {
     <Grid container justify="center" spacing={24}>
       {props.projects.map(p => {
         return (
-          <Grid key={p.id} item xs={10} md={5} lg={4}>
+          <Grid key={p.get('id')} item xs={10} md={5} lg={4}>
             <Card>
-              <Typography>{p.name}</Typography>
-              <Typography>€{p.rowPrice}</Typography>
-              <Typography>{p.taxRate}%</Typography>
+              <Typography>{p.get('name')}</Typography>
+              <Typography>€{p.get('rowPrice')}</Typography>
+              <Typography>{p.get('taxRate')}%</Typography>
             </Card>
           </Grid>
         )

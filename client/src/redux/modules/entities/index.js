@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import userReducer from './user'
+import projectReducer from './project'
 import { getEntitiesRequest } from '../../api'
 import { normalize, schema } from 'normalizr'
 
@@ -33,6 +34,7 @@ export const getEntities = () => async (dispatch, getState) => {
 export const test = () => {
   return { type: 'test' }
 }
+
 const initialState = { fetching: false, message: null }
 
 const entitiesStatus = (state = initialState, { type, payload } = {}) => {
@@ -50,5 +52,6 @@ const entitiesStatus = (state = initialState, { type, payload } = {}) => {
 
 export default combineReducers({
   user: userReducer,
+  projects: projectReducer,
   _status: entitiesStatus
 })
