@@ -1,0 +1,71 @@
+{
+  "favorites.sortDirection": "DESC",
+  "favorites.groupsFirst": true,
+  "favorites.root": [
+    {
+      "type": "Group",
+      "name": "Reducers",
+      "parent_id": null,
+      "id": "0QymJzH9dEwKf7OB"
+    },
+    {
+      "type": "Group",
+      "name": "Components",
+      "parent_id": null,
+      "id": "InmfwGE2L0RKMtqg"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\components\\dashBoard\\DashBoardComponent.js",
+      "parent_id": "InmfwGE2L0RKMtqg",
+      "workspacePath": "client\\src\\components\\dashBoard\\DashBoardComponent.js",
+      "id": "5nDwIVby1HsJCNZ7"
+    },
+    {
+      "type": "Group",
+      "name": "Models",
+      "parent_id": "0QymJzH9dEwKf7OB",
+      "id": "gTLWPvibF1B4Qcoz"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\redux\\modules\\entities\\user\\model.js",
+      "parent_id": "gTLWPvibF1B4Qcoz",
+      "workspacePath": "client\\src\\redux\\modules\\entities\\user\\model.js",
+      "id": "eEJky31sLmbpOC2D",
+      "label": "user/model.js"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\redux\\modules\\entities\\index.js",
+      "parent_id": "0QymJzH9dEwKf7OB",
+      "workspacePath": "client\\src\\redux\\modules\\entities\\index.js",
+      "id": "c5pIQCTFVg0nsNru",
+      "label": "entities/index"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\redux\\modules\\entities\\project\\index.js",
+      "parent_id": "0QymJzH9dEwKf7OB",
+      "workspacePath": "client\\src\\redux\\modules\\entities\\project\\index.js",
+      "id": "sRiTX1V34pkmHowY",
+      "label": "project/index"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\redux\\modules\\entities\\project\\model.js",
+      "parent_id": "gTLWPvibF1B4Qcoz",
+      "workspacePath": "client\\src\\redux\\modules\\entities\\project\\model.js",
+      "id": "9XAtSslz27WihdbB",
+      "label": "project/model"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\redux\\modules\\entities\\user\\index.js",
+      "parent_id": "0QymJzH9dEwKf7OB",
+      "workspacePath": "client\\src\\redux\\modules\\entities\\user\\index.js",
+      "id": "FIRxu0XTzq872Kbo",
+      "label": "user/index"
+    }
+  ]
+}
