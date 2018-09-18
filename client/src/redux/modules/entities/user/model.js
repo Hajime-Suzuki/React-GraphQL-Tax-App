@@ -1,12 +1,12 @@
 import { Record, fromJS, Map } from 'immutable'
 
 let initialState = {
-  id: undefined,
-  firstName: undefined,
-  lastName: undefined,
-  email: undefined,
-  projects: undefined,
-  createdAt: undefined
+  id: null,
+  firstName: null,
+  lastName: null,
+  email: null,
+  projects: null,
+  createdAt: null
 }
 
 class User extends Record(initialState) {
@@ -16,11 +16,8 @@ class User extends Record(initialState) {
     return new User(userData)
   }
   test() {
-    return this.withMutations(s => {
-      s.setIn(['firstName'], 'ashtashtasht').updateIn(['projects'], p =>
-        p.push('something!!!!!')
-      )
-    })
+    console.log('usertest')
+    return this.set('email', 'email!!')
   }
 }
 

@@ -1,23 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getUserData } from '../../redux/modules/data/data'
 import ProjectsList from './ProjectsList'
+import { getEntities } from '../../redux/modules/entities'
 
 class ProjectsListComponent extends Component {
   componentDidMount() {
-    this.props.getUserData(this.props.userId)
+    const { projects, getEntities, userId } = this.props
+    if (!projects.length) getEntities(userId)
   }
   render() {
+    // const projects = this.props.projects.getProjects()
+    // console.log(projects)
+    // return 'projects'
     return <ProjectsList projects={this.props.projects} />
   }
 }
 
 const mapSateToProps = state => ({
-  userId: state.userId,
-  projects: Object.values(state.data.projects)
+  userId: state.user.userId,
+  projects: state.entities.projects.getProjects()
 })
 
 export default connect(
   mapSateToProps,
-  { getUserData }
+  { getEntities }
 )(ProjectsListComponent)

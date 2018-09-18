@@ -1,0 +1,14 @@
+{
+	"currentWorkbench": {
+		"files": [
+			{
+				"path": "client\\src\\redux\\modules\\entities\\user\\model.js",
+				"alias": " 1 user/model.js"
+			},
+			{
+				"path": "client\\src\\components\\project\\ProjectsListComponent.js",
+				"alias": " 2 project/ProjectsListComponent.js"
+			}
+		]
+	}
+}
