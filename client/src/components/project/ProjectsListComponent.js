@@ -7,7 +7,7 @@ import { MainWrapper } from '../../styles/sharedStyles'
 class ProjectsListComponent extends Component {
   componentDidMount() {
     const { projects, getEntities, userId } = this.props
-    if (!projects.length) getEntities(userId)
+    if (!projects.length || projects.length === 1) getEntities(userId)
   }
   render() {
     // const projects = this.props.projects.getProjects()

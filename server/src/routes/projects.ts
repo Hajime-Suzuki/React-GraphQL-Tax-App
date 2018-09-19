@@ -12,6 +12,13 @@ const router = new Router({
   prefix: '/projects'
 })
 
+router.get('/:id', authMiddleware, async ctx => {
+  console.log(ctx.params.id)
+  const project = await Project.findById(ctx.params.id)
+  if (!project) ctx.throw(404, 'project not found')
+  ctx.body = { project }
+})
+
 router.post('/', authMiddleware, async ctx => {
   const jwtPayload: IJwtPayload = (ctx.req as any).user
 
