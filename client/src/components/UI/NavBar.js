@@ -49,7 +49,7 @@ const NavBar = ({ user, userId, logout }) => {
           </Link>
         )}
 
-        {user && (
+        {userId && (
           <Typography>
             {user.firstName} {user.lastName}
           </Typography>

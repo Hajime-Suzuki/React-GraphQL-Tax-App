@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import ProjectsList from './ProjectsList'
 import { getEntities } from '../../redux/modules/entities'
+import { MainWrapper } from '../../styles/sharedStyles'
 
 class ProjectsListComponent extends Component {
   componentDidMount() {
