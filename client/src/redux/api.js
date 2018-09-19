@@ -10,6 +10,10 @@ const userAxios = axios.create({
   baseURL: `${baseUrl}/users`
 })
 
+const projectAxios = axios.create({
+  baseURL: `${baseUrl}/projects`
+})
+
 export const loginOrSignupAndGetJwt = async (type, userData) => {
   if (type === 'login') {
     return loginAxios.post('/', userData).then(({ data }) => data.jwt)
@@ -23,3 +27,9 @@ export const getEntitiesRequest = async userId =>
   userAxios
     .get(`/${userId}`, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
+
+export const getSingleUserRequest = async projectId => {
+  return projectAxios
+    .get(`/${projectId}`, { headers: { Authorization: getJwt() } })
+    .then(({ data }) => data)
+}
