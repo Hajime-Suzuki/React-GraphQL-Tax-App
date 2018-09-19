@@ -21,8 +21,5 @@ export const theme = createMuiTheme({
   spacing: {
     unit: 8,
     unit2: 40
-  },
-  something: {
-    name: 'theme something prop'
   }
 })

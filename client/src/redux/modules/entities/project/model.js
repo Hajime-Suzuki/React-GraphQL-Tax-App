@@ -20,17 +20,12 @@ const initialProjectData = {
 
 export class Projects extends Record(initialState) {
   setProjects(data) {
-    const keys = Object.keys(data.entities.projects)
-    const projects = Object.values(data.entities.projects)
-    const id = projects[0].id
-    const b = fromJS(data.entities.projects)
-    return this.set('data', b)
+    return this.set('data', fromJS(data.entities.projects))
   }
 
   getProjects() {
     const projects = this.data
     const [...values] = projects.values()
-    values.forEach(v => console.log(v.get('name')))
     return values
   }
 }
