@@ -9,13 +9,7 @@ class DashBoardComponent extends Component {
     this.props.getEntities(this.props.userId)
   }
   render() {
-    return (
-      <div>
-        <h1 onClick={this.props.test}>test</h1>
-        <h1 onClick={this.props.usertest}>userTest</h1>
-        <DashBoard />
-      </div>
-    )
+    return <DashBoard />
   }
 }
 

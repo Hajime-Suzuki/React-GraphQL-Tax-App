@@ -1,4 +1,5 @@
 import { Record, fromJS, Map, List } from 'immutable'
+import { format } from 'date-fns'
 
 class Project extends Record(initialProjectData) {}
 
@@ -20,7 +21,11 @@ const initialProjectData = {
 
 export class Projects extends Record(initialState) {
   setProjects(data) {
-    return this.set('data', fromJS(data.entities.projects))
+    const { projects } = data.entities
+    Object.values(projects).forEach(d => {
+      d.date = format(d.date, 'YYYY-MM-DD')
+    })
+    return this.set('data', fromJS(projects))
   }
   fetchSingleProject() {
     return this.withMutations(s => {
