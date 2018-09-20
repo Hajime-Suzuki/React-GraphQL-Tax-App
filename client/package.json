@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.0.3",
     "axios": "^0.18.0",
+    "date-fns": "^1.29.0",
     "immutable": "4.0.0-rc.9",
     "normalizr": "^3.2.4",
     "react": "^16.4.1",
