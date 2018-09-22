@@ -10,10 +10,27 @@ import Icon from '@material-ui/core/Icon'
 
 const StyledCard = styled(Card)`
   padding: ${cardPadding};
-  .calendar {
+  .icon {
     color: ${theme.palette.secondary.main};
+    font-size: 20px;
+  }
+  .title {
+    margin: 0.5em;
   }
 `
+
+const Flex = styled.div`
+  display: flex;
+`
+
+const FlexItemAndIcon = ({ iconClassName, text }) => {
+  return (
+    <Flex>
+      {iconClassName && <Icon className={[iconClassName, 'icon'].join(' ')} />}
+      <Typography>{text}</Typography>
+    </Flex>
+  )
+}
 
 const ProjectsList = props => {
   return (
@@ -23,12 +40,23 @@ const ProjectsList = props => {
           <Grid key={p.get('id')} item xs={10} md={5} lg={4}>
             <Link to={`/projects/${p.get('id')}`}>
               <StyledCard>
-                <Icon className="far fa-calendar-alt calendar" />
-                <Typography>{p.get('date')}</Typography>
-                <Typography>{p.get('name')}</Typography>
-                <Typography>€{p.get('rowPrice')}</Typography>
-                <Typography>{p.get('taxRate')}%</Typography>
-                <Typography>{p.get('status')}</Typography>
+                <Typography variant="display1" className="title">
+                  {p.get('name')}
+                </Typography>
+
+                <FlexItemAndIcon
+                  iconClassName="far fa-calendar-alt"
+                  text={p.get('date')}
+                />
+                <FlexItemAndIcon
+                  iconClassName="fas fa-euro-sign"
+                  text={p.get('rowPrice')}
+                />
+                {/* <FlexItemAndIcon
+                  iconClassName="fas fa-percent"
+                  text={p.get('taxRate')}
+                /> */}
+                <FlexItemAndIcon text={p.get('status') || 'No action'} />
               </StyledCard>
             </Link>
           </Grid>

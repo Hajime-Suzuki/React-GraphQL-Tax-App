@@ -13,6 +13,7 @@ const LoadingIconComponent = styled(Icon)`
     color: ${theme.palette.secondary.main};
   }
 `
+
 const LoadingIcon = () => {
   return <LoadingIconComponent className="fa fa-spinner fa-spin" />
 }
