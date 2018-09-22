@@ -7,6 +7,7 @@ import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
 import styled from 'styled-components'
 import { StyledLink } from '../../styles/sharedStyles'
+import { routes } from '../../routes/constants'
 
 const StyledPaper = styled(Paper)`
   overflow: 'auto';
@@ -34,8 +35,8 @@ const ProjectsList = props => {
               <TableRow key={p.get('id')} hover>
                 <TableCell>
                   <StyledLink
-                    to={`/projects/${p.get('id')}`}
-                    style={{ fontWeight: 'bold' }}
+                    to={routes.singleProject(p.get('id'))}
+                    weight="bold"
                   >
                     {p.get('name')}
                   </StyledLink>

@@ -9,6 +9,8 @@ const MainWrapper = styled.div`
 
 const StyledLink = styled(Link)`
   color: ${theme.palette.primary.main};
+  /* font-weight: ${({ bold }) => (bold === true ? 'bold' : 'inherit')}; */
+  font-weight: ${({ weight }) => weight};
   transition: 0.3s;
   &:hover {
     color: ${lighten('0.1', theme.palette.primary.main)};

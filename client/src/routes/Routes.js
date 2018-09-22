@@ -9,37 +9,38 @@ import SingleProjectComponent from '../components/project/SingleProjectComponent
 import AddProjectFormContainer from '../components/project/AddProjectFormContainer'
 import NavBar from '../components/UI/NavBar'
 import { MainWrapper } from '../styles/sharedStyles'
+import { routes } from './constants'
 
 class Routes extends Component {
   render() {
     return (
       <Fragment>
-        <Route path="/" component={NavBar} />
+        <Route path={routes.top} component={NavBar} />
         <MainWrapper>
           <Switch>
             <Route path="/" exact component={TopPage} />
             <PrivateRoutes
-              path="/dashboard"
+              path={routes.dashboard}
               exact
               component={DashBoardComponent}
             />
             <PrivateRoutes
-              path="/projects"
+              path={routes.projects}
               exact
               component={ProjectsListComponent}
             />
             <PrivateRoutes
-              path="/projects/new"
+              path={routes.addProject}
               exact
               component={AddProjectFormContainer}
             />
             <PrivateRoutes
-              path="/projects/:id"
+              path={routes.singleProject()}
               exact
               component={SingleProjectComponent}
             />
-            <Route path="/login" exact component={LoginAndSignupForm} />
-            <Route path="/signup" exact component={LoginAndSignupForm} />
+            <Route path={routes.login} exact component={LoginAndSignupForm} />
+            <Route path={routes.signup} exact component={LoginAndSignupForm} />
           </Switch>
         </MainWrapper>
       </Fragment>
