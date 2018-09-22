@@ -38,8 +38,13 @@ const styles = theme => ({
 })
 
 const NavBar = props => {
-  const { user, userId, logout, classes } = props
-  console.log(props)
+  const {
+    user,
+    userId,
+    logout,
+    classes,
+    location: { pathname }
+  } = props
 
   return (
     <StyledAppBar position="static">
@@ -70,6 +75,13 @@ const NavBar = props => {
             {user.firstName} {user.lastName}
           </Typography>
         )}
+
+        {userId &&
+          pathname.startsWith(routes.projects) && (
+            <Link to={routes.addProject} className={classes.menuItem}>
+              <Button>Add</Button>
+            </Link>
+          )}
 
         {userId && (
           <Link to={routes.projects} className={classes.menuItem}>

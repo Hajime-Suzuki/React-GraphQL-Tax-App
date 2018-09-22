@@ -69,17 +69,30 @@
     },
     {
       "type": "File",
-      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\components\\project\\AddProjectFormContainer.js",
-      "parent_id": "InmfwGE2L0RKMtqg",
-      "workspacePath": "client\\src\\components\\project\\AddProjectFormContainer.js",
-      "id": "ViZujsDywKGtvRX0"
-    },
-    {
-      "type": "File",
       "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\components\\UI\\NavBar.js",
       "parent_id": "InmfwGE2L0RKMtqg",
       "workspacePath": "client\\src\\components\\UI\\NavBar.js",
       "id": "VLkZwhxSFUi7Pfjn"
+    },
+    {
+      "type": "Group",
+      "name": "Project",
+      "parent_id": "InmfwGE2L0RKMtqg",
+      "id": "uwC2bpytX8IT9JxM"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\components\\project\\AddProjectFormContainer.js",
+      "parent_id": "uwC2bpytX8IT9JxM",
+      "workspacePath": "client\\src\\components\\project\\AddProjectFormContainer.js",
+      "id": "uLGwTMtP1XvN4hyR"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\components\\project\\AddProjcetForm.js",
+      "parent_id": "uwC2bpytX8IT9JxM",
+      "workspacePath": "client\\src\\components\\project\\AddProjcetForm.js",
+      "id": "h0pZPjBzMOT3JsHX"
     }
   ]
 }

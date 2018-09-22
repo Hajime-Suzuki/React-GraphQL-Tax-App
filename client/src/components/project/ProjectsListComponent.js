@@ -1,11 +1,10 @@
+import Icon from '@material-ui/core/Icon'
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import ProjectsList from './ProjectsList'
-import { getEntities } from '../../redux/modules/entities'
-import { MainWrapper } from '../../styles/sharedStyles'
-import Icon from '@material-ui/core/Icon'
 import styled from 'styled-components'
+import { getEntities } from '../../redux/modules/entities'
 import { theme } from '../../styles/theme'
+import ProjectsList from './ProjectsList'
 
 const LoadingIconComponent = styled(Icon)`
   && {
