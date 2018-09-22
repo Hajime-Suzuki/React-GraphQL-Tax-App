@@ -1,69 +1,55 @@
-import { Link } from 'react-router-dom'
+import Paper from '@material-ui/core/Paper'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
 import styled from 'styled-components'
-import { cardPadding } from '../../styles/constants'
-import { theme } from '../../styles/theme'
-import Icon from '@material-ui/core/Icon'
+import { StyledLink } from '../../styles/sharedStyles'
 
-const StyledCard = styled(Card)`
-  padding: ${cardPadding};
-  .icon {
-    color: ${theme.palette.secondary.main};
-    font-size: 20px;
-  }
-  .title {
-    margin: 0.5em;
-  }
+const StyledPaper = styled(Paper)`
+  overflow: 'auto';
+  width: ${(100 / 12) * 11}%;
+  margin: auto;
 `
-
-const Flex = styled.div`
-  display: flex;
-`
-
-const FlexItemAndIcon = ({ iconClassName, text }) => {
-  return (
-    <Flex>
-      {iconClassName && <Icon className={[iconClassName, 'icon'].join(' ')} />}
-      <Typography>{text}</Typography>
-    </Flex>
-  )
-}
 
 const ProjectsList = props => {
+  const { projects } = props
   return (
-    <Grid container justify="center" spacing={24}>
-      {props.projects.map(p => {
-        return (
-          <Grid key={p.get('id')} item xs={10} md={5} lg={4}>
-            <Link to={`/projects/${p.get('id')}`}>
-              <StyledCard>
-                <Typography variant="display1" className="title">
-                  {p.get('name')}
-                </Typography>
-
-                <FlexItemAndIcon
-                  iconClassName="far fa-calendar-alt"
-                  text={p.get('date')}
-                />
-                <FlexItemAndIcon
-                  iconClassName="fas fa-euro-sign"
-                  text={p.get('rowPrice')}
-                />
-                {/* <FlexItemAndIcon
-                  iconClassName="fas fa-percent"
-                  text={p.get('taxRate')}
-                /> */}
-                <FlexItemAndIcon text={p.get('status') || 'No action'} />
-              </StyledCard>
-            </Link>
-          </Grid>
-          //  </Link>
-        )
-      })}
-    </Grid>
+    <StyledPaper style={{ overflow: 'auto' }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Price</TableCell>
+            <TableCell>Location</TableCell>
+            <TableCell>Status</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {projects.map(p => {
+            return (
+              <TableRow key={p.get('id')} hover>
+                <TableCell>
+                  <StyledLink
+                    to={`/projects/${p.get('id')}`}
+                    style={{ fontWeight: 'bold' }}
+                  >
+                    {p.get('name')}
+                  </StyledLink>
+                </TableCell>
+                <TableCell>{p.get('date')}</TableCell>
+                <TableCell>{p.get('rowPrice')}</TableCell>
+                <TableCell>{p.get('location') || '-'}</TableCell>
+                <TableCell>{p.get('status') || 'N/A'}</TableCell>
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
+    </StyledPaper>
   )
 }
 
