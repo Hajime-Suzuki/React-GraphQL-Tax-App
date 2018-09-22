@@ -9,17 +9,13 @@ const LoginForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <StyledGridFormItem container direction="column">
-        <Grid item className="item">
-          <Field component={renderTextField} name="email" label="email" />
-        </Grid>
-        <Grid item className="item">
-          <Field
-            type="password"
-            component={renderTextField}
-            name="password"
-            label="password"
-          />
-        </Grid>
+        <Field component={renderTextField} name="email" label="email" />
+        <Field
+          type="password"
+          component={renderTextField}
+          name="password"
+          label="password"
+        />
       </StyledGridFormItem>
 
       <Button type="submit" variant="contained" color="primary">

@@ -1,41 +1,56 @@
-import { Link } from 'react-router-dom'
+import Paper from '@material-ui/core/Paper'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
 import styled from 'styled-components'
-import { cardPadding } from '../../styles/constants'
-import { theme } from '../../styles/theme'
-import Icon from '@material-ui/core/Icon'
+import { StyledLink } from '../../styles/sharedStyles'
+import { routes } from '../../routes/constants'
 
-const StyledCard = styled(Card)`
-  padding: ${cardPadding};
-  .calendar {
-    color: ${theme.palette.secondary.main};
-  }
+const StyledPaper = styled(Paper)`
+  overflow: 'auto';
+  width: ${(100 / 12) * 11}%;
+  margin: auto;
 `
 
 const ProjectsList = props => {
+  const { projects } = props
   return (
-    <Grid container justify="center" spacing={24}>
-      {props.projects.map(p => {
-        return (
-          <Grid key={p.get('id')} item xs={10} md={5} lg={4}>
-            <Link to={`/projects/${p.get('id')}`}>
-              <StyledCard>
-                <Icon className="far fa-calendar-alt calendar" />
-                <Typography>{p.get('date')}</Typography>
-                <Typography>{p.get('name')}</Typography>
-                <Typography>€{p.get('rowPrice')}</Typography>
-                <Typography>{p.get('taxRate')}%</Typography>
-                <Typography>{p.get('status')}</Typography>
-              </StyledCard>
-            </Link>
-          </Grid>
-          //  </Link>
-        )
-      })}
-    </Grid>
+    <StyledPaper style={{ overflow: 'auto' }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Price</TableCell>
+            <TableCell>Location</TableCell>
+            <TableCell>Status</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {projects.map(p => {
+            return (
+              <TableRow key={p.get('id')} hover>
+                <TableCell>
+                  <StyledLink
+                    to={routes.singleProject(p.get('id'))}
+                    weight="bold"
+                  >
+                    {p.get('name')}
+                  </StyledLink>
+                </TableCell>
+                <TableCell>{p.get('date')}</TableCell>
+                <TableCell>{p.get('rowPrice')}</TableCell>
+                <TableCell>{p.get('location') || '-'}</TableCell>
+                <TableCell>{p.get('status') || 'N/A'}</TableCell>
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
+    </StyledPaper>
   )
 }
 
