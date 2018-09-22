@@ -25,7 +25,9 @@ export class Projects extends Record(initialState) {
     Object.values(projects).forEach(d => {
       d.date = format(d.date, 'YYYY-MM-DD')
     })
-    return this.set('data', fromJS(projects))
+    return this.withMutations(s => {
+      s.set('data', fromJS(projects)).setIn(['_status', 'fetching'], false)
+    })
   }
   fetchSingleProject() {
     return this.withMutations(s => {

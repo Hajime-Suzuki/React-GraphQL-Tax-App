@@ -37,7 +37,10 @@ const styles = theme => ({
   }
 })
 
-const NavBar = ({ user, userId, logout, classes }) => {
+const NavBar = props => {
+  const { user, userId, logout, classes } = props
+  console.log(props)
+
   return (
     <StyledAppBar position="static">
       <Toolbar disableGutters>

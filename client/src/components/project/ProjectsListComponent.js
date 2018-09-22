@@ -21,13 +21,10 @@ const LoadingIcon = () => {
 class ProjectsListComponent extends Component {
   componentDidMount() {
     const { projects, getEntities, userId } = this.props
+    // when you reload on the single porject and come back here, you fetch all project data.
     if (!projects.length || projects.length === 1) getEntities(userId)
   }
   render() {
-    // const projects = this.props.projects.getProjects()
-    // console.log(projects)
-    // return 'projects'
-
     if (this.props.fetching) return <LoadingIcon />
     return (
       <Fragment>
