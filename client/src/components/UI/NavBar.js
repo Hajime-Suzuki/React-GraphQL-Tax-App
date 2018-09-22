@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { routes } from '../../routes/constants'
 import { logout } from '../../redux/modules/user'
+import { withStyles } from '@material-ui/core/styles'
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -27,24 +28,44 @@ const StyledAppBar = styled(AppBar)`
   }
 `
 
-const NavBar = ({ user, userId, logout }) => {
+const styles = theme => ({
+  menuItem: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block'
+    }
+  }
+})
+
+const NavBar = props => {
+  const {
+    user,
+    userId,
+    logout,
+    classes,
+    location: { pathname }
+  } = props
+
   return (
     <StyledAppBar position="static">
-      <Toolbar>
+      <Toolbar disableGutters>
         <IconButton>
           <Icon className="fas fa-bars" />
         </IconButton>
-        <Typography className="logo" variant="headline">
+        <Typography
+          className={['logo', classes.menuItem].join(' ')}
+          variant="headline"
+        >
           Tax!
         </Typography>
         {!userId && (
-          <Link to={routes.login}>
+          <Link to={routes.login} className={classes.menuItem}>
             <Button>Login</Button>
           </Link>
         )}
 
         {!userId && (
-          <Link to={routes.signup}>
+          <Link to={routes.signup} className={classes.menuItem}>
             <Button>Signup</Button>
           </Link>
         )}
@@ -55,18 +76,29 @@ const NavBar = ({ user, userId, logout }) => {
           </Typography>
         )}
 
+        {userId &&
+          pathname.startsWith(routes.projects) && (
+            <Link to={routes.addProject} className={classes.menuItem}>
+              <Button>Add</Button>
+            </Link>
+          )}
+
         {userId && (
-          <Link to={routes.projects}>
+          <Link to={routes.projects} className={classes.menuItem}>
             <Button>Projects</Button>
           </Link>
         )}
 
         {userId && (
-          <Link to={routes.dashboard}>
+          <Link to={routes.dashboard} className={classes.menuItem}>
             <Button>DashBoard</Button>
           </Link>
         )}
-        {userId && <Button onClick={logout}>Logout</Button>}
+        {userId && (
+          <Button onClick={logout} className={classes.menuItem}>
+            Logout
+          </Button>
+        )}
       </Toolbar>
     </StyledAppBar>
   )
@@ -81,4 +113,4 @@ const mapSateToProps = state => ({
 export default connect(
   mapSateToProps,
   { logout }
-)(NavBar)
+)(withStyles(styles)(NavBar))

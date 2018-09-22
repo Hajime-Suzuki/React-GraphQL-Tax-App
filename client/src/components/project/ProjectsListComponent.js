@@ -1,11 +1,10 @@
+import Icon from '@material-ui/core/Icon'
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import ProjectsList from './ProjectsList'
-import { getEntities } from '../../redux/modules/entities'
-import { MainWrapper } from '../../styles/sharedStyles'
-import Icon from '@material-ui/core/Icon'
 import styled from 'styled-components'
+import { getEntities } from '../../redux/modules/entities'
 import { theme } from '../../styles/theme'
+import ProjectsList from './ProjectsList'
 
 const LoadingIconComponent = styled(Icon)`
   && {
@@ -13,6 +12,7 @@ const LoadingIconComponent = styled(Icon)`
     color: ${theme.palette.secondary.main};
   }
 `
+
 const LoadingIcon = () => {
   return <LoadingIconComponent className="fa fa-spinner fa-spin" />
 }
@@ -20,13 +20,10 @@ const LoadingIcon = () => {
 class ProjectsListComponent extends Component {
   componentDidMount() {
     const { projects, getEntities, userId } = this.props
+    // when you reload on the single porject and come back here, you fetch all project data.
     if (!projects.length || projects.length === 1) getEntities(userId)
   }
   render() {
-    // const projects = this.props.projects.getProjects()
-    // console.log(projects)
-    // return 'projects'
-
     if (this.props.fetching) return <LoadingIcon />
     return (
       <Fragment>
