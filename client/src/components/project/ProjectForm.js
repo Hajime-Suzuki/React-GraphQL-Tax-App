@@ -1,10 +1,7 @@
 import Button from '@material-ui/core/Button'
-
 import React from 'react'
-import { Field, FieldArray, reduxForm } from 'redux-form'
-import { renderDropdown } from '../../libs/forms/renderDropdown'
+import { FieldArray, reduxForm } from 'redux-form'
 import { renderExpense } from '../../libs/forms/renderExpense'
-import { renderTextField } from '../../libs/forms/renderTextField'
 import { StyledGridFormItem } from '../../styles/forms'
 import { MainWrapper } from '../../styles/sharedStyles'
 import ContactPersonForm from './formConponents/ContactPersonForm'
