@@ -6,6 +6,7 @@ class Project extends Record(initialProjectData) {}
 const initialState = {
   _status: {
     fetching: false,
+    posting: false,
     message: null
   },
   data: Map({})
@@ -29,6 +30,7 @@ export class Projects extends Record(initialState) {
       s.set('data', fromJS(projects)).setIn(['_status', 'fetching'], false)
     })
   }
+
   fetchSingleProject() {
     return this.withMutations(s => {
       s.setIn(['_status', 'fetching'], true).setIn(['_status', 'message'], null)
@@ -42,8 +44,32 @@ export class Projects extends Record(initialState) {
       )
     })
   }
+  requestCreatePost() {
+    return this.withMutations(s => {
+      s.setIn(['_status', 'posting'], true).setIn(['_status', 'message'], null)
+    })
+  }
+  failCreatePost(message) {
+    return this.withMutations(s => {
+      s.setIn(['_status', 'posting'], false).setIn(
+        ['_status', 'message'],
+        message
+      )
+    })
+  }
+  addProject(data) {
+    return this.withMutaions(s => {
+      s.setIn(['_status', 'posting'], false).setIn(['_status', 'message'], null)
+      //add  data
+    })
+  }
+
   setSingleProject(data) {
-    return this.mergeIn(['data'], fromJS({ [data.id]: data }))
+    return this.withMutations(s => {
+      s.mergeIn(['data'], fromJS({ [data.id]: data }))
+        .setIn(['_status', 'fetching'], false)
+        .setIn(['_status', 'message'], null)
+    })
   }
   getProjects() {
     const projects = this.data

@@ -1,34 +1,36 @@
 import React, { Component } from 'react'
-import AddProjectForm from './AddProjcetForm'
+import ProjectForm from './ProjectForm'
+import { createNewProject } from '../../redux/modules/entities/project'
+import { connect } from 'react-redux'
 
 class AddProjectFormContainer extends Component {
-  state = {
-    name: null,
-    rowPrice: null,
-    location: {
-      city: null,
-      streetAddress: null
-    },
-    status: null,
-    link: null,
-    date: null,
-    taxRate: null,
-    invoiceNum: null,
-    contact: {
-      name: null,
-      email: null,
-      phone: null
-    },
-    expense: []
-  }
+  // state = {
+  //   name: null,
+  //   rowPrice: null,
+  //   location: {
+  //     city: null,
+  //     streetAddress: null
+  //   },
+  //   status: null,
+  //   link: null,
+  //   date: null,
+  //   taxRate: null,
+  //   invoiceNum: null,
+  //   contact: {
+  //     name: null,
+  //     email: null,
+  //     phone: null
+  //   },
+  //   expense: []
+  // }
 
   handleSubmit = values => {
-    console.log(values)
+    this.props.createNewProject(values)
   }
 
   render() {
     return (
-      <AddProjectForm
+      <ProjectForm
         onSubmit={this.handleSubmit}
         handleChange={this.handleChange}
       />
@@ -36,4 +38,10 @@ class AddProjectFormContainer extends Component {
   }
 }
 
-export default AddProjectFormContainer
+const mapSateToProps = state => ({
+  posting: state.entities.projects._status.posting
+})
+export default connect(
+  mapSateToProps,
+  { createNewProject }
+)(AddProjectFormContainer)
