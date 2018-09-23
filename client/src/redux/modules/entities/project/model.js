@@ -57,10 +57,11 @@ export class Projects extends Record(initialState) {
       )
     })
   }
-  addProject(data) {
-    return this.withMutaions(s => {
-      s.setIn(['_status', 'posting'], false).setIn(['_status', 'message'], null)
-      //add  data
+  successCreatePost(data) {
+    return this.withMutations(s => {
+      s.setIn(['_status', 'posting'], false)
+        .setIn(['_status', 'message'], null)
+        .mergeIn(['data'], fromJS({ [data.id]: data }))
     })
   }
 
