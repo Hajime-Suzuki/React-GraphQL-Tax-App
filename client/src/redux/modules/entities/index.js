@@ -18,7 +18,6 @@ export const getEntities = () => async (dispatch, getState) => {
     dispatch({ type: FETCH_ENTITIES_REQUEST })
     const data = await getEntitiesRequest(getState().user.getId())
     const normalized = normalize(data.user, userSchema)
-    // console.log(normalized)
 
     dispatch({ type: FETCH_ENTITIES_SUCCESS, payload: normalized })
   } catch (e) {
