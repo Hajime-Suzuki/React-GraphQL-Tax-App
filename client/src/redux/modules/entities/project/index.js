@@ -1,10 +1,14 @@
 import { FETCH_ENTITIES_SUCCESS } from '..'
 import { Projects } from './model'
-import { getSingleUserRequest } from '../../../api'
+import { getSingleUserRequest, API_createNewProject } from '../../../api'
 
 const FETCH_SINGLE_REQUEST = 'entities/project/FETCH_SINGLE_REQUEST'
 const FETCH_SINGLE_FAILED = 'entities/project/FETCH_SINGLE_FAILED'
 const FETCH_SINGLE_SUCCESS = 'entities/project/FETCH_SINGLE_SUCCESS'
+
+const CREATE_PROJECT_REQUEST = 'entities/project/CREATE_PROJECT_REQUEST'
+const CREATE_PROJECT_FAILED = 'entities/project/CREATE_PROJECT_FAILED'
+const CREATE_PROJECT_SUCCESS = 'entities/project/CREATE_PROJECT_SUCCESS'
 
 export const getSingleProject = id => async dispatch => {
   try {
@@ -20,6 +24,18 @@ export const getSingleProject = id => async dispatch => {
     dispatch({ type: FETCH_SINGLE_FAILED, payload: message })
   }
 }
+
+export const createNewProject = data => async dispatch => {
+  try {
+    dispatch({ type: CREATE_PROJECT_REQUEST })
+    const project = await API_createNewProject(data)
+
+    console.log(project)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 const reducer = (state = new Projects(), { type, payload } = {}) => {
   switch (type) {
     case FETCH_ENTITIES_SUCCESS:
@@ -30,6 +46,14 @@ const reducer = (state = new Projects(), { type, payload } = {}) => {
       return state.failSingleProject(payload)
     case FETCH_SINGLE_SUCCESS:
       return state.setSingleProject(payload)
+
+    case CREATE_PROJECT_REQUEST:
+      return state.requestCreatePost()
+    case CREATE_PROJECT_FAILED:
+      return state.failCreatePost(payload)
+    case CREATE_PROJECT_SUCCESS:
+      return state.successCreatePost(payload)
+
     default:
       return state
   }

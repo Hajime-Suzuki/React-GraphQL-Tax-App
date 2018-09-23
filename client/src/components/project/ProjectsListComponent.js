@@ -1,21 +1,8 @@
-import Icon from '@material-ui/core/Icon'
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import { getEntities } from '../../redux/modules/entities'
-import { theme } from '../../styles/theme'
+import { LoadingIcon } from '../UI/LoadingIcon'
 import ProjectsList from './ProjectsList'
-
-const LoadingIconComponent = styled(Icon)`
-  && {
-    font-size: 70px;
-    color: ${theme.palette.secondary.main};
-  }
-`
-
-const LoadingIcon = () => {
-  return <LoadingIconComponent className="fa fa-spinner fa-spin" />
-}
 
 class ProjectsListComponent extends Component {
   componentDidMount() {
