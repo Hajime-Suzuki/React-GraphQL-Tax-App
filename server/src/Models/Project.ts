@@ -1,56 +1,89 @@
 import { Document, model, Model, Schema } from 'mongoose'
+import { IContactPerson } from './ContactPerson'
 import { IUser } from './User'
 
-export interface IProject extends Document {
+export interface IExpense {
   name: string
-  date: Date
-  taxRate?: [0, 6, 21]
-  status?: null | 'invoice sent' | 'paid'
-  user?: IUser
-  rowPrice: number
-  inVoiceDate: number
-  referenceNumber: string
-  contactPerson: IUser
+  price: number
+  taxRate: number
 }
 
+export interface IProject extends Document {
+  invoiceNumber: string
+  inVoiceDate?: Date
+  name: string
+  rowPrice: number
+  date?: Date
+  streetAddress?: string
+  city?: string
+  taxRate: [0, 6, 21]
+  link?: string
+  status?: 'none' | 'invoice' | 'paid'
+  contactPerson?: IContactPerson
+  user: IUser
+  expenses: [IExpense]
+}
+
+const expenseSchema: Schema = new Schema({
+  name: {
+    type: String
+  },
+  price: {
+    type: Number
+  },
+  taxRate: {
+    type: Number
+  }
+})
+
 const projectSchema: Schema = new Schema({
+  invoiceNumber: {
+    type: String,
+    required: true
+  },
+  invoiceDate: {
+    type: Date
+  },
   name: {
     type: String,
+    required: true
+  },
+  rowPrice: {
+    // need validation. 0 || 6 || 21
+    type: Number,
     required: true
   },
   date: {
     type: Date
   },
-  place: {
+  streetAddress: {
+    type: String
+  },
+  city: {
     type: String
   },
   taxRate: {
     type: Number,
     default: 21
   },
-  rowPrice: {
-    type: Number,
-    required: true
+  link: {
+    type: String
   },
   status: {
     type: String,
-    enum: [null, 'invoice sent', 'paid'],
+    enum: ['none', 'invoice sent', 'paid'],
     default: null
   },
-  inVoiceDate: {
-    type: Date
-  },
-  referenceNumber: {
-    type: String
-  },
+  // expenses: ,
   contactPerson: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Contact-Person'
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  expenses: [expenseSchema]
 })
 
 projectSchema.set('toJSON', {

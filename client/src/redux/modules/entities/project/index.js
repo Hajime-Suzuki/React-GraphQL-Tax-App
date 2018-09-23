@@ -27,12 +27,14 @@ export const getSingleProject = id => async dispatch => {
 
 export const createNewProject = data => async dispatch => {
   try {
+    data.status = data.status || 'none'
+
     dispatch({ type: CREATE_PROJECT_REQUEST })
     const project = await API_createNewProject(data)
-
-    console.log(project)
+    dispatch({ type: CREATE_PROJECT_SUCCESS, payload: project })
   } catch (e) {
     console.log(e)
+    dispatch({ type: CREATE_PROJECT_FAILED, payload: e.response.body })
   }
 }
 
