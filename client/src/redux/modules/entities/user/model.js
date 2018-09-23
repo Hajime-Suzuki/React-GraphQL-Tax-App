@@ -1,4 +1,4 @@
-import { Record, fromJS, Map } from 'immutable'
+import { Record } from 'immutable'
 
 let initialState = {
   id: null,
@@ -14,10 +14,6 @@ class User extends Record(initialState) {
     const userId = data.result
     const userData = data.entities.user[userId]
     return new User(userData)
-  }
-  test() {
-    console.log('usertest')
-    return this.set('email', 'email!!')
   }
 }
 

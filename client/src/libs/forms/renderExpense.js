@@ -36,7 +36,7 @@ export const renderExpense = ({ fields }) => {
 
             <Field
               component={renderDropdown}
-              name={`${expense}.rate`}
+              name={`${expense}.taxRate`}
               label="Rate"
             >
               <MenuItem value="0">0%</MenuItem>

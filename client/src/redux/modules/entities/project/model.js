@@ -1,7 +1,5 @@
-import { Record, fromJS, Map, List } from 'immutable'
 import { format } from 'date-fns'
-
-class Project extends Record(initialProjectData) {}
+import { fromJS, Map, Record } from 'immutable'
 
 const initialState = {
   _status: {
@@ -10,14 +8,6 @@ const initialState = {
     message: null
   },
   data: Map({})
-}
-
-const initialProjectData = {
-  id: null,
-  name: null,
-  rowPrice: null,
-  status: null,
-  taxRate: null
 }
 
 export class Projects extends Record(initialState) {
@@ -57,10 +47,11 @@ export class Projects extends Record(initialState) {
       )
     })
   }
-  addProject(data) {
-    return this.withMutaions(s => {
-      s.setIn(['_status', 'posting'], false).setIn(['_status', 'message'], null)
-      //add  data
+  successCreatePost(data) {
+    return this.withMutations(s => {
+      s.setIn(['_status', 'posting'], false)
+        .setIn(['_status', 'message'], null)
+        .mergeIn(['data'], fromJS({ [data.id]: data }))
     })
   }
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import ProjectForm from './ProjectForm'
 import { createNewProject } from '../../redux/modules/entities/project'
 import { connect } from 'react-redux'
+import { routes } from '../../routes/constants'
+import { Redirect } from 'react-router-dom'
 
 class AddProjectFormContainer extends Component {
   // state = {
@@ -29,6 +31,12 @@ class AddProjectFormContainer extends Component {
   }
 
   render() {
+    const { posting, message } = this.props.status
+    // if there is no error message and posting (updated successfully), redirect to project component
+    if (!posting && message === null) {
+      return <Redirect to={routes.projects} />
+    }
+
     return (
       <ProjectForm
         onSubmit={this.handleSubmit}
@@ -39,7 +47,7 @@ class AddProjectFormContainer extends Component {
 }
 
 const mapSateToProps = state => ({
-  posting: state.entities.projects._status.posting
+  status: state.entities.projects._status
 })
 export default connect(
   mapSateToProps,

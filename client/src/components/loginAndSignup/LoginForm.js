@@ -1,7 +1,6 @@
+import Button from '@material-ui/core/Button'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import { renderTextField } from '../../libs/forms/renderTextField'
 import { StyledGridFormItem } from '../../styles/forms'
 
