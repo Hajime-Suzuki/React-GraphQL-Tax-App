@@ -28,14 +28,12 @@ export const getEntitiesRequest = async userId =>
     .get(`/${userId}`, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
 
-export const getSingleUserRequest = async projectId => {
-  return projectAxios
+export const getSingleUserRequest = async projectId =>
+  projectAxios
     .get(`/${projectId}`, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
-}
 
-export const API_createNewProject = data => {
+export const API_createNewProject = data =>
   projectAxios
     .post('/', data, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
-}
