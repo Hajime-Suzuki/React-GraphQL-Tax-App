@@ -34,7 +34,6 @@ export const createNewProject = data => async dispatch => {
     dispatch({ type: CREATE_PROJECT_SUCCESS, payload: project })
   } catch (e) {
     console.log(e)
-
     dispatch({ type: CREATE_PROJECT_FAILED, payload: e.response.body })
   }
 }

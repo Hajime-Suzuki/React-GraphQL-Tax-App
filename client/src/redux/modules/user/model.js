@@ -1,7 +1,6 @@
 import { Record } from 'immutable'
 import PropTypes from 'prop-types'
 import { decodeJwt } from '../../../libs/jwt'
-import { createSelector } from 'reselect'
 
 const token = localStorage.getItem('jwt')
 const userId = token ? decodeJwt(token).id : null
