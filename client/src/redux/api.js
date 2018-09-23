@@ -33,3 +33,9 @@ export const getSingleUserRequest = async projectId => {
     .get(`/${projectId}`, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
 }
+
+export const API_createNewProject = data => {
+  projectAxios
+    .post('/', data, { headers: { Authorization: getJwt() } })
+    .then(({ data }) => data)
+}

@@ -6,7 +6,7 @@ export const renderTextField = ({
   meta: { touched, error },
   ...custom
 }) => (
-  <Grid item className="item">
+  <Grid item className="item" xs={11}>
     <TextField {...input} {...custom} />
   </Grid>
 )
