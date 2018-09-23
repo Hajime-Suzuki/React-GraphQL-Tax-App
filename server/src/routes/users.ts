@@ -16,7 +16,15 @@ usersRoutes.post('/', async ctx => {
 })
 
 usersRoutes.get('/:id', authMiddleware, async ctx => {
-  const user = await User.findById(ctx.params.id).populate('projects')
+  const user = await User.findById(ctx.params.id).populate({
+    path: 'projects',
+    options: { sort: { date: -1 } }
+  })
+
+  user!.projects.forEach(v => console.log(v.date))
+
+  // console.log(JSON.stringify(user!.projects, null, 2))
+
   if (!user) return ctx.throw(404, 'user not found')
 
   ctx.status = 200
