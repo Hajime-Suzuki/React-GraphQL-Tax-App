@@ -1,18 +1,8 @@
-import React from 'react'
+import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
-import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
-import { FormControl, MenuItem } from '@material-ui/core'
-
-// import {
-//   Checkbox,
-//   RadioGroup,
-//   Select,
-//   TextField,
-//   Switch,
-//   FormControlLabel
-// } from 'redux-form-material-ui'
-// const value = 100
+import Select from '@material-ui/core/Select'
+import React from 'react'
 
 export const renderDropdown = ({
   input,
@@ -22,7 +12,7 @@ export const renderDropdown = ({
   ...custom
 }) => {
   return (
-    <Grid item className="item">
+    <Grid item className="item" xs={11}>
       <FormControl className={custom.className}>
         <InputLabel htmlFor={custom.className}>{label}</InputLabel>
         <Select {...input} {...custom} children={children} />
