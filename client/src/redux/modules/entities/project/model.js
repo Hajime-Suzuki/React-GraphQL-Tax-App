@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { fromJS, Map, Record } from 'immutable'
+import { fromJS, Map, Record, OrderedMap } from 'immutable'
 
 const initialState = {
   _status: {
@@ -13,11 +13,22 @@ const initialState = {
 export class Projects extends Record(initialState) {
   setProjects(data) {
     const { projects } = data.entities
-    Object.values(projects).forEach(d => {
-      d.date = format(d.date, 'YYYY-MM-DD')
-    })
+
+    const immutableProjects = Object.keys(projects).reduce((obj, id) => {
+      const { date } = projects[id]
+      projects[id].date = date && format(date, 'YYYY-MM-DD')
+
+      return {
+        ...obj,
+        [id]: Map(projects[id])
+      }
+    }, {})
+
     return this.withMutations(s => {
-      s.set('data', fromJS(projects)).setIn(['_status', 'fetching'], false)
+      s.set('data', OrderedMap(immutableProjects)).setIn(
+        ['_status', 'fetching'],
+        false
+      )
     })
   }
 

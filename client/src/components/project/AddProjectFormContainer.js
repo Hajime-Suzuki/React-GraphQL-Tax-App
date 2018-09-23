@@ -30,13 +30,16 @@ class AddProjectFormContainer extends Component {
     this.props.createNewProject(values)
   }
 
-  render() {
+  componentDidUpdate() {
     const { posting, message } = this.props.status
+
     // if there is no error message and posting (updated successfully), redirect to project component
     if (!posting && message === null) {
-      return <Redirect to={routes.projects} />
+      this.props.history.push(routes.projects)
     }
+  }
 
+  render() {
     return (
       <ProjectForm
         onSubmit={this.handleSubmit}
