@@ -40,5 +40,5 @@ export const API_createNewProject = data =>
 
 export const API_updateStatus = (id, data) =>
   projectAxios
-    .post(`/status/${id}`, data, { headers: { Authorization: getJwt() } })
+    .put(`/${id}/status`, data, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
