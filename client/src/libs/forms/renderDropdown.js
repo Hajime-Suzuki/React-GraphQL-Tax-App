@@ -8,14 +8,20 @@ export const renderDropdown = ({
   input,
   label,
   children,
-  meta: { touched, error },
+  meta: { touched, error, dirty },
   ...custom
 }) => {
+  const defaultValue = custom.default
   return (
     <Grid item className="item" xs={11}>
       <FormControl className={custom.className}>
         <InputLabel htmlFor={custom.className}>{label}</InputLabel>
-        <Select {...input} {...custom} children={children} />
+        <Select
+          {...input}
+          {...custom}
+          children={children}
+          value={defaultValue && !dirty ? defaultValue : input.value}
+        />
       </FormControl>
     </Grid>
   )

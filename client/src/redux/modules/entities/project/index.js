@@ -1,6 +1,10 @@
 import { FETCH_ENTITIES_SUCCESS } from '..'
 import { Projects } from './model'
-import { getSingleUserRequest, API_createNewProject } from '../../../api'
+import {
+  getSingleUserRequest,
+  API_createNewProject,
+  API_updateStatus
+} from '../../../api'
 
 const FETCH_SINGLE_REQUEST = 'entities/project/FETCH_SINGLE_REQUEST'
 const FETCH_SINGLE_FAILED = 'entities/project/FETCH_SINGLE_FAILED'
@@ -9,6 +13,10 @@ const FETCH_SINGLE_SUCCESS = 'entities/project/FETCH_SINGLE_SUCCESS'
 const CREATE_PROJECT_REQUEST = 'entities/project/CREATE_PROJECT_REQUEST'
 const CREATE_PROJECT_FAILED = 'entities/project/CREATE_PROJECT_FAILED'
 const CREATE_PROJECT_SUCCESS = 'entities/project/CREATE_PROJECT_SUCCESS'
+
+const UPDATE_STATUS_REQUEST = 'entities/project/UPDATE_STATUS_REQUEST'
+const UPDATE_STATUS_FAILED = 'entities/project/UPDATE_STATUS_FAILED'
+const UPDATE_STATUS_SUCCESS = 'entities/project/UPDATE_STATUS_SUCCESS'
 
 export const getSingleProject = id => async dispatch => {
   try {
@@ -38,6 +46,16 @@ export const createNewProject = data => async dispatch => {
   }
 }
 
+export const updateStaus = (projectId, data) => async dispatch => {
+  try {
+    console.log(projectId, data)
+    dispatch({ type: UPDATE_STATUS_REQUEST })
+    const updated = await API_updateStatus(projectId, data)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 const reducer = (state = new Projects(), { type, payload } = {}) => {
   switch (type) {
     case FETCH_ENTITIES_SUCCESS:
@@ -55,6 +73,13 @@ const reducer = (state = new Projects(), { type, payload } = {}) => {
       return state.failCreatePost(payload)
     case CREATE_PROJECT_SUCCESS:
       return state.successCreatePost(payload)
+
+    case UPDATE_STATUS_REQUEST:
+      return state
+    case UPDATE_STATUS_FAILED:
+      return state
+    case UPDATE_STATUS_SUCCESS:
+      return state
 
     default:
       return state
