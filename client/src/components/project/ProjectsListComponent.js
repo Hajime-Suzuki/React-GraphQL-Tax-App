@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { getEntities } from '../../redux/modules/entities'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import ProjectsList from './ProjectsList'
+import { updateStaus } from '../../redux/modules/entities/project'
 
 class ProjectsListComponent extends Component {
   componentDidMount() {
@@ -10,11 +11,18 @@ class ProjectsListComponent extends Component {
     // when you reload on the single porject and come back here, you fetch all project data.
     if (!projects.length || projects.length === 1) getEntities(userId)
   }
+
+  handleChange = (event, newValue, previousValue, projectId) => {
+    this.props.updateStaus(projectId, newValue)
+  }
   render() {
     if (this.props.fetching) return <LoadingIcon />
     return (
       <Fragment>
-        <ProjectsList projects={this.props.projects} />
+        <ProjectsList
+          projects={this.props.projects}
+          handleChange={this.handleChange}
+        />
       </Fragment>
     )
   }
@@ -28,5 +36,5 @@ const mapSateToProps = state => ({
 
 export default connect(
   mapSateToProps,
-  { getEntities }
+  { getEntities, updateStaus }
 )(ProjectsListComponent)

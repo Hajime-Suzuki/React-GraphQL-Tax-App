@@ -37,3 +37,8 @@ export const API_createNewProject = data =>
   projectAxios
     .post('/', data, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
+
+export const API_updateStatus = (id, data) =>
+  projectAxios
+    .post(`/status/${id}`, data, { headers: { Authorization: getJwt() } })
+    .then(({ data }) => data)
