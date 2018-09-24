@@ -16,8 +16,7 @@ As a freelancer, it is annoying to keep track on expense, income, who paid or no
 
 To make Redux more readable and concise, I used some helpful libraries.
 
-- [Normalizr](https://github.com/paularmstrong/normalizr)
-  &nbsp;
+- [Normalizr](https://github.com/paularmstrong/normalizr)<br/>
   APIs sometimes return nested objects, which asks you extra steps to copy them with the spread oerator, `Array.concat`, or `Object.assign`. With Normalizr, your data look like a relational database.
   &nbsp;
   A tipical nested data
@@ -68,10 +67,10 @@ To make Redux more readable and concise, I used some helpful libraries.
   ```
 
   Although this already looks much more organized, `articles, users, comments` are still objects. To make this even better, I use Immutable-js
-  &nbsp;
+ <br/>
 
 - [Immutable-js](https://github.com/facebook/immutable-js)
-  &nbsp;
+  <br/>
   Immutable returns a new copy of object. For instance `Immutable.List().push()` returns a copy of List, and doesn't mutate the original List. This is very useful when dealing with nested objects.
   &nbsp;
 
