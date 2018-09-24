@@ -8,6 +8,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { StyledLink } from '../../styles/sharedStyles'
 import { routes } from '../../routes/constants'
+import { reduxForm, Field } from 'redux-form'
+import { renderDropdown } from '../../libs/forms/renderDropdown'
+import {
+  renderStateMenuItems,
+  StateMenuItems,
+  RenderStateMenuItems
+} from '../../libs/forms/renderStateMenuItem'
+import { Icon, IconButton, MenuItem } from '@material-ui/core'
 
 const StyledPaper = styled(Paper)`
   overflow: 'auto';
@@ -15,8 +23,28 @@ const StyledPaper = styled(Paper)`
   margin: auto;
 `
 
+const CustomTableRow = styled(TableRow)`
+  &&.table-item {
+    .edit-button {
+      opacity: 0;
+      margin-left: 1em;
+      transition: 0.3s;
+      .edit-icon {
+        font-size: 15px;
+      }
+    }
+    &:hover {
+      .edit-button {
+        opacity: 1;
+      }
+    }
+  }
+`
+
 const ProjectsList = props => {
-  const { projects } = props
+  const { projects, handleChange } = props
+  // console.log(this.props)
+
   return (
     <StyledPaper style={{ overflow: 'auto' }}>
       <Table>
@@ -30,9 +58,9 @@ const ProjectsList = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {projects.map(p => {
+          {projects.map((p, i) => {
             return (
-              <TableRow key={p.get('id')} hover>
+              <CustomTableRow key={p.get('id')} hover className="table-item">
                 <TableCell>
                   <StyledLink
                     to={routes.singleProject(p.get('id'))}
@@ -44,8 +72,21 @@ const ProjectsList = props => {
                 <TableCell>{p.get('date')}</TableCell>
                 <TableCell>{p.get('rowPrice')}</TableCell>
                 <TableCell>{p.get('location') || '-'}</TableCell>
-                <TableCell>{p.get('status') || 'N/A'}</TableCell>
-              </TableRow>
+                <TableCell>
+                  {/* {p.get('status') || 'N/A'}
+                  <IconButton className="edit-button">
+                    <Icon color="secondary" className="fas fa-pen edit-icon" />
+                  </IconButton> */}
+                  <Field
+                    component={renderDropdown}
+                    name={p.get('id')}
+                    default={p.get('status')}
+                    onChange={handleChange}
+                  >
+                    {renderStateMenuItems()}
+                  </Field>
+                </TableCell>
+              </CustomTableRow>
             )
           })}
         </TableBody>
@@ -54,4 +95,4 @@ const ProjectsList = props => {
   )
 }
 
-export default ProjectsList
+export default reduxForm({ form: 'status' })(ProjectsList)

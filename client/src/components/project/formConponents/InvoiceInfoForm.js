@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 import { Field } from 'redux-form'
 import { renderTextField } from '../../../libs/forms/renderTextField'
 import { renderDropdown } from '../../../libs/forms/renderDropdown'
+import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
 import MenuItem from '@material-ui/core/MenuItem'
 
 const InvoiceForm = props => {
@@ -43,9 +44,7 @@ const InvoiceForm = props => {
         label="Rate"
         onChange={handleChange}
       >
-        <MenuItem value="0">0%</MenuItem>
-        <MenuItem value="6">6%</MenuItem>
-        <MenuItem value="21">21%</MenuItem>
+        {renderStateMenuItems()}
       </Field>
       <Field
         component={renderTextField}
