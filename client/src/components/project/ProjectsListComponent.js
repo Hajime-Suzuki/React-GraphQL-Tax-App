@@ -15,8 +15,10 @@ class ProjectsListComponent extends Component {
   handleChange = (event, newValue, previousValue, projectId) => {
     this.props.updateStaus(projectId, newValue)
   }
+
   render() {
-    if (this.props.fetching) return <LoadingIcon />
+    const { entitiesFetching, fetching, posting } = this.props
+    if (entitiesFetching || fetching || posting) return <LoadingIcon />
     return (
       <Fragment>
         <ProjectsList
@@ -31,7 +33,9 @@ class ProjectsListComponent extends Component {
 const mapSateToProps = state => ({
   userId: state.user.userId,
   projects: state.entities.projects.getProjects(),
-  fetching: state.entities.projects._status.fetching
+  entitiesFetching: state.entities._status.fetching,
+  fetching: state.entities.projects._status.fetching,
+  posting: state.entities.projects._status.posting
 })
 
 export default connect(

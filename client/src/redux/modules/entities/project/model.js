@@ -45,6 +45,7 @@ export class Projects extends Record(initialState) {
       )
     })
   }
+
   requestCreatePost() {
     return this.withMutations(s => {
       s.setIn(['_status', 'posting'], true).setIn(['_status', 'message'], null)
@@ -63,6 +64,22 @@ export class Projects extends Record(initialState) {
       s.setIn(['_status', 'posting'], false)
         .setIn(['_status', 'message'], null)
         .mergeIn(['data'], fromJS({ [data.id]: data }))
+    })
+  }
+
+  // need to refactor. make api request method and turn fetching and posting into logind.
+
+  updateStatusRequest() {
+    return this.withMutations(s => {
+      s.setIn(['_status', 'posting'], true).setIn(['_status', 'message'], null)
+    })
+  }
+
+  updateStatusSuccess({ id, status }) {
+    return this.withMutations(s => {
+      s.setIn(['_status', 'posting'], false)
+        .setIn(['_status', 'message'], null)
+        .setIn(['data', id, 'status'], status)
     })
   }
 
