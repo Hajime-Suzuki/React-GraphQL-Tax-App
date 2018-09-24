@@ -14,7 +14,6 @@ const router = new Router({
 })
 
 router.get('/:id', authMiddleware, async ctx => {
-  console.log(ctx.params.id)
   const project = await Project.findById(ctx.params.id)
   if (!project) ctx.throw(404, 'project not found')
   ctx.body = { project }
@@ -24,10 +23,11 @@ router.post('/', authMiddleware, async ctx => {
   const jwtPayload: IJwtPayload = (ctx.req as any).user
   const { contactPerson: contactPersonData, ...data } = ctx.request
     .body as IProject
+
   const user = await User.findById(jwtPayload.id).populate('projects')
   if (!user) return ctx.throw(404, 'no user found')
 
-  const newProject = new Project(ctx.request.body)
+  const newProject = new Project(data)
   newProject.user = user._id
 
   if (contactPersonData) {
@@ -58,14 +58,25 @@ router.post('/', authMiddleware, async ctx => {
     { $push: { projects: newProject._id } }
   )
 
-  // const updated = await user.update({ $push: { projects: newProject._id } })
-
   console.log('update')
-  // console.log(d)
   const p = await Project.findById(newProject.id).populate(['contactPerson'])
 
   ctx.status = 201
   ctx.body = p
+})
+
+router.put('/:id/status', authMiddleware, async ctx => {
+  const projectId: string = ctx.params.id
+  const status: string = (ctx.request.body as any).status
+
+  const project = await Project.findByIdAndUpdate(
+    projectId,
+    { status },
+    { new: true }
+  )
+  console.log(project)
+
+  ctx.body = project
 })
 
 export default router
