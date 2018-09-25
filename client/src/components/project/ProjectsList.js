@@ -5,18 +5,13 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
+import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
-import { StyledLink } from '../../styles/sharedStyles'
-import { routes } from '../../routes/constants'
-import { reduxForm, Field } from 'redux-form'
 import { renderDropdown } from '../../libs/forms/renderDropdown'
-import {
-  renderStateMenuItems,
-  StateMenuItems,
-  RenderStateMenuItems
-} from '../../libs/forms/renderStateMenuItem'
+import { renderStateMenuItems } from '../../libs/forms/renderStateMenuItem'
+import { routes } from '../../routes/constants'
+import { StyledLink } from '../../styles/sharedStyles'
 import { LoadingIcon } from '../UI/LoadingIcon'
-import { Icon, IconButton, MenuItem } from '@material-ui/core'
 
 const StyledPaper = styled(Paper)`
   overflow: 'auto';

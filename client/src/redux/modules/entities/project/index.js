@@ -1,40 +1,30 @@
+import { reset } from 'redux-form'
 import { FETCH_ENTITIES_SUCCESS } from '..'
-import { Projects } from './model'
 import {
-  getSingleUserRequest,
   API_createNewProject,
-  API_updateStatus
+  API_updateStatus,
+  getSingleUserRequest
 } from '../../../api'
-
-const FETCH_SINGLE_REQUEST = 'entities/project/FETCH_SINGLE_REQUEST'
-const FETCH_SINGLE_FAILED = 'entities/project/FETCH_SINGLE_FAILED'
-const FETCH_SINGLE_SUCCESS = 'entities/project/FETCH_SINGLE_SUCCESS'
-
-const CREATE_PROJECT_REQUEST = 'entities/project/CREATE_PROJECT_REQUEST'
-const CREATE_PROJECT_FAILED = 'entities/project/CREATE_PROJECT_FAILED'
-const CREATE_PROJECT_SUCCESS = 'entities/project/CREATE_PROJECT_SUCCESS'
-
-const UPDATE_STATUS_REQUEST = 'entities/project/UPDATE_STATUS_REQUEST'
-const UPDATE_STATUS_FAILED = 'entities/project/UPDATE_STATUS_FAILED'
-const UPDATE_STATUS_SUCCESS = 'entities/project/UPDATE_STATUS_SUCCESS'
+import { Projects } from './model'
+import { extractErrorMessage } from '../../../../libs/error'
 
 const FETCH_REQUESET = 'entities/project/FETCH_REQUEST'
 const FETCH_FAILED = 'entities/project/FETCH_FAILED'
 const POST_REQUEST = 'entities/project/POST_REQUEST'
 const POST_FAILED = 'entities/project/POST_FAILED'
 
+const FETCH_SINGLE_SUCCESS = 'entities/project/FETCH_SINGLE_SUCCESS'
+const CREATE_PROJECT_SUCCESS = 'entities/project/CREATE_PROJECT_SUCCESS'
+const UPDATE_STATUS_SUCCESS = 'entities/project/UPDATE_STATUS_SUCCESS'
+
 export const getSingleProject = id => async dispatch => {
   try {
-    dispatch({ type: FETCH_SINGLE_REQUEST })
+    dispatch({ type: FETCH_REQUESET })
     const data = await getSingleUserRequest(id)
     dispatch({ type: FETCH_SINGLE_SUCCESS, payload: data.project })
   } catch (e) {
     console.log(e)
-    let message
-    if (e.response.status === 404) {
-      message = 'Not Found'
-    }
-    dispatch({ type: FETCH_FAILED, payload: message })
+    dispatch({ type: FETCH_FAILED, payload: extractErrorMessage(e) })
   }
 }
 
@@ -46,7 +36,7 @@ export const createNewProject = data => async dispatch => {
     dispatch({ type: CREATE_PROJECT_SUCCESS, payload: project })
   } catch (e) {
     console.log(e)
-    dispatch({ type: POST_FAILED, payload: e.response.body })
+    dispatch({ type: POST_FAILED, payload: extractErrorMessage(e) })
   }
 }
 
@@ -60,6 +50,11 @@ export const updateStaus = (projectId, data) => async dispatch => {
     })
   } catch (e) {
     console.log(e)
+    dispatch(reset('status'))
+    dispatch({
+      type: POST_FAILED,
+      payload: extractErrorMessage(e)
+    })
   }
 }
 
@@ -69,14 +64,14 @@ const reducer = (state = new Projects(), { type, payload } = {}) => {
       return state.setProjects(payload)
 
     case FETCH_REQUESET:
-      return state.fetchSingleProject()
+      return state.fetchRequest()
     case FETCH_FAILED:
       return state.fetchFail(payload)
     case FETCH_SINGLE_SUCCESS:
       return state.successSingleProject(payload)
 
     case POST_REQUEST:
-      return state.postItem(payload)
+      return state.postRequest(payload)
     case POST_FAILED:
       return state.postFail(payload)
 
