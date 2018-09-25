@@ -69,9 +69,12 @@ export class Projects extends Record(initialState) {
 
   // need to refactor. make api request method and turn fetching and posting into logind.
 
-  updateStatusRequest() {
+  updateStatusRequest(projectId) {
     return this.withMutations(s => {
-      s.setIn(['_status', 'posting'], true).setIn(['_status', 'message'], null)
+      s.setIn(['_status', 'posting'], projectId).setIn(
+        ['_status', 'message'],
+        null
+      )
     })
   }
 

@@ -74,8 +74,6 @@ router.put('/:id/status', authMiddleware, async ctx => {
     { status },
     { new: true }
   )
-  console.log(project)
-
   ctx.body = project
 })
 

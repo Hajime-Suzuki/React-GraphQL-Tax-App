@@ -15,6 +15,7 @@ import {
   StateMenuItems,
   RenderStateMenuItems
 } from '../../libs/forms/renderStateMenuItem'
+import { LoadingIcon } from '../UI/LoadingIcon'
 import { Icon, IconButton, MenuItem } from '@material-ui/core'
 
 const StyledPaper = styled(Paper)`
@@ -42,9 +43,7 @@ const CustomTableRow = styled(TableRow)`
 `
 
 const ProjectsList = props => {
-  const { projects, handleChange } = props
-  // console.log(this.props)
-
+  const { projects, handleChange, postingId } = props
   return (
     <StyledPaper style={{ overflow: 'auto' }}>
       <Table>
@@ -73,18 +72,18 @@ const ProjectsList = props => {
                 <TableCell>{p.get('rowPrice')}</TableCell>
                 <TableCell>{p.get('location') || '-'}</TableCell>
                 <TableCell>
-                  {/* {p.get('status') || 'N/A'}
-                  <IconButton className="edit-button">
-                    <Icon color="secondary" className="fas fa-pen edit-icon" />
-                  </IconButton> */}
-                  <Field
-                    component={renderDropdown}
-                    name={p.get('id')}
-                    default={p.get('status')}
-                    onChange={handleChange}
-                  >
-                    {renderStateMenuItems()}
-                  </Field>
+                  {postingId === p.get('id') ? (
+                    <LoadingIcon size="2em" />
+                  ) : (
+                    <Field
+                      component={renderDropdown}
+                      name={p.get('id')}
+                      default={p.get('status')}
+                      onChange={handleChange}
+                    >
+                      {renderStateMenuItems()}
+                    </Field>
+                  )}
                 </TableCell>
               </CustomTableRow>
             )
