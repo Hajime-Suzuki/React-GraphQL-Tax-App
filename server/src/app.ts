@@ -19,7 +19,7 @@ app.use(async (ctx, next) => {
     await next()
   } catch (e) {
     console.log(new Date())
-    console.log(e)
+    console.log(e.message)
     ctx.status = e.status || 500
     ctx.body = e.message
   }

@@ -5,17 +5,13 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
+import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
-import { StyledLink } from '../../styles/sharedStyles'
-import { routes } from '../../routes/constants'
-import { reduxForm, Field } from 'redux-form'
 import { renderDropdown } from '../../libs/forms/renderDropdown'
-import {
-  renderStateMenuItems,
-  StateMenuItems,
-  RenderStateMenuItems
-} from '../../libs/forms/renderStateMenuItem'
-import { Icon, IconButton, MenuItem } from '@material-ui/core'
+import { renderStateMenuItems } from '../../libs/forms/renderStateMenuItem'
+import { routes } from '../../routes/constants'
+import { StyledLink } from '../../styles/sharedStyles'
+import { LoadingIcon } from '../UI/LoadingIcon'
 
 const StyledPaper = styled(Paper)`
   overflow: 'auto';
@@ -42,9 +38,7 @@ const CustomTableRow = styled(TableRow)`
 `
 
 const ProjectsList = props => {
-  const { projects, handleChange } = props
-  // console.log(this.props)
-
+  const { projects, handleChange, postingId } = props
   return (
     <StyledPaper style={{ overflow: 'auto' }}>
       <Table>
@@ -73,18 +67,18 @@ const ProjectsList = props => {
                 <TableCell>{p.get('rowPrice')}</TableCell>
                 <TableCell>{p.get('location') || '-'}</TableCell>
                 <TableCell>
-                  {/* {p.get('status') || 'N/A'}
-                  <IconButton className="edit-button">
-                    <Icon color="secondary" className="fas fa-pen edit-icon" />
-                  </IconButton> */}
-                  <Field
-                    component={renderDropdown}
-                    name={p.get('id')}
-                    default={p.get('status')}
-                    onChange={handleChange}
-                  >
-                    {renderStateMenuItems()}
-                  </Field>
+                  {postingId === p.get('id') ? (
+                    <LoadingIcon size="2em" />
+                  ) : (
+                    <Field
+                      component={renderDropdown}
+                      name={p.get('id')}
+                      default={p.get('status')}
+                      onChange={handleChange}
+                    >
+                      {renderStateMenuItems()}
+                    </Field>
+                  )}
                 </TableCell>
               </CustomTableRow>
             )

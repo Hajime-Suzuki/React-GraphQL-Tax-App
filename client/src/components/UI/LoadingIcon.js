@@ -5,10 +5,10 @@ import { theme } from '../../styles/theme'
 
 const LoadingIconComponent = styled(Icon)`
   && {
-    font-size: 70px;
+    font-size: ${({ size }) => size || '70px'};
     color: ${theme.palette.secondary.main};
   }
 `
-export const LoadingIcon = () => {
-  return <LoadingIconComponent className="fa fa-spinner fa-spin" />
+export const LoadingIcon = ({ size }) => {
+  return <LoadingIconComponent className="fa fa-spinner fa-spin" size={size} />
 }

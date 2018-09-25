@@ -1,41 +1,49 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getEntities } from '../../redux/modules/entities'
-import { LoadingIcon } from '../UI/LoadingIcon'
-import ProjectsList from './ProjectsList'
 import { updateStaus } from '../../redux/modules/entities/project'
+import { LoadingIcon } from '../UI/LoadingIcon'
+import WithErrorMessage from '../UI/WithErrorMessage'
+import ProjectsList from './ProjectsList'
 
 class ProjectsListComponent extends Component {
   componentDidMount() {
-    const { projects, getEntities, userId } = this.props
+    const { projects, getEntities } = this.props
     // when you reload on the single porject and come back here, you fetch all project data.
-    if (!projects.length || projects.length === 1) getEntities(userId)
+    if (!projects.length || projects.length === 1) getEntities()
   }
 
-  handleChange = (event, newValue, previousValue, projectId) => {
+  handleChange = (e, newValue, previousValue, projectId) => {
     this.props.updateStaus(projectId, newValue)
   }
 
   render() {
-    const { entitiesFetching, fetching, posting } = this.props
-    if (entitiesFetching || fetching || posting) return <LoadingIcon />
+    const {
+      entitiesFetching,
+      postingId,
+      projects,
+      projectErrorMessage,
+      entitiesErrorMessage
+    } = this.props
+    if (entitiesFetching) return <LoadingIcon />
     return (
-      <Fragment>
+      <WithErrorMessage message={entitiesErrorMessage || projectErrorMessage}>
         <ProjectsList
-          projects={this.props.projects}
+          projects={projects}
           handleChange={this.handleChange}
+          postingId={postingId}
         />
-      </Fragment>
+      </WithErrorMessage>
     )
   }
 }
 
 const mapSateToProps = state => ({
-  userId: state.user.userId,
   projects: state.entities.projects.getProjects(),
   entitiesFetching: state.entities._status.fetching,
-  fetching: state.entities.projects._status.fetching,
-  posting: state.entities.projects._status.posting
+  entitiesErrorMessage: state.entities._status.message,
+  postingId: state.entities.projects._status.posting,
+  projectErrorMessage: state.entities.projects._status.message
 })
 
 export default connect(
