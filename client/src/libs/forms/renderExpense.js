@@ -8,35 +8,37 @@ import { Field } from 'redux-form'
 import { renderDropdown } from './renderDropdown'
 import { renderTextField } from './renderTextField'
 
-export const renderExpense = ({ fields }) => {
+export const renderExpenseAndIncome = ({ fields }) => {
+  const type = fields.name
+  const text = type === 'expenses' ? 'Expenses' : 'Incomes'
   return (
     <Grid item xs={11} container justify="center">
       <Grid item xs={11}>
-        <Typography variant="subheading">Expenses</Typography>
+        <Typography variant="subheading">{text}</Typography>
       </Grid>
-      {fields.map((expense, i) => {
+      {fields.map((item, i) => {
         return (
           <Grid key={i} item xs={11} container justify="center">
             <Grid item xs={11}>
-              <Typography variant="subheading">{`Expense ${i + 1}`}</Typography>
+              <Typography variant="subheading">{`${text} ${i + 1}`}</Typography>
               <IconButton onClick={() => fields.remove(i)}>
                 <Icon className="far fa-trash-alt" />
               </IconButton>
             </Grid>
             <Field
-              name={`${expense}.name`}
+              name={`${item}.name`}
               label="Name"
               component={renderTextField}
             />
             <Field
-              name={`${expense}.price`}
-              label="Price"
+              name={`${item}.price`}
+              label="Price(excl)"
               component={renderTextField}
             />
 
             <Field
               component={renderDropdown}
-              name={`${expense}.taxRate`}
+              name={`${item}.taxRate`}
               label="Rate"
             >
               <MenuItem value="0">0%</MenuItem>

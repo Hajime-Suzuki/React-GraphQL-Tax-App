@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button'
 import React from 'react'
 import { FieldArray, reduxForm } from 'redux-form'
-import { renderExpense } from '../../libs/forms/renderExpense'
+import { renderExpenseAndIncome } from '../../libs/forms/renderExpense'
 import { StyledGridFormItem } from '../../styles/forms'
 import { MainWrapper } from '../../styles/sharedStyles'
 import ContactPersonForm from './formConponents/ContactPersonForm'
@@ -13,7 +13,7 @@ const AddProjectForm = props => {
     <form onSubmit={handleSubmit}>
       <StyledGridFormItem container justify="center">
         <InvoiceForm handleChange={handleChange} />
-        <FieldArray name="expenses" component={renderExpense} />
+        <FieldArray name="expenses" component={renderExpenseAndIncome} />
         <ContactPersonForm handleChange={handleChange} />
       </StyledGridFormItem>
       <MainWrapper>

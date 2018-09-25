@@ -14,7 +14,9 @@ const router = new Router({
 })
 
 router.get('/:id', authMiddleware, async ctx => {
-  const project = await Project.findById(ctx.params.id)
+  const project = await Project.findById(ctx.params.id).populate(
+    'contactPerson'
+  )
   if (!project) ctx.throw(404, 'project not found')
   ctx.body = { project }
 })
