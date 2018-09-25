@@ -68,14 +68,11 @@ router.post('/', authMiddleware, async ctx => {
 router.put('/:id/status', authMiddleware, async ctx => {
   const projectId: string = ctx.params.id
   const status: string = (ctx.request.body as any).status
-
   const project = await Project.findByIdAndUpdate(
     projectId,
     { status },
     { new: true }
   )
-  console.log(project)
-
   ctx.body = project
 })
 

@@ -3,6 +3,7 @@ import userReducer from './user'
 import projectReducer from './project'
 import { getEntitiesRequest } from '../../api'
 import { normalize, schema } from 'normalizr'
+import { extractErrorMessage } from '../../../libs/error'
 
 export const FETCH_ENTITIES_REQUEST = 'FETCH_ENTITIES_REQUEST'
 export const FETCH_ENTITIES_FAILED = 'FETCH_ENTITIES_FAILED'
@@ -22,16 +23,11 @@ export const getEntities = () => async (dispatch, getState) => {
     dispatch({ type: FETCH_ENTITIES_SUCCESS, payload: normalized })
   } catch (e) {
     console.log(e)
-
     dispatch({
       type: FETCH_ENTITIES_FAILED,
-      payload: (e.response && e.response.data) || 'unknown error'
+      payload: extractErrorMessage(e)
     })
   }
-}
-
-export const test = () => {
-  return { type: 'test' }
 }
 
 const initialState = { fetching: false, message: null }

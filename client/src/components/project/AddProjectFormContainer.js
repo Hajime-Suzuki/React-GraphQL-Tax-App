@@ -1,31 +1,10 @@
 import React, { Component } from 'react'
-import ProjectForm from './ProjectForm'
-import { createNewProject } from '../../redux/modules/entities/project'
 import { connect } from 'react-redux'
+import { createNewProject } from '../../redux/modules/entities/project'
 import { routes } from '../../routes/constants'
-import { Redirect } from 'react-router-dom'
+import ProjectForm from './ProjectForm'
 
 class AddProjectFormContainer extends Component {
-  // state = {
-  //   name: null,
-  //   rowPrice: null,
-  //   location: {
-  //     city: null,
-  //     streetAddress: null
-  //   },
-  //   status: null,
-  //   link: null,
-  //   date: null,
-  //   taxRate: null,
-  //   invoiceNum: null,
-  //   contact: {
-  //     name: null,
-  //     email: null,
-  //     phone: null
-  //   },
-  //   expense: []
-  // }
-
   handleSubmit = values => {
     this.props.createNewProject(values)
   }
