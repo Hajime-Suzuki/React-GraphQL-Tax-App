@@ -1,4 +1,5 @@
 import * as Router from 'koa-router'
+import { Project } from '../Models/Project'
 import { IUser, User } from '../Models/User'
 import { authMiddleware } from '../passport/passport'
 

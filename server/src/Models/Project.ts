@@ -22,6 +22,7 @@ export interface IProject extends Document {
   contactPerson?: IContactPerson
   user: IUser
   expenses: [IExpense]
+  incomes: [IExpense]
 }
 
 const expenseSchema: Schema = new Schema({
@@ -71,7 +72,7 @@ const projectSchema: Schema = new Schema({
   },
   status: {
     type: String,
-    enum: ['none', 'invoice sent', 'paid'],
+    enum: ['none', 'invoice', 'paid'],
     default: null
   },
   // expenses: ,
@@ -83,7 +84,8 @@ const projectSchema: Schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  expenses: [expenseSchema]
+  expenses: [expenseSchema],
+  incomes: [expenseSchema]
 })
 
 projectSchema.set('toJSON', {
