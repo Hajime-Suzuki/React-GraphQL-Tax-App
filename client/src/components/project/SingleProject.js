@@ -23,7 +23,10 @@ const ProjectDetails = styled(Grid)`
 const SingleProject = ({ project: p }) => {
   if (!p) return null
   const c = p.get('contactPerson')
-  console.log(c)
+  const totalIncomeExcl = calcTotalvalueWithoutTax(p.get('incomes'))
+  const totalExpensesExcl = calcTotalvalueWithoutTax(p.get('expenses'))
+  const totalIncomeTax = calcOnlyTax(p.get('incomes'))
+  const totalExpenseTax = calcOnlyTax(p.get('expenses'))
   return (
     <div>
       <ProjectDetails container>
@@ -51,24 +54,19 @@ const SingleProject = ({ project: p }) => {
         </Grid>
         <hr style={{ width: '100%' }} />
         <Grid item xs={11} sm={6}>
-          <Typography>
-            Price(Excl.): €{calcTotalvalueWithoutTax(p.get('incomes'))}
-          </Typography>
+          <Typography>Price(Excl.): €{totalIncomeExcl}</Typography>
           <Typography>
             Price(Incl.): €
-            {calcTotalvalueWithoutTax(p.get('incomes')) +
-              calcOnlyTax(p.get('incomes'))}
+            {Math.round((totalIncomeExcl + totalIncomeTax) * 100) / 100}
           </Typography>
           <Typography>
-            Tax: €
-            {calcOnlyTax(p.get('incomes')) - calcOnlyTax(p.get('expenses'))}
+            Tax: €{Math.round((totalIncomeTax - totalExpenseTax) * 100) / 100}
           </Typography>
-          <Typography>
-            Expense: €{calcTotalvalueWithoutTax(p.get('expenses'))}
-          </Typography>
+          <Typography>Expense: €{totalExpensesExcl}</Typography>
         </Grid>
         <Grid item xs={11} sm={6}>
-          {c && (
+          <Typography>Contact Person</Typography>
+          {c ? (
             <Fragment>
               <Typography>
                 <a href={c.get('link')} target="_blank">
@@ -78,17 +76,19 @@ const SingleProject = ({ project: p }) => {
               <Typography>{c.get('email')}</Typography>
               <Typography>{c.get('phone')}</Typography>
             </Fragment>
+          ) : (
+            '-'
           )}
         </Grid>
         <hr style={{ width: '100%' }} />
         <Grid container item xs={11} justify="space-evenly">
           <Grid item sm={5}>
-            <Typography variant="title">Expense</Typography>
-            <ExpenseIncomeTable items={p.get('expenses')} />
-          </Grid>
-          <Grid item sm={5}>
             <Typography variant="title">Income</Typography>
             <ExpenseIncomeTable items={p.get('incomes')} />
+          </Grid>
+          <Grid item sm={5}>
+            <Typography variant="title">Expense</Typography>
+            <ExpenseIncomeTable items={p.get('expenses')} />
           </Grid>
         </Grid>
       </ProjectDetails>

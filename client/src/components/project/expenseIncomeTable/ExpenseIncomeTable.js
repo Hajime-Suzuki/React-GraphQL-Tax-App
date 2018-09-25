@@ -17,7 +17,7 @@ const renderItems = items => {
       <TableRow key={i}>
         <TableCell>{item.get('name')}</TableCell>
         <TableCell>{item.get('price')}</TableCell>
-        <TableCell>{item.get('taxRate')}</TableCell>
+        <TableCell>{item.get('taxRate')}%</TableCell>
       </TableRow>
     )
   })

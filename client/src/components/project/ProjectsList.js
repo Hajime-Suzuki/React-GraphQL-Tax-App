@@ -12,6 +12,7 @@ import { renderStateMenuItems } from '../../libs/forms/renderStateMenuItem'
 import { routes } from '../../routes/constants'
 import { StyledLink } from '../../styles/sharedStyles'
 import { LoadingIcon } from '../UI/LoadingIcon'
+import { calcTotalvalueWithoutTax } from '../../libs/singleProject/totalValues'
 
 const StyledPaper = styled(Paper)`
   overflow: 'auto';
@@ -64,7 +65,9 @@ const ProjectsList = props => {
                   </StyledLink>
                 </TableCell>
                 <TableCell>{p.get('date')}</TableCell>
-                <TableCell>{p.get('rowPrice')}</TableCell>
+                <TableCell>
+                  {calcTotalvalueWithoutTax(p.get('incomes')) || '-'}
+                </TableCell>
                 <TableCell>{p.get('location') || '-'}</TableCell>
                 <TableCell>
                   {postingId === p.get('id') ? (
