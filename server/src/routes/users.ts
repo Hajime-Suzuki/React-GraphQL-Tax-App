@@ -16,9 +16,11 @@ usersRoutes.post('/', async ctx => {
 })
 
 usersRoutes.get('/:id', authMiddleware, async ctx => {
+  //  will replace with ctx.user.id
   const user = await User.findById(ctx.params.id).populate({
     path: 'projects',
-    options: { sort: { date: -1 } }
+    options: { sort: { date: -1 } },
+    populate: { path: 'contactPerson' }
   })
 
   if (!user) return ctx.throw(404, 'user not found')
