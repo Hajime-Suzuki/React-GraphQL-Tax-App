@@ -1,5 +1,7 @@
 import { reset } from 'redux-form'
 import { FETCH_ENTITIES_SUCCESS } from '..'
+import parse from 'date-fns/parse'
+import isValid from 'date-fns/is_valid'
 import {
   API_createNewProject,
   API_updateStatus,
@@ -31,6 +33,9 @@ export const getSingleProject = id => async dispatch => {
 export const createNewProject = data => async dispatch => {
   try {
     data.status = data.status || 'none'
+    const date = parse(data.date)
+    data.date = date
+
     dispatch({ type: POST_REQUEST })
     const project = await API_createNewProject(data)
     dispatch({ type: CREATE_PROJECT_SUCCESS, payload: project })

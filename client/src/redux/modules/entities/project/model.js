@@ -20,7 +20,7 @@ export class Projects extends Record(initialState) {
 
       return {
         ...obj,
-        [id]: Map(projects[id])
+        [id]: fromJS(projects[id])
       }
     }, {})
 

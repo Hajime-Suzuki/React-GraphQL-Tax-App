@@ -44,7 +44,9 @@ const InvoiceForm = props => {
         label="Rate"
         onChange={handleChange}
       >
-        {renderStateMenuItems()}
+        <MenuItem value="0">0%</MenuItem>
+        <MenuItem value="6">6%</MenuItem>
+        <MenuItem value="21">21%</MenuItem>
       </Field>
       <Field
         component={renderTextField}
