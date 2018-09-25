@@ -37,7 +37,7 @@ export class Projects extends Record(initialState) {
     return values
   }
 
-  fetchItem() {
+  fetchRequest() {
     return this.withMutations(s => {
       s.setIn(['_status', 'fetching'], true).setIn(['_status', 'message'], null)
     })
@@ -51,7 +51,7 @@ export class Projects extends Record(initialState) {
     })
   }
 
-  postItem(projectId) {
+  postRequest(projectId) {
     return this.withMutations(s => {
       s.setIn(['_status', 'posting'], projectId || true).setIn(
         ['_status', 'message'],
