@@ -48,8 +48,8 @@ export const createNewProject = data => async dispatch => {
 
 export const updateStaus = (projectId, data) => async dispatch => {
   try {
-    console.log(projectId, data)
-    dispatch({ type: UPDATE_STATUS_REQUEST })
+    // console.log(projectId, data)
+    dispatch({ type: UPDATE_STATUS_REQUEST, payload: projectId })
     const updated = await API_updateStatus(projectId, { status: data })
     dispatch({
       type: UPDATE_STATUS_SUCCESS,
@@ -79,7 +79,7 @@ const reducer = (state = new Projects(), { type, payload } = {}) => {
       return state.successCreatePost(payload)
 
     case UPDATE_STATUS_REQUEST:
-      return state.updateStatusRequest()
+      return state.updateStatusRequest(payload)
     case UPDATE_STATUS_FAILED:
       return state
     case UPDATE_STATUS_SUCCESS:
