@@ -31,13 +31,18 @@ export class Projects extends Record(initialState) {
       )
     })
   }
+  getProjects() {
+    const projects = this.data
+    const [...values] = projects.values()
+    return values
+  }
 
-  fetchSingleProject() {
+  fetchItem() {
     return this.withMutations(s => {
       s.setIn(['_status', 'fetching'], true).setIn(['_status', 'message'], null)
     })
   }
-  failSingleProject(message) {
+  fetchFail(message) {
     return this.withMutations(s => {
       s.setIn(['_status', 'fetching'], false).setIn(
         ['_status', 'message'],
@@ -46,12 +51,15 @@ export class Projects extends Record(initialState) {
     })
   }
 
-  requestCreatePost() {
+  postItem(projectId) {
     return this.withMutations(s => {
-      s.setIn(['_status', 'posting'], true).setIn(['_status', 'message'], null)
+      s.setIn(['_status', 'posting'], projectId || true).setIn(
+        ['_status', 'message'],
+        null
+      )
     })
   }
-  failCreatePost(message) {
+  postFail(message) {
     return this.withMutations(s => {
       s.setIn(['_status', 'posting'], false).setIn(
         ['_status', 'message'],
@@ -59,6 +67,15 @@ export class Projects extends Record(initialState) {
       )
     })
   }
+
+  successSingleProject(data) {
+    return this.withMutations(s => {
+      s.setIn(['_status', 'fetching'], false)
+        .setIn(['_status', 'message'], null)
+        .mergeIn(['data'], fromJS({ [data.id]: data }))
+    })
+  }
+
   successCreatePost(data) {
     return this.withMutations(s => {
       s.setIn(['_status', 'posting'], false)
@@ -67,35 +84,11 @@ export class Projects extends Record(initialState) {
     })
   }
 
-  // need to refactor. make api request method and turn fetching and posting into logind.
-
-  updateStatusRequest(projectId) {
-    return this.withMutations(s => {
-      s.setIn(['_status', 'posting'], projectId).setIn(
-        ['_status', 'message'],
-        null
-      )
-    })
-  }
-
-  updateStatusSuccess({ id, status }) {
+  successUpdateStatus({ id, status }) {
     return this.withMutations(s => {
       s.setIn(['_status', 'posting'], false)
         .setIn(['_status', 'message'], null)
         .setIn(['data', id, 'status'], status)
     })
-  }
-
-  setSingleProject(data) {
-    return this.withMutations(s => {
-      s.mergeIn(['data'], fromJS({ [data.id]: data }))
-        .setIn(['_status', 'fetching'], false)
-        .setIn(['_status', 'message'], null)
-    })
-  }
-  getProjects() {
-    const projects = this.data
-    const [...values] = projects.values()
-    return values
   }
 }
