@@ -1,10 +1,10 @@
+import MenuItem from '@material-ui/core/MenuItem'
 import Typography from '@material-ui/core/Typography'
 import React, { Fragment } from 'react'
-import { Field } from 'redux-form'
-import { renderTextField } from '../../../libs/forms/renderTextField'
+import { Field, FieldArray } from 'redux-form'
 import { renderDropdown } from '../../../libs/forms/renderDropdown'
-import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
-import MenuItem from '@material-ui/core/MenuItem'
+import { renderExpenseAndIncome } from '../../../libs/forms/renderExpense'
+import { renderTextField } from '../../../libs/forms/renderTextField'
 
 const InvoiceForm = props => {
   const { handleChange } = props
@@ -25,6 +25,8 @@ const InvoiceForm = props => {
         onChange={handleChange}
       />
 
+      <FieldArray name="incomes" component={renderExpenseAndIncome} />
+
       <Field
         component={renderTextField}
         name="name"
@@ -44,7 +46,9 @@ const InvoiceForm = props => {
         label="Rate"
         onChange={handleChange}
       >
-        {renderStateMenuItems()}
+        <MenuItem value="0">0%</MenuItem>
+        <MenuItem value="6">6%</MenuItem>
+        <MenuItem value="21">21%</MenuItem>
       </Field>
       <Field
         component={renderTextField}
