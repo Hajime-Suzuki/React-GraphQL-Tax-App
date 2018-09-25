@@ -6,6 +6,7 @@ import Icon from '@material-ui/core/Icon'
 import format from 'date-fns/format'
 import styled from 'styled-components'
 import { StyledLink } from '../../styles/sharedStyles'
+import ExpenseIncomeTable from './expRevTable/ExpenseIncomeTable'
 
 const ProjectDetails = styled(Grid)`
   .invoice-number,
@@ -24,7 +25,7 @@ const SingleProject = ({ project: p }) => {
     <div>
       <ProjectDetails container>
         <Grid item xs={11} sm={6}>
-          <Typography variant="display1">{p.get('name')}</Typography>
+          <Typography variant="display2">{p.get('name')}</Typography>
         </Grid>
         <Grid item xs={11} sm={6}>
           <Grid container justify="flex-end">
@@ -73,6 +74,17 @@ const SingleProject = ({ project: p }) => {
               <Typography>{c.get('phone')}</Typography>
             </Fragment>
           )}
+        </Grid>
+        <hr style={{ width: '100%' }} />
+        <Grid container item xs={11} justify="space-evenly">
+          <Grid item sm={5}>
+            <Typography variant="title">Expense</Typography>
+            <ExpenseIncomeTable items={p.get('expenses')} />
+          </Grid>
+          <Grid item sm={5}>
+            <Typography variant="title">Income</Typography>
+            <ExpenseIncomeTable items={p.get('expenses')} />
+          </Grid>
         </Grid>
       </ProjectDetails>
     </div>
