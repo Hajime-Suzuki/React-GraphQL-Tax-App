@@ -6,7 +6,11 @@ import Icon from '@material-ui/core/Icon'
 import format from 'date-fns/format'
 import styled from 'styled-components'
 import { StyledLink } from '../../styles/sharedStyles'
-import ExpenseIncomeTable from './expRevTable/ExpenseIncomeTable'
+import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
+import {
+  calcTotalvalueWithoutTax,
+  calcOnlyTax
+} from '../../libs/singleProject/totalValues'
 
 const ProjectDetails = styled(Grid)`
   .invoice-number,
@@ -20,7 +24,6 @@ const SingleProject = ({ project: p }) => {
   if (!p) return null
   const c = p.get('contactPerson')
   console.log(c)
-
   return (
     <div>
       <ProjectDetails container>
@@ -48,18 +51,20 @@ const SingleProject = ({ project: p }) => {
         </Grid>
         <hr style={{ width: '100%' }} />
         <Grid item xs={11} sm={6}>
-          <Typography>Price(Excl.): €{p.get('rowPrice')}</Typography>
           <Typography>
-            Price(Incl.): €{p.get('rowPrice') * (1 + p.get('taxRate') / 100)}
+            Price(Excl.): €{calcTotalvalueWithoutTax(p.get('incomes'))}
           </Typography>
           <Typography>
-            Tax: €{(p.get('rowPrice') * p.get('taxRate')) / 100}
+            Price(Incl.): €
+            {calcTotalvalueWithoutTax(p.get('incomes')) +
+              calcOnlyTax(p.get('incomes'))}
           </Typography>
           <Typography>
-            Expense: €
-            {p
-              .get('expenses')
-              .reduce((total, exp) => (total += exp.get('price')), 0)}
+            Tax: €
+            {calcOnlyTax(p.get('incomes')) - calcOnlyTax(p.get('expenses'))}
+          </Typography>
+          <Typography>
+            Expense: €{calcTotalvalueWithoutTax(p.get('expenses'))}
           </Typography>
         </Grid>
         <Grid item xs={11} sm={6}>
@@ -83,7 +88,7 @@ const SingleProject = ({ project: p }) => {
           </Grid>
           <Grid item sm={5}>
             <Typography variant="title">Income</Typography>
-            <ExpenseIncomeTable items={p.get('expenses')} />
+            <ExpenseIncomeTable items={p.get('incomes')} />
           </Grid>
         </Grid>
       </ProjectDetails>

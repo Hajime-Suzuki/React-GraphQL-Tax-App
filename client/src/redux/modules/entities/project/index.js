@@ -1,14 +1,13 @@
+import parse from 'date-fns/parse'
 import { reset } from 'redux-form'
 import { FETCH_ENTITIES_SUCCESS } from '..'
-import parse from 'date-fns/parse'
-import isValid from 'date-fns/is_valid'
+import { extractErrorMessage } from '../../../../libs/error'
 import {
   API_createNewProject,
   API_updateStatus,
   getSingleUserRequest
 } from '../../../api'
 import { Projects } from './model'
-import { extractErrorMessage } from '../../../../libs/error'
 
 const FETCH_REQUESET = 'entities/project/FETCH_REQUEST'
 const FETCH_FAILED = 'entities/project/FETCH_FAILED'
@@ -33,8 +32,7 @@ export const getSingleProject = id => async dispatch => {
 export const createNewProject = data => async dispatch => {
   try {
     data.status = data.status || 'none'
-    const date = parse(data.date)
-    data.date = date
+    // data.date = data.date && parse(data.date)
 
     dispatch({ type: POST_REQUEST })
     const project = await API_createNewProject(data)
