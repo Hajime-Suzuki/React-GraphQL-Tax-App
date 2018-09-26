@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv'
 import * as Koa from 'koa'
 import * as bodyParser from 'koa-bodyparser'
 import * as cors from 'koa-cors'
@@ -6,6 +7,7 @@ import passport from './passport/passport'
 import loginRoutes from './routes/login'
 import projectRoutes from './routes/projects'
 import usersRoutes from './routes/users'
+dotenv.config()
 
 const app = new Koa()
 const router = new Router()

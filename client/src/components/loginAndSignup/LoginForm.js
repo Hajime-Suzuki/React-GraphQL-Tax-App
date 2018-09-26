@@ -7,7 +7,7 @@ import { StyledGridFormItem } from '../../styles/forms'
 const LoginForm = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <StyledGridFormItem container direction="column">
+      <StyledGridFormItem container direction="column" alignItems="center">
         <Field component={renderTextField} name="email" label="email" />
         <Field
           type="password"

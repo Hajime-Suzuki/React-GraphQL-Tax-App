@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose'
-import connectionString from './connectionString'
 
 export default mongoose.connect(
-  connectionString,
+  process.env.DB_STRING || 'mongodb://localhost:27017/Tax',
   { useNewUrlParser: true }
 )
