@@ -20,24 +20,6 @@ const StyledPaper = styled(Paper)`
   margin: auto;
 `
 
-const CustomTableRow = styled(TableRow)`
-  &&.table-item {
-    .edit-button {
-      opacity: 0;
-      margin-left: 1em;
-      transition: 0.3s;
-      .edit-icon {
-        font-size: 15px;
-      }
-    }
-    &:hover {
-      .edit-button {
-        opacity: 1;
-      }
-    }
-  }
-`
-
 const ProjectsList = props => {
   const { projects, handleChange, postingId } = props
   return (
@@ -55,7 +37,7 @@ const ProjectsList = props => {
         <TableBody>
           {projects.map((p, i) => {
             return (
-              <CustomTableRow key={p.get('id')} hover className="table-item">
+              <TableRow key={p.get('id')} hover className="table-item">
                 <TableCell>
                   <StyledLink
                     to={routes.singleProject(p.get('id'))}
@@ -83,7 +65,7 @@ const ProjectsList = props => {
                     </Field>
                   )}
                 </TableCell>
-              </CustomTableRow>
+              </TableRow>
             )
           })}
         </TableBody>
