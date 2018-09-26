@@ -1,16 +1,15 @@
-import React, { Fragment } from 'react'
-import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Icon from '@material-ui/core/Icon'
-
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
 import format from 'date-fns/format'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
-import { StyledLink } from '../../styles/sharedStyles'
-import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
 import {
-  calcTotalvalueWithoutTax,
-  calcOnlyTax
+  calcOnlyTax,
+  calcTotalvalueWithoutTax
 } from '../../libs/singleProject/totalValues'
+import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
 
 const ProjectDetails = styled(Grid)`
   .invoice-number,
@@ -20,7 +19,7 @@ const ProjectDetails = styled(Grid)`
   }
 `
 
-const SingleProject = ({ project: p }) => {
+const SingleProject = ({ project: p, openModal }) => {
   if (!p) return null
   const c = p.get('contactPerson')
   const totalIncomeExcl = calcTotalvalueWithoutTax(p.get('incomes'))
@@ -29,7 +28,7 @@ const SingleProject = ({ project: p }) => {
   const totalExpenseTax = calcOnlyTax(p.get('expenses'))
   return (
     <div>
-      <ProjectDetails container>
+      <ProjectDetails container justify="center">
         <Grid item xs={11} sm={6}>
           <Typography variant="display2">{p.get('name')}</Typography>
         </Grid>
@@ -84,10 +83,16 @@ const SingleProject = ({ project: p }) => {
         <Grid container item xs={11} justify="space-evenly">
           <Grid item sm={5}>
             <Typography variant="title">Income</Typography>
+            <IconButton onClick={openModal}>
+              <Icon className="fas fa-pen" />
+            </IconButton>
             <ExpenseIncomeTable items={p.get('incomes')} />
           </Grid>
           <Grid item sm={5}>
             <Typography variant="title">Expense</Typography>
+            <IconButton onClick={openModal}>
+              <Icon className="fas fa-pen" />
+            </IconButton>
             <ExpenseIncomeTable items={p.get('expenses')} />
           </Grid>
         </Grid>

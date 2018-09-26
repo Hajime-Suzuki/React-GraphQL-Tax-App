@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import SingleProject from './SingleProject'
 import { connect } from 'react-redux'
 import { getSingleProject } from '../../redux/modules/entities/project'
+import EditFormModal from './modal/EditFormModal'
 
 class SingleProjectComponent extends Component {
+  state = { isModalOpen: false }
   componentDidMount() {
     const {
       project,
@@ -16,8 +18,33 @@ class SingleProjectComponent extends Component {
       getSingleProject(id)
     }
   }
+
+  updateItem = () => {
+    console.log('update items')
+    this.setState({ isModalOpen: false })
+  }
+
+  openModal = () => {
+    this.setState({ isModalOpen: true })
+  }
+  closeModal = () => {
+    this.setState({ isModalOpen: false })
+  }
+
   render() {
-    return <SingleProject project={this.props.project} />
+    return (
+      <Fragment>
+        <SingleProject
+          project={this.props.project}
+          openModal={this.openModal}
+        />
+        <EditFormModal
+          isOpen={this.state.isModalOpen}
+          closeModal={this.closeModal}
+          confirm={this.updateItem}
+        />
+      </Fragment>
+    )
   }
 }
 const mapSateToProps = (state, props) => ({
