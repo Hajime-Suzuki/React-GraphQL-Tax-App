@@ -3,6 +3,7 @@ import SingleProject from './SingleProject'
 import { connect } from 'react-redux'
 import { getSingleProject } from '../../redux/modules/entities/project'
 import EditFormModal from './modal/EditFormModal'
+import EditExpenseIncomeForm from './formConponents/EditExpenseIncomeForm'
 
 class SingleProjectComponent extends Component {
   state = { isModalOpen: false }
@@ -42,7 +43,9 @@ class SingleProjectComponent extends Component {
           isOpen={this.state.isModalOpen}
           closeModal={this.closeModal}
           confirm={this.updateItem}
-        />
+        >
+          <EditExpenseIncomeForm />
+        </EditFormModal>
       </Fragment>
     )
   }

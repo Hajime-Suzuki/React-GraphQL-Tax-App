@@ -1,15 +1,14 @@
-import React from 'react'
 import {
-  DialogTitle,
+  Button,
   Dialog,
-  DialogContent,
-  Typography,
   DialogActions,
-  Button
-} from '../../../../node_modules/@material-ui/core'
+  DialogContent,
+  DialogTitle
+} from '@material-ui/core'
+import React from 'react'
 
 const EditFormModal = props => {
-  const { closeModal, confirm, handleEntering, isOpen } = props
+  const { closeModal, confirm, handleEntering, isOpen, children } = props
   return (
     <Dialog
       disableBackdropClick
@@ -19,9 +18,7 @@ const EditFormModal = props => {
       open={isOpen}
     >
       <DialogTitle>Edit Income</DialogTitle>
-      <DialogContent>
-        <Typography>Modal!</Typography>
-      </DialogContent>
+      <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button onClick={closeModal} color="primary">
           Cancel
