@@ -61,6 +61,12 @@ export const updateStaus = (projectId, data) => async dispatch => {
   }
 }
 
+// TODO: add data to the database
+export const updateIncomes = (projectId, incomes) => dispatch => {
+  console.log(projectId)
+  console.log(incomes)
+}
+
 const reducer = (state = new Projects(), { type, payload } = {}) => {
   switch (type) {
     case FETCH_ENTITIES_SUCCESS:

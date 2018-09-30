@@ -4,6 +4,11 @@ import { createNewProject } from '../../redux/modules/entities/project'
 import { routes } from '../../routes/constants'
 import ProjectForm from './ProjectForm'
 
+// TODO: Remove rowPrice and rate
+// TODO: Add quantity
+// TODO: Add Error Message
+// TODO: Add validation
+
 class AddProjectFormContainer extends Component {
   handleSubmit = values => {
     this.props.createNewProject(values)

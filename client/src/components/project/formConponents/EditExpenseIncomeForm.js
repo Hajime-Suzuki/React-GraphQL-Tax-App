@@ -1,10 +1,17 @@
 import React from 'react'
-import { reduxForm, Field } from 'redux-form'
-
-import { renderTextField } from '../../../libs/forms/renderTextField'
+import { FieldArray, reduxForm } from 'redux-form'
+import { renderExpenseAndIncome } from '../../../libs/forms/renderExpense'
 
 const EditExpenseIncomeForm = props => {
-  return <Field name="income" label="income" component={renderTextField} />
+  const { defaultValues } = props
+
+  return (
+    <FieldArray
+      name="incomes"
+      component={renderExpenseAndIncome}
+      defaultValues={defaultValues}
+    />
+  )
 }
 
 export default reduxForm({
