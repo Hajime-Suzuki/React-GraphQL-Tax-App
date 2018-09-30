@@ -12,6 +12,7 @@ export class renderExpenseAndIncome extends Component {
   componentDidMount() {
     const { defaultValues, fields } = this.props
 
+    // if there are defaults, push it to the field array
     if (defaultValues) {
       defaultValues.toJS().map(v => {
         fields.push(v)
@@ -52,14 +53,13 @@ export class renderExpenseAndIncome extends Component {
               />
 
               <Field
-                component={renderDropdown}
                 name={`${item}.taxRate`}
                 label="Rate"
-                // default={item.get('taxRate')}
+                component={renderDropdown}
               >
-                <MenuItem value="0">0%</MenuItem>
-                <MenuItem value="6">6%</MenuItem>
-                <MenuItem value="21">21%</MenuItem>
+                <MenuItem value={0}>0%</MenuItem>
+                <MenuItem value={6}>6%</MenuItem>
+                <MenuItem value={21}>21%</MenuItem>
               </Field>
             </Grid>
           )
