@@ -2,9 +2,16 @@ import React from 'react'
 import { FieldArray, reduxForm } from 'redux-form'
 import { renderExpenseAndIncome } from '../../../libs/forms/renderExpense'
 
-// TODO: add incomes form
 const EditExpenseIncomeForm = props => {
-  return <FieldArray name="incomes" component={renderExpenseAndIncome} />
+  const { defaultValues } = props
+
+  return (
+    <FieldArray
+      name="incomes"
+      component={renderExpenseAndIncome}
+      defaultValues={defaultValues}
+    />
+  )
 }
 
 export default reduxForm({
