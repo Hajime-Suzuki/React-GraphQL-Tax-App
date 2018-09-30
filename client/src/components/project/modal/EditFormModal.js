@@ -8,7 +8,7 @@ import {
 import React from 'react'
 
 const EditFormModal = props => {
-  const { closeModal, confirm, handleEntering, isOpen, children } = props
+  const { closeModal, cofirmAndEdit, handleEntering, isOpen, children } = props
   return (
     <Dialog
       disableBackdropClick
@@ -23,7 +23,7 @@ const EditFormModal = props => {
         <Button onClick={closeModal} color="primary">
           Cancel
         </Button>
-        <Button onClick={confirm} color="primary">
+        <Button onClick={cofirmAndEdit} color="primary">
           Ok
         </Button>
       </DialogActions>
