@@ -5,10 +5,7 @@ import entities from './entities'
 import user from './user'
 
 export default combineReducers({
-  // projects,
-  // data,
   entities,
   user,
-  // signupLogin,
   form: formReducer
 })

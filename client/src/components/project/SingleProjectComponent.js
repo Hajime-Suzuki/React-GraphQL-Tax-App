@@ -1,12 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import SingleProject from './SingleProject'
 import { connect } from 'react-redux'
-import { getSingleProject } from '../../redux/modules/entities/project'
+import {
+  getSingleProject,
+  updateIncomes
+} from '../../redux/modules/entities/project'
 import EditFormModal from './modal/EditFormModal'
 import EditExpenseIncomeForm from './formConponents/EditExpenseIncomeForm'
+import { getFormValues } from 'redux-form'
 
 class SingleProjectComponent extends Component {
   state = { isModalOpen: false }
+
   componentDidMount() {
     const {
       project,
@@ -20,8 +25,9 @@ class SingleProjectComponent extends Component {
     }
   }
 
-  updateItem = () => {
-    console.log('update items')
+  updateItems = () => {
+    const { updateIncomes, project, incomes } = this.props
+    updateIncomes(project.get('id'), incomes)
     this.setState({ isModalOpen: false })
   }
 
@@ -42,18 +48,19 @@ class SingleProjectComponent extends Component {
         <EditFormModal
           isOpen={this.state.isModalOpen}
           closeModal={this.closeModal}
-          confirm={this.updateItem}
+          cofirmAndEdit={this.updateItems}
         >
-          <EditExpenseIncomeForm />
+          <EditExpenseIncomeForm test={this.test} />
         </EditFormModal>
       </Fragment>
     )
   }
 }
 const mapSateToProps = (state, props) => ({
-  project: state.entities.projects.data.get(props.match.params.id)
+  project: state.entities.projects.data.get(props.match.params.id),
+  incomes: getFormValues('editExpenseIncome')(state)
 })
 export default connect(
   mapSateToProps,
-  { getSingleProject }
+  { getSingleProject, updateIncomes }
 )(SingleProjectComponent)
