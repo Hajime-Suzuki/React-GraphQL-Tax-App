@@ -7,15 +7,9 @@ export const renderTextField = ({
   ...custom
 }) => {
   const defaultValue = custom.default
-  console.log(dirty)
-
   return (
     <Grid item className="item" xs={11}>
-      <TextField
-        {...input}
-        {...custom}
-        // value={defaultValue && !dirty ? defaultValue : input.value}
-      />
+      <TextField {...input} {...custom} />
     </Grid>
   )
 }

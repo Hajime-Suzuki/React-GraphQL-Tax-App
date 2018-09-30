@@ -61,6 +61,7 @@ export const updateStaus = (projectId, data) => async dispatch => {
   }
 }
 
+// TODO: add data to the database
 export const updateIncomes = (projectId, incomes) => dispatch => {
   console.log(projectId)
   console.log(incomes)

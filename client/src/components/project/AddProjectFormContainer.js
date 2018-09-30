@@ -5,6 +5,7 @@ import { routes } from '../../routes/constants'
 import ProjectForm from './ProjectForm'
 
 // TODO: Remove rowPrice and rate
+// TODO: Add quantity
 // TODO: Add Error Message
 // TODO: Add validation
 

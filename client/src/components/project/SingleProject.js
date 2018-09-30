@@ -19,6 +19,7 @@ const ProjectDetails = styled(Grid)`
   }
 `
 
+// TODO: Add quantity
 const SingleProject = ({ project: p, openModal }) => {
   if (!p) return null
   const c = p.get('contactPerson')

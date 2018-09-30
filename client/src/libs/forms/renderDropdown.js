@@ -12,19 +12,12 @@ export const renderDropdown = ({
   ...custom
 }) => {
   const defaultValue = custom.default
-  // console.log(defaultValue)
-  // console.log(!dirty)
 
   return (
     <Grid item className="item" xs={11}>
       <FormControl className={custom.className}>
         <InputLabel htmlFor={custom.className}>{label}</InputLabel>
-        <Select
-          {...input}
-          {...custom}
-          children={children}
-          value={defaultValue && !dirty ? defaultValue : input.value}
-        />
+        <Select {...input} {...custom} children={children} />
       </FormControl>
     </Grid>
   )
