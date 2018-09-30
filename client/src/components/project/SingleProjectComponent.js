@@ -8,6 +8,9 @@ import {
 import EditFormModal from './modal/EditFormModal'
 import EditExpenseIncomeForm from './formConponents/EditExpenseIncomeForm'
 import { getFormValues } from 'redux-form'
+import { LoadingIcon } from '../UI/LoadingIcon'
+
+import { FieldArray, reduxForm, initialize } from 'redux-form'
 
 class SingleProjectComponent extends Component {
   state = { isModalOpen: false }
@@ -23,6 +26,12 @@ class SingleProjectComponent extends Component {
     if (!project) {
       getSingleProject(id)
     }
+
+    // console.log(this.props.project && this.props.project.get('incomes'))
+
+    // initialize({
+    //   editExpenseIncome: this.props.project && this.props.project.get('incomes')
+    // })
   }
 
   updateItems = () => {
@@ -39,6 +48,9 @@ class SingleProjectComponent extends Component {
   }
 
   render() {
+    if (this.props.fetching || !this.props.project) return <LoadingIcon />
+    // console.log(this.props.project.get('incomes'))
+
     return (
       <Fragment>
         <SingleProject
@@ -50,13 +62,17 @@ class SingleProjectComponent extends Component {
           closeModal={this.closeModal}
           cofirmAndEdit={this.updateItems}
         >
-          <EditExpenseIncomeForm test={this.test} />
+          <EditExpenseIncomeForm
+            // items={this.props.project.get('incomes')}
+            defaultValues={this.props.project.get('incomes')}
+          />
         </EditFormModal>
       </Fragment>
     )
   }
 }
 const mapSateToProps = (state, props) => ({
+  fetching: state.entities.projects._status.fetching,
   project: state.entities.projects.data.get(props.match.params.id),
   incomes: getFormValues('editExpenseIncome')(state)
 })
