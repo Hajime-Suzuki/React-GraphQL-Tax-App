@@ -3,11 +3,11 @@ import { FieldArray, reduxForm } from 'redux-form'
 import { renderExpenseAndIncome } from '../../../libs/forms/renderExpense'
 
 const EditExpenseIncomeForm = props => {
-  const { defaultValues } = props
+  const { defaultValues, type } = props
 
   return (
     <FieldArray
-      name="incomes"
+      name={type}
       component={renderExpenseAndIncome}
       defaultValues={defaultValues}
     />

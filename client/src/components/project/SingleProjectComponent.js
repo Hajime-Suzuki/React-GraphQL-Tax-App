@@ -1,19 +1,20 @@
 import React, { Component, Fragment } from 'react'
-import SingleProject from './SingleProject'
 import { connect } from 'react-redux'
+import { getFormValues } from 'redux-form'
 import {
   getSingleProject,
-  updateIncomes
+  updateIncomesAndExpenses
 } from '../../redux/modules/entities/project'
-import EditFormModal from './modal/EditFormModal'
-import EditExpenseIncomeForm from './formConponents/EditExpenseIncomeForm'
-import { getFormValues } from 'redux-form'
 import { LoadingIcon } from '../UI/LoadingIcon'
+import EditExpenseIncomeForm from './formConponents/EditExpenseIncomeForm'
+import EditFormModal from './modal/EditFormModal'
+import SingleProject from './SingleProject'
 
-import { FieldArray, reduxForm, initialize } from 'redux-form'
+const incomes = 'incomes'
+const expenses = 'expenses'
 
 class SingleProjectComponent extends Component {
-  state = { isModalOpen: false }
+  state = { isIncomeModalOpen: false, isExpenseModalOpen: false }
 
   componentDidMount() {
     const {
@@ -26,25 +27,20 @@ class SingleProjectComponent extends Component {
     if (!project) {
       getSingleProject(id)
     }
-
-    // console.log(this.props.project && this.props.project.get('incomes'))
-
-    // initialize({
-    //   editExpenseIncome: this.props.project && this.props.project.get('incomes')
-    // })
   }
 
-  updateItems = () => {
-    const { updateIncomes, project, incomes } = this.props
-    updateIncomes(project.get('id'), incomes)
-    this.setState({ isModalOpen: false })
+  updateItems = type => {
+    const { project, updateIncomesAndExpenses, incomesAndExpenses } = this.props
+
+    updateIncomesAndExpenses(project.get('id'), type, incomesAndExpenses)
+    this.setState({ isIncomeModalOpen: false, isExpenseModalOpen: false })
   }
 
-  openModal = () => {
-    this.setState({ isModalOpen: true })
+  openModal = type => {
+    this.setState({ [type]: true })
   }
   closeModal = () => {
-    this.setState({ isModalOpen: false })
+    this.setState({ isIncomeModalOpen: false, isExpenseModalOpen: false })
   }
 
   render() {
@@ -58,13 +54,25 @@ class SingleProjectComponent extends Component {
           openModal={this.openModal}
         />
         <EditFormModal
-          isOpen={this.state.isModalOpen}
+          isOpen={this.state.isIncomeModalOpen}
           closeModal={this.closeModal}
           cofirmAndEdit={this.updateItems}
+          type={incomes}
         >
           <EditExpenseIncomeForm
-            // items={this.props.project.get('incomes')}
-            defaultValues={this.props.project.get('incomes')}
+            type={incomes}
+            defaultValues={this.props.project.get(incomes)}
+          />
+        </EditFormModal>
+        <EditFormModal
+          isOpen={this.state.isExpenseModalOpen}
+          closeModal={this.closeModal}
+          cofirmAndEdit={this.updateItems}
+          type={expenses}
+        >
+          <EditExpenseIncomeForm
+            type={expenses}
+            defaultValues={this.props.project.get(expenses)}
           />
         </EditFormModal>
       </Fragment>
@@ -74,9 +82,9 @@ class SingleProjectComponent extends Component {
 const mapSateToProps = (state, props) => ({
   fetching: state.entities.projects._status.fetching,
   project: state.entities.projects.data.get(props.match.params.id),
-  incomes: getFormValues('editExpenseIncome')(state)
+  incomesAndExpenses: getFormValues('editExpenseIncome')(state)
 })
 export default connect(
   mapSateToProps,
-  { getSingleProject, updateIncomes }
+  { getSingleProject, updateIncomesAndExpenses }
 )(SingleProjectComponent)
