@@ -45,13 +45,13 @@ class SingleProjectComponent extends Component {
 
   render() {
     if (this.props.fetching || !this.props.project) return <LoadingIcon />
-    // console.log(this.props.project.get('incomes'))
 
     return (
       <Fragment>
         <SingleProject
           project={this.props.project}
           openModal={this.openModal}
+          posting={this.props.posting}
         />
         <EditFormModal
           isOpen={this.state.isIncomeModalOpen}
@@ -81,6 +81,7 @@ class SingleProjectComponent extends Component {
 }
 const mapSateToProps = (state, props) => ({
   fetching: state.entities.projects._status.fetching,
+  posting: state.entities.projects._status.posting,
   project: state.entities.projects.data.get(props.match.params.id),
   incomesAndExpenses: getFormValues('editExpenseIncome')(state)
 })
