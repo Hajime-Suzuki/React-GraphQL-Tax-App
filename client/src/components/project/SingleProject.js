@@ -19,7 +19,6 @@ const ProjectDetails = styled(Grid)`
   }
 `
 
-// TODO: Add quantity
 const SingleProject = ({ project: p, openModal }) => {
   if (!p) return null
   const c = p.get('contactPerson')
@@ -82,16 +81,16 @@ const SingleProject = ({ project: p, openModal }) => {
         </Grid>
         <hr style={{ width: '100%' }} />
         <Grid container item xs={11} justify="space-evenly">
-          <Grid item sm={5}>
+          <Grid item sm={11} lg={5}>
             <Typography variant="title">Income</Typography>
-            <IconButton onClick={openModal}>
+            <IconButton onClick={() => openModal('isIncomeModalOpen')}>
               <Icon className="fas fa-pen" />
             </IconButton>
             <ExpenseIncomeTable items={p.get('incomes')} />
           </Grid>
-          <Grid item sm={5}>
+          <Grid item sm={11} lg={5}>
             <Typography variant="title">Expense</Typography>
-            <IconButton onClick={openModal}>
+            <IconButton onClick={() => openModal('isExpenseModalOpen')}>
               <Icon className="fas fa-pen" />
             </IconButton>
             <ExpenseIncomeTable items={p.get('expenses')} />

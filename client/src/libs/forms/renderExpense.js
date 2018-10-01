@@ -51,7 +51,11 @@ export class renderExpenseAndIncome extends Component {
                 label="Price(excl)"
                 component={renderTextField}
               />
-
+              <Field
+                name={`${item}.quantity`}
+                label="Qualtity"
+                component={renderTextField}
+              />
               <Field
                 name={`${item}.taxRate`}
                 label="Rate"
