@@ -17,6 +17,7 @@ const renderItems = items => {
       <TableRow key={i}>
         <TableCell>{item.get('name')}</TableCell>
         <TableCell>{item.get('price')}</TableCell>
+        <TableCell>{item.get('quantity')}</TableCell>
         <TableCell>{item.get('taxRate')}%</TableCell>
       </TableRow>
     )
@@ -34,6 +35,7 @@ const renderTotalRows = (type, items) => {
       </TableCell>
       <TableCell>{totalValue}</TableCell>
       <TableCell>-</TableCell>
+      <TableCell>-</TableCell>
     </TableRow>
   )
 }
@@ -47,6 +49,7 @@ const ExpenseIncomeTable = props => {
           <TableRow>
             <TableCell>Item</TableCell>
             <TableCell>Price</TableCell>
+            <TableCell>Quantity</TableCell>
             <TableCell>Tax Rate</TableCell>
           </TableRow>
         </TableHead>

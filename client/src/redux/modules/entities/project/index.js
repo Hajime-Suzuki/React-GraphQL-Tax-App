@@ -5,7 +5,8 @@ import { extractErrorMessage } from '../../../../libs/error'
 import {
   API_createNewProject,
   API_updateStatus,
-  getSingleUserRequest
+  getSingleUserRequest,
+  API_updateIncomeAndExpense
 } from '../../../api'
 import { Projects } from './model'
 
@@ -17,6 +18,8 @@ const POST_FAILED = 'entities/project/POST_FAILED'
 const FETCH_SINGLE_SUCCESS = 'entities/project/FETCH_SINGLE_SUCCESS'
 const CREATE_PROJECT_SUCCESS = 'entities/project/CREATE_PROJECT_SUCCESS'
 const UPDATE_STATUS_SUCCESS = 'entities/project/UPDATE_STATUS_SUCCESS'
+const UPDATE_INCOME_EXPENSE_SUCCESS =
+  'entities/project/UPDATE_INCOME_EXPENSE_SUCCESS'
 
 export const getSingleProject = id => async dispatch => {
   try {
@@ -61,10 +64,36 @@ export const updateStaus = (projectId, data) => async dispatch => {
   }
 }
 
-// TODO: add data to the database
-export const updateIncomes = (projectId, incomes) => dispatch => {
-  console.log(projectId)
-  console.log(incomes)
+export const updateIncomesAndExpenses = (
+  projectId,
+  incomeOrExpense,
+  data
+) => async dispatch => {
+  try {
+    dispatch({ type: POST_REQUEST })
+    const updated = await API_updateIncomeAndExpense(
+      projectId,
+      incomeOrExpense,
+      data
+    )
+    console.log(incomeOrExpense)
+
+    const { incomes, expenses } = updated
+    dispatch({
+      type: UPDATE_INCOME_EXPENSE_SUCCESS,
+      payload: {
+        id: projectId,
+        ...(incomes && { incomes }),
+        ...(expenses && { expenses })
+      }
+    })
+  } catch (e) {
+    console.log(e)
+    dispatch({
+      type: POST_FAILED,
+      payload: extractErrorMessage(e)
+    })
+  }
 }
 
 const reducer = (state = new Projects(), { type, payload } = {}) => {
@@ -88,6 +117,8 @@ const reducer = (state = new Projects(), { type, payload } = {}) => {
       return state.successCreatePost(payload)
     case UPDATE_STATUS_SUCCESS:
       return state.successUpdateStatus(payload)
+    case UPDATE_INCOME_EXPENSE_SUCCESS:
+      return state.successUpdateExpenseAndIncomes(payload)
 
     default:
       return state

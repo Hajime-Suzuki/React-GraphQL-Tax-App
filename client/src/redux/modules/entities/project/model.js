@@ -91,4 +91,18 @@ export class Projects extends Record(initialState) {
         .setIn(['data', id, 'status'], status)
     })
   }
+
+  successUpdateExpenseAndIncomes({ id, incomes, expenses }) {
+    return this.withMutations(s => {
+      s.setIn(['_status', 'posting'], false).setIn(['_status', 'message'], null)
+
+      if (incomes) {
+        s.setIn(['data', id, 'incomes'], fromJS(incomes))
+      }
+
+      if (expenses) {
+        s.setIn(['data', id, 'expenses'], fromJS(expenses))
+      }
+    })
+  }
 }

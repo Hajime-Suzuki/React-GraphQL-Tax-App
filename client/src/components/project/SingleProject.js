@@ -10,6 +10,7 @@ import {
   calcTotalvalueWithoutTax
 } from '../../libs/singleProject/totalValues'
 import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
+import { LoadingIcon } from '../UI/LoadingIcon'
 
 const ProjectDetails = styled(Grid)`
   .invoice-number,
@@ -19,8 +20,7 @@ const ProjectDetails = styled(Grid)`
   }
 `
 
-// TODO: Add quantity
-const SingleProject = ({ project: p, openModal }) => {
+const SingleProject = ({ project: p, openModal, posting }) => {
   if (!p) return null
   const c = p.get('contactPerson')
   const totalIncomeExcl = calcTotalvalueWithoutTax(p.get('incomes'))
@@ -81,22 +81,26 @@ const SingleProject = ({ project: p, openModal }) => {
           )}
         </Grid>
         <hr style={{ width: '100%' }} />
-        <Grid container item xs={11} justify="space-evenly">
-          <Grid item sm={5}>
-            <Typography variant="title">Income</Typography>
-            <IconButton onClick={openModal}>
-              <Icon className="fas fa-pen" />
-            </IconButton>
-            <ExpenseIncomeTable items={p.get('incomes')} />
+        {!posting ? (
+          <Grid container item xs={11} justify="space-evenly">
+            <Grid item sm={11} lg={5}>
+              <Typography variant="title">Income</Typography>
+              <IconButton onClick={() => openModal('isIncomeModalOpen')}>
+                <Icon className="fas fa-pen" />
+              </IconButton>
+              <ExpenseIncomeTable items={p.get('incomes')} />
+            </Grid>
+            <Grid item sm={11} lg={5}>
+              <Typography variant="title">Expense</Typography>
+              <IconButton onClick={() => openModal('isExpenseModalOpen')}>
+                <Icon className="fas fa-pen" />
+              </IconButton>
+              <ExpenseIncomeTable items={p.get('expenses')} />
+            </Grid>
           </Grid>
-          <Grid item sm={5}>
-            <Typography variant="title">Expense</Typography>
-            <IconButton onClick={openModal}>
-              <Icon className="fas fa-pen" />
-            </IconButton>
-            <ExpenseIncomeTable items={p.get('expenses')} />
-          </Grid>
-        </Grid>
+        ) : (
+          <LoadingIcon />
+        )}
       </ProjectDetails>
     </div>
   )
