@@ -13,6 +13,7 @@ import { routes } from '../../routes/constants'
 import { StyledLink } from '../../styles/sharedStyles'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import { calcTotalvalueWithoutTax } from '../../libs/singleProject/totalValues'
+import MenuItem from '@material-ui/core/MenuItem'
 
 const StyledPaper = styled(Paper)`
   overflow: 'auto';
@@ -58,7 +59,7 @@ const ProjectsList = props => {
                     <Field
                       component={renderDropdown}
                       name={p.get('id')}
-                      default={p.get('status')}
+                      initialValue={p.get('status')}
                       onChange={handleChange}
                     >
                       {renderStateMenuItems()}

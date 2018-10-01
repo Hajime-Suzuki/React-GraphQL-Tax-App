@@ -1,12 +1,17 @@
 import * as Router from 'koa-router'
 import { ContactPerson } from '../Models/ContactPerson'
-import { IExpense, IProject, Project } from '../Models/Project'
+import { IExpenseAndIncome, IProject, Project } from '../Models/Project'
 import { IUser, User } from '../Models/User'
 import { authMiddleware, IJwtPayload } from '../passport/passport'
 
 interface IProjectForm {
   name: string
   date?: Date
+}
+
+interface IProjectBody {
+  incomes: IExpenseAndIncome[]
+  expenses: IExpenseAndIncome[]
 }
 
 const router = new Router({
@@ -76,6 +81,25 @@ router.put('/:id/status', authMiddleware, async ctx => {
     { new: true }
   )
   ctx.body = project
+})
+
+router.put('/:id/incomes-expenses', authMiddleware, async ctx => {
+  const projectId: string = ctx.params.id
+  const data: IProjectBody = ctx.request.body as any
+  const { incomes, expenses } = data
+
+  const updatedProject = await Project.findByIdAndUpdate(
+    projectId,
+    { ...(incomes && { incomes }), ...(expenses && { expenses }) },
+    { new: true }
+  )
+
+  if (!updatedProject) return ctx.throw(404, 'project not found')
+
+  ctx.body = {
+    ...(incomes && { incomes: updatedProject.incomes }),
+    ...(expenses && { expenses: updatedProject.expenses })
+  }
 })
 
 export default router
