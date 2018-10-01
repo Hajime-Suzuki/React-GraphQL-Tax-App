@@ -87,7 +87,6 @@ export const updateIncomesAndExpenses = (
         ...(expenses && { expenses })
       }
     })
-    console.log(updated)
   } catch (e) {
     console.log(e)
     dispatch({
