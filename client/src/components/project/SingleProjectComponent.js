@@ -7,10 +7,9 @@ import {
 } from '../../redux/modules/entities/project'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import EditExpenseIncomeForm from './formConponents/EditExpenseIncomeForm'
+import GeneralEditForm from './formConponents/GeneralEditForm'
 import EditFormModal from './modal/EditFormModal'
 import SingleProject from './SingleProject'
-import GeneralEditForm from './formConponents/GeneralEditForm'
-import Button from '@material-ui/core/Button'
 
 const incomes = 'incomes'
 const expenses = 'expenses'
