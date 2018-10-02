@@ -42,7 +42,6 @@ class SingleProjectComponent extends Component {
       incomesAndExpenses,
       generalInfo
     } = this.props
-    console.log(generalInfo)
 
     const dataToPass = type === general ? generalInfo : incomesAndExpenses
     updateIncomesAndExpenses(project.get('id'), dataToPass)

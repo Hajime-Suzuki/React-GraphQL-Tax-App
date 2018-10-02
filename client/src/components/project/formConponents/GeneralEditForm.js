@@ -5,7 +5,9 @@ import { renderTextField } from '../../../libs/forms/renderTextField'
 import { renderDropdown } from '../../../libs/forms/renderDropdown'
 import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
 const GeneralEditForm = props => {
-  const { handleChange } = props
+  const { handleChange, project } = props
+  const isInvoiceSent = project.get('status') !== 'none'
+
   return (
     <Fragment>
       <Field
@@ -20,12 +22,13 @@ const GeneralEditForm = props => {
         name="invoiceNumber"
         label="Invoice Number"
         onChange={handleChange}
+        disabled={isInvoiceSent}
       />
 
       <Field
         component={renderTextField}
-        name="invoiceDate"
-        label="Invoice Date"
+        name="date"
+        label="Project Date"
         onChange={handleChange}
       />
 
@@ -37,6 +40,13 @@ const GeneralEditForm = props => {
       >
         {renderStateMenuItems()}
       </Field>
+      <Field
+        component={renderTextField}
+        name="invoiceDate"
+        label="Invoice Date"
+        onChange={handleChange}
+        disabled={isInvoiceSent}
+      />
     </Fragment>
   )
 }
@@ -46,7 +56,8 @@ const mapSateToProps = (_, { project }) => ({
     name: project && project.get('name'),
     invoiceNumber: project && project.get('invoiceNumber'),
     invoiceDate: project && project.get('invoiceDate'),
-    status: project && project.get('status')
+    status: project && project.get('status'),
+    date: project && project.get('date')
   }
 })
 
