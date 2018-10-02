@@ -7,7 +7,6 @@ import { MainWrapper } from '../../styles/sharedStyles'
 import ContactPersonForm from './formConponents/ContactPersonForm'
 import InvoiceForm from './formConponents/InvoiceInfoForm'
 
-// TODO: render date correctly.
 const AddProjectForm = props => {
   const { handleSubmit, handleChange } = props
   return (
