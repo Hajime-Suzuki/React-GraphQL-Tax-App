@@ -100,6 +100,13 @@
       "parent_id": "uwC2bpytX8IT9JxM",
       "workspacePath": "client\\src\\components\\project\\ProjectsListComponent.js",
       "id": "aAYMvoWRjtnufx1F"
+    },
+    {
+      "type": "File",
+      "name": "d:\\Web\\MKRN-Stack-Tax-App\\client\\src\\components\\project\\SingleProjectComponent.js",
+      "parent_id": "uwC2bpytX8IT9JxM",
+      "workspacePath": "client\\src\\components\\project\\SingleProjectComponent.js",
+      "id": "u9ZSjKlUXgA6d1sx"
     }
   ]
 }

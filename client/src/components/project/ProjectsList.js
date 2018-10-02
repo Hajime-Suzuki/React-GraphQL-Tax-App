@@ -9,11 +9,10 @@ import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
 import { renderDropdown } from '../../libs/forms/renderDropdown'
 import { renderStateMenuItems } from '../../libs/forms/renderStateMenuItem'
+import { calcTotalvalueWithoutTax } from '../../libs/singleProject/totalValues'
 import { routes } from '../../routes/constants'
 import { StyledLink } from '../../styles/sharedStyles'
 import { LoadingIcon } from '../UI/LoadingIcon'
-import { calcTotalvalueWithoutTax } from '../../libs/singleProject/totalValues'
-import MenuItem from '@material-ui/core/MenuItem'
 
 const StyledPaper = styled(Paper)`
   overflow: 'auto';
@@ -36,7 +35,7 @@ const ProjectsList = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {projects.map((p, i) => {
+          {projects.map(p => {
             return (
               <TableRow key={p.get('id')} hover className="table-item">
                 <TableCell>

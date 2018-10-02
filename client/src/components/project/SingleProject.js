@@ -1,6 +1,7 @@
 import Grid from '@material-ui/core/Grid'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import format from 'date-fns/format'
 import React, { Fragment } from 'react'
@@ -18,6 +19,9 @@ const ProjectDetails = styled(Grid)`
     width: 30%;
     text-align: left;
   }
+  .edit-button {
+    margin: 0 1em 2em;
+  }
 `
 
 const SingleProject = ({ project: p, openModal, posting }) => {
@@ -30,6 +34,16 @@ const SingleProject = ({ project: p, openModal, posting }) => {
   return (
     <div>
       <ProjectDetails container justify="center">
+        <Grid item xs={12} container justify="flex-end">
+          <Button
+            variant="outlined"
+            color="primary"
+            className="edit-button"
+            onClick={() => openModal('isGeneralEditModalOpen')}
+          >
+            Edit
+          </Button>
+        </Grid>
         <Grid item xs={11} sm={6}>
           <Typography variant="display2">{p.get('name')}</Typography>
         </Grid>

@@ -9,12 +9,19 @@ import { LoadingIcon } from '../UI/LoadingIcon'
 import EditExpenseIncomeForm from './formConponents/EditExpenseIncomeForm'
 import EditFormModal from './modal/EditFormModal'
 import SingleProject from './SingleProject'
+import GeneralEditForm from './formConponents/GeneralEditForm'
+import Button from '@material-ui/core/Button'
 
 const incomes = 'incomes'
 const expenses = 'expenses'
+const general = 'general'
 
 class SingleProjectComponent extends Component {
-  state = { isIncomeModalOpen: false, isExpenseModalOpen: false }
+  state = {
+    isIncomeModalOpen: false,
+    isExpenseModalOpen: false,
+    isGeneralEditModalOpen: false
+  }
 
   componentDidMount() {
     const {
@@ -30,17 +37,30 @@ class SingleProjectComponent extends Component {
   }
 
   updateItems = type => {
-    const { project, updateIncomesAndExpenses, incomesAndExpenses } = this.props
+    const {
+      project,
+      updateIncomesAndExpenses,
+      incomesAndExpenses,
+      generalInfo
+    } = this.props
+    console.log(generalInfo)
 
-    updateIncomesAndExpenses(project.get('id'), type, incomesAndExpenses)
-    this.setState({ isIncomeModalOpen: false, isExpenseModalOpen: false })
+    const dataToPass = type === general ? generalInfo : incomesAndExpenses
+    updateIncomesAndExpenses(project.get('id'), dataToPass)
+    this.closeModal()
   }
+
+  test = () => {}
 
   openModal = type => {
     this.setState({ [type]: true })
   }
   closeModal = () => {
-    this.setState({ isIncomeModalOpen: false, isExpenseModalOpen: false })
+    this.setState({
+      isIncomeModalOpen: false,
+      isExpenseModalOpen: false,
+      isGeneralEditModalOpen: false
+    })
   }
 
   render() {
@@ -53,27 +73,36 @@ class SingleProjectComponent extends Component {
           openModal={this.openModal}
           posting={this.props.posting}
         />
+
+        {/* modals */}
+        {[incomes, expenses].map(type => {
+          const isOpen =
+            type === incomes
+              ? this.state.isIncomeModalOpen
+              : this.state.isExpenseModalOpen
+          return (
+            <EditFormModal
+              isOpen={isOpen}
+              closeModal={this.closeModal}
+              cofirmAndEdit={this.updateItems}
+              type={type}
+              key={type}
+            >
+              <EditExpenseIncomeForm
+                type={type}
+                defaultValues={this.props.project.get(type)}
+              />
+            </EditFormModal>
+          )
+        })}
+
         <EditFormModal
-          isOpen={this.state.isIncomeModalOpen}
+          isOpen={this.state.isGeneralEditModalOpen}
           closeModal={this.closeModal}
           cofirmAndEdit={this.updateItems}
-          type={incomes}
+          type={general}
         >
-          <EditExpenseIncomeForm
-            type={incomes}
-            defaultValues={this.props.project.get(incomes)}
-          />
-        </EditFormModal>
-        <EditFormModal
-          isOpen={this.state.isExpenseModalOpen}
-          closeModal={this.closeModal}
-          cofirmAndEdit={this.updateItems}
-          type={expenses}
-        >
-          <EditExpenseIncomeForm
-            type={expenses}
-            defaultValues={this.props.project.get(expenses)}
-          />
+          <GeneralEditForm project={this.props.project} />
         </EditFormModal>
       </Fragment>
     )
@@ -83,7 +112,8 @@ const mapSateToProps = (state, props) => ({
   fetching: state.entities.projects._status.fetching,
   posting: state.entities.projects._status.posting,
   project: state.entities.projects.data.get(props.match.params.id),
-  incomesAndExpenses: getFormValues('editExpenseIncome')(state)
+  incomesAndExpenses: getFormValues('editExpenseIncome')(state),
+  generalInfo: getFormValues('generalInfo')(state)
 })
 export default connect(
   mapSateToProps,
