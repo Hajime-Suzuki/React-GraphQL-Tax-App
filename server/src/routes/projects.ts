@@ -83,23 +83,33 @@ router.put('/:id/status', authMiddleware, async ctx => {
   ctx.body = project
 })
 
-router.put('/:id/incomes-expenses', authMiddleware, async ctx => {
+router.put('/:id', authMiddleware, async ctx => {
   const projectId: string = ctx.params.id
   const data: IProjectBody = ctx.request.body as any
-  const { incomes, expenses } = data
+
+  const { incomes, expenses, ...generalInfo } = data
+  console.log({ incomes, expenses, generalInfo })
 
   const updatedProject = await Project.findByIdAndUpdate(
     projectId,
-    { ...(incomes && { incomes }), ...(expenses && { expenses }) },
+    {
+      ...(incomes && { incomes }),
+      ...(expenses && { expenses }),
+      ...generalInfo
+    },
     { new: true }
   )
 
   if (!updatedProject) return ctx.throw(404, 'project not found')
 
+  // console.log(updatedProject)
+
   ctx.body = {
     ...(incomes && { incomes: updatedProject.incomes }),
-    ...(expenses && { expenses: updatedProject.expenses })
+    ...(expenses && { expenses: updatedProject.expenses }),
+    ...(generalInfo && { generalInfo })
   }
+  // ctx.body = { updatedProject }
 })
 
 export default router

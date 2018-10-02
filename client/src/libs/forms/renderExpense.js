@@ -15,7 +15,7 @@ export class renderExpenseAndIncome extends Component {
     // if there are defaults, push it to the field array
     if (defaultValues) {
       defaultValues.toJS().map(v => {
-        fields.push(v)
+        return fields.push(v)
       })
     }
   }

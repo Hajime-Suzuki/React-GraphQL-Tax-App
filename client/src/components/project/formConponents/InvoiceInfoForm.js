@@ -5,6 +5,7 @@ import { Field, FieldArray } from 'redux-form'
 import { renderDropdown } from '../../../libs/forms/renderDropdown'
 import { renderExpenseAndIncome } from '../../../libs/forms/renderExpense'
 import { renderTextField } from '../../../libs/forms/renderTextField'
+import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
 
 const InvoiceForm = props => {
   const { handleChange } = props
@@ -36,36 +37,20 @@ const InvoiceForm = props => {
 
       <Field
         component={renderTextField}
-        name="rowPrice"
-        label="Price"
-        onChange={handleChange}
-      />
-      <Field
-        component={renderDropdown}
-        name="taxRate"
-        label="Rate"
-        onChange={handleChange}
-      >
-        <MenuItem value="0">0%</MenuItem>
-        <MenuItem value="6">6%</MenuItem>
-        <MenuItem value="21">21%</MenuItem>
-      </Field>
-      <Field
-        component={renderTextField}
         name="date"
-        label="Date"
+        label="Project Date"
         onChange={handleChange}
       />
+
       <Field
         component={renderDropdown}
         name="status"
         label="Status"
         onChange={handleChange}
       >
-        <MenuItem value="none">None</MenuItem>
-        <MenuItem value="invoice">Invoice Sent</MenuItem>
-        <MenuItem value="paid">Paid</MenuItem>
+        {renderStateMenuItems()}
       </Field>
+
       <Field
         component={renderTextField}
         name="streetAddress"
