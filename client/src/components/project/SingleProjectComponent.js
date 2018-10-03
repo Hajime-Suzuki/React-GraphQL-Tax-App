@@ -63,6 +63,8 @@ class SingleProjectComponent extends Component {
 
   render() {
     if (this.props.fetching || !this.props.project) return <LoadingIcon />
+    const invoiceStatusFromForm =
+      this.props.generalInfo && this.props.generalInfo.status
 
     return (
       <Fragment>
@@ -100,7 +102,10 @@ class SingleProjectComponent extends Component {
           cofirmAndEdit={this.updateItems}
           type={general}
         >
-          <GeneralEditForm project={this.props.project} />
+          <GeneralEditForm
+            project={this.props.project}
+            invoiceStatusFromForm={invoiceStatusFromForm}
+          />
         </EditFormModal>
       </Fragment>
     )
