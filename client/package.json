@@ -5,8 +5,9 @@
   "dependencies": {
     "@material-ui/core": "^3.0.3",
     "axios": "^0.18.0",
-    "date-fns": "^1.29.0",
+    "date-fns": "2.0.0-alpha.16",
     "immutable": "4.0.0-rc.9",
+    "material-ui-pickers": "^1.0.0-rc.17",
     "normalizr": "^3.2.4",
     "polished": "^2.1.1",
     "react": "^16.4.1",

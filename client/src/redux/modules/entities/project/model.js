@@ -15,9 +15,6 @@ export class Projects extends Record(initialState) {
     const { projects } = data.entities
 
     const immutableProjects = Object.keys(projects).reduce((obj, id) => {
-      const { date } = projects[id]
-      projects[id].date = date && format(date, 'YYYY-MM-DD')
-
       return {
         ...obj,
         [id]: fromJS(projects[id])
