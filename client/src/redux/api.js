@@ -43,13 +43,9 @@ export const API_updateStatus = (id, data) =>
     .put(`/${id}/status`, data, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
 
-export const API_updateIncomeAndExpense = (id, incomeOrExpense, data) =>
+export const API_updateProject = (id, data) =>
   projectAxios
-    .put(
-      `/${id}/incomes-expenses`,
-      { ...data, type: incomeOrExpense },
-      {
-        headers: { Authorization: getJwt() }
-      }
-    )
+    .put(`/${id}`, data, {
+      headers: { Authorization: getJwt() }
+    })
     .then(({ data }) => data)

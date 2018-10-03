@@ -1,12 +1,11 @@
-import parse from 'date-fns/parse'
 import { reset } from 'redux-form'
 import { FETCH_ENTITIES_SUCCESS } from '..'
 import { extractErrorMessage } from '../../../../libs/error'
 import {
   API_createNewProject,
+  API_updateProject,
   API_updateStatus,
-  getSingleUserRequest,
-  API_updateIncomeAndExpense
+  getSingleUserRequest
 } from '../../../api'
 import { Projects } from './model'
 
@@ -18,8 +17,7 @@ const POST_FAILED = 'entities/project/POST_FAILED'
 const FETCH_SINGLE_SUCCESS = 'entities/project/FETCH_SINGLE_SUCCESS'
 const CREATE_PROJECT_SUCCESS = 'entities/project/CREATE_PROJECT_SUCCESS'
 const UPDATE_STATUS_SUCCESS = 'entities/project/UPDATE_STATUS_SUCCESS'
-const UPDATE_INCOME_EXPENSE_SUCCESS =
-  'entities/project/UPDATE_INCOME_EXPENSE_SUCCESS'
+const UPDATE_PROJECT_SUCCESS = 'entities/project/UPDATE_PROJECT_SUCCESS'
 
 export const getSingleProject = id => async dispatch => {
   try {
@@ -64,27 +62,21 @@ export const updateStaus = (projectId, data) => async dispatch => {
   }
 }
 
-export const updateIncomesAndExpenses = (
-  projectId,
-  incomeOrExpense,
-  data
-) => async dispatch => {
+export const updateIncomesAndExpenses = (projectId, data) => async dispatch => {
   try {
     dispatch({ type: POST_REQUEST })
-    const updated = await API_updateIncomeAndExpense(
+    const { incomes, expenses, generalInfo } = await API_updateProject(
       projectId,
-      incomeOrExpense,
       data
     )
-    console.log(incomeOrExpense)
 
-    const { incomes, expenses } = updated
     dispatch({
-      type: UPDATE_INCOME_EXPENSE_SUCCESS,
+      type: UPDATE_PROJECT_SUCCESS,
       payload: {
         id: projectId,
         ...(incomes && { incomes }),
-        ...(expenses && { expenses })
+        ...(expenses && { expenses }),
+        ...(generalInfo && { generalInfo })
       }
     })
   } catch (e) {
@@ -117,8 +109,8 @@ const reducer = (state = new Projects(), { type, payload } = {}) => {
       return state.successCreatePost(payload)
     case UPDATE_STATUS_SUCCESS:
       return state.successUpdateStatus(payload)
-    case UPDATE_INCOME_EXPENSE_SUCCESS:
-      return state.successUpdateExpenseAndIncomes(payload)
+    case UPDATE_PROJECT_SUCCESS:
+      return state.updateProject(payload)
 
     default:
       return state

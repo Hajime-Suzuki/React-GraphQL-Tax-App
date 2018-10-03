@@ -5,16 +5,12 @@ import Select from '@material-ui/core/Select'
 import React, { PureComponent } from 'react'
 
 export class renderDropdown extends PureComponent {
-  componentDidMount() {
-    const { initialValue } = this.props
-  }
-
   render() {
     const {
       input,
       label,
       children,
-      meta: { touched, error, dirty },
+      // meta: { touched, error, dirty },
       initialValue,
       ...custom
     } = this.props

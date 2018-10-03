@@ -92,7 +92,7 @@ export class Projects extends Record(initialState) {
     })
   }
 
-  successUpdateExpenseAndIncomes({ id, incomes, expenses }) {
+  updateProject({ id, incomes, expenses, generalInfo }) {
     return this.withMutations(s => {
       s.setIn(['_status', 'posting'], false).setIn(['_status', 'message'], null)
 
@@ -102,6 +102,16 @@ export class Projects extends Record(initialState) {
 
       if (expenses) {
         s.setIn(['data', id, 'expenses'], fromJS(expenses))
+      }
+
+      if (generalInfo) {
+        s.mergeIn(['data', id], fromJS(generalInfo))
+
+        const sortedProject = s.data.sort((a, b) => {
+          return new Date(b.get('date')) - new Date(a.get('date'))
+        })
+
+        s.set('data', sortedProject)
       }
     })
   }
