@@ -13,6 +13,7 @@ import { calcTotalvalueWithoutTax } from '../../libs/singleProject/totalValues'
 import { routes } from '../../routes/constants'
 import { StyledLink } from '../../styles/sharedStyles'
 import { LoadingIcon } from '../UI/LoadingIcon'
+import { format } from 'date-fns'
 
 const StyledPaper = styled(Paper)`
   overflow: 'auto';
@@ -46,7 +47,7 @@ const ProjectsList = props => {
                     {p.get('name')}
                   </StyledLink>
                 </TableCell>
-                <TableCell>{p.get('date')}</TableCell>
+                <TableCell>{format(p.get('date'), 'Y-MM-dd')}</TableCell>
                 <TableCell>
                   {calcTotalvalueWithoutTax(p.get('incomes')) || '-'}
                 </TableCell>
