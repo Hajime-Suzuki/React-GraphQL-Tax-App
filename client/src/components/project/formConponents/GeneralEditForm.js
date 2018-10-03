@@ -4,9 +4,10 @@ import { Field, reduxForm } from 'redux-form'
 import { renderTextField } from '../../../libs/forms/renderTextField'
 import { renderDropdown } from '../../../libs/forms/renderDropdown'
 import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
+
 const GeneralEditForm = props => {
-  const { handleChange, project } = props
-  const isInvoiceSent = project.get('status') !== 'none'
+  const { handleChange, invoiceStatusFromForm } = props
+  const isInvoiceSent = invoiceStatusFromForm !== 'none'
 
   return (
     <Fragment>

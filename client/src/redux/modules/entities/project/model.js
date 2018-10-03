@@ -106,6 +106,12 @@ export class Projects extends Record(initialState) {
 
       if (generalInfo) {
         s.mergeIn(['data', id], fromJS(generalInfo))
+
+        const sortedProject = s.data.sort((a, b) => {
+          return new Date(b.get('date')) - new Date(a.get('date'))
+        })
+
+        s.set('data', sortedProject)
       }
     })
   }
