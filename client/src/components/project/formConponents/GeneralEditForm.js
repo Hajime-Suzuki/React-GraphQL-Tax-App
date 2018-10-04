@@ -4,7 +4,8 @@ import { Field, reduxForm } from 'redux-form'
 import { renderTextField } from '../../../libs/forms/renderTextField'
 import { renderDropdown } from '../../../libs/forms/renderDropdown'
 import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
-
+import { format } from 'date-fns'
+import { renderDatePicker } from '../../../libs/forms/renderDatePicker'
 const GeneralEditForm = props => {
   const { handleChange, invoiceStatusFromForm } = props
   const isInvoiceSent = invoiceStatusFromForm !== 'none'
@@ -27,7 +28,7 @@ const GeneralEditForm = props => {
       />
 
       <Field
-        component={renderTextField}
+        component={renderDatePicker}
         name="date"
         label="Project Date"
         onChange={handleChange}
@@ -42,7 +43,7 @@ const GeneralEditForm = props => {
         {renderStateMenuItems()}
       </Field>
       <Field
-        component={renderTextField}
+        component={renderDatePicker}
         name="invoiceDate"
         label="Invoice Date"
         onChange={handleChange}
@@ -58,7 +59,8 @@ const mapSateToProps = (_, { project }) => ({
     invoiceNumber: project && project.get('invoiceNumber'),
     invoiceDate: project && project.get('invoiceDate'),
     status: project && project.get('status'),
-    date: project && project.get('date')
+    date: project && project.get('date'),
+    test: '2018-09-09'
   }
 })
 

@@ -58,7 +58,7 @@ const SingleProject = ({ project: p, openModal, posting }) => {
             <Icon className="far fa-calendar-alt" />
             <Typography className="invoice-date">
               {p.get('invoiceDate')
-                ? format(p.get('invoiceDate'), 'YYYY-MM-DD')
+                ? format(p.get('invoiceDate'), 'Y-MM-dd')
                 : '-'}
             </Typography>
           </Grid>

@@ -15,6 +15,9 @@ const incomes = 'incomes'
 const expenses = 'expenses'
 const general = 'general'
 
+// TODO: Edit Contact Person.
+// TODO: Order by date.
+// TODO: Search by name | date | month | status === 'none' items.
 class SingleProjectComponent extends Component {
   state = {
     isIncomeModalOpen: false,
