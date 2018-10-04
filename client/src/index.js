@@ -10,11 +10,17 @@ import registerServiceWorker from './registerServiceWorker'
 import { theme } from './styles/theme'
 import store from './redux'
 
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider'
+
+import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils'
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <MuiThemeProvider theme={theme}>
-        <App />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     </BrowserRouter>
   </Provider>,
