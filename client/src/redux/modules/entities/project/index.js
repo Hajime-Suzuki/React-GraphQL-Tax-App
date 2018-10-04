@@ -9,6 +9,8 @@ import {
 } from '../../../api'
 import { Projects } from './model'
 
+const SORT_BY_INVOICE_DATE = 'entities/project/SORT_BY_INVOICE_DATE'
+
 const FETCH_REQUESET = 'entities/project/FETCH_REQUEST'
 const FETCH_FAILED = 'entities/project/FETCH_FAILED'
 const POST_REQUEST = 'entities/project/POST_REQUEST'
@@ -33,8 +35,6 @@ export const getSingleProject = id => async dispatch => {
 export const createNewProject = data => async dispatch => {
   try {
     data.status = data.status || 'none'
-    // data.date = data.date && parse(data.date)
-
     dispatch({ type: POST_REQUEST })
     const project = await API_createNewProject(data)
     dispatch({ type: CREATE_PROJECT_SUCCESS, payload: project })
@@ -88,6 +88,10 @@ export const updateIncomesAndExpenses = (projectId, data) => async dispatch => {
   }
 }
 
+export const sortProjectByDate = type => {
+  return { type: SORT_BY_INVOICE_DATE, payload: type }
+}
+
 const reducer = (state = new Projects(), { type, payload } = {}) => {
   switch (type) {
     case FETCH_ENTITIES_SUCCESS:
@@ -111,6 +115,9 @@ const reducer = (state = new Projects(), { type, payload } = {}) => {
       return state.successUpdateStatus(payload)
     case UPDATE_PROJECT_SUCCESS:
       return state.updateProject(payload)
+
+    case SORT_BY_INVOICE_DATE:
+      return state.sortProjectByDate(payload)
 
     default:
       return state
