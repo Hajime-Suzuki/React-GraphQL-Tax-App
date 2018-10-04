@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import userReducer from './user'
 import projectReducer from './project'
-import { getEntitiesRequest } from '../../api'
+import { API_getEntities } from '../../api'
 import { normalize, schema } from 'normalizr'
 import { extractErrorMessage } from '../../../libs/error'
 
@@ -14,10 +14,10 @@ const userSchema = new schema.Entity('user', {
   projects: [projectSchema]
 })
 
-export const getEntities = () => async (dispatch, getState) => {
+export const getEntities = type => async (dispatch, getState) => {
   try {
     dispatch({ type: FETCH_ENTITIES_REQUEST })
-    const data = await getEntitiesRequest(getState().user.getId())
+    const data = await API_getEntities(getState().user.getId())
     const normalized = normalize(data.user, userSchema)
 
     dispatch({ type: FETCH_ENTITIES_SUCCESS, payload: normalized })

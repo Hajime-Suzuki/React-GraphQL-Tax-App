@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+import { format, toDate, startOfQuarter } from 'date-fns'
 import { fromJS, Map, Record, OrderedMap } from 'immutable'
 
 const initialState = {
@@ -32,6 +32,31 @@ export class Projects extends Record(initialState) {
     const projects = this.data
     const [...values] = projects.values()
     return values
+  }
+
+  getCurrentPeriodProjects() {
+    const today = new Date()
+    const currentPeriodStartDate = startOfQuarter(today)
+    return this.data.filter(
+      p => new Date(p.get('invoiceDate')) >= currentPeriodStartDate
+    )
+  }
+
+  sortProjectByDate(type) {
+    return this.withMutations(s => {
+      const sortedProject = s.data.sort((a, b) => {
+        if (!!a.get(type) && !b.get(type)) {
+          return -1
+        }
+        if (!!b.get(type) && !a.get(type)) {
+          return 1
+        }
+
+        const diff = new Date(b.get(type)) - new Date(a.get(type))
+        return diff
+      })
+      s.set('data', sortedProject)
+    })
   }
 
   fetchRequest() {
