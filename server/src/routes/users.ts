@@ -1,7 +1,7 @@
 import * as Router from 'koa-router'
 import { Project } from '../Models/Project'
 import { IUser, User } from '../Models/User'
-import { authMiddleware } from '../passport/passport'
+import { authMiddleware, IJwtPayload } from '../passport/passport'
 
 const usersRoutes = new Router({
   prefix: '/users'
@@ -29,5 +29,21 @@ usersRoutes.get('/:id', authMiddleware, async ctx => {
   ctx.status = 200
   ctx.body = { user }
 })
+
+// usersRoutes.get('/:id/dashboard', authMiddleware, async ctx => {
+//   // wouldn't need :id?.
+
+//   const jwtPayload: IJwtPayload = (ctx.req as any).user
+//   const userId = jwtPayload.id
+
+//   const user = await User.findById(userId).populate({
+//     path: 'projects',
+//     match: { date: { $gt: '2018-09-09' } },
+//     options: { sort: { date: -1 } }
+//   })
+//   console.log(JSON.stringify(user!.projects, null, 2))
+
+//   ctx.body = { user }
+// })
 
 export default usersRoutes

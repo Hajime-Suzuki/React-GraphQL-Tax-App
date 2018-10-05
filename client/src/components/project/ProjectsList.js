@@ -22,16 +22,21 @@ const StyledPaper = styled(Paper)`
 `
 
 const ProjectsList = props => {
-  const { projects, handleChange, postingId } = props
+  const { projects, handleChange, postingId, sortProjectByDate } = props
   return (
     <StyledPaper style={{ overflow: 'auto' }}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>Date</TableCell>
+            <TableCell onClick={() => sortProjectByDate('date')}>
+              Project Date
+            </TableCell>
+            <TableCell onClick={() => sortProjectByDate('invoiceDate')}>
+              Invoice Date
+            </TableCell>
             <TableCell>Price</TableCell>
-            <TableCell>Location</TableCell>
+            {/* <TableCell>Location</TableCell> */}
             <TableCell>Status</TableCell>
           </TableRow>
         </TableHead>
@@ -47,11 +52,18 @@ const ProjectsList = props => {
                     {p.get('name')}
                   </StyledLink>
                 </TableCell>
-                <TableCell>{format(p.get('date'), 'Y-MM-dd')}</TableCell>
+                <TableCell>
+                  {p.get('date') ? format(p.get('date'), 'Y-MM-dd') : '-'}
+                </TableCell>
+                <TableCell>
+                  {p.get('invoiceDate')
+                    ? format(p.get('invoiceDate'), 'Y-MM-dd')
+                    : '-'}
+                </TableCell>
                 <TableCell>
                   {calcTotalvalueWithoutTax(p.get('incomes')) || '-'}
                 </TableCell>
-                <TableCell>{p.get('location') || '-'}</TableCell>
+                {/* <TableCell>{p.get('location') || '-'}</TableCell> */}
                 <TableCell>
                   {postingId === p.get('id') ? (
                     <LoadingIcon size="2em" />
