@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { baseUrl } from '../constants'
+import { baseUrl, FetchEntityType } from '../constants'
 import { getJwt } from '../libs/jwt'
 
 const loginAxios = axios.create({
@@ -23,10 +23,16 @@ export const loginOrSignupAndGetJwt = async (type, userData) => {
   return null
 }
 
-export const getEntitiesRequest = async userId =>
-  userAxios
+export const API_getEntities = async userId => {
+  // let url = `/${userId}`
+  // if (type === FetchEntityType.dashBoard) {
+  //   url += '/dashboard'
+  // }
+
+  return userAxios
     .get(`/${userId}`, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
+}
 
 export const getSingleUserRequest = async projectId =>
   projectAxios
