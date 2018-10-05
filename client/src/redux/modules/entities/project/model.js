@@ -1,5 +1,5 @@
-import { format, toDate, startOfQuarter } from 'date-fns'
-import { fromJS, Map, Record, OrderedMap } from 'immutable'
+import { startOfQuarter } from 'date-fns';
+import { fromJS, Map, OrderedMap, Record } from 'immutable';
 
 const initialState = {
   _status: {
