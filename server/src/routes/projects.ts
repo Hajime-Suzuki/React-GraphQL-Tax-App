@@ -118,18 +118,17 @@ router.post('/populate', async ctx => {
   await Expense.deleteMany({})
 
   const email = (ctx as any).request.body.email
+
   const user = await User.findOne({ email })
-  if (user) {
-    await user.remove()
-  }
-  const newUser = await User.create({
+  if (user) await user.remove()
+  const newUser = new User({
     firstName: 'test',
     lastName: 'user',
     email,
     password: 'ashtasht'
   })
 
-  const projectAmount = 100
+  const projectAmount = 50
   const nonProjectExpensesAomunt = 20
 
   const futureLimit = addMonths(new Date(), 4)
@@ -139,27 +138,27 @@ router.post('/populate', async ctx => {
   const projects = Array(projectAmount)
     .fill('')
     .map(_ => {
-      const incomesAmount = faker.random.number({ min: 1, max: 10 })
+      const incomesAmount = faker.random.number({ min: 1, max: 3 })
       const expensesAmount = faker.random.number(5)
 
       const projectIncomes = Array(incomesAmount)
         .fill('')
         .map(__ => {
           return {
-            name: faker.commerce.product,
-            price: faker.commerce.price(50, 800, 2),
+            name: faker.commerce.product(),
+            price: faker.commerce.price(50, 300, 2),
             taxRate: taxRates[faker.random.number(2)],
-            quantity: faker.random.number({ min: 1, max: 5 })
+            quantity: faker.random.number({ min: 1, max: 3 })
           }
         })
       const projectExpenses = Array(expensesAmount)
         .fill('')
         .map(__ => {
           return {
-            name: faker.commerce.product,
+            name: faker.commerce.product(),
             price: faker.commerce.price(5, 50, 2),
             taxRate: taxRates[faker.random.number(2)],
-            quantity: faker.random.number(3)
+            quantity: faker.random.number({ min: 1, max: 3 })
           }
         })
 
@@ -205,6 +204,9 @@ router.post('/populate', async ctx => {
 
   const savedProjects = await Project.insertMany(projects)
   const savedExpenses = await Expense.insertMany(expenses)
+  newUser.expenses = savedExpenses
+  newUser.projects = savedProjects
+  await newUser.save()
   ctx.body = savedProjects
 })
 export default router

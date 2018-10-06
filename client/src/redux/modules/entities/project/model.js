@@ -1,5 +1,5 @@
-import { startOfQuarter } from 'date-fns';
-import { fromJS, Map, OrderedMap, Record } from 'immutable';
+import { startOfQuarter } from 'date-fns'
+import { fromJS, Map, OrderedMap, Record } from 'immutable'
 
 const initialState = {
   _status: {
@@ -13,6 +13,7 @@ const initialState = {
 export class Projects extends Record(initialState) {
   setProjects(data) {
     const { projects } = data.entities
+    if (!projects) return this
 
     const immutableProjects = Object.keys(projects).reduce((obj, id) => {
       return {
