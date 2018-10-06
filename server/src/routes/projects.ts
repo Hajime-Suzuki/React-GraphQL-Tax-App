@@ -174,7 +174,6 @@ router.post('/populate', async ctx => {
       return new Project({
         invoiceNumber: String(faker.random.number(100000)),
         name: faker.commerce.productName() + faker.random.number(100),
-        price: faker.random.number({ min: 50, max: 1000 }),
         streetAddress: faker.address.streetAddress(true),
         city: faker.address.city(),
         status: ['none', 'invoice', 'paid'][faker.random.number(2)],

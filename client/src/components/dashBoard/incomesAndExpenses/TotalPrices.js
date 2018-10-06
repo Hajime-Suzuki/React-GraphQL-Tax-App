@@ -28,60 +28,78 @@ const TotalPrices = ({ projects }) => {
           <TableRow>
             <TableCell>Gross Income</TableCell>
             <TableCell>
-              {details0.incomes + details6.incomes + details21.incomes}
+              {(
+                details0.incomes +
+                details6.incomes +
+                details21.incomes
+              ).toFixed(2)}
             </TableCell>
             <TableCell>Gross Expense</TableCell>
             <TableCell>
-              {details0.expenses + details6.expenses + details21.expenses}
+              {(
+                details0.expenses +
+                details6.expenses +
+                details21.expenses
+              ).toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Income Tax 0%</TableCell>
-            <TableCell>{details0.incomesTax}</TableCell>
+            <TableCell>{details0.incomesTax.toFixed(2)}</TableCell>
             <TableCell>Expense Tax 0%</TableCell>
-            <TableCell>{details0.expensesTax}</TableCell>
+            <TableCell>{details0.expensesTax.toFixed(2)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Income Tax 6%</TableCell>
-            <TableCell>{details6.incomesTax}</TableCell>
+            <TableCell>{details6.incomesTax.toFixed(2)}</TableCell>
             <TableCell>Expense Tax 6%</TableCell>
-            <TableCell>{details6.expensesTax}</TableCell>
+            <TableCell>{details6.expensesTax.toFixed(2)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Income Tax 21%</TableCell>
-            <TableCell>{details21.incomesTax}</TableCell>
+            <TableCell>{details21.incomesTax.toFixed(2)}</TableCell>
             <TableCell>Expense Tax 21%</TableCell>
-            <TableCell>{details21.expensesTax}</TableCell>
+            <TableCell>{details21.expensesTax.toFixed(2)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Income Tax Total</TableCell>
             <TableCell>
-              {details0.incomesTax + details6.incomesTax + details21.incomesTax}
+              {(
+                details0.incomesTax +
+                details6.incomesTax +
+                details21.incomesTax
+              ).toFixed(2)}
             </TableCell>
             <TableCell>Expense Tax Total</TableCell>
             <TableCell>
-              {details0.expensesTax +
+              {(
+                details0.expensesTax +
                 details6.expensesTax +
-                details21.expensesTax}
+                details21.expensesTax
+              ).toFixed(2)}
             </TableCell>
           </TableRow>
 
           <TableRow style={{ backgroundColor: 'pink' }}>
             <TableCell>Total Income</TableCell>
             <TableCell>
-              {details0.incomes +
+              {(
+                details0.incomes +
                 details6.incomes +
                 details21.incomes -
-                (details0.expenses + details6.expenses + details21.expenses)}
+                (details0.expenses + details6.expenses + details21.expenses)
+              ).toFixed(2)}
             </TableCell>
             <TableCell>Total Tax to Pay</TableCell>
             <TableCell>
-              {details0.incomesTax +
+              {(
+                details0.incomesTax +
                 details6.incomesTax +
                 details21.incomesTax -
                 (details0.expensesTax +
                   details6.expensesTax +
-                  details21.expensesTax)}
+                  details21.expensesTax)
+              ).toFixed(2)}
             </TableCell>
           </TableRow>
         </TableBody>
