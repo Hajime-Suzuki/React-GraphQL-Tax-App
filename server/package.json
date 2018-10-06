@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/dotenv": "^4.0.3",
     "bcrypt": "^3.0.0",
+    "date-fns": "^1.29.0",
     "dotenv": "^6.0.0",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^2.0.0",
+    "@types/faker": "^4.1.4",
     "@types/jest": "^23.3.2",
     "@types/koa": "^2.0.46",
     "@types/koa-bodyparser": "^5.0.1",
@@ -37,6 +39,7 @@
     "@types/supertest": "^2.0.6",
     "@types/validator": "^9.4.1",
     "cross-env": "^5.2.0",
+    "faker": "^4.1.0",
     "jest": "^23.6.0",
     "nodemon": "^1.18.4",
     "supertest": "^3.3.0",
@@ -47,7 +50,8 @@
     "dev": "nodemon --watch src/**/*.ts --exec ts-node src/starter.ts",
     "test-w": "cross-env NODE_ENV=test jest --watch",
     "test": "cross-env NODE_ENV=test jest",
-    "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts"
+    "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts",
+    "test-e": "cross-env NODE_ENV=test jest ./test/expense.test.ts --watch"
   },
   "jest": {
     "transform": {
