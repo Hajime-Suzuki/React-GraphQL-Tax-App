@@ -131,7 +131,7 @@ router.post('/populate', async ctx => {
   const projectAmount = 50
   const nonProjectExpensesAomunt = 20
 
-  const futureLimit = addMonths(new Date(), 4)
+  const futureLimit = addMonths(new Date(), 1)
   const pastLimit = subMonths(new Date(), 6)
   const taxRates = [0, 6, 21]
 
@@ -171,17 +171,21 @@ router.post('/populate', async ctx => {
         format(addDays(date, 15))
       )
 
+      const invoiceStatus = ['none', 'invoice', 'paid'][faker.random.number(2)]
       return new Project({
         invoiceNumber: String(faker.random.number(100000)),
         name: faker.commerce.productName() + faker.random.number(100),
         streetAddress: faker.address.streetAddress(true),
         city: faker.address.city(),
-        status: ['none', 'invoice', 'paid'][faker.random.number(2)],
+        status: invoiceStatus,
         user: newUser._id,
         expenses: projectExpenses,
         incomes: projectIncomes,
         date,
-        invoiceDate
+        invoiceDate:
+          invoiceStatus === 'none' || invoiceDate > new Date()
+            ? null
+            : invoiceDate
       })
     })
 
@@ -193,10 +197,7 @@ router.post('/populate', async ctx => {
         price: faker.commerce.price(10, 300, 2),
         quantity: faker.random.number({ min: 1, max: 3 }),
         taxRate: taxRates[faker.random.number(2)],
-        date: faker.date.between(
-          format(pastLimit, 'YYYY-MM-DD'),
-          format(futureLimit, 'YYYY-MM-DD')
-        ),
+        date: faker.date.between(format(pastLimit, 'YYYY-MM-DD'), new Date()),
         user: newUser._id
       })
     })
