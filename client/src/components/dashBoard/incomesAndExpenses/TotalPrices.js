@@ -66,8 +66,15 @@ const TotalPrices = ({ projects }) => {
             </TableCell>
           </TableRow>
 
-          <TableRow>
-            <TableCell>Total Payment</TableCell>
+          <TableRow style={{ backgroundColor: 'pink' }}>
+            <TableCell>Total Income</TableCell>
+            <TableCell>
+              {details0.incomes +
+                details6.incomes +
+                details21.incomes -
+                (details0.expenses + details6.expenses + details21.expenses)}
+            </TableCell>
+            <TableCell>Total Tax to Pay</TableCell>
             <TableCell>
               {details0.incomesTax +
                 details6.incomesTax +

@@ -12,8 +12,8 @@ export interface IUser extends Document {
   lastName: string
   email: string
   password: string
-  projects: [IProject]
-  expenses: [IExpense]
+  projects: IProject[]
+  expenses: IExpense[]
   generateToken: () => string
   verifyToken: (token: string) => any
   comparePassword: (password: string) => Promise<boolean>

@@ -18,8 +18,20 @@ export const getEntities = type => async (dispatch, getState) => {
   try {
     dispatch({ type: FETCH_ENTITIES_REQUEST })
     const data = await API_getEntities(getState().user.getId())
-    const normalized = normalize(data.user, userSchema)
 
+    const normalized = normalize(data.user, userSchema)
+    const test = {
+      status: 'none',
+      invoiceNumber: '88380',
+      name: 'Ergonomic Granite Salad34',
+      streetAddress: '4150 Shanna Locks Apt. 364',
+      city: 'South Roselynfurt',
+      user: '5bb90a6db502315990f6ff4a',
+      date: '2018 - 05 - 27 22: 34: 02.527',
+      invoiceDate: '2018 - 05 - 30 19: 19: 36.121'
+    }
+    normalized.projects = normalized.projects || [test]
+    // console.log(normalized)
     dispatch({ type: FETCH_ENTITIES_SUCCESS, payload: normalized })
   } catch (e) {
     console.log(e)

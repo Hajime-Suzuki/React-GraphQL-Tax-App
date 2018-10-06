@@ -1,5 +1,5 @@
 export const currentPeriodIncomeAndTaxDetails = projects => {
-  const outPut = {
+  const output = {
     '0': {
       incomes: 0,
       incomesTax: 0,
@@ -28,9 +28,8 @@ export const currentPeriodIncomeAndTaxDetails = projects => {
         (target.get('taxRate') / 100) *
         target.get('quantity')
 
-      outPut[target.get('taxRate')][type] += Math.round(TotalAmount * 100) / 100
-      outPut[target.get('taxRate')][type + 'Tax'] +=
-        Math.round(TotalAomuntTax * 100) / 100
+      output[target.get('taxRate')][type] += TotalAmount
+      output[target.get('taxRate')][type + 'Tax'] += TotalAomuntTax
     })
   }
 
@@ -39,5 +38,11 @@ export const currentPeriodIncomeAndTaxDetails = projects => {
     addTaxAndIncome(project, 'expenses')
   })
 
-  return outPut
+  // Round
+  Object.entries(output).forEach(([rate, items]) => {
+    Object.entries(items).forEach(([category, price]) => {
+      output[rate][category] = Math.round(price * 100) / 100
+    })
+  })
+  return output
 }
