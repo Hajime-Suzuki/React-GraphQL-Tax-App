@@ -3,8 +3,9 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { currentPeriodIncomeAndTaxDetails } from '../libs/calculatePriceAndTax'
+import { Paper } from '@material-ui/core'
 
 const TotalPrices = ({ projects }) => {
   const incomeAndExpenseDetails = currentPeriodIncomeAndTaxDetails(projects)
@@ -13,7 +14,7 @@ const TotalPrices = ({ projects }) => {
   const details21 = incomeAndExpenseDetails['21']
 
   return (
-    <div>
+    <Paper style={{ overflowX: 'auto' }}>
       <Table>
         <TableHead>
           <TableRow>
@@ -67,11 +68,18 @@ const TotalPrices = ({ projects }) => {
 
           <TableRow>
             <TableCell>Total Payment</TableCell>
-            {/* <TableCell>{totalIncomeTax - totalExpenseTax}</TableCell> */}
+            <TableCell>
+              {details0.incomesTax +
+                details6.incomesTax +
+                details21.incomesTax -
+                (details0.expensesTax +
+                  details6.expensesTax +
+                  details21.expensesTax)}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
-    </div>
+    </Paper>
   )
 }
 

@@ -1,5 +1,8 @@
+import { addDays, addMonths, format, subMonths } from 'date-fns'
+import * as faker from 'faker'
 import * as Router from 'koa-router'
 import { ContactPerson } from '../Models/ContactPerson'
+import { Expense } from '../Models/Expense'
 import { IExpenseAndIncome, IProject, Project } from '../Models/Project'
 import { IUser, User } from '../Models/User'
 import { authMiddleware, IJwtPayload } from '../passport/passport'
@@ -35,7 +38,8 @@ router.post('/', authMiddleware, async ctx => {
   if (!user) return ctx.throw(404, 'no user found')
 
   const newProject = new Project(data)
-  newProject.user = user._id
+
+  newProject.user = user
 
   if (contactPersonData) {
     const { firstName, lastName, email, phone, link } = contactPersonData
@@ -102,14 +106,105 @@ router.put('/:id', authMiddleware, async ctx => {
 
   if (!updatedProject) return ctx.throw(404, 'project not found')
 
-  // console.log(updatedProject)
-
   ctx.body = {
     ...(incomes && { incomes: updatedProject.incomes }),
     ...(expenses && { expenses: updatedProject.expenses }),
     ...(generalInfo && { generalInfo })
   }
-  // ctx.body = { updatedProject }
 })
 
+router.post('/populate', async ctx => {
+  await Project.deleteMany({})
+  await Expense.deleteMany({})
+
+  const email = (ctx as any).request.body.email
+  const user = await User.findOne({ email })
+  if (user) {
+    await user.remove()
+  }
+  const newUser = await User.create({
+    firstName: 'test',
+    lastName: 'user',
+    email,
+    password: 'ashtasht'
+  })
+
+  const projectAmount = 100
+  const nonProjectExpensesAomunt = 20
+
+  const futureLimit = addMonths(new Date(), 4)
+  const pastLimit = subMonths(new Date(), 6)
+  const taxRates = [0, 6, 21]
+
+  const projects = Array(projectAmount)
+    .fill('')
+    .map(_ => {
+      const incomesAmount = faker.random.number({ min: 1, max: 10 })
+      const expensesAmount = faker.random.number(5)
+
+      const projectIncomes = Array(incomesAmount)
+        .fill('')
+        .map(__ => {
+          return {
+            name: faker.commerce.product,
+            price: faker.commerce.price(50, 800, 2),
+            taxRate: taxRates[faker.random.number(2)],
+            quantity: faker.random.number({ min: 1, max: 5 })
+          }
+        })
+      const projectExpenses = Array(expensesAmount)
+        .fill('')
+        .map(__ => {
+          return {
+            name: faker.commerce.product,
+            price: faker.commerce.price(5, 50, 2),
+            taxRate: taxRates[faker.random.number(2)],
+            quantity: faker.random.number(3)
+          }
+        })
+
+      const date = faker.date.between(
+        format(pastLimit, 'YYYY-MM-DD'),
+        format(futureLimit, 'YYYY-MM-DD')
+      )
+      const invoiceDate = faker.date.between(
+        format(date, 'YYYY-MM-DD'),
+        format(addDays(date, 15))
+      )
+
+      return new Project({
+        invoiceNumber: String(faker.random.number(100000)),
+        name: faker.commerce.productName() + faker.random.number(100),
+        price: faker.random.number({ min: 50, max: 1000 }),
+        streetAddress: faker.address.streetAddress(true),
+        city: faker.address.city(),
+        status: ['none', 'invoice', 'paid'][faker.random.number(2)],
+        user: newUser._id,
+        expenses: projectExpenses,
+        incomes: projectIncomes,
+        date,
+        invoiceDate
+      })
+    })
+
+  const expenses = Array(nonProjectExpensesAomunt)
+    .fill('')
+    .map(_ => {
+      return new Expense({
+        name: faker.commerce.productName(),
+        price: faker.commerce.price(10, 300, 2),
+        quantity: faker.random.number({ min: 1, max: 3 }),
+        taxRate: taxRates[faker.random.number(2)],
+        date: faker.date.between(
+          format(pastLimit, 'YYYY-MM-DD'),
+          format(futureLimit, 'YYYY-MM-DD')
+        ),
+        user: newUser._id
+      })
+    })
+
+  const savedProjects = await Project.insertMany(projects)
+  const savedExpenses = await Expense.insertMany(expenses)
+  ctx.body = savedProjects
+})
 export default router
