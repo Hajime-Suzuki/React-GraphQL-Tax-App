@@ -42,12 +42,5 @@ export const currentPeriodIncomeAndTaxDetails = projects => {
     addTaxAndIncome(project, 'expenses')
   })
 
-  // Round
-  // Object.entries(output).forEach(([rate, items]) => {
-  //   Object.entries(items).forEach(([category, price]) => {
-  //     output[rate][category] = Math.round(price * 100) / 100
-  //     // output[rate][category] = Math.round(price * 100) / 100
-  //   })
-  // })
   return output
 }
