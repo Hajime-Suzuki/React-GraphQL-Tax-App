@@ -1,6 +1,11 @@
 import * as mongoose from 'mongoose'
 
+let dbString = process.env.DB_STRING || 'mongodb://localhost:27017/Tax'
+if (process.env.NODE_ENV === 'test') {
+  dbString = process.env.DB_STRING_TEST || 'mongodb://localhost:27017/Tax-TEST'
+}
+
 export default mongoose.connect(
-  process.env.DB_STRING || 'mongodb://localhost:27017/Tax',
+  dbString,
   { useNewUrlParser: true }
 )
