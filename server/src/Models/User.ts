@@ -3,18 +3,17 @@ import * as jwt from 'jsonwebtoken'
 import { Document, Model, model, Schema } from 'mongoose'
 import * as validator from 'validator'
 import { secret } from '../jwt/jwt'
-import { IProject } from './Project'
-
-interface IJwt {
-  id: string
-}
+import { IExpense } from './Expense'
+import { IExpenseAndIncome, IProject } from './Project'
 
 export interface IUser extends Document {
+  _id: string
   firstName: string
   lastName: string
   email: string
   password: string
-  projects: [IProject]
+  projects: IProject[]
+  expenses: IExpense[]
   generateToken: () => string
   verifyToken: (token: string) => any
   comparePassword: (password: string) => Promise<boolean>
@@ -57,6 +56,12 @@ const userSchema: Schema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: 'Project'
+    }
+  ],
+  expenses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Expense'
     }
   ],
   createdAt: {

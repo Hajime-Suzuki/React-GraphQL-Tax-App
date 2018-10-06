@@ -11,8 +11,12 @@ let initialState = {
 
 class User extends Record(initialState) {
   setUser(data) {
+    // console.log(data)
+
     const userId = data.result
     const userData = data.entities.user[userId]
+    // console.log(userData)
+
     return new User(userData)
   }
 }

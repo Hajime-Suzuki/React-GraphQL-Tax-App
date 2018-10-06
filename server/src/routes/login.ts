@@ -15,8 +15,4 @@ usersRoutes.post(
   }
 )
 
-usersRoutes.get('/test', authMiddleware, (ctx: any) => {
-  ctx.body = ctx.req.user.jwtPayload
-})
-
 export default usersRoutes

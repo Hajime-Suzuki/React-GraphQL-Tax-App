@@ -11,7 +11,7 @@ let server
 let request
 
 beforeAll(async () => {
-  server = await app.listen(5000, () => {
+  server = await app.listen(9000, () => {
     dbConnection.then(() => console.log('DB')).catch(e => console.log(e))
   })
   request = supertest(server)
@@ -39,10 +39,11 @@ describe.only('---- USER ----', () => {
       const user: IUser = data.user
       const token = data.jwt
       const decoded: any = jwt.verify(token, secret)
+      console.log(user)
 
       expect(user.firstName).toBe('first')
       expect(user.password).not.toBe('password')
-      expect(decoded.id).toBe(user.id)
+      expect(decoded.id).toBe(user._id)
     })
 
     test('cannot add a user with duplicate email', async () => {

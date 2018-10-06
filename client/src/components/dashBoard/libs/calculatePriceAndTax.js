@@ -1,5 +1,5 @@
 export const currentPeriodIncomeAndTaxDetails = projects => {
-  const outPut = {
+  const output = {
     '0': {
       incomes: 0,
       incomesTax: 0,
@@ -25,12 +25,15 @@ export const currentPeriodIncomeAndTaxDetails = projects => {
       const TotalAmount = target.get('price') * target.get('quantity')
       const TotalAomuntTax =
         target.get('price') *
-        (target.get('taxRate') / 100) *
+        (target.get('taxRate') !== 0 ? target.get('taxRate') / 100 : 1) *
         target.get('quantity')
 
-      outPut[target.get('taxRate')][type] += Math.round(TotalAmount * 100) / 100
-      outPut[target.get('taxRate')][type + 'Tax'] +=
-        Math.round(TotalAomuntTax * 100) / 100
+      // console.log(target.get('taxRate'))
+      output[target.get('taxRate')].incomes += 10
+      // console.log(output[target.get('taxRate')])
+
+      output[target.get('taxRate')][type] += TotalAmount
+      output[target.get('taxRate')][type + 'Tax'] += TotalAomuntTax
     })
   }
 
@@ -39,5 +42,5 @@ export const currentPeriodIncomeAndTaxDetails = projects => {
     addTaxAndIncome(project, 'expenses')
   })
 
-  return outPut
+  return output
 }
