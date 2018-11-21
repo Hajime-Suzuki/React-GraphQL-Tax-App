@@ -35,6 +35,7 @@ class Routes extends Component {
               component={AddProjectFormContainer}
             />
             <PrivateRoutes
+              // TODO: check
               path={routes.singleProject()}
               exact
               component={SingleProjectComponent}
