@@ -4,6 +4,12 @@
 
 ### Simple tax app with MKRN(Mongo, Koa, React, Node) stack.
 
+##### Todos
+
+- move from REST to GraphQL
+- move from javascript to typescript
+- move redux to state management by Apollo client
+
 ---
 
 Redux structure is based on the "[Redux Ducks](https://github.com/erikras/ducks-modular-redux)" style.
@@ -67,9 +73,10 @@ To make Redux more readable and concise, I used some helpful libraries.
   ```
 
   Although this already looks much more organized, `articles, users, comments` are still objects. To make this even better, I use Immutable-js
- <br/>
+  <br/>
 
 - [Immutable-js](https://github.com/facebook/immutable-js)
+
   <br/>
   Immutable returns a new copy of object. For instance `Immutable.List().push()` returns a copy of List, and doesn't mutate the original List. This is very useful when dealing with nested objects.
   &nbsp;
