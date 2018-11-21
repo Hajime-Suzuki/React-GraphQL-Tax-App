@@ -1,5 +1,5 @@
 {
-  "favorites.sortDirection": "DESC",
+  "favorites.sortDirection": "ASC",
   "favorites.groupsFirst": true,
   "favorites.root": [
     {

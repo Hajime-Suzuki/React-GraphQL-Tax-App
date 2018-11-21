@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { baseUrl, FetchEntityType } from '../constants'
 import { getJwt } from '../libs/jwt'
+const baseUrl = 'http://localhost:4000'
 
 const loginAxios = axios.create({
   baseURL: `${baseUrl}/login`
