@@ -8,6 +8,7 @@ import expenseRoutes from './routes/expense'
 import loginRoutes from './routes/login'
 import projectRoutes from './routes/projects'
 import usersRoutes from './routes/users'
+import server from './server'
 
 dotenv.config()
 
@@ -38,5 +39,7 @@ app.use(projectRoutes.routes())
 app.use(usersRoutes.routes())
 app.use(expenseRoutes.routes())
 app.use(loginRoutes.routes())
+
+server.applyMiddleware({ app })
 
 export default app
