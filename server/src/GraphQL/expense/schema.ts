@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-koa'
 
-const expense = gql`
+export const expenseSchema = gql`
   type Expense {
     name: String
     price: Int

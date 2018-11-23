@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-koa'
 
-const ProjectSchema = gql`
+export const projectSchema = gql`
   type Project {
     invoiceNumber: String!
     inVoiceDate: String
@@ -10,10 +10,10 @@ const ProjectSchema = gql`
     city: String
     link: String
     status: String #'none' | 'invoice' | 'paid'
-    contactPerson?: IContactPerson
-    user: User
-    expenses: [IExpenseAndIncome]
-    incomes: [IExpenseAndIncome]
+    contactPerson: ContactPerson
+    user: String!
+    expenses: [ExpenseAndIncome]
+    incomes: [ExpenseAndIncome]
   }
   type ExpenseAndIncome {
     name: String

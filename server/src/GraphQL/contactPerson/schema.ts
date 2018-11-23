@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-koa'
 
-const contactPerson = gql`
+export const contactPersonSchema = gql`
   type ContactPerson {
     firstName: String
     lastName: String

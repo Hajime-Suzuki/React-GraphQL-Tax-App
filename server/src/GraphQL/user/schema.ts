@@ -1,13 +1,16 @@
 import { gql } from 'apollo-server-koa'
 
-const UserSchema = gql`
+export const userSchema = gql`
   type User {
-    _id: String!
+    id: ID!
     firstName: String!
     lastName: String!
     email: String!
     password: String!
     projects: [Project]
-    expenses: IExpense[]
+    expenses: [Expense]
+  }
+  type Query {
+    getUser(id: String): User
   }
 `
