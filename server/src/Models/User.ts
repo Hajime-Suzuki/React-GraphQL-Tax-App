@@ -2,18 +2,19 @@ import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Document, Model, model, Schema } from 'mongoose'
 import * as validator from 'validator'
+import { User, Project, Expense } from '../GraphQL/@types/types'
 import { secret } from '../jwt/jwt'
-import { IExpense } from './Expense'
-import { IExpenseAndIncome, IProject } from './Project'
+
+type OutPutUser = User & Document
 
 export interface IUser extends Document {
-  _id: string
+  id: string
   firstName: string
   lastName: string
   email: string
   password: string
-  projects: IProject[]
-  expenses: IExpense[]
+  projects: Project[] | null
+  expenses: Expense[] | null
   generateToken: () => string
   verifyToken: (token: string) => any
   comparePassword: (password: string) => Promise<boolean>

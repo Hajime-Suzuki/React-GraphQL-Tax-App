@@ -11,7 +11,8 @@
     "trailing-comma": false,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "curly": [true, "ignore-same-line"]
+    "curly": [true, "ignore-same-line"],
+    "no-unused-variable": [true, { "ignore-pattern": "^_" }]
   },
   "rulesDirectory": []
 }
