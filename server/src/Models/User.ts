@@ -2,10 +2,13 @@ import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Document, Model, model, Schema } from 'mongoose'
 import * as validator from 'validator'
-import { User, Project, Expense } from '../GraphQL/@types/types'
+import { User } from '../GraphQL/@types/types'
 import { secret } from '../jwt/jwt'
+import { IProject } from './Project'
+import { IExpense } from './Expense'
+import { IJwtPayload } from '../passport/passport'
 
-type OutPutUser = User & Document
+// type OutPutUser = User & Document
 
 export interface IUser extends Document {
   id: string
@@ -13,8 +16,8 @@ export interface IUser extends Document {
   lastName: string
   email: string
   password: string
-  projects: Project[] | null
-  expenses: Expense[] | null
+  projects: IProject[] | null
+  expenses: IExpense[] | null
   generateToken: () => string
   verifyToken: (token: string) => any
   comparePassword: (password: string) => Promise<boolean>
@@ -76,6 +79,7 @@ userSchema.set('toJSON', {
 })
 
 userSchema.methods.generateToken = function(): string {
+  console.log('generate')
   return jwt.sign({ id: this.id }, secret, { expiresIn: '10 days' })
 }
 userSchema.methods.verifyToken = (token: string): any =>
@@ -92,8 +96,6 @@ userSchema.statics.findByToken = async function(token: string): Promise<IUser> {
   return this.findById(verifiedToken.id)
 }
 
-const User: IUserModel = model<IUser, IUserModel>('User', userSchema)
-
 userSchema.pre<IUser>('save', async function() {
   const user = await User.findOne({ email: this.email })
   if (user) {
@@ -104,5 +106,7 @@ userSchema.pre<IUser>('save', async function() {
   }
   this.password = await bcrypt.hash(this.password, 10)
 })
+
+const User: IUserModel = model<IUser, IUserModel>('User', userSchema)
 
 export { User }

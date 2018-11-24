@@ -7,10 +7,10 @@ export const userSchema = gql`
     lastName: String!
     email: String!
     password: String!
-    projects: [Project]
-    expenses: [Expense]
+    projects: [Project!]
+    expenses: [Expense!]
   }
   type Query {
-    getUser(id: String): User
+    getUser(id: String!): User!
   }
 `

@@ -9,7 +9,7 @@ export const projectSchema = gql`
     streetAddress: String
     city: String
     link: String
-    status: String #'none' | 'invoice' | 'paid'
+    status: INVOICE_STATUS
     contactPerson: ContactPerson
     user: String!
     expenses: [ExpenseAndIncome]
@@ -19,6 +19,6 @@ export const projectSchema = gql`
     name: String
     price: Int
     quantity: Int
-    taxRate: Int # 0 | 6 | 21
+    taxRate: Int
   }
 `
