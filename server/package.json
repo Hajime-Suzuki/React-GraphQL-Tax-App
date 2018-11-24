@@ -57,7 +57,8 @@
   "scripts": {
     "dev": "ts-node-dev src/starter.ts",
     "gen:introspection": "apollo schema:download ./schema.json --endpoint=http://localhost:4000/graphql",
-    "generateTypes": "yarn gen:introspection && gql-gen --schema schema.json --template typescript --out ./src/GraphQL/@types/types.d.ts",
+    "gen:clean": "rm -f src/GraphQL/@types/types.d.ts",
+    "gen:types": "yarn gen:clean && yarn gen:introspection && gql-gen --schema schema.json --template typescript --out ./src/GraphQL/@types/types.d.ts",
     "test-w": "cross-env NODE_ENV=test jest --watch",
     "test": "cross-env NODE_ENV=test jest",
     "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts",
