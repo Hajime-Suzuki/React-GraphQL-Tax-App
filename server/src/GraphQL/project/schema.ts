@@ -21,4 +21,7 @@ export const projectSchema = gql`
     quantity: Int
     taxRate: Int
   }
+  type Query {
+    getProjectByUserId(userId: String!): [Project]
+  }
 `

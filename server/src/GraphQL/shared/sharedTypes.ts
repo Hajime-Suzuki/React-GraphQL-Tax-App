@@ -6,4 +6,8 @@ export const sharedTypes = gql`
     invoice
     paid
   }
+  interface MutationResponse {
+    success: Boolean!
+    message: String
+  }
 `
