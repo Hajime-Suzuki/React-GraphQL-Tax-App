@@ -1,27 +1,29 @@
-import { GetUserQueryArgs } from '../@types/types'
-import { IResolverObject } from 'graphql-tools'
-import { User, IUser } from '../../Models/User'
-import { Types } from 'mongoose'
-import { Context } from 'koa'
 import { AuthenticationError } from 'apollo-server-koa'
-
-interface ICtx {
-  userId: string
-}
+import { IResolverObject } from 'graphql-tools'
+import { ICtx } from '../../server'
+import {
+  GetUserQueryArgs,
+  LoginUserMutationArgs,
+  RegisterResponse,
+  RegisterUserMutationArgs
+} from '../@types/types.d'
+import { getUserById, loginUser, registerUser } from './methods'
 
 export const userResolvers: IResolverObject = {
   Query: {
     async getUser(_, { id }: GetUserQueryArgs, { userId }: ICtx) {
       if (!userId) throw new AuthenticationError('You are not authorized')
-      const user = await User.findById({ _id: id }).populate({
-        path: 'projects',
-        options: { sort: { date: -1 } },
-        populate: { path: 'contactPerson' }
-      })
-
-      if (!user) throw new Error('user not found')
-
-      return user
+      return getUserById(id)
     }
+  },
+  Mutation: {
+    // TODO: add validation
+    registerUser: (
+      _,
+      data: RegisterUserMutationArgs
+    ): Promise<RegisterResponse> => registerUser(data),
+
+    loginUser: (_, data: LoginUserMutationArgs): Promise<RegisterResponse> =>
+      loginUser(data)
   }
 }

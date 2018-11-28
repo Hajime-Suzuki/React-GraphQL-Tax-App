@@ -5,11 +5,21 @@ export enum InvoiceStatus {
 }
 
 // ====================================================
+// Interfaces
+// ====================================================
+
+export interface MutationResponse {
+  success: boolean;
+
+  message?: string | null;
+}
+
+// ====================================================
 // Types
 // ====================================================
 
 export interface Query {
-  getUser: User;
+  getUser?: User | null;
 }
 
 export interface User {
@@ -90,10 +100,38 @@ export interface Expense {
   user?: User | null;
 }
 
+export interface Mutation {
+  registerUser?: RegisterResponse | null;
+
+  loginUser?: RegisterResponse | null;
+}
+
+export interface RegisterResponse {
+  success: boolean;
+
+  message?: string | null;
+
+  token: string;
+}
+
 // ====================================================
 // Arguments
 // ====================================================
 
 export interface GetUserQueryArgs {
   id: string;
+}
+export interface RegisterUserMutationArgs {
+  firstName: string;
+
+  lastName: string;
+
+  email: string;
+
+  password: string;
+}
+export interface LoginUserMutationArgs {
+  email: string;
+
+  password: string;
 }
