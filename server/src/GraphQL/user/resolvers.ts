@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server-koa'
-import { IResolverObject } from 'graphql-tools'
+import { IResolvers } from 'graphql-tools'
 import { ICtx } from '../../server'
 import {
   GetUserQueryArgs,
@@ -9,7 +9,7 @@ import {
 } from '../@types/types.d'
 import { getUserById, loginUser, registerUser } from './methods'
 
-export const userResolvers: IResolverObject = {
+export const userResolvers: IResolvers = {
   Query: {
     async getUser(_, { id }: GetUserQueryArgs, { userId }: ICtx) {
       if (!userId) throw new AuthenticationError('You are not authorized')

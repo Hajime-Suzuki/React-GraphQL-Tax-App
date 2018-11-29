@@ -1,6 +1,6 @@
 import { Project, IProject } from '../../Models/Project'
 
-export const getProjectByUserId = async (
+export const getProjectsByUser = async (
   userId: string
 ): Promise<IProject[]> => {
   // TODO: change interface to graphql generated one

@@ -19,8 +19,8 @@ export const userSchema = gql`
       firstName: String!
       lastName: String!
       email: String!
-      password: String!
-    ): RegisterResponse
+    ): # password: String!
+    RegisterResponse
     loginUser(email: String!, password: String!): RegisterResponse
   }
   type RegisterResponse {
