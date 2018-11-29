@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/dotenv": "^4.0.3",
+    "@types/graphql": "^14.0.3",
     "apollo-server-koa": "^2.0.0-rc.12",
     "bcrypt": "^3.0.0",
     "date-fns": "^1.29.0",
@@ -59,7 +60,8 @@
     "dev": "ts-node-dev src/starter.ts",
     "gen:introspection": "apollo schema:download ./schema.json --endpoint=http://localhost:4000/graphql",
     "gen:clean": "rm -f src/GraphQL/@types/types.d.ts",
-    "gen:types": "yarn gen:clean && yarn gen:introspection && gql-gen --schema schema.json --template typescript --out ./src/GraphQL/@types/types.d.ts",
+    "gen:byJson": "gql-gen --schema schema.json --template typescript --out ./src/GraphQL/@types/types.d.ts",
+    "gen:types": "yarn gen:clean && yarn gen:introspection && gen:byJson",
     "test-w": "cross-env NODE_ENV=test jest --watch",
     "test": "cross-env NODE_ENV=test jest",
     "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts",

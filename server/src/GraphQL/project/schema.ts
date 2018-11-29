@@ -6,7 +6,7 @@ export const projectSchema = gql`
     invoiceNumber: String!
     inVoiceDate: String
     name: String!
-    date: String
+    date: Date
     streetAddress: String
     city: String
     link: String
@@ -23,6 +23,7 @@ export const projectSchema = gql`
     taxRate: Int
   }
   type Query {
-    getProjectByUserId(userId: String!): [Project]
+    getProjectsByUser(userId: String!): [Project]
   }
+  scalar Date
 `

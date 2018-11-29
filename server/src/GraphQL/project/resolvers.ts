@@ -1,10 +1,31 @@
-import { IResolverObject } from 'graphql-tools'
-import { getProjectByUserId } from './methods'
-import { GetProjectByUserIdQueryArgs } from '../@types/types'
+import { IResolvers, IResolverObject } from 'graphql-tools'
+import { GetProjectsByUserQueryArgs } from '../@types/types'
+import { getProjectsByUser } from './methods'
+import { GraphQLScalarType, Kind } from 'graphql'
+import { ExpenseAndIncome } from '../@types/types.d'
+import { Project } from '../@types/types.d'
 
-export const projectResolvers: IResolverObject = {
+export const projectResolvers: IResolvers = {
   Query: {
-    getProjectByUserId: (_, { userId }: GetProjectByUserIdQueryArgs) =>
-      getProjectByUserId(userId)
-  }
+    getProjectsByUser: async (_, { userId }: GetProjectsByUserQueryArgs) => {
+      const projects = await getProjectsByUser(userId)
+      return projects
+    }
+  },
+  Date: new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date Object',
+    serialize: (value: any) => {
+      console.log('serialize')
+      return value
+    },
+    parseValue: () => {
+      console.log('222222')
+      return 'parse'
+    },
+    parseLiteral: () => {
+      console.log('333333')
+      return 'literal'
+    }
+  })
 }
