@@ -1,6 +1,14 @@
 import { Record } from 'immutable'
 
-let initialState = {
+// interface IUser {
+//   id: string | null
+//   firstName: string | null
+//   lastName: string | null
+//   email: string | null
+//   projects: any[] | null
+//   createdAt: Date | null
+// }
+const initialState = {
   id: null,
   firstName: null,
   lastName: null,
@@ -9,6 +17,13 @@ let initialState = {
   createdAt: null
 }
 
+// interface IData {
+//   result: string
+//   entities: {
+//     user: IUser[]
+//     [entitiy: string]: any
+//   }
+// }
 class User extends Record(initialState) {
   setUser(data) {
     // console.log(data)
