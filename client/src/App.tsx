@@ -1,14 +1,9 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import './App.css'
-import Routes from './routes/Routes'
 
-class App extends Component {
-  render() {
-    return (
-      <div className='App'>
-        <Routes />
-      </div>
-    )
+class App extends React.Component {
+  public render() {
+    return <div className="App">Test23</div>
   }
 }
 

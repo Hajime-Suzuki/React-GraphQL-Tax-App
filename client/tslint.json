@@ -1,38 +1,10 @@
 {
-  "extends": ["tslint:recommended", "tslint-react"],
-  "rules": {
-    "jsx-no-multiline-js": false,
-    "jsx-boolean-value": false,
-    "jsx-curly-spacing": false,
-    "jsx-no-lambda": false,
-    "member-access": false,
-    "interface-name": true,
-    "object-literal-sort-keys": false,
-    "ordered-imports": false,
-    "curly": false,
-    "ban-types": false,
-    "array-type": false,
-    "no-shadowed-variable": true,
-    "no-console": false,
-    "trailing-comma": false,
-    "no-unused-variable": [
-      true,
-      {
-        "ignore-pattern": "^_"
-      }
-    ],
-    "quotemark": [true, "single"],
-    "semicolon": [true, "never"],
-    "interface-over-type-literal": true
-  },
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js",
-      "src/registerServiceWorker.ts",
-      "src/serviceWorker.ts",
-      "src/App.test.tsx"
+      "coverage/lcov-report/*.js"
     ]
   }
 }
