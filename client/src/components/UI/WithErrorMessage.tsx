@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
+import * as React from 'react'
 
 const WithErrorMessage = ({ children, message }) => {
   return (
-    <Fragment>
+    <React.Fragment>
       {message ? <p>{message}</p> : null}
       {children}
-    </Fragment>
+    </React.Fragment>
   )
 }
 

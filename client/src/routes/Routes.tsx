@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import DashBoardComponent from '../components/dashBoard/DashBoardComponent'
 import LoginAndSignupForm from '../components/loginAndSignup/LoginAndSignupForm'
@@ -11,10 +11,10 @@ import NavBar from '../components/UI/NavBar'
 import { MainWrapper } from '../styles/sharedStyles'
 import { routes } from './constants'
 
-class Routes extends Component {
+class Routes extends React.Component {
   render() {
     return (
-      <Fragment>
+      <React.Fragment>
         <Route path={routes.top} component={NavBar} />
         <MainWrapper>
           <Switch>
@@ -43,7 +43,7 @@ class Routes extends Component {
             <Route path={routes.signup} exact component={LoginAndSignupForm} />
           </Switch>
         </MainWrapper>
-      </Fragment>
+      </React.Fragment>
     )
   }
 }

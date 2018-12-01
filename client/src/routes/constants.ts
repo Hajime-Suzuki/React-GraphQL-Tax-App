@@ -4,7 +4,7 @@ const routes = {
   login: '/login',
   dashboard: '/dashboard',
   projects: '/projects',
-  singleProject: id => (id ? `/projects/${id}` : '/projects/:id'),
+  singleProject: (id?: string) => (id ? `/projects/${id}` : '/projects/:id'),
   addProject: '/projects/new'
 }
 

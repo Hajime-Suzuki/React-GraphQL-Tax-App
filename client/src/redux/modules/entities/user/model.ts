@@ -1,6 +1,6 @@
 import { Record } from 'immutable'
 
-let initialState = {
+const initialState = {
   id: null,
   firstName: null,
   lastName: null,

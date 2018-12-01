@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { baseUrl, FetchEntityType } from '../constants'
+import { baseUrl } from '../constants'
 import { getJwt } from '../libs/jwt'
 
 const loginAxios = axios.create({
@@ -23,7 +23,7 @@ export const loginOrSignupAndGetJwt = async (type, userData) => {
   return null
 }
 
-export const API_getEntities = async userId => {
+export const APIGetEntities = async userId => {
   // let url = `/${userId}`
   // if (type === FetchEntityType.dashBoard) {
   //   url += '/dashboard'
@@ -39,19 +39,19 @@ export const getSingleUserRequest = async projectId =>
     .get(`/${projectId}`, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
 
-export const API_createNewProject = data =>
+export const APICreateNewProject = body =>
   projectAxios
-    .post('/', data, { headers: { Authorization: getJwt() } })
+    .post('/', body, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
 
-export const API_updateStatus = (id, data) =>
+export const APIUpdateStatus = (id, body) =>
   projectAxios
-    .put(`/${id}/status`, data, { headers: { Authorization: getJwt() } })
+    .put(`/${id}/status`, body, { headers: { Authorization: getJwt() } })
     .then(({ data }) => data)
 
-export const API_updateProject = (id, data) =>
+export const APIUpdateProject = (id, body) =>
   projectAxios
-    .put(`/${id}`, data, {
+    .put(`/${id}`, body, {
       headers: { Authorization: getJwt() }
     })
     .then(({ data }) => data)

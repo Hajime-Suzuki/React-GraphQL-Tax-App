@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { createNewProject } from '../../redux/modules/entities/project'
 import { routes } from '../../routes/constants'
@@ -7,7 +7,7 @@ import ProjectForm from './ProjectForm'
 // TODO: Add Error Message
 // TODO: Add validation
 
-class AddProjectFormContainer extends Component {
+class AddProjectFormContainer extends React.Component<any> {
   handleSubmit = values => {
     this.props.createNewProject(values)
   }
@@ -25,7 +25,7 @@ class AddProjectFormContainer extends Component {
     return (
       <ProjectForm
         onSubmit={this.handleSubmit}
-        handleChange={this.handleChange}
+        // handleChange={this.handleChange}
       />
     )
   }

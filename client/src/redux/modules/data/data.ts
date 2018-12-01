@@ -44,7 +44,7 @@ export const getUserData = userId => async dispatch => {
   }
 }
 
-const projectReducer = (state = {}, { type, payload } = {}) => {
+const projectReducer = (state = {}, { type, payload }) => {
   switch (type) {
     case FETCHING_DATA_REQUEST:
       return {}
@@ -55,7 +55,7 @@ const projectReducer = (state = {}, { type, payload } = {}) => {
   }
 }
 
-const userReducer = (state = {}, { type, payload } = {}) => {
+const userReducer = (state = {}, { type, payload }) => {
   switch (type) {
     case FETCHING_DATA_REQUEST:
       return {}
@@ -66,7 +66,7 @@ const userReducer = (state = {}, { type, payload } = {}) => {
   }
 }
 
-const messageReducer = (state = null, { type } = {}) => {
+const messageReducer = (state = null, { type }) => {
   switch (type) {
     case FETCHING_DATA_REQUEST:
       return 'pending'
@@ -80,7 +80,7 @@ const messageReducer = (state = null, { type } = {}) => {
 }
 
 export default combineReducers({
-  user: userReducer,
-  projects: projectReducer,
-  message: messageReducer
+  user: userReducer as any,
+  projects: projectReducer as any,
+  message: messageReducer as any
 })

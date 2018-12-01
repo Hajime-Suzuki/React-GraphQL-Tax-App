@@ -7,21 +7,21 @@ import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
-import { RenderDropdown } from '../../libs/forms/renderDropdown'
+import { renderDropdown } from '../../libs/forms/renderDropdown'
 import { renderStateMenuItems } from '../../libs/forms/renderStateMenuItem'
 import { calcTotalvalueWithoutTax } from '../../libs/singleProject/totalValues'
 import { routes } from '../../routes/constants'
 import { StyledLink } from '../../styles/sharedStyles'
 import { LoadingIcon } from '../UI/LoadingIcon'
-import { format } from 'date-fns'
+import { format } from 'date-fns/esm'
 
-const StyledPaper = styled(Paper)`
+const StyledPaper: any = styled(Paper)`
   overflow: 'auto';
   width: ${(100 / 12) * 11}%;
   margin: auto;
 `
 
-const ProjectsList = props => {
+const ProjectsList: React.SFC<any> = props => {
   const { projects, handleChange, postingId, sortProjectByDate } = props
   return (
     <StyledPaper style={{ overflow: 'auto' }}>
@@ -69,7 +69,7 @@ const ProjectsList = props => {
                     <LoadingIcon size="2em" />
                   ) : (
                     <Field
-                      component={RenderDropdown}
+                      component={renderDropdown}
                       name={p.get('id')}
                       initialValue={p.get('status')}
                       onChange={handleChange}
@@ -87,4 +87,4 @@ const ProjectsList = props => {
   )
 }
 
-export default reduxForm({ form: 'status' })(ProjectsList)
+export default reduxForm({ form: 'status' })(ProjectsList) as any

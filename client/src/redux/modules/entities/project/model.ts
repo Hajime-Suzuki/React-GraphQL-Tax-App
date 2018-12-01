@@ -39,13 +39,13 @@ export class Projects extends Record(initialState) {
     const today = new Date()
     const currentPeriodStartDate = startOfQuarter(today)
     return this.data.filter(
-      p => new Date(p.get('invoiceDate')) >= currentPeriodStartDate
+      (p: any) => new Date(p.get('invoiceDate')) >= currentPeriodStartDate
     )
   }
 
   sortProjectByDate(type) {
     return this.withMutations(s => {
-      const sortedProject = s.data.sort((a, b) => {
+      const sortedProject = s.data.sort((a: any, b: any) => {
         if (!!a.get(type) && !b.get(type)) {
           return -1
         }
@@ -53,7 +53,8 @@ export class Projects extends Record(initialState) {
           return 1
         }
 
-        const diff = new Date(b.get(type)) - new Date(a.get(type))
+        const diff =
+          Number(new Date(b.get(type))) - Number(new Date(a.get(type)))
         return diff
       })
       s.set('data', sortedProject)
@@ -130,8 +131,10 @@ export class Projects extends Record(initialState) {
       if (generalInfo) {
         s.mergeIn(['data', id], fromJS(generalInfo))
 
-        const sortedProject = s.data.sort((a, b) => {
-          return new Date(b.get('date')) - new Date(a.get('date'))
+        const sortedProject = s.data.sort((a: any, b: any) => {
+          return (
+            Number(new Date(b.get('date'))) - Number(new Date(a.get('date')))
+          )
         })
 
         s.set('data', sortedProject)

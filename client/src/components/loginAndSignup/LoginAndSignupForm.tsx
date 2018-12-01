@@ -1,5 +1,5 @@
 import Typography from '@material-ui/core/Typography'
-import React, { Component, Fragment } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import WithErrorMessage from '../UI/WithErrorMessage'
@@ -10,7 +10,7 @@ import { userStatusType } from '../../redux/modules/user/model'
 import PropTypes from 'prop-types'
 import SignupForm from './SignupForm'
 
-class LoginAndSignupForm extends Component {
+class LoginAndSignupForm extends React.Component<any> {
   static propTypes = {
     userId: PropTypes.string,
     loginSignupStatus: userStatusType.isRequired
@@ -26,7 +26,7 @@ class LoginAndSignupForm extends Component {
 
     if (userId) return <Redirect to={routes.dashboard} />
     return (
-      <Fragment>
+      <React.Fragment>
         <Typography variant="display2">
           {match.path === '/signup' ? 'Signup' : 'Login'}
         </Typography>
@@ -37,7 +37,7 @@ class LoginAndSignupForm extends Component {
             <LoginForm onSubmit={this.submit} />
           )}
         </WithErrorMessage>
-      </Fragment>
+      </React.Fragment>
     )
   }
 }

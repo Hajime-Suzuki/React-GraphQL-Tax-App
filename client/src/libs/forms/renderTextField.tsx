@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 
-export const renderTextField = ({
+export const renderTextField: React.SFC<any> = ({
   input,
   meta: { touched, error, dirty },
   defaultValue,
