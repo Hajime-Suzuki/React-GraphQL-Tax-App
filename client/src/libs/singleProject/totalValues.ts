@@ -1,7 +1,7 @@
 export const calcOnlyTax = items => {
   const total = items.reduce(
-    (total, item) =>
-      (total +=
+    (sum, item) =>
+      (sum +=
         (item.get('price') * item.get('quantity') * item.get('taxRate')) / 100),
     0
   )
@@ -10,7 +10,7 @@ export const calcOnlyTax = items => {
 
 export const calcTotalvalueWithoutTax = items => {
   const total = items.reduce(
-    (total, item) => (total += item.get('price') * item.get('quantity')),
+    (sum, item) => (sum += item.get('price') * item.get('quantity')),
     0
   )
   return Math.round(total * 100) / 100
