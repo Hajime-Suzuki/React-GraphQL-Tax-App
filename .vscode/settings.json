@@ -1,5 +1,5 @@
 {
-  "favorites.sortDirection": "DESC",
+  "favorites.sortDirection": "ASC",
   "favorites.groupsFirst": true,
   "favorites.root": [
     {
@@ -108,5 +108,12 @@
       "workspacePath": "client\\src\\components\\project\\SingleProjectComponent.js",
       "id": "u9ZSjKlUXgA6d1sx"
     }
-  ]
+  ],
+  "eslint.enable": false,
+  "files.exclude": {
+    "**/node_modules/*/**": false
+  },
+  "search.exclude": {
+    "**/node_modules/*/**": true
+  }
 }
