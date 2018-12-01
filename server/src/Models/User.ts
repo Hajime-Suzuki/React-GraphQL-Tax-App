@@ -79,7 +79,6 @@ userSchema.set('toJSON', {
 })
 
 userSchema.methods.generateToken = function(): string {
-  console.log('generate')
   return jwt.sign({ id: this.id }, secret, { expiresIn: '10 days' })
 }
 userSchema.methods.verifyToken = (token: string): any =>

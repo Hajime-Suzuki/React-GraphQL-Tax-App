@@ -1,55 +1,49 @@
-import Typography from '@material-ui/core/Typography'
+import gql from 'graphql-tag'
 import * as React from 'react'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
-import WithErrorMessage from '../UI/WithErrorMessage'
-import LoginForm from './LoginForm'
-import { routes } from '../../routes/constants'
-import { loginOrSignup } from '../../redux/modules/user'
-import { userStatusType } from '../../redux/modules/user/model'
-import PropTypes from 'prop-types'
-import SignupForm from './SignupForm'
+import LoginFormGQL from './LoginFormGQL'
+import { LOGIN_MUTATION, LoginMutation } from './loginQueryMutation'
 
-class LoginAndSignupForm extends React.Component<any> {
-  static propTypes = {
-    userId: PropTypes.string,
-    loginSignupStatus: userStatusType.isRequired
-  }
+import { LoadingIcon } from '../UI/LoadingIcon'
+import Typography from '@material-ui/core/Typography'
+import { ApolloConsumer } from 'react-apollo'
+import { storeJwt, decodeJwt } from 'src/libs/jwt'
 
-  submit = values => {
-    const type = this.props.match.path === '/signup' ? 'signup' : 'login'
-    this.props.loginOrSignup(type, values)
-  }
-
-  render() {
-    const { userId, loginSignupStatus, match } = this.props
-
-    if (userId) return <Redirect to={routes.dashboard} />
-    return (
-      <React.Fragment>
-        <Typography variant="display2">
-          {match.path === '/signup' ? 'Signup' : 'Login'}
-        </Typography>
-        <WithErrorMessage message={loginSignupStatus.message}>
-          {match.path === '/signup' ? (
-            <SignupForm onSubmit={this.submit} />
-          ) : (
-            <LoginForm onSubmit={this.submit} />
-          )}
-        </WithErrorMessage>
-      </React.Fragment>
-    )
-  }
+interface Props {
+  path: string
+  message: string
+  submit: any
 }
 
-const mapSateToProps = state => {
-  return {
-    userId: state.user.getId(),
-    loginSignupStatus: state.user.getStatus()
-  }
+export const LoginAndSignupForm: React.SFC<Props> = ({
+  path,
+  submit,
+  message
+}) => {
+  return (
+    <ApolloConsumer>
+      {client => (
+        <LoginMutation
+          mutation={LOGIN_MUTATION}
+          onCompleted={({ loginUser }) => {
+            storeJwt(loginUser.token)
+            client.writeData({
+              data: { userId: decodeJwt(loginUser.token).id }
+            })
+          }}
+        >
+          {(login, { loading, error, data }) => {
+            if (loading) return <LoadingIcon />
+            return (
+              <React.Fragment>
+                {error && <Typography>{error.message}</Typography>}
+                <LoginFormGQL login={login} />
+              </React.Fragment>
+            )
+          }}
+        </LoginMutation>
+      )}
+    </ApolloConsumer>
+  )
 }
 
-export default connect(
-  mapSateToProps,
-  { loginOrSignup }
-)(LoginAndSignupForm)
+export default LoginAndSignupForm

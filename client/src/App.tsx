@@ -3,11 +3,7 @@ import Routes from './routes/Routes'
 
 class App extends React.Component {
   public render() {
-    return (
-      <div>
-        <Routes />
-      </div>
-    )
+    return <Routes />
   }
 }
 

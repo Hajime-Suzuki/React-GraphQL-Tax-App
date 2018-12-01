@@ -28,10 +28,12 @@ const server = new ApolloServer({
   }),
 
   context: async ({ ctx: { headers } }: { ctx: Context }) => {
+    console.log({ jwt: headers.jwt })
+    console.log(!!headers.jwt)
     if (headers.jwt) {
       const user = await User.findByToken(headers.jwt)
       return {
-        userId: user.id
+        userId: user
       }
     }
   }
