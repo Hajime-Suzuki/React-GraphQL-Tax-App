@@ -13,7 +13,7 @@ import { calcTotalvalueWithoutTax } from '../../libs/singleProject/totalValues'
 import { routes } from '../../routes/constants'
 import { StyledLink } from '../../styles/sharedStyles'
 import { LoadingIcon } from '../UI/LoadingIcon'
-import { format } from 'date-fns/esm'
+import { format } from 'date-fns'
 
 const StyledPaper: any = styled(Paper)`
   overflow: 'auto';
