@@ -13,7 +13,7 @@ const userSchema = new schema.Entity('user', {
 })
 
 export const getUserData = userId => async dispatch => {
-  //add expiration check later
+  // add expiration check later
   try {
     dispatch({ type: FETCHING_DATA_REQUEST })
 
