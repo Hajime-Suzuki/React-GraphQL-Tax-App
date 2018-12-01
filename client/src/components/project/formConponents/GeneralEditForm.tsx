@@ -1,17 +1,17 @@
-import React, { Fragment } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { renderDatePicker } from '../../../libs/forms/renderDatePicker'
-import { RenderDropdown } from '../../../libs/forms/renderDropdown'
+import { renderDropdown } from '../../../libs/forms/renderDropdown'
 import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
 import { renderTextField } from '../../../libs/forms/renderTextField'
 
-const GeneralEditForm = props => {
+const GeneralEditForm: React.SFC<any> = props => {
   const { handleChange, invoiceStatusFromForm } = props
   const isInvoiceSent = invoiceStatusFromForm !== 'none'
 
   return (
-    <Fragment>
+    <React.Fragment>
       <Field
         component={renderTextField}
         name="name"
@@ -36,7 +36,7 @@ const GeneralEditForm = props => {
       />
 
       <Field
-        component={RenderDropdown}
+        component={renderDropdown}
         name="status"
         label="Status"
         onChange={handleChange}
@@ -50,7 +50,7 @@ const GeneralEditForm = props => {
         onChange={handleChange}
         disabled={isInvoiceSent}
       />
-    </Fragment>
+    </React.Fragment>
   )
 }
 
@@ -68,4 +68,4 @@ export default connect(mapSateToProps)(
   reduxForm({
     form: 'generalInfo'
   })(GeneralEditForm)
-)
+) as any

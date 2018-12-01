@@ -12,7 +12,7 @@ import { routes } from '../../routes/constants'
 import { logout } from '../../redux/modules/user'
 import { withStyles } from '@material-ui/core/styles'
 
-const StyledAppBar = styled(AppBar)`
+const StyledAppBar: any = styled(AppBar)`
   && {
     a {
       text-decoration: none;
@@ -76,12 +76,11 @@ const NavBar = props => {
           </Typography>
         )}
 
-        {userId &&
-          pathname.startsWith(routes.projects) && (
-            <Link to={routes.addProject} className={classes.menuItem}>
-              <Button>Add</Button>
-            </Link>
-          )}
+        {userId && pathname.startsWith(routes.projects) && (
+          <Link to={routes.addProject} className={classes.menuItem}>
+            <Button>Add</Button>
+          </Link>
+        )}
 
         {userId && (
           <Link to={routes.projects} className={classes.menuItem}>

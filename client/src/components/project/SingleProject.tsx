@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import format from 'date-fns/format'
-import React, { Fragment } from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 import {
   calcOnlyTax,
@@ -13,7 +13,7 @@ import {
 import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
 import { LoadingIcon } from '../UI/LoadingIcon'
 
-const ProjectDetails = styled(Grid)`
+const ProjectDetails: any = styled(Grid)`
   .invoice-number,
   .invoice-date {
     width: 30%;
@@ -83,7 +83,7 @@ const SingleProject = ({ project: p, openModal, posting }) => {
         <Grid item xs={11} sm={6}>
           <Typography>Contact Person</Typography>
           {c ? (
-            <Fragment>
+            <React.Fragment>
               <Typography>
                 <a href={c.get('link')} target="_blank">
                   {c.get('firstName')} {c.get('lastName')}
@@ -91,7 +91,7 @@ const SingleProject = ({ project: p, openModal, posting }) => {
               </Typography>
               <Typography>{c.get('email')}</Typography>
               <Typography>{c.get('phone')}</Typography>
-            </Fragment>
+            </React.Fragment>
           ) : (
             '-'
           )}

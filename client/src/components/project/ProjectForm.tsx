@@ -7,7 +7,7 @@ import { MainWrapper } from '../../styles/sharedStyles'
 import ContactPersonForm from './formConponents/ContactPersonForm'
 import InvoiceForm from './formConponents/InvoiceInfoForm'
 
-const AddProjectForm = props => {
+const AddProjectForm: React.SFC<any> = props => {
   const { handleSubmit, handleChange } = props
   return (
     <form onSubmit={handleSubmit}>

@@ -28,7 +28,7 @@ export const logout = () => {
   return { type: LOGOUT }
 }
 
-const userReducer = (state = new User(), { type, payload } = {}) => {
+const userReducer = (state = new User(), { type, payload }) => {
   switch (type) {
     case LOGIN_SIGN_UP_REQUEST:
       return state.loginSignupRequest()

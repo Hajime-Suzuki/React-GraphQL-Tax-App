@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { getEntities } from '../../redux/modules/entities'
 import DashBoard from './DashBoard'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import Typography from '@material-ui/core/Typography'
 
-class DashBoardComponent extends Component {
+class DashBoardComponent extends React.Component<any> {
   componentDidMount() {
     this.props.getEntities()
   }

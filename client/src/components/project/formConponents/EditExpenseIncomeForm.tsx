@@ -2,7 +2,7 @@ import React from 'react'
 import { FieldArray, reduxForm } from 'redux-form'
 import { RenderExpenseAndIncome } from '../../../libs/forms/renderExpense'
 
-const EditExpenseIncomeForm = props => {
+const EditExpenseIncomeForm: React.SFC<any> = props => {
   const { defaultValues, type } = props
 
   return (
@@ -16,4 +16,4 @@ const EditExpenseIncomeForm = props => {
 
 export default reduxForm({
   form: 'editExpenseIncome'
-})(EditExpenseIncomeForm)
+})(EditExpenseIncomeForm) as any

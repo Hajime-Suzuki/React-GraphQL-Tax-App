@@ -2,9 +2,9 @@ import { reset } from 'redux-form'
 import { FETCH_ENTITIES_SUCCESS } from '..'
 import { extractErrorMessage } from '../../../../libs/error'
 import {
-  API_createNewProject,
-  API_updateProject,
-  API_updateStatus,
+  APICreateNewProject,
+  APIUpdateProject,
+  APIUpdateStatus,
   getSingleUserRequest
 } from '../../../api'
 import { Projects } from './model'
@@ -36,7 +36,7 @@ export const createNewProject = data => async dispatch => {
   try {
     data.status = data.status || 'none'
     dispatch({ type: POST_REQUEST })
-    const project = await API_createNewProject(data)
+    const project = await APICreateNewProject(data)
     dispatch({ type: CREATE_PROJECT_SUCCESS, payload: project })
   } catch (e) {
     console.log(e)
@@ -47,7 +47,7 @@ export const createNewProject = data => async dispatch => {
 export const updateStaus = (projectId, data) => async dispatch => {
   try {
     dispatch({ type: POST_REQUEST, payload: projectId })
-    const updated = await API_updateStatus(projectId, { status: data })
+    const updated = await APIUpdateStatus(projectId, { status: data })
     dispatch({
       type: UPDATE_STATUS_SUCCESS,
       payload: { id: projectId, status: updated.status }
@@ -65,7 +65,7 @@ export const updateStaus = (projectId, data) => async dispatch => {
 export const updateIncomesAndExpenses = (projectId, data) => async dispatch => {
   try {
     dispatch({ type: POST_REQUEST })
-    const { incomes, expenses, generalInfo } = await API_updateProject(
+    const { incomes, expenses, generalInfo } = await APIUpdateProject(
       projectId,
       data
     )
@@ -92,7 +92,7 @@ export const sortProjectByDate = type => {
   return { type: SORT_BY_INVOICE_DATE, payload: type }
 }
 
-const reducer = (state = new Projects(), { type, payload } = {}) => {
+const reducer = (state = new Projects(), { type, payload }) => {
   switch (type) {
     case FETCH_ENTITIES_SUCCESS:
       return state.setProjects(payload)

@@ -3,12 +3,12 @@ import Grid from '@material-ui/core/Grid'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import React, { Component } from 'react'
+import * as React from 'react'
 import { Field } from 'redux-form'
-import { RenderDropdown } from './renderDropdown'
+import { renderDropdown } from './renderDropdown'
 import { renderTextField } from './renderTextField'
 
-export class RenderExpenseAndIncome extends Component {
+export class RenderExpenseAndIncome extends React.Component<any> {
   componentDidMount() {
     const { defaultValues, fields } = this.props
 
@@ -59,7 +59,7 @@ export class RenderExpenseAndIncome extends Component {
               <Field
                 name={`${item}.taxRate`}
                 label="Rate"
-                component={RenderDropdown}
+                component={renderDropdown}
               >
                 <MenuItem value={0}>0%</MenuItem>
                 <MenuItem value={6}>6%</MenuItem>

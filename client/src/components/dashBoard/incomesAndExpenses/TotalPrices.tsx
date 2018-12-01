@@ -3,7 +3,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import React, { Fragment } from 'react'
+import * as React from 'react'
 import { currentPeriodIncomeAndTaxDetails } from '../libs/calculatePriceAndTax'
 import { Paper } from '@material-ui/core'
 

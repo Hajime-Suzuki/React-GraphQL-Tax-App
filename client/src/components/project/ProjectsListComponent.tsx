@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { getEntities } from '../../redux/modules/entities'
 import {
@@ -12,7 +12,7 @@ import ProjectsList from './ProjectsList'
 // TODO: Get only basic info.
 // TODO: Fetch details when open single page.
 
-class ProjectsListComponent extends Component {
+class ProjectsListComponent extends React.Component<any> {
   componentDidMount() {
     const { projects, getEntities } = this.props
     // when you reload on the single porject and come back here, you fetch all project data.

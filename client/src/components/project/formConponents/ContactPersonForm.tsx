@@ -1,12 +1,12 @@
 import Typography from '@material-ui/core/Typography'
-import React, { Fragment } from 'react'
+import * as React from 'react'
 import { Field } from 'redux-form'
 import { renderTextField } from '../../../libs/forms/renderTextField'
 
 const ContactPersonForm = props => {
   const { handleChange } = props
   return (
-    <Fragment>
+    <React.Fragment>
       <Typography>Contact Person</Typography>
       <Field
         component={renderTextField}
@@ -39,7 +39,7 @@ const ContactPersonForm = props => {
         label="Link"
         onChange={handleChange}
       />
-    </Fragment>
+    </React.Fragment>
   )
 }
 

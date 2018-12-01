@@ -1,16 +1,15 @@
-import MenuItem from '@material-ui/core/MenuItem'
 import Typography from '@material-ui/core/Typography'
-import React, { Fragment } from 'react'
+import * as React from 'react'
 import { Field, FieldArray } from 'redux-form'
-import { RenderDropdown } from '../../../libs/forms/renderDropdown'
-import { RenderExpenseAndIncome } from '../../../libs/forms/renderExpense'
-import { renderTextField } from '../../../libs/forms/renderTextField'
 import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
+import { renderTextField } from '../../../libs/forms/renderTextField'
+import { RenderExpenseAndIncome } from 'src/libs/forms/renderExpense'
+import { renderDropdown } from 'src/libs/forms/renderDropdown'
 
 const InvoiceForm = props => {
   const { handleChange } = props
   return (
-    <Fragment>
+    <React.Fragment>
       <Typography>Invoice Info</Typography>
       <Field
         component={renderTextField}
@@ -43,7 +42,7 @@ const InvoiceForm = props => {
       />
 
       <Field
-        component={RenderDropdown}
+        component={renderDropdown}
         name="status"
         label="Status"
         onChange={handleChange}
@@ -70,7 +69,7 @@ const InvoiceForm = props => {
         label="Link"
         onChange={handleChange}
       />
-    </Fragment>
+    </React.Fragment>
   )
 }
 

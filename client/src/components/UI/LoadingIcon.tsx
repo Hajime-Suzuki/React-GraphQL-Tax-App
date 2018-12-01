@@ -3,12 +3,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { theme } from '../../styles/theme'
 
-const LoadingIconComponent = styled(Icon)`
+const LoadingIconComponent: any = styled(Icon)`
   && {
-    font-size: ${({ size }) => size || '70px'};
+    font-size: ${({ size }: any) => size || '70px'};
     color: ${theme.palette.secondary.main};
   }
 `
-export const LoadingIcon = ({ size }) => {
+export const LoadingIcon: React.SFC<any> = ({ size }) => {
   return <LoadingIconComponent className="fa fa-spinner fa-spin" size={size} />
 }

@@ -2,12 +2,12 @@ import Grid from '@material-ui/core/Grid'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import React, { Fragment } from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 import { cardPadding } from '../../styles/constants'
 import TotalPrices from './incomesAndExpenses/TotalPrices'
 
-const Wrapper = styled(Grid)`
+const Wrapper: any = styled(Grid)`
   && {
     .title {
       margin-bottom: ${cardPadding};
@@ -22,10 +22,15 @@ const Wrapper = styled(Grid)`
   }
 `
 
+const StyledDiv = styled.div`
+  color: black;
+`
+
 const DashBoard = props => {
   const { projects } = props
   return (
-    <Fragment>
+    <React.Fragment>
+      <StyledDiv>test</StyledDiv>
       <Wrapper container justify="center">
         <Typography variant="display1" className="title">
           Current Period
@@ -44,7 +49,7 @@ const DashBoard = props => {
           </Grid>
         </Grid>
       </Wrapper>
-    </Fragment>
+    </React.Fragment>
   )
 }
 export default DashBoard

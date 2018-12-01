@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { getFormValues } from 'redux-form'
 import {
@@ -18,7 +18,7 @@ const general = 'general'
 // TODO: Edit Contact Person.
 // TODO: Order by date.
 // TODO: Search by name | date | month | status === 'none' items.
-class SingleProjectComponent extends Component {
+class SingleProjectComponent extends React.Component<any> {
   state = {
     isIncomeModalOpen: false,
     isExpenseModalOpen: false,
@@ -51,8 +51,6 @@ class SingleProjectComponent extends Component {
     this.closeModal()
   }
 
-  test = () => {}
-
   openModal = type => {
     this.setState({ [type]: true })
   }
@@ -70,7 +68,7 @@ class SingleProjectComponent extends Component {
       this.props.generalInfo && this.props.generalInfo.status
 
     return (
-      <Fragment>
+      <React.Fragment>
         <SingleProject
           project={this.props.project}
           openModal={this.openModal}
@@ -110,7 +108,7 @@ class SingleProjectComponent extends Component {
             invoiceStatusFromForm={invoiceStatusFromForm}
           />
         </EditFormModal>
-      </Fragment>
+      </React.Fragment>
     )
   }
 }

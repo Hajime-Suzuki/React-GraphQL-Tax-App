@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import userReducer from './user'
 import projectReducer from './project'
-import { API_getEntities } from '../../api'
+import { APIGetEntities } from '../../api'
 import { normalize, schema } from 'normalizr'
 import { extractErrorMessage } from '../../../libs/error'
 
@@ -17,7 +17,7 @@ const userSchema = new schema.Entity('user', {
 export const getEntities = type => async (dispatch, getState) => {
   try {
     dispatch({ type: FETCH_ENTITIES_REQUEST })
-    const data = await API_getEntities(getState().user.getId())
+    const data = await APIGetEntities(getState().user.getId())
 
     const normalized = normalize(data.user, userSchema)
     const test = {
@@ -30,7 +30,7 @@ export const getEntities = type => async (dispatch, getState) => {
       date: '2018 - 05 - 27 22: 34: 02.527',
       invoiceDate: '2018 - 05 - 30 19: 19: 36.121'
     }
-    normalized.projects = normalized.projects || [test]
+    ;(normalized as any).projects = (normalized as any).projects || [test]
     // console.log(normalized)
     dispatch({ type: FETCH_ENTITIES_SUCCESS, payload: normalized })
   } catch (e) {
@@ -44,7 +44,7 @@ export const getEntities = type => async (dispatch, getState) => {
 
 const initialState = { fetching: false, message: null }
 
-const entitiesStatus = (state = initialState, { type, payload } = {}) => {
+const entitiesStatus = (state = initialState, { type, payload }) => {
   switch (type) {
     case FETCH_ENTITIES_REQUEST:
       return { fetching: true, message: null }

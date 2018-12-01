@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@date-io/date-fns": "^0.0.2",
     "@material-ui/core": "^3.6.0",
+    "@types/date-fns": "^2.6.0",
+    "@types/react-redux": "^6.0.10",
     "@types/react-router-dom": "^4.3.1",
     "@types/redux-form": "^7.4.12",
     "apollo": "^2.1.7",
     "apollo-boost": "^0.1.22",
     "axios": "^0.18.0",
-    "date-fns": "2.0.0-alpha.25",
+    "date-fns": "2.0.0-alpha.21",
     "graphql": "^14.0.2",
     "graphql-code-generator": "^0.14.5",
     "graphql-codegen-typescript-client": "^0.14.5",
@@ -17,6 +20,7 @@
     "graphql-codegen-typescript-server": "^0.14.5",
     "immutable": "^4.0.0-rc.12",
     "indefinite-observable": "^1.0.2",
+    "material-ui-pickers": "^2.0.4",
     "normalizr": "^3.3.0",
     "polished": "^2.3.0",
     "react": "^16.6.3",
@@ -52,6 +56,7 @@
     "@types/node": "^10.12.11",
     "@types/react": "^16.7.11",
     "@types/react-dom": "^16.0.11",
+    "@types/styled-components": "^4.1.2",
     "typescript": "^3.2.1"
   }
 }
