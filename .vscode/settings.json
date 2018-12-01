@@ -108,5 +108,12 @@
       "workspacePath": "client\\src\\components\\project\\SingleProjectComponent.js",
       "id": "u9ZSjKlUXgA6d1sx"
     }
-  ]
+  ],
+  "eslint.enable": false,
+  "files.exclude": {
+    "**/node_modules/*/**": true
+  },
+  "search.exclude": {
+    "**/node_modules/*/**": true
+  }
 }

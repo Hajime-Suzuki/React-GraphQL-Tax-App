@@ -1,5 +1,13 @@
 {
-  "extends": ["tslint:recommended", "tslint-react"],
+  "extends": [
+    "tslint:recommended",
+    //  "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "jsRules": {
+    "member-ordering": false,
+    "object-literal-sort-keys": false
+  },
   "rules": {
     "jsx-no-multiline-js": false,
     "jsx-boolean-value": false,
@@ -9,12 +17,13 @@
     "interface-name": false,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "curly": false,
     "ban-types": false,
     "array-type": false,
     "no-shadowed-variable": true,
     "no-console": false,
+    "arrow-parens": [true, "ban-single-arg-parens"],
     "trailing-comma": false,
+    "curly": false,
     "no-unused-variable": [
       true,
       {
@@ -32,7 +41,8 @@
       "coverage/lcov-report/*.js",
       "src/registerServiceWorker.ts",
       "src/serviceWorker.ts",
-      "src/App.test.tsx"
+      "src/App.test.tsx",
+      "src/**/*.js"
     ]
   }
 }
