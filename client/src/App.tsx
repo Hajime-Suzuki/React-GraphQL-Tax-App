@@ -1,9 +1,15 @@
 import * as React from 'react'
 import './App.css'
+import Test from './components/Test'
 
 class App extends React.Component {
   public render() {
-    return <div className="App">Test23</div>
+    return (
+      <div>
+        <div className="App">Test2</div>
+        <Test />
+      </div>
+    )
   }
 }
 
