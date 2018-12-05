@@ -65,6 +65,7 @@
     "ts-jest": "22.0.1",
     "ts-lint": "^4.5.1",
     "ts-loader": "^2.3.7",
+    "ts-node": "^7.0.1",
     "tsconfig-paths-webpack-plugin": "^2.0.0",
     "tslint": "^5.7.0",
     "tslint-config-prettier": "^1.10.0",
@@ -82,17 +83,23 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
+    "gen": "gql-gen",
+    "gen2": "apollo client:codegen --queries=./test.ts --target=typescript ./",
     "gen:clean": "rm -f src/graphql/@types/types.d.ts",
     "gen:introspection": "apollo schema:download ./schema.json --endpoint=http://localhost:4000/graphql",
     "gen:json": "gql-gen --schema schema.json --template typescript --out ./src/graphql/@types/types.d.ts",
-    "gen:types": "yarn gen:clean && yarn gen:introspection && yarn gen:json"
+    "gen:types": "yarn gen:clean && yarn gen:introspection && yarn gen:json",
+    "gen:query": "apollo client:codegen --clientName ashts --endpoint http://localhost:4000 --includes ./src/**/*.ts --target typescript test111.ts"
   },
   "devDependencies": {
+    "@types/graphql": "^14.0.3",
     "@types/jest": "^23.3.10",
     "@types/node": "^10.12.11",
     "@types/react": "^16.7.11",
     "@types/react-dom": "^16.0.11",
     "@types/styled-components": "^4.1.2",
+    "graphql-codegen-typescript-react-apollo": "^0.14.5",
+    "graphql-codegen-typescript-resolvers": "^0.14.5",
     "typescript": "^3.2.1"
   },
   "jest": {
