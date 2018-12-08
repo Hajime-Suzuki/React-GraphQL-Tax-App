@@ -26,6 +26,7 @@
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
     "fork-ts-checker-webpack-plugin": "^0.2.8",
+    "formik": "^1.3.2",
     "fs-extra": "3.0.1",
     "graphql": "^14.0.2",
     "graphql-code-generator": "^0.14.5",
@@ -82,10 +83,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "gen:clean": "rm -f src/graphql/@types/types.d.ts",
     "gen:introspection": "apollo schema:download ./schema.json --endpoint=http://localhost:4000/graphql",
-    "gen:json": "gql-gen --schema schema.json --template typescript --out ./src/graphql/@types/types.d.ts",
-    "gen:types": "yarn gen:clean && yarn gen:introspection && yarn gen:json"
+    "gen": "gql-gen"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
@@ -93,6 +92,7 @@
     "@types/react": "^16.7.11",
     "@types/react-dom": "^16.0.11",
     "@types/styled-components": "^4.1.2",
+    "graphql-codegen-typescript-react-apollo": "^0.14.5",
     "typescript": "^3.2.1"
   },
   "jest": {

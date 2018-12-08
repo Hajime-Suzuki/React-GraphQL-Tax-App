@@ -38,7 +38,7 @@
       "coverage/lcov-report/*.js",
       "src/registerServiceWorker.ts",
       "src/serviceWorker.ts",
-      "src/App.test.tsx"
+      "src/graphql/components/**"
     ]
   }
 }

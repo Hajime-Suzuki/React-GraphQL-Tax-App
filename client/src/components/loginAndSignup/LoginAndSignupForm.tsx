@@ -1,12 +1,10 @@
-import gql from 'graphql-tag'
-import * as React from 'react'
-import LoginFormGQL from './LoginFormGQL'
-import { LOGIN_MUTATION, LoginMutation } from './loginQueryMutation'
-
-import { LoadingIcon } from '../UI/LoadingIcon'
 import Typography from '@material-ui/core/Typography'
+import * as React from 'react'
 import { ApolloConsumer } from 'react-apollo'
-import { storeJwt, decodeJwt } from 'src/libs/jwt'
+import { decodeJwt, storeJwt } from 'src/libs/jwt'
+import { LoadingIcon } from '../UI/LoadingIcon'
+import LoginFormGQL from './LoginFormGQL'
+import { LoginMutation, LOGIN_MUTATION } from './loginQueryMutation'
 
 interface Props {
   path: string
