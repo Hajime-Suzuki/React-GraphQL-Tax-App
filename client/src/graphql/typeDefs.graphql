@@ -1,8 +1,0 @@
-type Query {
-  token: String!
-  userId: String
-}
-
-type Mutation {
-  logout: String
-}
