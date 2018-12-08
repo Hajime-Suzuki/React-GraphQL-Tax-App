@@ -1,21 +1,16 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import {
-  GET_USER,
-  GetUserQuery,
-  GET_USER_ID,
-  UserIdQuery
-} from '../../loginAndSignup/loginQueryMutation'
 import NavBar from './NavBar'
+import { GetToken } from 'src/graphql/components/client/login'
+import { GetUser } from 'src/graphql/components/login'
 
 const NavBarContainer: React.SFC<RouteComponentProps> = props => {
   return (
-    <UserIdQuery query={GET_USER_ID}>
-      {({ data: localState }) => {
+    <GetToken.Component>
+      {({ data: localData }) => {
         return (
-          <GetUserQuery query={GET_USER} variables={{ id: localState!.userId }}>
+          <GetUser.Component variables={{ id: localData!.userId! }}>
             {({ data }) => {
-              console.log(data, '======')
               return (
                 <NavBar
                   user={data && data.getUser}
@@ -23,10 +18,10 @@ const NavBarContainer: React.SFC<RouteComponentProps> = props => {
                 />
               )
             }}
-          </GetUserQuery>
+          </GetUser.Component>
         )
       }}
-    </UserIdQuery>
+    </GetToken.Component>
   )
 }
 

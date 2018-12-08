@@ -1,0 +1,24 @@
+type Author {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  posts(findTitle: String): [Post]
+}
+
+type Post {
+  id: Int!
+  title: String!
+  author: Author!
+}
+
+type Query {
+  posts: [Post]
+}
+
+type Mutation {
+  test: String
+}
+
+schema {
+  query: Query
+}

@@ -1,48 +1,45 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
+import { ApolloConsumer } from 'react-apollo'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
-import { loginOrSignup } from '../../redux/modules/user'
+import { GetToken } from 'src/graphql/components/client/login'
+import { Login } from 'src/graphql/components/login'
+import { decodeJwt, storeJwt } from 'src/libs/jwt'
 import { routes } from '../../routes/constants'
-import { LoginAndSignupForm } from './LoginAndSignupForm'
+import LoginForm from './LoginForm'
 
-interface PropsFromState {
-  userId: string
-  loginSignupStatus: any
-}
-interface Dispatch {
-  loginOrSignup: any
-}
-
-type Props = PropsFromState & Dispatch & RouteComponentProps
+type Props = RouteComponentProps & { data: GetToken.Query }
 
 class LoginAndSignupFormContainer extends React.Component<Props> {
-  submit = values => {
-    const type = this.props.match.path === '/signup' ? 'signup' : 'login'
-    this.props.loginOrSignup(type, values)
-  }
-
   render() {
-    const { userId, loginSignupStatus, match } = this.props
-
-    if (userId) return <Redirect to={routes.dashboard} />
+    const { data: localData } = this.props
+    console.log(localData)
     return (
-      <LoginAndSignupForm
-        path={match.path === '/signup' ? 'Signup' : 'Login'}
-        message={loginSignupStatus.message}
-        submit={this.submit}
-      />
+      <ApolloConsumer>
+        {client => {
+          if (localData.userId) return <Redirect to={routes.dashboard} />
+          return (
+            <Login.Component
+              onCompleted={({ loginUser }) => {
+                storeJwt(loginUser.token)
+                client.writeData({
+                  data: { userId: decodeJwt(loginUser.token).id }
+                })
+              }}
+            >
+              {(login, { error }) => {
+                return (
+                  <div style={{ textAlign: 'center' }}>
+                    {error && <p>{error.message}</p>}
+                    <LoginForm login={login} />
+                  </div>
+                )
+              }}
+            </Login.Component>
+          )
+        }}
+      </ApolloConsumer>
     )
   }
 }
 
-const mapSateToProps = state => {
-  return {
-    userId: state.user.getId(),
-    loginSignupStatus: state.user.getStatus()
-  }
-}
-
-export default connect<PropsFromState, Dispatch>(
-  mapSateToProps,
-  { loginOrSignup }
-)(LoginAndSignupFormContainer)
+export default GetToken.HOC({})(LoginAndSignupFormContainer)

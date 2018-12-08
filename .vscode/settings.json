@@ -115,5 +115,8 @@
   },
   "search.exclude": {
     "**/node_modules/*/**": true
-  }
+  },
+  "cSpell.words": [
+    "Formik"
+  ]
 }

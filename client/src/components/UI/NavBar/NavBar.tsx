@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import { logout } from '../../../redux/modules/user'
 import { routes } from '../../../routes/constants'
 import { UserData } from 'src/components/loginAndSignup/LoginQueryMutation'
+import { GetUser } from 'src/graphql/components/login'
 
 const StyledAppBar: any = styled(AppBar)`
   && {
@@ -39,7 +40,7 @@ const styles = theme =>
   })
 
 interface Props {
-  user: UserData['getUser']
+  user?: GetUser.GetUser | null
   path: string
 }
 
@@ -73,7 +74,6 @@ const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
         {user && (
           <Typography>
             {user.firstName} {user.lastName}
-            user will be here
           </Typography>
         )}
 

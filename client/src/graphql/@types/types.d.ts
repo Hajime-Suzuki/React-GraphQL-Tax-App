@@ -102,9 +102,9 @@ export interface Expense {
 }
 
 export interface Mutation {
-  registerUser?: RegisterResponse | null;
+  registerUser: RegisterResponse;
 
-  loginUser?: RegisterResponse | null;
+  loginUser: RegisterResponse;
 }
 
 export interface RegisterResponse {

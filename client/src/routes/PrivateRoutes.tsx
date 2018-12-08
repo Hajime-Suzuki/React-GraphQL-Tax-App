@@ -1,17 +1,27 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
-import { Redirect, Route } from 'react-router-dom'
+import { Redirect, Route, RouteProps } from 'react-router-dom'
+import { GetToken } from 'src/graphql/components/client/login'
 import { routes } from './constants'
 
-const PrivateRoutes: React.SFC<any> = props => {
-  const { userId, component: Component, ...rest } = props
+interface Props {
+  path: string
+}
+interface ApolloProps {
+  data: GetToken.Query
+}
+
+const PrivateRoutes: React.SFC<Props & RouteProps & ApolloProps> = props => {
+  const {
+    data: { userId },
+    component,
+    ...rest
+  } = props
   if (!userId) {
     return <Redirect to={routes.login} />
   }
+
+  const Component = component as any
   return <Route {...rest} render={props => <Component {...props} />} />
 }
 
-const mapSateToProps = state => ({
-  userId: state.user.getId()
-})
-export default connect(mapSateToProps)(PrivateRoutes)
+export default GetToken.HOC<Props & RouteProps>({})(PrivateRoutes)

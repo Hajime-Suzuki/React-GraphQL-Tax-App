@@ -123,6 +123,7 @@ module.exports = {
         enforce: 'pre',
         include: paths.appSrc
       },
+      { test: /\.graphql?$/, loader: 'webpack-graphql-loader' },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall

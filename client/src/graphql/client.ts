@@ -6,7 +6,7 @@ import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
 import { getJwt, USER_ID } from 'src/libs/jwt'
 import { resolvers } from './resolvers'
-import { typeDefs } from './typeDefs'
+import typeDefs from './typeDefs'
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:4000/graphql'
@@ -23,11 +23,18 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const defaults = {
-  userId: USER_ID
+  userId: USER_ID || null
 }
 
+// const types = mergeTypes(typesArray, { all: true })
+
 const cache = new InMemoryCache()
-const stateLink = withClientState({ cache, typeDefs, resolvers, defaults })
+const stateLink = withClientState({
+  cache,
+  typeDefs,
+  resolvers,
+  defaults
+})
 
 const link = ApolloLink.from([authLink, stateLink, httpLink])
 

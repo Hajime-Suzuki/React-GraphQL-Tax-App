@@ -14,3 +14,18 @@ export const renderTextField: React.SFC<any> = ({
     </Grid>
   )
 }
+
+export const renderFormikTextField = ({
+  field,
+  form: { touched, errors },
+  ...props
+}) => {
+  return (
+    <React.Fragment>
+      <TextField type="text" placeholder={field.name} {...field} {...props} />
+      {touched[field.name] && errors[field.name] && (
+        <div className="error">{errors[field.name]}</div>
+      )}
+    </React.Fragment>
+  )
+}
