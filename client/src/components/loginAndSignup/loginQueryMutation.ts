@@ -34,11 +34,11 @@ export const GET_USER = gql`
   }
 `
 
-export const GET_USER_ID = gql`
-  query getToken {
-    userId @client
-  }
-`
+// export const GET_USER_ID = gql`
+//   query getToken {
+//     userId @client
+//   }
+// `
 
 export type LoginFn = MutationFn<LoginUserData, LoginUserMutationArgs>
 export class LoginMutation extends Mutation<
