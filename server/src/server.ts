@@ -24,7 +24,7 @@ const typeDefs = mergeTypes(
 const server = new ApolloServer({
   schema: makeExecutableSchema({
     typeDefs,
-    resolvers: [userResolvers, projectResolvers]
+    resolvers: [userResolvers as any, projectResolvers]
   }),
 
   context: async ({ ctx: { headers } }: { ctx: Context }) => {

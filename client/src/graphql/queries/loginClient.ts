@@ -5,8 +5,3 @@ export const GET_USER_ID = gql`
     userId @client
   }
 `
-export const LOGOUT = gql`
-  mutation logout {
-    logout @client
-  }
-`

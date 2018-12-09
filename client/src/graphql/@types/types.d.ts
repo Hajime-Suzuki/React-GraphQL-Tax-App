@@ -131,6 +131,8 @@ export interface RegisterUserMutationArgs {
   lastName: string;
 
   email: string;
+
+  password: string;
 }
 export interface LoginUserMutationArgs {
   email: string;

@@ -70,18 +70,6 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace MutationResolvers {
-  export interface Resolvers<Context = {}, TypeParent = {}> {
-    logout?: LogoutResolver<string | null, TypeParent, Context>;
-  }
-
-  export type LogoutResolver<
-    R = string | null,
-    Parent = {},
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-}
-
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
 export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
   Result,

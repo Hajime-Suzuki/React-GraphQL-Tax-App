@@ -1,29 +1,21 @@
 import { AuthenticationError } from 'apollo-server-koa'
 import { IResolvers } from 'graphql-tools'
 import { ICtx } from '../../server'
-import {
-  GetUserQueryArgs,
-  LoginUserMutationArgs,
-  RegisterResponse,
-  RegisterUserMutationArgs
-} from '../@types/types.d'
-import { getUserById, loginUser, registerUser } from './methods'
+import { MutationResolvers, QueryResolvers } from '../@types/types.d'
+import { getUserById, registerUser, loginUser } from './methods'
 
-export const userResolvers: IResolvers = {
+export const userResolvers: {
+  Query: QueryResolvers.Resolvers<ICtx>
+  Mutation: MutationResolvers.Resolvers
+} = {
   Query: {
-    async getUser(_, { id }: GetUserQueryArgs, { userId }: ICtx) {
+    async getUser(_, { id }, { userId }) {
       if (!userId) throw new AuthenticationError('You are not authorized')
-      return getUserById(id)
+      return getUserById(id) as any
     }
   },
   Mutation: {
-    // TODO: add validation
-    registerUser: (
-      _,
-      data: RegisterUserMutationArgs
-    ): Promise<RegisterResponse> => registerUser(data),
-
-    loginUser: (_, data: LoginUserMutationArgs): Promise<RegisterResponse> =>
-      loginUser(data)
+    registerUser: (_, data) => registerUser(data),
+    loginUser: (_, data) => loginUser(data)
   }
 }

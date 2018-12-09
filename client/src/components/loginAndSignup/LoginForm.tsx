@@ -1,15 +1,13 @@
-import * as React from 'react'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import { StyledGridFormItem } from 'src/styles/forms'
-import Divider from '@material-ui/core/Divider'
-import { LoginFn } from './loginQueryMutation'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
 import Grid from '@material-ui/core/Grid'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import * as React from 'react'
 import { renderFormikTextField } from 'src/libs/forms/renderTextField'
+import { Login } from 'src/graphql/components/login'
+import { StyledGridFormItem } from 'src/styles/forms'
 
 interface Props {
-  login: LoginFn
+  login: Login.MutationFn
 }
 export default class LoginForm extends React.Component<Props> {
   handleSubmit = ({ email, password }) => {

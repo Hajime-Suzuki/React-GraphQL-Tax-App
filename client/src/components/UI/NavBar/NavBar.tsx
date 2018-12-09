@@ -8,11 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { logout } from '../../../redux/modules/user'
 import { routes } from '../../../routes/constants'
-import { UserData } from 'src/components/loginAndSignup/LoginQueryMutation'
 import { GetUser } from 'src/graphql/components/login'
-import { Logout } from 'src/graphql/components/client/login'
 
 const StyledAppBar: any = styled(AppBar)`
   && {
@@ -42,13 +39,13 @@ const styles = theme =>
 
 interface Props {
   user?: GetUser.GetUser | null
-  logout: Logout.MutationFn
+  logout: () => void
   path: string
 }
 
 const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
   const { classes, user, path, logout } = props
-
+  console.log('user:', user)
   return (
     <StyledAppBar position="static">
       <Toolbar disableGutters>
@@ -97,7 +94,7 @@ const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
           </Link>
         )}
         {user && (
-          <Button onClick={logout as any} className={classes.menuItem}>
+          <Button onClick={logout} className={classes.menuItem}>
             Logout
           </Button>
         )}

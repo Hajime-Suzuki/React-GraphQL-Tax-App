@@ -22,7 +22,7 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
-const defaults = {
+export const defaults = {
   userId: USER_ID || null
 }
 

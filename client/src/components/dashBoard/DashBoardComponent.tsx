@@ -11,7 +11,7 @@ class DashBoardComponent extends React.Component<any> {
   }
   render() {
     const { projects, fetching } = this.props
-    console.log(projects)
+    // console.log(projects)
 
     if (fetching) return <LoadingIcon />
     if (!projects.size)

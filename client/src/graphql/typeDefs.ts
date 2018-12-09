@@ -6,9 +6,6 @@ export const typeDefs = gql`
     token: String!
     userId: String
   }
-  type Mutation {
-    logout: String
-  }
 `
 
 export default typeDefs
