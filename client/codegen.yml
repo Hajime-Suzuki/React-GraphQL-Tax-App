@@ -25,7 +25,7 @@ generates:
       - typescript-react-apollo
 
   ./src/graphql/@types/resolvers.d.ts:
-    schema: ./src/gql-gen/typeDefs.js
+    schema: ./src/_gql-gen/typeDefs.js
     documents: ./src/graphql/queries/loginClient.ts
     plugins:
       - typescript-common

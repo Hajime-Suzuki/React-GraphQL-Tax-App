@@ -12,6 +12,7 @@ import { logout } from '../../../redux/modules/user'
 import { routes } from '../../../routes/constants'
 import { UserData } from 'src/components/loginAndSignup/LoginQueryMutation'
 import { GetUser } from 'src/graphql/components/login'
+import { Logout } from 'src/graphql/components/client/login'
 
 const StyledAppBar: any = styled(AppBar)`
   && {
@@ -41,11 +42,12 @@ const styles = theme =>
 
 interface Props {
   user?: GetUser.GetUser | null
+  logout: Logout.MutationFn
   path: string
 }
 
 const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
-  const { classes, user, path } = props
+  const { classes, user, path, logout } = props
 
   return (
     <StyledAppBar position="static">
@@ -95,7 +97,7 @@ const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
           </Link>
         )}
         {user && (
-          <Button onClick={logout} className={classes.menuItem}>
+          <Button onClick={logout as any} className={classes.menuItem}>
             Logout
           </Button>
         )}

@@ -1,13 +1,16 @@
-import { QueryResolvers, MutationResolvers } from './@types/resolvers'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import { MutationResolvers, QueryResolvers } from './@types/resolvers'
 
 export const resolvers: {
   Query: QueryResolvers.Resolvers
-  Mutation: MutationResolvers.Resolvers
+  Mutation: MutationResolvers.Resolvers<{ cache: InMemoryCache }>
 } = {
   Query: {},
   Mutation: {
-    logout: () => {
-      console.log('ashitoe')
+    logout: (_, __, { cache }) => {
+      cache.writeData({ data: { userId: null } })
+      localStorage.removeItem('jwt')
+      console.log('logout')
       return 'hello'
     }
   }
