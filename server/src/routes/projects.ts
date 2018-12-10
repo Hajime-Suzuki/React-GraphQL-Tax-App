@@ -3,15 +3,10 @@ import * as faker from 'faker'
 import * as Router from 'koa-router'
 import { ContactPerson } from '../Models/ContactPerson'
 import { Expense } from '../Models/Expense'
-import { IExpenseAndIncome, Project } from '../Models/Project'
-import { IUser, User } from '../Models/User'
+import { Project } from '../Models/Project'
+import { User } from '../Models/User'
 import { authMiddleware, IJwtPayload } from '../passport/passport'
-import { Project as GProject } from '../GraphQL/@types/types'
-
-interface IProjectForm {
-  name: string
-  date?: Date
-}
+import { IProject, IExpenseAndIncome } from '../GraphQL/@types/types'
 
 interface IProjectBody {
   incomes: IExpenseAndIncome[]
@@ -33,7 +28,7 @@ router.get('/:id', authMiddleware, async ctx => {
 router.post('/', authMiddleware, async ctx => {
   const jwtPayload: IJwtPayload = (ctx.req as any).user
   const { contactPerson: contactPersonData, ...data } = ctx.request
-    .body as GProject
+    .body as IProject
 
   const user = await User.findById(jwtPayload.id).populate('projects')
   if (!user) return ctx.throw(404, 'no user found')
@@ -205,7 +200,9 @@ router.post('/populate', async ctx => {
 
   const savedProjects = await Project.insertMany(projects)
   const savedExpenses = await Expense.insertMany(expenses)
-  newUser.expenses = savedExpenses
+
+    // tslint:disable-next-line:align
+  ; (newUser as any).expenses = savedExpenses
   newUser.projects = savedProjects
   await newUser.save()
   ctx.body = savedProjects

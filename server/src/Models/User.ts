@@ -2,25 +2,19 @@ import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Document, Model, model, Schema } from 'mongoose'
 import * as validator from 'validator'
-import { Project, User } from '../GraphQL/@types/types'
+import { IUser } from '../GraphQL/@types/types'
 import { secret } from '../jwt/jwt'
-import { IExpense } from './Expense'
 
-export interface IUser extends Document {
-  id: string
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  projects: Project[] | null
-  expenses: IExpense[] | null
+interface IUserMethods {
   generateToken: () => string
   verifyToken: (token: string) => any
   comparePassword: (password: string) => Promise<boolean>
 }
 
-interface IUserModel extends Model<IUser> {
-  findByToken: (token: string) => IUser
+export type IUserDocument = IUser & Document & IUserMethods
+
+interface IUserModel extends Model<IUserDocument> {
+  findByToken: (token: string) => IUserDocument
 }
 
 const userSchema: Schema = new Schema({
@@ -74,15 +68,13 @@ userSchema.set('toJSON', {
   virtuals: true
 })
 
-userSchema.methods.generateToken = function(): string {
+userSchema.methods.generateToken = function() {
   return jwt.sign({ id: this.id }, secret, { expiresIn: '10 days' })
 }
 userSchema.methods.verifyToken = (token: string): any =>
   jwt.verify(token, secret)
 
-userSchema.methods.comparePassword = async function(
-  plainPassword: string
-): Promise<boolean> {
+userSchema.methods.comparePassword = async function(plainPassword: string) {
   return bcrypt.compare(plainPassword, this.password)
 }
 
@@ -91,7 +83,7 @@ userSchema.statics.findByToken = async function(token: string): Promise<IUser> {
   return this.findById(verifiedToken.id)
 }
 
-userSchema.pre<IUser>('save', async function() {
+userSchema.pre<IUserDocument>('save', async function() {
   const user = await User.findOne({ email: this.email })
   if (user) {
     throw new Error('email is already taken')
@@ -102,6 +94,6 @@ userSchema.pre<IUser>('save', async function() {
   this.password = await bcrypt.hash(this.password, 10)
 })
 
-const User: IUserModel = model<IUser, IUserModel>('User', userSchema)
+const User: IUserModel = model<IUserDocument, IUserModel>('User', userSchema)
 
 export { User }

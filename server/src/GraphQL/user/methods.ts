@@ -7,7 +7,6 @@ import {
 export const getUserById = async (id: string) => User.findById(id)
 export const registerUser = async (data: RegisterUserMutationArgs) => {
   try {
-    console.log(data)
     const newUser = await new User(data).save()
     return {
       success: true,

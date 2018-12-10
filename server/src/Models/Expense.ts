@@ -1,11 +1,7 @@
 import { Document, model, Model, Schema } from 'mongoose'
-import { IExpenseAndIncome } from './Project'
-import { IUser } from './User'
+import { IExpenseAndIncome } from '../GraphQL/@types/types'
 
-export interface IExpense extends IExpenseAndIncome, Document {
-  date: Date
-  user: IUser
-}
+type ExpenseDocument = IExpenseAndIncome & Document
 
 const expenseSchema: Schema = new Schema({
   name: {
@@ -28,7 +24,7 @@ const expenseSchema: Schema = new Schema({
   }
 })
 
-export const Expense: Model<IExpense> = model<IExpense>(
+export const Expense: Model<ExpenseDocument> = model<ExpenseDocument>(
   'Expense',
   expenseSchema
 )

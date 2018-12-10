@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql'
-import { QueryResolvers } from '../@types/types'
+import { QueryResolvers, ProjectResolvers } from '../@types/types'
 import { getProjectsByUserId } from './methods'
 
 export const projectResolvers: { Query: QueryResolvers.Resolvers } = {

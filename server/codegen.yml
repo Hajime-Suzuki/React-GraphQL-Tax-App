@@ -6,5 +6,5 @@ generates:
       - typescript-common
       - typescript-server
       - typescript-resolvers
-    # config:
-    #   interfacePrefix:
+    config:
+      interfacePrefix: I

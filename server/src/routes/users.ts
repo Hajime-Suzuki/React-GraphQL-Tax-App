@@ -1,6 +1,6 @@
 import * as Router from 'koa-router'
 import { Project } from '../Models/Project'
-import { IUser, User } from '../Models/User'
+import { User } from '../Models/User'
 import { authMiddleware, IJwtPayload } from '../passport/passport'
 
 const usersRoutes = new Router({
