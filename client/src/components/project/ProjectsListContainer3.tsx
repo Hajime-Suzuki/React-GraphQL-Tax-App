@@ -12,7 +12,7 @@ import ProjectsList from './ProjectsList'
 // TODO: Get only basic info.
 // TODO: Fetch details when open single page.
 
-class ProjectsListComponent extends React.Component<any> {
+class ProjectsListContainer extends React.Component<any> {
   componentDidMount() {
     const { projects, getEntities } = this.props
     // when you reload on the single porject and come back here, you fetch all project data.
@@ -59,4 +59,4 @@ const mapSateToProps = state => ({
 export default connect(
   mapSateToProps,
   { getEntities, updateStaus, sortProjectByDate }
-)(ProjectsListComponent)
+)(ProjectsListContainer)

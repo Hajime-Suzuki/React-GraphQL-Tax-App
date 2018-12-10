@@ -4,7 +4,6 @@ export enum InvoiceStatus {
   Paid = "paid"
 }
 
-/** Date Object */
 export type Date = any;
 
 // ====================================================

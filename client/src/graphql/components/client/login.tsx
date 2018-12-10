@@ -1,3 +1,11 @@
+export enum InvoiceStatus {
+  None = "none",
+  Invoice = "invoice",
+  Paid = "paid"
+}
+
+export type Date = any;
+
 // ====================================================
 // Documents
 // ====================================================

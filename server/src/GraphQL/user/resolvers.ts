@@ -11,7 +11,7 @@ export const userResolvers: {
   Query: {
     async getUser(_, { id }, { userId }) {
       if (!userId) throw new AuthenticationError('You are not authorized')
-      return getUserById(id) as any
+      return getUserById(id)
     }
   },
   Mutation: {

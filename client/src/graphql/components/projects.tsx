@@ -10,24 +10,37 @@ export type Date = any;
 // Documents
 // ====================================================
 
-export namespace SignUp {
+export namespace GetProjectOverview {
   export type Variables = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
+    userId: string;
   };
 
-  export type Mutation = {
-    __typename?: "Mutation";
+  export type Query = {
+    __typename?: "Query";
 
-    registerUser: RegisterUser;
+    getProjectsByUserId: GetProjectsByUserId[];
   };
 
-  export type RegisterUser = {
-    __typename?: "RegisterResponse";
+  export type GetProjectsByUserId = {
+    __typename?: "Project";
 
-    token: string;
+    id: string;
+
+    name: string;
+
+    date: Date | null;
+
+    inVoiceDate: string | null;
+
+    incomes: (Incomes | null)[] | null;
+
+    status: InvoiceStatus | null;
+  };
+
+  export type Incomes = {
+    __typename?: "ExpenseAndIncome";
+
+    price: number | null;
   };
 }
 
@@ -40,52 +53,48 @@ import gql from "graphql-tag";
 // Components
 // ====================================================
 
-export namespace SignUp {
+export namespace GetProjectOverview {
   export const Document = gql`
-    mutation signUp(
-      $firstName: String!
-      $lastName: String!
-      $email: String!
-      $password: String!
-    ) {
-      registerUser(
-        firstName: $firstName
-        lastName: $lastName
-        email: $email
-        password: $password
-      ) {
-        token
+    query getProjectOverview($userId: String!) {
+      getProjectsByUserId(userId: $userId) {
+        id
+        name
+        date
+        inVoiceDate
+        incomes {
+          price
+        }
+        status
       }
     }
   `;
   export class Component extends React.Component<
-    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+    Partial<ReactApollo.QueryProps<Query, Variables>>
   > {
     render() {
       return (
-        <ReactApollo.Mutation<Mutation, Variables>
-          mutation={Document}
+        <ReactApollo.Query<Query, Variables>
+          query={Document}
           {...(this as any)["props"] as any}
         />
       );
     }
   }
   export type Props<TChildProps = any> = Partial<
-    ReactApollo.MutateProps<Mutation, Variables>
+    ReactApollo.DataProps<Query, Variables>
   > &
     TChildProps;
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
           TProps,
-          Mutation,
+          Query,
           Variables,
           Props<TChildProps>
         >
       | undefined
   ) {
-    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+    return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
       Document,
       operationOptions
     );

@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import LoginAndSignupFormContainer from 'src/components/loginAndSignup/LoginAndSignupFormContainer'
+import ProjectsListContainer from 'src/components/project/ProjectsListContainer'
+import NavBarContainer from 'src/components/UI/NavBar/NavBarContainer'
 import DashBoardComponent from '../components/dashBoard/DashBoardComponent'
 import AddProjectFormContainer from '../components/project/AddProjectFormContainer'
-import ProjectsListComponent from '../components/project/ProjectsListComponent'
 import SingleProjectComponent from '../components/project/SingleProjectComponent'
 import TopPage from '../components/topPage/TopPage'
 import { MainWrapper } from '../styles/sharedStyles'
 import { routes } from './constants'
 import PrivateRoutes from './PrivateRoutes'
-import NavBarContainer from 'src/components/UI/NavBar/NavBarContainer'
 
 class Routes extends React.Component {
   render() {
@@ -27,7 +27,7 @@ class Routes extends React.Component {
             <PrivateRoutes
               path={routes.projects}
               exact
-              component={ProjectsListComponent}
+              component={ProjectsListContainer}
             />
             <PrivateRoutes
               path={routes.addProject}

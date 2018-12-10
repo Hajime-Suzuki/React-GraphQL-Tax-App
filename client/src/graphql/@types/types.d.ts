@@ -4,7 +4,6 @@ export enum InvoiceStatus {
   Paid = "paid"
 }
 
-/** Date Object */
 export type Date = any;
 
 // ====================================================
@@ -18,7 +17,7 @@ export type Date = any;
 export interface Query {
   getUser?: User | null;
 
-  getProjectsByUser?: (Project | null)[] | null;
+  getProjectsByUserId: Project[];
 }
 
 export interface User {
@@ -122,7 +121,7 @@ export interface RegisterResponse {
 export interface GetUserQueryArgs {
   id: string;
 }
-export interface GetProjectsByUserQueryArgs {
+export interface GetProjectsByUserIdQueryArgs {
   userId: string;
 }
 export interface RegisterUserMutationArgs {
