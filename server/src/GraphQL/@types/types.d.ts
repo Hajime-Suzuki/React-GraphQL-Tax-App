@@ -4,7 +4,6 @@ export enum InvoiceStatus {
   Paid = "paid"
 }
 
-/** Date Object */
 export type Date = any;
 
 // ====================================================
@@ -18,7 +17,7 @@ export type Date = any;
 export interface Query {
   getUser?: User | null;
 
-  getProjectsByUser?: (Project | null)[] | null;
+  getProjectsByUserId: Project[];
 }
 
 export interface User {
@@ -122,7 +121,7 @@ export interface RegisterResponse {
 export interface GetUserQueryArgs {
   id: string;
 }
-export interface GetProjectsByUserQueryArgs {
+export interface GetProjectsByUserIdQueryArgs {
   userId: string;
 }
 export interface RegisterUserMutationArgs {
@@ -197,8 +196,8 @@ export namespace QueryResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
     getUser?: GetUserResolver<User | null, TypeParent, Context>;
 
-    getProjectsByUser?: GetProjectsByUserResolver<
-      (Project | null)[] | null,
+    getProjectsByUserId?: GetProjectsByUserIdResolver<
+      Project[],
       TypeParent,
       Context
     >;
@@ -213,12 +212,12 @@ export namespace QueryResolvers {
     id: string;
   }
 
-  export type GetProjectsByUserResolver<
-    R = (Project | null)[] | null,
+  export type GetProjectsByUserIdResolver<
+    R = Project[],
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, GetProjectsByUserArgs>;
-  export interface GetProjectsByUserArgs {
+  > = Resolver<R, Parent, Context, GetProjectsByUserIdArgs>;
+  export interface GetProjectsByUserIdArgs {
     userId: string;
   }
 }

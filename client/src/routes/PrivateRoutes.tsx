@@ -16,6 +16,7 @@ const PrivateRoutes: React.SFC<Props & RouteProps & ApolloProps> = props => {
     component,
     ...rest
   } = props
+
   if (!userId) {
     return <Redirect to={routes.login} />
   }

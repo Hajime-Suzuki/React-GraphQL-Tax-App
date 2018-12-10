@@ -3,9 +3,10 @@ import * as faker from 'faker'
 import * as Router from 'koa-router'
 import { ContactPerson } from '../Models/ContactPerson'
 import { Expense } from '../Models/Expense'
-import { IExpenseAndIncome, IProject, Project } from '../Models/Project'
+import { IExpenseAndIncome, Project } from '../Models/Project'
 import { IUser, User } from '../Models/User'
 import { authMiddleware, IJwtPayload } from '../passport/passport'
+import { Project as GProject } from '../GraphQL/@types/types'
 
 interface IProjectForm {
   name: string
@@ -32,14 +33,14 @@ router.get('/:id', authMiddleware, async ctx => {
 router.post('/', authMiddleware, async ctx => {
   const jwtPayload: IJwtPayload = (ctx.req as any).user
   const { contactPerson: contactPersonData, ...data } = ctx.request
-    .body as IProject
+    .body as GProject
 
   const user = await User.findById(jwtPayload.id).populate('projects')
   if (!user) return ctx.throw(404, 'no user found')
 
   const newProject = new Project(data)
 
-  newProject.user = user
+  newProject.user = user.id
 
   if (contactPersonData) {
     const { firstName, lastName, email, phone, link } = contactPersonData

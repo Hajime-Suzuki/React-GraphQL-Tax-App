@@ -8,6 +8,7 @@ import { client } from 'src/graphql/client'
 class NavBarContainer extends React.Component<RouteComponentProps> {
   handleLogout = () => {
     localStorage.removeItem('jwt')
+    // client.writeData({ data: { userId: null } })
     client.resetStore()
     this.props.history.replace('/')
   }

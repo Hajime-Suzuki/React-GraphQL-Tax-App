@@ -23,7 +23,7 @@ export const projectSchema = gql`
     taxRate: Int
   }
   type Query {
-    getProjectsByUser(userId: String!): [Project]
+    getProjectsByUserId(userId: String!): [Project!]!
   }
   scalar Date
 `

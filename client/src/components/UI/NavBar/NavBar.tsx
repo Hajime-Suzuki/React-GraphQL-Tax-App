@@ -45,7 +45,6 @@ interface Props {
 
 const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
   const { classes, user, path, logout } = props
-  console.log('user:', user)
   return (
     <StyledAppBar position="static">
       <Toolbar disableGutters>

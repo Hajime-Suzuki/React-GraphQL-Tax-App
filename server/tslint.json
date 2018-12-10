@@ -12,7 +12,9 @@
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "curly": [true, "ignore-same-line"],
-    "no-unused-variable": [true, { "ignore-pattern": "^_" }]
+    "no-unused-variable": [true, { "ignore-pattern": "^_" }],
+    "member-access": false,
+    "variable-name": false
   },
   "linterOptions": {
     "exclude": ["node_modules/**/*.ts", "src/GraphQL/@types/**"]
