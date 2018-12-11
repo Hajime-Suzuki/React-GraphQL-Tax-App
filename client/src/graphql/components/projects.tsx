@@ -30,9 +30,9 @@ export namespace GetProjectOverview {
 
     date: Date | null;
 
-    inVoiceDate: string | null;
+    invoiceDate: string | null;
 
-    incomes: (Incomes | null)[] | null;
+    incomes: Incomes[] | null;
 
     status: InvoiceStatus | null;
   };
@@ -40,7 +40,9 @@ export namespace GetProjectOverview {
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
-    price: number | null;
+    price: number;
+
+    quantity: number;
   };
 }
 
@@ -60,9 +62,10 @@ export namespace GetProjectOverview {
         id
         name
         date
-        inVoiceDate
+        invoiceDate
         incomes {
           price
+          quantity
         }
         status
       }

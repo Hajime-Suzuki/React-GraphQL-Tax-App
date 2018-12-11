@@ -41,7 +41,7 @@ export interface Project {
 
   invoiceNumber: string;
 
-  inVoiceDate?: string | null;
+  invoiceDate?: string | null;
 
   name: string;
 
@@ -59,9 +59,9 @@ export interface Project {
 
   user: string;
 
-  expenses?: (ExpenseAndIncome | null)[] | null;
+  expenses?: ExpenseAndIncome[] | null;
 
-  incomes?: (ExpenseAndIncome | null)[] | null;
+  incomes?: ExpenseAndIncome[] | null;
 }
 
 export interface ContactPerson {
@@ -77,13 +77,13 @@ export interface ContactPerson {
 }
 
 export interface ExpenseAndIncome {
-  name?: string | null;
+  name: string;
 
-  price?: number | null;
+  price: number;
 
-  quantity?: number | null;
+  quantity: number;
 
-  taxRate?: number | null;
+  taxRate: number;
 }
 
 export interface Expense {

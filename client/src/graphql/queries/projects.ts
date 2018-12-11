@@ -6,9 +6,10 @@ export const GET_PROJECT_OVERVIEW = gql`
       id
       name
       date
-      inVoiceDate
+      invoiceDate
       incomes {
         price
+        quantity
       }
       status
     }

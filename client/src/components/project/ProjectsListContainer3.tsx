@@ -7,7 +7,7 @@ import {
 } from '../../redux/modules/entities/project'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import WithErrorMessage from '../UI/WithErrorMessage'
-import ProjectsList from './ProjectsList'
+import ProjectsList from './ProjectsList2'
 
 // TODO: Get only basic info.
 // TODO: Fetch details when open single page.

@@ -5,34 +5,37 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { GetProjectOverview } from 'src/graphql/components/projects'
 import styled from 'styled-components'
-import { renderDropdown } from '../../libs/forms/renderDropdown'
-import { renderStateMenuItems } from '../../libs/forms/renderStateMenuItem'
-import { calcTotalvalueWithoutTax } from '../../libs/singleProject/totalValues'
 import { routes } from '../../routes/constants'
 import { StyledLink } from '../../styles/sharedStyles'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import { format } from 'date-fns'
-
+import {
+  calcTotalvalueWithoutTax,
+  calcTotalvalueWithoutTax2
+} from 'src/libs/singleProject/totalValues'
 const StyledPaper: any = styled(Paper)`
   overflow: 'auto';
   width: ${(100 / 12) * 11}%;
   margin: auto;
 `
+interface Props {
+  projects: GetProjectOverview.GetProjectsByUserId[]
+}
 
-const ProjectsList: React.SFC<any> = props => {
-  const { projects, handleChange, postingId, sortProjectByDate } = props
+const ProjectsList: React.SFC<Props> = props => {
+  const { projects } = props
   return (
     <StyledPaper style={{ overflow: 'auto' }}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell onClick={() => sortProjectByDate('date')}>
+            <TableCell onClick={() => console.log('project date')}>
               Project Date
             </TableCell>
-            <TableCell onClick={() => sortProjectByDate('invoiceDate')}>
+            <TableCell onClick={() => console.log('invoice date')}>
               Invoice Date
             </TableCell>
             <TableCell>Price</TableCell>
@@ -43,39 +46,38 @@ const ProjectsList: React.SFC<any> = props => {
         <TableBody>
           {projects.map(p => {
             return (
-              <TableRow key={p.get('id')} hover className="table-item">
+              <TableRow key={p.id} hover className="table-item">
                 <TableCell>
-                  <StyledLink
-                    to={routes.singleProject(p.get('id'))}
-                    weight="bold"
-                  >
-                    {p.get('name')}
+                  <StyledLink to={routes.singleProject(p.id)} weight="bold">
+                    {p.name}
                   </StyledLink>
                 </TableCell>
                 <TableCell>
-                  {p.get('date') ? format(p.get('date'), 'Y-MM-dd') : '-'}
+                  {p.date ? format(p.date, 'Y-MM-dd') : '-'}
                 </TableCell>
                 <TableCell>
-                  {p.get('invoiceDate')
-                    ? format(p.get('invoiceDate'), 'Y-MM-dd')
+                  {p.invoiceDate
+                    ? format(Number(p.invoiceDate), 'Y-MM-dd')
                     : '-'}
                 </TableCell>
                 <TableCell>
-                  {calcTotalvalueWithoutTax(p.get('incomes')) || '-'}
+                  {calcTotalvalueWithoutTax2(p.incomes || [])}
                 </TableCell>
                 {/* <TableCell>{p.get('location') || '-'}</TableCell> */}
                 <TableCell>
-                  {postingId === p.get('id') ? (
+                  {'test' === p.id ? (
                     <LoadingIcon size="2em" />
                   ) : (
-                    <Field
-                      component={renderDropdown}
-                      name={p.get('id')}
-                      initialValue={p.get('status')}
-                      onChange={handleChange}
-                    >
-                      {renderStateMenuItems()}
-                    </Field>
+                    'test'
+
+                    // <Field
+                    //   component={renderDropdown}
+                    //   name={p.id}
+                    //   initialValue={p.status}
+                    //   onChange={() => console.log('change')}
+                    // >
+                    //   {renderStateMenuItems()}
+                    // </Field>
                   )}
                 </TableCell>
               </TableRow>
@@ -87,4 +89,4 @@ const ProjectsList: React.SFC<any> = props => {
   )
 }
 
-export default reduxForm({ form: 'status' })(ProjectsList) as any
+export default ProjectsList
