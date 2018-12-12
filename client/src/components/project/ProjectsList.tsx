@@ -4,17 +4,15 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import { format } from 'date-fns'
 import React from 'react'
 import { GetProjectOverview } from 'src/graphql/components/projects'
+import { calcTotalvalueWithoutTax2 } from 'src/libs/singleProject/totalValues'
 import styled from 'styled-components'
 import { routes } from '../../routes/constants'
 import { StyledLink } from '../../styles/sharedStyles'
-import { LoadingIcon } from '../UI/LoadingIcon'
-import { format } from 'date-fns'
-import {
-  calcTotalvalueWithoutTax,
-  calcTotalvalueWithoutTax2
-} from 'src/libs/singleProject/totalValues'
+import { StatusDropdown } from './formConponents/StatusDropDown'
+
 const StyledPaper: any = styled(Paper)`
   overflow: 'auto';
   width: ${(100 / 12) * 11}%;
@@ -65,20 +63,8 @@ const ProjectsList: React.SFC<Props> = props => {
                 </TableCell>
                 {/* <TableCell>{p.get('location') || '-'}</TableCell> */}
                 <TableCell>
-                  {'test' === p.id ? (
-                    <LoadingIcon size="2em" />
-                  ) : (
-                    'test'
-
-                    // <Field
-                    //   component={renderDropdown}
-                    //   name={p.id}
-                    //   initialValue={p.status}
-                    //   onChange={() => console.log('change')}
-                    // >
-                    //   {renderStateMenuItems()}
-                    // </Field>
-                  )}
+                  {/* <LoadingIcon size="2em" /> */}
+                  <StatusDropdown status={p.status} />
                 </TableCell>
               </TableRow>
             )

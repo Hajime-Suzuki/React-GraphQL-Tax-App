@@ -53,7 +53,7 @@ export interface IProject {
 
   link?: string | null;
 
-  status?: IInvoiceStatus | null;
+  status: IInvoiceStatus;
 
   contactPerson?: IContactPerson | null;
 
@@ -294,7 +294,7 @@ export namespace ProjectResolvers {
 
     link?: LinkResolver<string | null, TypeParent, Context>;
 
-    status?: StatusResolver<IInvoiceStatus | null, TypeParent, Context>;
+    status?: StatusResolver<IInvoiceStatus, TypeParent, Context>;
 
     contactPerson?: ContactPersonResolver<
       IContactPerson | null,
@@ -354,7 +354,7 @@ export namespace ProjectResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type StatusResolver<
-    R = IInvoiceStatus | null,
+    R = IInvoiceStatus,
     Parent = IProject,
     Context = {}
   > = Resolver<R, Parent, Context>;

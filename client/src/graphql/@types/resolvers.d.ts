@@ -175,7 +175,7 @@ export namespace ProjectResolvers {
 
     link?: LinkResolver<string | null, TypeParent, Context>;
 
-    status?: StatusResolver<InvoiceStatus | null, TypeParent, Context>;
+    status?: StatusResolver<InvoiceStatus, TypeParent, Context>;
 
     contactPerson?: ContactPersonResolver<
       ContactPerson | null,
@@ -231,7 +231,7 @@ export namespace ProjectResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type StatusResolver<
-    R = InvoiceStatus | null,
+    R = InvoiceStatus,
     Parent = Project,
     Context = {}
   > = Resolver<R, Parent, Context>;

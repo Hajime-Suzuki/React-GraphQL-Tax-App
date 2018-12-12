@@ -53,7 +53,7 @@ export interface Project {
 
   link?: string | null;
 
-  status?: InvoiceStatus | null;
+  status: InvoiceStatus;
 
   contactPerson?: ContactPerson | null;
 

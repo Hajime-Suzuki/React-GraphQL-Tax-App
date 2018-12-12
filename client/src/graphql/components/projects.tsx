@@ -34,7 +34,7 @@ export namespace GetProjectOverview {
 
     incomes: Incomes[] | null;
 
-    status: InvoiceStatus | null;
+    status: InvoiceStatus;
   };
 
   export type Incomes = {

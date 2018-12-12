@@ -10,7 +10,7 @@ export const projectSchema = gql`
     streetAddress: String
     city: String
     link: String
-    status: INVOICE_STATUS
+    status: INVOICE_STATUS!
     contactPerson: ContactPerson
     user: String!
     expenses: [ExpenseAndIncome!]
