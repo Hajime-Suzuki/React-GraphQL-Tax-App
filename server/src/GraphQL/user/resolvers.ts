@@ -1,8 +1,7 @@
 import { AuthenticationError } from 'apollo-server-koa'
-import { IResolvers } from 'graphql-tools'
 import { ICtx } from '../../server'
 import { MutationResolvers, QueryResolvers } from '../@types/types.d'
-import { getUserById, registerUser, loginUser } from './methods'
+import { getUserById, loginUser, registerUser } from './methods'
 
 export const userResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>

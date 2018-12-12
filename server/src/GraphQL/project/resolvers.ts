@@ -1,28 +1,24 @@
-import { GraphQLScalarType } from 'graphql'
-import { QueryResolvers, ProjectResolvers } from '../@types/types'
-import { getProjectsByUserId } from './methods'
+import { MutationResolvers, QueryResolvers } from '../@types/types'
+import { getProjectsByUserId, updateProject } from './methods'
 
-export const projectResolvers: { Query: QueryResolvers.Resolvers } = {
+export const projectResolvers: {
+  Query: QueryResolvers.Resolvers
+  Mutation: MutationResolvers.Resolvers
+} = {
   Query: {
     getProjectsByUserId: async (_, { userId }) => {
       const projects = await getProjectsByUserId(userId)
       return projects
     }
+  },
+  Mutation: {
+    updateProject: async (_, { projectId, data }) => {
+      const project = await updateProject(projectId, data)
+      return {
+        success: true,
+        message: `Project "${projectId}" has been updated`,
+        project
+      }
+    }
   }
-  // Date: new GraphQLScalarType({
-  //   name: 'Date',
-  //   description: 'Date Object',
-  //   serialize: (value: any) => {
-  //     console.log('serialize')
-  //     return value
-  //   },
-  //   parseValue: () => {
-  //     console.log('222222')
-  //     return 'parse'
-  //   },
-  //   parseLiteral: () => {
-  //     console.log('333333')
-  //     return 'literal'
-  //   }
-  // })
 }

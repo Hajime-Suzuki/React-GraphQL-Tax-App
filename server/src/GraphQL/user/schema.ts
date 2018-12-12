@@ -23,6 +23,7 @@ export const userSchema = gql`
     ): RegisterResponse!
     loginUser(email: String!, password: String!): RegisterResponse!
   }
+
   type RegisterResponse {
     success: Boolean!
     message: String

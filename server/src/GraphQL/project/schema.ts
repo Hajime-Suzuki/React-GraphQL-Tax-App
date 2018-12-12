@@ -16,14 +16,27 @@ export const projectSchema = gql`
     expenses: [ExpenseAndIncome!]
     incomes: [ExpenseAndIncome!]
   }
-  type ExpenseAndIncome {
-    name: String!
-    price: Int!
-    quantity: Int!
-    taxRate: Int!
-  }
+
   type Query {
     getProjectsByUserId(userId: String!): [Project!]!
   }
+
+  type Mutation {
+    updateProject(
+      projectId: String!
+      data: UpdateProjectInput!
+    ): MutationProjectResponse!
+  }
+
+  type MutationProjectResponse implements MutationResponse {
+    success: Boolean!
+    message: String
+    project: Project
+  }
+
+  input UpdateProjectInput {
+    status: INVOICE_STATUS!
+  }
+
   scalar Date
 `

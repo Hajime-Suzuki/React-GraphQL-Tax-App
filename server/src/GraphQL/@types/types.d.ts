@@ -1,3 +1,7 @@
+export interface IUpdateProjectInput {
+  status: IInvoiceStatus;
+}
+
 export enum IInvoiceStatus {
   None = "none",
   Invoice = "invoice",
@@ -9,6 +13,16 @@ export type Date = any;
 // ====================================================
 // Scalars
 // ====================================================
+
+// ====================================================
+// Interfaces
+// ====================================================
+
+export interface IMutationResponse {
+  success: boolean;
+
+  message?: string | null;
+}
 
 // ====================================================
 // Types
@@ -104,6 +118,8 @@ export interface IMutation {
   registerUser: IRegisterResponse;
 
   loginUser: IRegisterResponse;
+
+  updateProject: IMutationProjectResponse;
 }
 
 export interface IRegisterResponse {
@@ -112,6 +128,14 @@ export interface IRegisterResponse {
   message?: string | null;
 
   token: string;
+}
+
+export interface IMutationProjectResponse extends IMutationResponse {
+  success: boolean;
+
+  message?: string | null;
+
+  project?: IProject | null;
 }
 
 // ====================================================
@@ -137,6 +161,11 @@ export interface LoginUserMutationArgs {
   email: string;
 
   password: string;
+}
+export interface UpdateProjectMutationArgs {
+  projectId: string;
+
+  data: IUpdateProjectInput;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -505,6 +534,12 @@ export namespace MutationResolvers {
     registerUser?: RegisterUserResolver<IRegisterResponse, TypeParent, Context>;
 
     loginUser?: LoginUserResolver<IRegisterResponse, TypeParent, Context>;
+
+    updateProject?: UpdateProjectResolver<
+      IMutationProjectResponse,
+      TypeParent,
+      Context
+    >;
   }
 
   export type RegisterUserResolver<
@@ -532,6 +567,17 @@ export namespace MutationResolvers {
 
     password: string;
   }
+
+  export type UpdateProjectResolver<
+    R = IMutationProjectResponse,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, UpdateProjectArgs>;
+  export interface UpdateProjectArgs {
+    projectId: string;
+
+    data: IUpdateProjectInput;
+  }
 }
 
 export namespace RegisterResponseResolvers {
@@ -558,6 +604,46 @@ export namespace RegisterResponseResolvers {
     Parent = IRegisterResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;
+}
+
+export namespace MutationProjectResponseResolvers {
+  export interface Resolvers<
+    Context = {},
+    TypeParent = IMutationProjectResponse
+  > {
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+
+    message?: MessageResolver<string | null, TypeParent, Context>;
+
+    project?: ProjectResolver<IProject | null, TypeParent, Context>;
+  }
+
+  export type SuccessResolver<
+    R = boolean,
+    Parent = IMutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type MessageResolver<
+    R = string | null,
+    Parent = IMutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ProjectResolver<
+    R = IProject | null,
+    Parent = IMutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace MutationResponseResolvers {
+  export interface Resolvers {
+    __resolveType: ResolveType;
+  }
+  export type ResolveType<
+    R = "MutationProjectResponse",
+    Parent = IMutationProjectResponse,
+    Context = {}
+  > = TypeResolveFn<R, Parent, Context>;
 }
 
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */

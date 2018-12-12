@@ -9,4 +9,10 @@ export const expenseSchema = gql`
     date: String
     user: User
   }
+  type ExpenseAndIncome {
+    name: String!
+    price: Int!
+    quantity: Int!
+    taxRate: Int!
+  }
 `
