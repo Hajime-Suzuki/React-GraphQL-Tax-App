@@ -1,3 +1,7 @@
+export interface UpdateProjectInput {
+  status: InvoiceStatus;
+}
+
 export enum InvoiceStatus {
   None = "none",
   Invoice = "invoice",
@@ -43,6 +47,37 @@ export namespace GetProjectOverview {
     price: number;
 
     quantity: number;
+  };
+}
+
+export namespace UpdateStatus {
+  export type Variables = {
+    projectId: string;
+    data: UpdateProjectInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateProject: UpdateProject;
+  };
+
+  export type UpdateProject = {
+    __typename?: "MutationProjectResponse";
+
+    success: boolean;
+
+    message: string | null;
+
+    project: Project | null;
+  };
+
+  export type Project = {
+    __typename?: "Project";
+
+    id: string;
+
+    status: InvoiceStatus;
   };
 }
 
@@ -98,6 +133,52 @@ export namespace GetProjectOverview {
       | undefined
   ) {
     return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace UpdateStatus {
+  export const Document = gql`
+    mutation updateStatus($projectId: String!, $data: UpdateProjectInput!) {
+      updateProject(projectId: $projectId, data: $data) {
+        success
+        message
+        project {
+          id
+          status
+        }
+      }
+    }
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
       Document,
       operationOptions
     );

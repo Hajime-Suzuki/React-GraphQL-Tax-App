@@ -1,3 +1,7 @@
+export interface UpdateProjectInput {
+  status: InvoiceStatus;
+}
+
 export enum InvoiceStatus {
   None = "none",
   Invoice = "invoice",
@@ -383,6 +387,12 @@ export namespace MutationResolvers {
 
     loginUser?: LoginUserResolver<RegisterResponse, TypeParent, Context>;
 
+    updateProject?: UpdateProjectResolver<
+      MutationProjectResponse,
+      TypeParent,
+      Context
+    >;
+
     logout?: LogoutResolver<string | null, TypeParent, Context>;
   }
 
@@ -410,6 +420,17 @@ export namespace MutationResolvers {
     email: string;
 
     password: string;
+  }
+
+  export type UpdateProjectResolver<
+    R = MutationProjectResponse,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, UpdateProjectArgs>;
+  export interface UpdateProjectArgs {
+    projectId: string;
+
+    data: UpdateProjectInput;
   }
 
   export type LogoutResolver<
@@ -443,6 +464,46 @@ export namespace RegisterResponseResolvers {
     Parent = RegisterResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;
+}
+
+export namespace MutationProjectResponseResolvers {
+  export interface Resolvers<
+    Context = {},
+    TypeParent = MutationProjectResponse
+  > {
+    success?: SuccessResolver<boolean, TypeParent, Context>;
+
+    message?: MessageResolver<string | null, TypeParent, Context>;
+
+    project?: ProjectResolver<Project | null, TypeParent, Context>;
+  }
+
+  export type SuccessResolver<
+    R = boolean,
+    Parent = MutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type MessageResolver<
+    R = string | null,
+    Parent = MutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ProjectResolver<
+    R = Project | null,
+    Parent = MutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace MutationResponseResolvers {
+  export interface Resolvers {
+    __resolveType: ResolveType;
+  }
+  export type ResolveType<
+    R = "MutationProjectResponse",
+    Parent = MutationProjectResponse,
+    Context = {}
+  > = TypeResolveFn<R, Parent, Context>;
 }
 
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */

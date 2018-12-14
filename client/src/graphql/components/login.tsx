@@ -1,3 +1,7 @@
+export interface UpdateProjectInput {
+  status: InvoiceStatus;
+}
+
 export enum InvoiceStatus {
   None = "none",
   Invoice = "invoice",

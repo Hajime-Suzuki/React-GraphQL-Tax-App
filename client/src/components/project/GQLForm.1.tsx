@@ -1,11 +1,7 @@
-import FormControl from '@material-ui/core/FormControl'
-import Grid from '@material-ui/core/Grid'
-import InputLabel from '@material-ui/core/InputLabel'
-import Select from '@material-ui/core/Select'
-import * as React from 'react'
-import { Formik, FormikProps, Form, Field, FieldProps } from 'formik'
-import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import { Field, FieldProps, Formik, FormikProps } from 'formik'
+import * as React from 'react'
 
 interface Test {
   color: string

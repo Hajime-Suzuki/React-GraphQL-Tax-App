@@ -6,7 +6,10 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { format } from 'date-fns'
 import React from 'react'
-import { GetProjectOverview } from 'src/graphql/components/projects'
+import {
+  GetProjectOverview,
+  UpdateStatus
+} from 'src/graphql/components/projects'
 import { calcTotalvalueWithoutTax2 } from 'src/libs/singleProject/totalValues'
 import styled from 'styled-components'
 import { routes } from '../../routes/constants'
@@ -64,7 +67,16 @@ const ProjectsList: React.SFC<Props> = props => {
                 {/* <TableCell>{p.get('location') || '-'}</TableCell> */}
                 <TableCell>
                   {/* <LoadingIcon size="2em" /> */}
-                  <StatusDropdown status={p.status} />
+                  <UpdateStatus.Component>
+                    {(update, data) => (
+                      <StatusDropdown
+                        status={p.status}
+                        projectId={p.id}
+                        onSubmit={update}
+                        data={data}
+                      />
+                    )}
+                  </UpdateStatus.Component>
                 </TableCell>
               </TableRow>
             )

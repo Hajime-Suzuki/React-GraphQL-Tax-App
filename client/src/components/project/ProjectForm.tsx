@@ -5,7 +5,7 @@ import { RenderExpenseAndIncome } from '../../libs/forms/renderExpense'
 import { StyledGridFormItem } from '../../styles/forms'
 import { MainWrapper } from '../../styles/sharedStyles'
 import ContactPersonForm from './formConponents/ContactPersonForm'
-import InvoiceForm from './formConponents/InvoiceInfoForm'
+import InvoiceForm from './formConponents/InvoiceInfoForm2'
 
 const AddProjectForm: React.SFC<any> = props => {
   const { handleSubmit, handleChange } = props

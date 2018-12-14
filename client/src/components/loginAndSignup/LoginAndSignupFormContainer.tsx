@@ -8,14 +8,16 @@ import { routes } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import { SignUp } from 'src/graphql/components/signup'
+import { DataProps } from 'react-apollo'
 
-type Props = RouteComponentProps & { data: GetToken.Query }
+type Props = GetToken.Props<RouteComponentProps>
 
 class LoginAndSignupFormContainer extends React.Component<Props> {
   render() {
     const path = this.props.location.pathname
     const { data: localData } = this.props
-    if (localData.userId) return <Redirect to={routes.dashboard} />
+
+    if (localData!.userId) return <Redirect to={routes.dashboard} />
     return path === routes.login ? <this.LoginForm /> : <this.SignUpForm />
   }
 

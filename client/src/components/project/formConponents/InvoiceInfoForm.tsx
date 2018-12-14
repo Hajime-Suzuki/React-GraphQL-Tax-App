@@ -1,76 +1,60 @@
-import Typography from '@material-ui/core/Typography'
 import * as React from 'react'
-import { Field, FieldArray } from 'redux-form'
-import { renderStateMenuItems } from '../../../libs/forms/renderStateMenuItem'
-import { renderTextField } from '../../../libs/forms/renderTextField'
-import { RenderExpenseAndIncome } from 'src/libs/forms/renderExpense'
-import { renderDropdown } from 'src/libs/forms/renderDropdown'
+import { Field, FieldArray, ArrayHelpers } from 'formik'
+import { renderFormikTextField } from 'src/libs/forms/renderTextField'
+import Grid from '@material-ui/core/Grid'
+import { FormProps } from '../AddProjectContainer'
 
-const InvoiceForm = props => {
-  const { handleChange } = props
-  return (
-    <React.Fragment>
-      <Typography>Invoice Info</Typography>
-      <Field
-        component={renderTextField}
-        name="invoiceNumber"
-        label="Invoice Number"
-        onChange={handleChange}
-      />
-
-      <Field
-        component={renderTextField}
-        name="invoiceDate"
-        label="Invoice Date"
-        onChange={handleChange}
-      />
-
-      <FieldArray name="incomes" component={RenderExpenseAndIncome} />
-
-      <Field
-        component={renderTextField}
-        name="name"
-        label="Name"
-        onChange={handleChange}
-      />
-
-      <Field
-        component={renderTextField}
-        name="date"
-        label="Project Date"
-        onChange={handleChange}
-      />
-
-      <Field
-        component={renderDropdown}
-        name="status"
-        label="Status"
-        onChange={handleChange}
-      >
-        {renderStateMenuItems()}
-      </Field>
-
-      <Field
-        component={renderTextField}
-        name="streetAddress"
-        label="Street Address"
-        onChange={handleChange}
-      />
-      <Field
-        component={renderTextField}
-        name="city"
-        label="City"
-        onChange={handleChange}
-      />
-
-      <Field
-        component={renderTextField}
-        name="link"
-        label="Link"
-        onChange={handleChange}
-      />
-    </React.Fragment>
-  )
+interface Props {
+  incomes: FormProps['incomes']
+}
+class InvoiceInfoForm extends React.PureComponent<Props> {
+  render() {
+    const { incomes } = this.props
+    return (
+      <React.Fragment>
+        <Grid item>
+          <Field
+            name="invoiceNumber"
+            label="Invoice Number"
+            component={renderFormikTextField}
+          />
+        </Grid>
+        <Grid item>
+          <Field
+            name="invoiceDate"
+            label="Invoice Date"
+            component={renderFormikTextField}
+          />
+        </Grid>
+        <FieldArray
+          name="incomes"
+          render={(arrayHelpers: ArrayHelpers) => {
+            return (
+              <React.Fragment>
+                <Field
+                  name={`incomes.0`}
+                  label="Name"
+                  component={renderFormikTextField}
+                />
+                {/* {incomes.map((income, i) => {
+                  return (
+                    <Field
+                      name={`${income}.name`}
+                      label="Name"
+                      component={renderFormikTextField}
+                    />
+                  )
+                })} */}
+              </React.Fragment>
+            )
+          }}
+        />
+        <Grid item>
+          <Field name="name" label="Name" component={renderFormikTextField} />
+        </Grid>
+      </React.Fragment>
+    )
+  }
 }
 
-export default InvoiceForm
+export default InvoiceInfoForm

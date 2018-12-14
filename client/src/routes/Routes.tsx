@@ -10,6 +10,7 @@ import TopPage from '../components/topPage/TopPage'
 import { MainWrapper } from '../styles/sharedStyles'
 import { routes } from './constants'
 import PrivateRoutes from './PrivateRoutes'
+import AddProjectContainer from 'src/components/project/AddProjectContainer'
 
 class Routes extends React.Component {
   render() {
@@ -32,7 +33,7 @@ class Routes extends React.Component {
             <PrivateRoutes
               path={routes.addProject}
               exact
-              component={AddProjectFormContainer}
+              component={AddProjectContainer}
             />
             <PrivateRoutes
               path={routes.singleProject()}

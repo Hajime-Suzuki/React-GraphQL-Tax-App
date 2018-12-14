@@ -1,3 +1,7 @@
+export interface UpdateProjectInput {
+  status: InvoiceStatus;
+}
+
 export enum InvoiceStatus {
   None = "none",
   Invoice = "invoice",
@@ -9,6 +13,16 @@ export type Date = any;
 // ====================================================
 // Scalars
 // ====================================================
+
+// ====================================================
+// Interfaces
+// ====================================================
+
+export interface MutationResponse {
+  success: boolean;
+
+  message?: string | null;
+}
 
 // ====================================================
 // Types
@@ -104,6 +118,8 @@ export interface Mutation {
   registerUser: RegisterResponse;
 
   loginUser: RegisterResponse;
+
+  updateProject: MutationProjectResponse;
 }
 
 export interface RegisterResponse {
@@ -112,6 +128,14 @@ export interface RegisterResponse {
   message?: string | null;
 
   token: string;
+}
+
+export interface MutationProjectResponse extends MutationResponse {
+  success: boolean;
+
+  message?: string | null;
+
+  project?: Project | null;
 }
 
 // ====================================================
@@ -137,4 +161,9 @@ export interface LoginUserMutationArgs {
   email: string;
 
   password: string;
+}
+export interface UpdateProjectMutationArgs {
+  projectId: string;
+
+  data: UpdateProjectInput;
 }

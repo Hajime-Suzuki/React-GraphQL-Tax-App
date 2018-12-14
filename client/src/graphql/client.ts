@@ -26,8 +26,6 @@ export const defaults = {
   userId: USER_ID || null
 }
 
-// const types = mergeTypes(typesArray, { all: true })
-
 const cache = new InMemoryCache()
 const stateLink = withClientState({
   cache,

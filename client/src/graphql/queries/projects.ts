@@ -15,3 +15,16 @@ export const GET_PROJECT_OVERVIEW = gql`
     }
   }
 `
+
+export const UPDATE_STATUS = gql`
+  mutation updateStatus($projectId: String!, $data: UpdateProjectInput!) {
+    updateProject(projectId: $projectId, data: $data) {
+      success
+      message
+      project {
+        id
+        status
+      }
+    }
+  }
+`
