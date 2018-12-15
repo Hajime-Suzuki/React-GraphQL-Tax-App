@@ -28,7 +28,7 @@ export const projectSchema = gql`
     ): MutationProjectResponse!
   }
 
-  type MutationProjectResponse implements MutationResponse {
+  type MutationProjectResponse {
     success: Boolean!
     message: String
     project: Project

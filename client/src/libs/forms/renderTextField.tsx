@@ -22,7 +22,7 @@ export const renderFormikTextField = ({
 }) => {
   return (
     <React.Fragment>
-      <TextField type="text" placeholder={field.name} {...field} {...props} />
+      <TextField type="text" {...field} {...props} />
       {touched[field.name] && errors[field.name] && (
         <div className="error">{errors[field.name]}</div>
       )}

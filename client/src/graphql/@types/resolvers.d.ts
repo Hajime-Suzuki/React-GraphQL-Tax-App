@@ -336,13 +336,13 @@ export namespace ExpenseAndIncomeResolvers {
 
 export namespace ExpenseResolvers {
   export interface Resolvers<Context = {}, TypeParent = Expense> {
-    name?: NameResolver<string | null, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, Context>;
 
-    price?: PriceResolver<number | null, TypeParent, Context>;
+    price?: PriceResolver<number, TypeParent, Context>;
 
-    quantity?: QuantityResolver<number | null, TypeParent, Context>;
+    quantity?: QuantityResolver<number, TypeParent, Context>;
 
-    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
+    taxRate?: TaxRateResolver<number, TypeParent, Context>;
 
     date?: DateResolver<string | null, TypeParent, Context>;
 
@@ -350,22 +350,22 @@ export namespace ExpenseResolvers {
   }
 
   export type NameResolver<
-    R = string | null,
+    R = string,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PriceResolver<
-    R = number | null,
+    R = number,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type QuantityResolver<
-    R = number | null,
+    R = number,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type TaxRateResolver<
-    R = number | null,
+    R = number,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -493,17 +493,6 @@ export namespace MutationProjectResponseResolvers {
     Parent = MutationProjectResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;
-}
-
-export namespace MutationResponseResolvers {
-  export interface Resolvers {
-    __resolveType: ResolveType;
-  }
-  export type ResolveType<
-    R = "MutationProjectResponse",
-    Parent = MutationProjectResponse,
-    Context = {}
-  > = TypeResolveFn<R, Parent, Context>;
 }
 
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */

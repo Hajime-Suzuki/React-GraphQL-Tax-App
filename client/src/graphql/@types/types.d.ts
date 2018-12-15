@@ -15,16 +15,6 @@ export type Date = any;
 // ====================================================
 
 // ====================================================
-// Interfaces
-// ====================================================
-
-export interface MutationResponse {
-  success: boolean;
-
-  message?: string | null;
-}
-
-// ====================================================
 // Types
 // ====================================================
 
@@ -101,13 +91,13 @@ export interface ExpenseAndIncome {
 }
 
 export interface Expense {
-  name?: string | null;
+  name: string;
 
-  price?: number | null;
+  price: number;
 
-  quantity?: number | null;
+  quantity: number;
 
-  taxRate?: number | null;
+  taxRate: number;
 
   date?: string | null;
 
@@ -130,7 +120,7 @@ export interface RegisterResponse {
   token: string;
 }
 
-export interface MutationProjectResponse extends MutationResponse {
+export interface MutationProjectResponse {
   success: boolean;
 
   message?: string | null;

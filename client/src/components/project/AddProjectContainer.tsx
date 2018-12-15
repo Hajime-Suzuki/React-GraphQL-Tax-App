@@ -1,58 +1,45 @@
-import Grid from '@material-ui/core/Grid'
-import { Field, Form, Formik, FormikProps } from 'formik'
-import * as React from 'react'
-import { StyledGridFormItem } from 'src/styles/forms'
 import Button from '@material-ui/core/Button'
-import InvoiceInfoForm from './formConponents/InvoiceInfoForm'
+import Grid from '@material-ui/core/Grid'
+import { Form, FormikProps, withFormik } from 'formik'
+import * as React from 'react'
+import InvoiceInfoForm from './formConponents/invoiceForm/InvoiceInfoForm'
+import Typography from '@material-ui/core/Typography'
 
-export interface FormProps {
-  invoiceNumber: string
-  invoiceDate: string
-  incomes: {
-    name: string
-    price: number
-  }[]
-  name: string
-  projectDate: string
-}
-
-const initialValues = {
+export const addProjectInitialValues = {
   invoiceNumber: '',
   invoiceDate: '',
-  incomes: [],
   name: '',
-  projectDate: ''
+  projectDate: '',
+  incomes: [
+    {
+      name: '',
+      price: '',
+      quantity: '',
+      taxRate: 21
+    }
+  ],
+  expenses: [
+    {
+      name: '',
+      price: '',
+      quantity: '',
+      taxRate: 21
+    }
+  ]
 }
 
-class AddProjectContainer extends React.PureComponent {
+export type AddProjectInitialValues = typeof addProjectInitialValues
+
+class AddProjectContainer extends React.PureComponent<
+  FormikProps<AddProjectInitialValues>
+> {
   render() {
-    return (
-      <Formik
-        onSubmit={values => console.log(values)}
-        initialValues={initialValues}
-      >
-        {({ values }: FormikProps<FormProps>) => {
-          return (
-            <Form>
-              <StyledGridFormItem
-                container
-                justify="center"
-                spacing={40}
-                style={{ marginTop: 100 }}
-              >
-                <InvoiceInfoForm incomes={values.incomes} />
-                <Grid item xs={12} style={{ textAlign: 'center' }}>
-                  <Button type="submit" variant="contained" color="primary">
-                    Submit
-                  </Button>
-                </Grid>
-              </StyledGridFormItem>
-            </Form>
-          )
-        }}
-      </Formik>
-    )
+    const { values, handleChange } = this.props
+    return <InvoiceInfoForm values={values} handleChange={handleChange} />
   }
 }
 
-export default AddProjectContainer
+export default withFormik<{}, AddProjectInitialValues, any>({
+  mapPropsToValues: () => addProjectInitialValues,
+  handleSubmit: values => console.log(values)
+})(AddProjectContainer)

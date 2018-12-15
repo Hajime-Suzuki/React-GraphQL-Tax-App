@@ -8,7 +8,6 @@ import { routes } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import { SignUp } from 'src/graphql/components/signup'
-import { DataProps } from 'react-apollo'
 
 type Props = GetToken.Props<RouteComponentProps>
 
