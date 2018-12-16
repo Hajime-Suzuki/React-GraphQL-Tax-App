@@ -2,6 +2,32 @@ export interface IUpdateProjectInput {
   status: IInvoiceStatus;
 }
 
+export interface IAddProjectInput {
+  invoiceNumber?: string | null;
+
+  invoiceDate?: string | null;
+
+  name?: string | null;
+
+  date?: string | null;
+
+  status?: IInvoiceStatus | null;
+
+  expenses?: (IExpenseAndIncomeInput | null)[] | null;
+
+  incomes?: (IExpenseAndIncomeInput | null)[] | null;
+}
+
+export interface IExpenseAndIncomeInput {
+  name?: string | null;
+
+  price?: number | null;
+
+  quantity?: number | null;
+
+  taxRate?: number | null;
+}
+
 export enum IInvoiceStatus {
   None = "none",
   Invoice = "invoice",
@@ -110,6 +136,8 @@ export interface IMutation {
   loginUser: IRegisterResponse;
 
   updateProject: IMutationProjectResponse;
+
+  addProject?: IMutationProjectResponse | null;
 }
 
 export interface IRegisterResponse {
@@ -156,6 +184,9 @@ export interface UpdateProjectMutationArgs {
   projectId: string;
 
   data: IUpdateProjectInput;
+}
+export interface AddProjectMutationArgs {
+  data: IAddProjectInput;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -530,6 +561,12 @@ export namespace MutationResolvers {
       TypeParent,
       Context
     >;
+
+    addProject?: AddProjectResolver<
+      IMutationProjectResponse | null,
+      TypeParent,
+      Context
+    >;
   }
 
   export type RegisterUserResolver<
@@ -567,6 +604,15 @@ export namespace MutationResolvers {
     projectId: string;
 
     data: IUpdateProjectInput;
+  }
+
+  export type AddProjectResolver<
+    R = IMutationProjectResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, AddProjectArgs>;
+  export interface AddProjectArgs {
+    data: IAddProjectInput;
   }
 }
 

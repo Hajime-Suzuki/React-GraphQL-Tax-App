@@ -2,6 +2,34 @@ export interface UpdateProjectInput {
   status: InvoiceStatus;
 }
 
+export interface AddProjectInput {
+  invoiceNumber?: string | null;
+
+  invoiceDate?: string | null;
+
+  projectDate?: string | null;
+
+  name?: string | null;
+
+  date?: string | null;
+
+  status?: InvoiceStatus | null;
+
+  expenses?: (ExpenseAndIncomeInput | null)[] | null;
+
+  incomes?: (ExpenseAndIncomeInput | null)[] | null;
+}
+
+export interface ExpenseAndIncomeInput {
+  name?: string | null;
+
+  price?: number | null;
+
+  quantity?: number | null;
+
+  taxRate?: number | null;
+}
+
 export enum InvoiceStatus {
   None = "none",
   Invoice = "invoice",

@@ -2,6 +2,34 @@ export interface UpdateProjectInput {
   status: InvoiceStatus;
 }
 
+export interface AddProjectInput {
+  invoiceNumber?: string | null;
+
+  invoiceDate?: string | null;
+
+  projectDate?: string | null;
+
+  name?: string | null;
+
+  date?: string | null;
+
+  status?: InvoiceStatus | null;
+
+  expenses?: (ExpenseAndIncomeInput | null)[] | null;
+
+  incomes?: (ExpenseAndIncomeInput | null)[] | null;
+}
+
+export interface ExpenseAndIncomeInput {
+  name?: string | null;
+
+  price?: number | null;
+
+  quantity?: number | null;
+
+  taxRate?: number | null;
+}
+
 export enum InvoiceStatus {
   None = "none",
   Invoice = "invoice",
@@ -81,6 +109,36 @@ export namespace UpdateStatus {
   };
 }
 
+export namespace AddProject {
+  export type Variables = {
+    data: AddProjectInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    addProject: AddProject | null;
+  };
+
+  export type AddProject = {
+    __typename?: "MutationProjectResponse";
+
+    success: boolean;
+
+    message: string | null;
+
+    project: Project | null;
+  };
+
+  export type Project = {
+    __typename?: "Project";
+
+    id: string;
+
+    status: InvoiceStatus;
+  };
+}
+
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 
@@ -142,6 +200,52 @@ export namespace UpdateStatus {
   export const Document = gql`
     mutation updateStatus($projectId: String!, $data: UpdateProjectInput!) {
       updateProject(projectId: $projectId, data: $data) {
+        success
+        message
+        project {
+          id
+          status
+        }
+      }
+    }
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace AddProject {
+  export const Document = gql`
+    mutation addProject($data: AddProjectInput!) {
+      addProject(data: $data) {
         success
         message
         project {

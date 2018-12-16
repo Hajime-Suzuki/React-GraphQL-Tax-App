@@ -47,7 +47,7 @@ const projectSchema: Schema = new Schema({
   status: {
     type: String,
     enum: ['none', 'invoice', 'paid'],
-    default: null
+    default: 'none'
   },
   expenses: [expenseSchema],
   incomes: [expenseSchema],

@@ -121,7 +121,7 @@ router.post('/populate', async ctx => {
     firstName: 'test',
     lastName: 'user',
     email,
-    password: 'ashtasht'
+    password: 'ashtashtasht'
   })
 
   const projectAmount = 50

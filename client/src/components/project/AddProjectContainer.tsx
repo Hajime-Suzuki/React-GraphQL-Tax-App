@@ -1,9 +1,7 @@
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import { Form, FormikProps, withFormik } from 'formik'
+import { FormikProps, withFormik, Formik } from 'formik'
 import * as React from 'react'
 import InvoiceInfoForm from './formConponents/invoiceForm/InvoiceInfoForm'
-import Typography from '@material-ui/core/Typography'
+import { AddProject } from 'src/graphql/components/projects'
 
 export const addProjectInitialValues = {
   invoiceNumber: '',
@@ -25,21 +23,54 @@ export const addProjectInitialValues = {
       quantity: '',
       taxRate: 21
     }
-  ]
+  ],
+  contactPerson: {
+    name: '',
+    email: '',
+    phoneNumber: '',
+    address: ''
+  }
 }
 
 export type AddProjectInitialValues = typeof addProjectInitialValues
 
-class AddProjectContainer extends React.PureComponent<
-  FormikProps<AddProjectInitialValues>
-> {
+type Props = AddProject.Props<{}>
+
+class AddProjectContainer extends React.PureComponent<Props> {
+  handleSubmit = (values: AddProjectInitialValues) => {
+    const { mutate: addProject } = this.props
+    const { contactPerson, incomes, expenses, ...rest } = values
+    // TODO: update
+    addProject!({
+      variables: {
+        data: rest
+      }
+    })
+  }
   render() {
-    const { values, handleChange } = this.props
-    return <InvoiceInfoForm values={values} handleChange={handleChange} />
+    console.log(this.props)
+    return (
+      <React.Fragment>
+        <Formik
+          onSubmit={this.handleSubmit}
+          initialValues={addProjectInitialValues}
+          render={(props: FormikProps<AddProjectInitialValues>) => {
+            const { values, handleChange } = props
+            return (
+              <InvoiceInfoForm values={values} handleChange={handleChange} />
+            )
+          }}
+        />
+      </React.Fragment>
+    )
   }
 }
 
-export default withFormik<{}, AddProjectInitialValues, any>({
-  mapPropsToValues: () => addProjectInitialValues,
-  handleSubmit: values => console.log(values)
-})(AddProjectContainer)
+// export default withFormik<AddProject.Props, AddProjectInitialValues>({
+//   // validationSchema: addProjectSchema,
+//   // validateOnBlur: false,
+//   // validateOnChange: false,
+//   mapPropsToValues: () => addProjectInitialValues,
+//   handleSubmit: (values, props) => console.log(values)
+// })(AddProject.HOC({})(AddProjectContainer))
+export default AddProject.HOC({})(AddProjectContainer)

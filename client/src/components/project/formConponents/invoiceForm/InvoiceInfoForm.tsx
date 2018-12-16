@@ -5,6 +5,8 @@ import { renderFormikTextField } from 'src/libs/forms/renderTextField'
 import { AddProjectInitialValues } from '../../AddProjectContainer'
 import { IncomesField } from './IncomesField'
 import Button from '@material-ui/core/Button'
+import ContactPersonForm from './ContactPersonForm'
+import Typography from '@material-ui/core/Typography'
 
 interface Props {
   values: AddProjectInitialValues
@@ -15,6 +17,10 @@ const fields = [
   {
     name: 'invoiceNumber',
     label: 'Invoice Number'
+  },
+  {
+    name: 'projectDate',
+    label: 'Project Date'
   },
   {
     name: 'invoiceDate',
@@ -40,29 +46,33 @@ class InvoiceInfoForm extends React.PureComponent<Props> {
           spacing={40}
           style={{ marginTop: 100 }}
         >
-          <Grid item xs={12}>
-            <Grid container justify="center">
-              {fields.map((field, i) => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    md={3}
-                    style={{ textAlign: 'center' }}
-                    key={i}
-                  >
-                    <Field
-                      name={field.name}
-                      label={field.label}
-                      component={renderFormikTextField}
-                    />
-                  </Grid>
-                )
-              })}
-            </Grid>
-            <IncomesField incomes={incomes} handleChange={handleChange} />
-            <IncomesField expenses={expenses} handleChange={handleChange} />
+          {/* <Grid item xs={12}> */}
+          <Grid container item justify="center">
+            {fields.map((field, i) => {
+              return (
+                <Grid
+                  item
+                  xs={12}
+                  md={3}
+                  style={{ textAlign: 'center' }}
+                  key={i}
+                >
+                  <Field
+                    name={field.name}
+                    label={field.label}
+                    component={renderFormikTextField}
+                  />
+                </Grid>
+              )
+            })}
           </Grid>
+          <IncomesField incomes={incomes} handleChange={handleChange} />
+          <IncomesField expenses={expenses} handleChange={handleChange} />
+          <Grid item xs={12} style={{ textAlign: 'center' }}>
+            <Typography>Contact Person</Typography>
+            <ContactPersonForm />
+          </Grid>
+          {/* </Grid> */}
           <Grid item xs={12} style={{ textAlign: 'center' }}>
             <Button type="submit" variant="contained" color="primary">
               Submit

@@ -4,7 +4,7 @@ import { FieldArray, reduxForm } from 'redux-form'
 import { RenderExpenseAndIncome } from '../../libs/forms/renderExpense'
 import { StyledGridFormItem } from '../../styles/forms'
 import { MainWrapper } from '../../styles/sharedStyles'
-import ContactPersonForm from './formConponents/ContactPersonForm'
+import ContactPersonForm from './formConponents/ContactPersonForm.1'
 import InvoiceForm from './formConponents/InvoiceInfoForm2'
 
 const AddProjectForm: React.SFC<any> = props => {

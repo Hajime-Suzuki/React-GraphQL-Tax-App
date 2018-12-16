@@ -26,6 +26,7 @@ export const projectSchema = gql`
       projectId: String!
       data: UpdateProjectInput!
     ): MutationProjectResponse!
+    addProject(data: AddProjectInput!): MutationProjectResponse
   }
 
   type MutationProjectResponse {
@@ -36,6 +37,17 @@ export const projectSchema = gql`
 
   input UpdateProjectInput {
     status: INVOICE_STATUS!
+  }
+
+  input AddProjectInput {
+    invoiceNumber: String
+    invoiceDate: String
+    projectDate: String
+    name: String
+    date: String
+    status: INVOICE_STATUS
+    expenses: [ExpenseAndIncomeInput]
+    incomes: [ExpenseAndIncomeInput]
   }
 
   scalar Date

@@ -6,7 +6,10 @@ import Select from '@material-ui/core/Select'
 import Typography from '@material-ui/core/Typography'
 import { Field, FieldArray, FormikHandlers } from 'formik'
 import React from 'react'
-import { renderFormikTextField } from 'src/libs/forms/renderTextField'
+import {
+  renderFormikTextField,
+  renderFormikArrayField
+} from 'src/libs/forms/renderTextField'
 import {
   AddProjectInitialValues,
   addProjectInitialValues
@@ -18,11 +21,14 @@ interface Props {
   handleChange: FormikHandlers['handleChange']
 }
 
+const test = (index: any) => (props: any) =>
+  renderFormikArrayField(props, index)
+
 const renderFields = (type: 'incomes' | 'expenses', i: number) => {
   const fields = [
     { name: 'name', label: 'Name' },
-    { name: 'price', label: 'Price', type: 'number' },
-    { name: 'quantity', label: 'Quantity', type: 'number' }
+    { name: 'price', label: 'Price' },
+    { name: 'quantity', label: 'Quantity' }
   ]
   return fields.map((field, fieldIndex) => {
     return (
@@ -30,7 +36,6 @@ const renderFields = (type: 'incomes' | 'expenses', i: number) => {
         <Field
           name={`${type}.${i}.${field.name}`}
           label={field.label}
-          type={field.type || 'text'}
           component={renderFormikTextField}
         />
       </Grid>
@@ -59,6 +64,7 @@ export const IncomesField: React.SFC<Props> = props => {
                 return (
                   <Grid item xs={12} key={i} container justify="center">
                     {renderFields(type, i)}
+                    {/* <Field name={`${type}.${i}.name`} component={test} /> */}
                     <Grid item>
                       <Select
                         value={item.taxRate}

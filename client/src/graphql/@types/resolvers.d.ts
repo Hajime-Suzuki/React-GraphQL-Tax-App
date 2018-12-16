@@ -2,6 +2,34 @@ export interface UpdateProjectInput {
   status: InvoiceStatus;
 }
 
+export interface AddProjectInput {
+  invoiceNumber?: string | null;
+
+  invoiceDate?: string | null;
+
+  projectDate?: string | null;
+
+  name?: string | null;
+
+  date?: string | null;
+
+  status?: InvoiceStatus | null;
+
+  expenses?: (ExpenseAndIncomeInput | null)[] | null;
+
+  incomes?: (ExpenseAndIncomeInput | null)[] | null;
+}
+
+export interface ExpenseAndIncomeInput {
+  name?: string | null;
+
+  price?: number | null;
+
+  quantity?: number | null;
+
+  taxRate?: number | null;
+}
+
 export enum InvoiceStatus {
   None = "none",
   Invoice = "invoice",
@@ -393,6 +421,12 @@ export namespace MutationResolvers {
       Context
     >;
 
+    addProject?: AddProjectResolver<
+      MutationProjectResponse | null,
+      TypeParent,
+      Context
+    >;
+
     logout?: LogoutResolver<string | null, TypeParent, Context>;
   }
 
@@ -431,6 +465,15 @@ export namespace MutationResolvers {
     projectId: string;
 
     data: UpdateProjectInput;
+  }
+
+  export type AddProjectResolver<
+    R = MutationProjectResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, AddProjectArgs>;
+  export interface AddProjectArgs {
+    data: AddProjectInput;
   }
 
   export type LogoutResolver<

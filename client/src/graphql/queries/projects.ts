@@ -28,3 +28,16 @@ export const UPDATE_STATUS = gql`
     }
   }
 `
+
+export const ADD_PROJECT = gql`
+  mutation addProject($data: AddProjectInput!) {
+    addProject(data: $data) {
+      success
+      message
+      project {
+        id
+        status
+      }
+    }
+  }
+`

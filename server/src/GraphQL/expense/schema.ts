@@ -15,4 +15,10 @@ export const expenseSchema = gql`
     quantity: Int!
     taxRate: Int!
   }
+  input ExpenseAndIncomeInput {
+    name: String
+    price: Int
+    quantity: Int
+    taxRate: Int
+  }
 `
