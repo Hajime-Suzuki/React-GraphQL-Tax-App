@@ -22,14 +22,38 @@ export const renderFormikTextField = ({
   ...props
 }: FieldProps) => {
   const { touched, errors } = form
+  const [fieldSection, fieldName] = field.name.split('.')
+
+  let errorMessage
+  if (fieldName) {
+    // if field is an object
+    errorMessage =
+      errors &&
+      fieldName &&
+      errors[fieldSection] &&
+      errors[fieldSection]![fieldName]
+  } else {
+    // normal case
+    errorMessage = errors[fieldSection]
+  }
+
+  // console.log(errors, field.name)
 
   return (
-    <React.Fragment>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}
+    >
       <TextField type="text" {...field} {...props} />
+      {errorMessage && <div className="error">{errorMessage}</div>}
+      {/* <TextField type="text" {...field} {...props} />
       {touched[field.name] && errors[field.name] && (
         <div className="error">{errors[field.name]}</div>
-      )}
-    </React.Fragment>
+      )} */}
+    </div>
   )
 }
 

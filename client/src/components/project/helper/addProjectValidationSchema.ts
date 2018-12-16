@@ -16,14 +16,22 @@ const expenseShape = yup.object().shape({
   taxRate: yup.mixed().oneOf([0, 6, 21])
 })
 
+const contactPersonShape = yup.object().shape({
+  name: yup.string().required(),
+  email: yup.string(),
+  address: yup.string(),
+  phone: yup.string()
+})
+
 export const addProjectSchema = yup.object().shape({
   invoiceNumber: yup.string().required(),
   invoiceDate: yup.string(),
   name: yup.string().required(),
   projectDate: yup.string().required(),
-  incomes: yup
-    .array()
-    .of(incomesShape)
-    .required(),
-  expenses: yup.array().of(expenseShape)
+  // incomes: yup
+  //   .array()
+  //   .of(incomesShape)
+  //   .required(),
+  // expenses: yup.array().of(expenseShape),
+  contactPerson: contactPersonShape
 })

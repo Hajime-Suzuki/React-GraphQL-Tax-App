@@ -1,7 +1,8 @@
-import { FormikProps, withFormik, Formik } from 'formik'
+import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
-import InvoiceInfoForm from './formConponents/invoiceForm/InvoiceInfoForm'
 import { AddProject } from 'src/graphql/components/projects'
+import InvoiceInfoForm from './formConponents/invoiceForm/InvoiceInfoForm'
+import { addProjectSchema } from './helper/addProjectValidationSchema'
 
 export const addProjectInitialValues = {
   invoiceNumber: '',
@@ -16,14 +17,7 @@ export const addProjectInitialValues = {
       taxRate: 21
     }
   ],
-  expenses: [
-    {
-      name: '',
-      price: '',
-      quantity: '',
-      taxRate: 21
-    }
-  ],
+  expenses: [],
   contactPerson: {
     name: '',
     email: '',
@@ -32,7 +26,9 @@ export const addProjectInitialValues = {
   }
 }
 
-export type AddProjectInitialValues = typeof addProjectInitialValues
+export type AddProjectInitialValues = typeof addProjectInitialValues & {
+  expenses: typeof addProjectInitialValues['incomes']
+}
 
 type Props = AddProject.Props<{}>
 
@@ -47,21 +43,16 @@ class AddProjectContainer extends React.PureComponent<Props> {
       }
     })
   }
-  render() {
-    console.log(this.props)
+  render = () => {
     return (
-      <React.Fragment>
-        <Formik
-          onSubmit={this.handleSubmit}
-          initialValues={addProjectInitialValues}
-          render={(props: FormikProps<AddProjectInitialValues>) => {
-            const { values, handleChange } = props
-            return (
-              <InvoiceInfoForm values={values} handleChange={handleChange} />
-            )
-          }}
-        />
-      </React.Fragment>
+      <Formik
+        onSubmit={this.handleSubmit}
+        initialValues={addProjectInitialValues}
+        validationSchema={addProjectSchema}
+        render={(formProps: FormikProps<AddProjectInitialValues>) => {
+          return <InvoiceInfoForm {...formProps} />
+        }}
+      />
     )
   }
 }
