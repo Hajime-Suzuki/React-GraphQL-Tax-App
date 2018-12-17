@@ -51,9 +51,9 @@ const projectSchema: Schema = new Schema({
   },
   expenses: [expenseSchema],
   incomes: [expenseSchema],
-  contactPerson: {
+  client: {
     type: Schema.Types.ObjectId,
-    ref: 'Contact-Person'
+    ref: 'Client'
   },
   user: {
     type: Schema.Types.ObjectId,

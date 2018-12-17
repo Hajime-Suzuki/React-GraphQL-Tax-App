@@ -1,10 +1,10 @@
 import { Document, model, Model, Schema } from 'mongoose'
 import * as validator from 'validator'
-import { IContactPerson } from '../GraphQL/@types/types'
+import { IClient } from '../GraphQL/@types/types'
 
-type ContactPersonDocument = IContactPerson & Document
+type ClientDocument = IClient & Document
 
-const contactPersonSchema = new Schema({
+const ClientSchema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -27,11 +27,12 @@ const contactPersonSchema = new Schema({
   phone: {
     type: String
   },
-  link: {
+  postalCode: {
     type: String
   }
 })
 
-export const ContactPerson: Model<ContactPersonDocument> = model<
-  ContactPersonDocument
->('Contact-Person', contactPersonSchema)
+export const Client: Model<ClientDocument> = model<ClientDocument>(
+  'Client',
+  ClientSchema
+)

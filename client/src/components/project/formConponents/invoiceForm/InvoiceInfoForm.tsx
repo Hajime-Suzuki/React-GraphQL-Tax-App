@@ -2,42 +2,36 @@ import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
 import Typography from '@material-ui/core/Typography'
 import { FieldArray, Form, FormikProps } from 'formik'
 import * as React from 'react'
+import { AddProjectInput } from 'src/graphql/components/projects'
+import { StatusField } from 'src/libs/forms/renderDropdown'
 import styled from 'styled-components'
-import {
-  AddProjectInitialValues,
-  addProjectInitialValues
-} from '../../AddProjectContainer'
+import { addProjectInitialValues } from '../../AddProjectContainer'
 import { renderFields } from '../../helper/renderFields'
 
-interface Props {
-  handleSubmit: any
-}
-
 class InvoiceInfoForm extends React.PureComponent<
-  Props & FormikProps<AddProjectInitialValues>
+  FormikProps<AddProjectInput>
 > {
   render() {
+    const { isSubmitting } = this.props
     return (
       <StyledForm>
         <div className="form-section">
           <Typography variant="h5" className="title">
             Basic Info
           </Typography>
-          {fields.map((field, i) => (
+          {generalFields.map((field, i) => (
             <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
           ))}
         </div>
 
         <div className="form-section">
           <Typography variant="h5" className="title">
-            Contact Person
+            Client Info
           </Typography>
-          {contactPersonFields.map((field, i) => (
+          {clientFields.map((field, i) => (
             <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
           ))}
         </div>
@@ -57,7 +51,12 @@ class InvoiceInfoForm extends React.PureComponent<
         </div>
 
         <div className="form-section">
-          <Button type="submit" variant="contained" color="primary">
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isSubmitting}
+          >
             Submit
           </Button>
         </div>
@@ -75,42 +74,39 @@ class InvoiceInfoForm extends React.PureComponent<
         render={arrayHelpers => {
           return (
             <React.Fragment>
-              {items.map((item, i) => {
-                return (
-                  <React.Fragment key={i}>
-                    {generateArrayFields(type, i).map((field, i) => (
-                      <React.Fragment key={i}>
-                        {renderFields(field)}
-                      </React.Fragment>
-                    ))}
-                    <div className="field-item select">
-                      <InputLabel htmlFor="tax-rate">Age</InputLabel>
-                      <Select
-                        value={item.taxRate}
-                        name={`${type}.${i}.taxRate`}
-                        id="tax-rate"
-                        onChange={handleChange}
-                      >
-                        <MenuItem value={0}>0%</MenuItem>
-                        <MenuItem value={6}>6%</MenuItem>
-                        <MenuItem value={21}>21%</MenuItem>
-                      </Select>
-                    </div>
-                    <div className="add-icon">
-                      <IconButton onClick={() => arrayHelpers.remove(i)}>
-                        <Icon className="far fa-trash-alt" />
-                      </IconButton>
-                    </div>
-                  </React.Fragment>
-                )
-              })}
+              {items &&
+                items.map((item, i) => {
+                  return (
+                    <React.Fragment key={i}>
+                      {generateArrayFields(type, i).map((field, i) => (
+                        <React.Fragment key={i}>
+                          {renderFields(field)}
+                        </React.Fragment>
+                      ))}
+                      <div className="field-item select">
+                        <InputLabel htmlFor="tax-rate">Tax Rate</InputLabel>
+                        <StatusField
+                          value={item.taxRate === null ? '' : item.taxRate}
+                          name={`${type}.${i}.taxRate`}
+                          id="tax-rate"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="add-icon">
+                        <IconButton onClick={() => arrayHelpers.remove(i)}>
+                          <Icon className="far fa-trash-alt" />
+                        </IconButton>
+                      </div>
+                    </React.Fragment>
+                  )
+                })}
               <IconButton
                 style={{ marginTop: '1em' }}
                 onClick={() =>
                   arrayHelpers.push(addProjectInitialValues.incomes[0])
                 }
               >
-                <Icon className="fas fa-plus-circle" />
+                <Icon className="fas fa-plus-circle" color="secondary" />
               </IconButton>
             </React.Fragment>
           )
@@ -120,24 +116,26 @@ class InvoiceInfoForm extends React.PureComponent<
   }
 }
 
-const fields = [
+const generalFields = [
   { name: 'invoiceNumber', label: 'Invoice Number' },
   { name: 'projectDate', label: 'Project Date' },
   { name: 'invoiceDate', label: 'Invoice Date' },
   { name: 'name', label: 'Name' }
 ]
 
-const contactPersonFields = [
-  { name: 'contactPerson.name', label: 'Name' },
-  { name: 'contactPerson.email', label: 'Email' },
-  { name: 'contactPerson.address', label: 'Address' },
-  { name: 'contactPerson.phone', label: 'Phone' }
+const clientFields = [
+  { name: 'client.firstName', label: 'First Name' },
+  { name: 'client.lastName', label: 'Last Name' },
+  { name: 'client.email', label: 'Email' },
+  { name: 'client.phone', label: 'Phone' },
+  { name: 'client.address', label: 'Address' },
+  { name: 'client.postalCode', label: 'Postal Code' }
 ]
 
-const generateArrayFields = (type: 'incomes' | 'expenses', i) => [
-  { name: `${type}.${i}.name`, label: 'Name' },
-  { name: `${type}.${i}.price`, label: 'Price' },
-  { name: `${type}.${i}.quantity`, label: 'Quantity' }
+const generateArrayFields = (type: 'incomes' | 'expenses', index: number) => [
+  { name: `${type}.${index}.name`, label: 'Name' },
+  { name: `${type}.${index}.price`, label: 'Price', type: 'number' },
+  { name: `${type}.${index}.quantity`, label: 'Quantity', type: 'number' }
 ]
 
 const StyledForm = styled(Form)`

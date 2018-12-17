@@ -15,6 +15,7 @@ export const renderFields = (field: Field) => {
       label={field.label}
       component={renderFormikTextField}
       className="field-item"
+      type={field.type || 'text'}
     />
   )
 }

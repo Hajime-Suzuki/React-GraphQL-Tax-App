@@ -15,9 +15,23 @@ export interface AddProjectInput {
 
   status?: InvoiceStatus | null;
 
-  expenses?: (ExpenseAndIncomeInput | null)[] | null;
+  client?: ClientInput | null;
 
-  incomes?: (ExpenseAndIncomeInput | null)[] | null;
+  expenses?: ExpenseAndIncomeInput[] | null;
+
+  incomes?: ExpenseAndIncomeInput[] | null;
+}
+
+export interface ClientInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  phone?: string | null;
+
+  postalCode?: string | null;
 }
 
 export interface ExpenseAndIncomeInput {

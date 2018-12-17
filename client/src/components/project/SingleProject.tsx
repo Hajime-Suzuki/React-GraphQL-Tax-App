@@ -26,7 +26,7 @@ const ProjectDetails: any = styled(Grid)`
 
 const SingleProject = ({ project: p, openModal, posting }) => {
   if (!p) return null
-  const c = p.get('contactPerson')
+  const c = p.get('client')
   const totalIncomeExcl = calcTotalvalueWithoutTax(p.get('incomes'))
   const totalExpensesExcl = calcTotalvalueWithoutTax(p.get('expenses'))
   const totalIncomeTax = calcOnlyTax(p.get('incomes'))

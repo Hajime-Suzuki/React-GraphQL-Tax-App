@@ -1,5 +1,5 @@
 import MenuItem from '@material-ui/core/MenuItem'
-import React from 'react'
+import * as React from 'react'
 
 type statusMenuItems = 'none' | 'invoice' | 'paid'
 

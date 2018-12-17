@@ -3,39 +3,39 @@ import * as React from 'react'
 import { Field } from 'redux-form'
 import { renderTextField } from '../../../libs/forms/renderTextField'
 
-const ContactPersonForm = props => {
+const ClientForm = props => {
   const { handleChange } = props
   return (
     <React.Fragment>
       <Typography>Contact Person</Typography>
       <Field
         component={renderTextField}
-        name="contactPerson.firstName"
+        name="client.firstName"
         label="First Name"
         onChange={handleChange}
       />
       <Field
         component={renderTextField}
-        name="contactPerson.lastName"
+        name="client.lastName"
         label="Last Name"
         onChange={handleChange}
       />
       <Field
         component={renderTextField}
-        name="contactPerson.email"
+        name="client.email"
         label="Email"
         onChange={handleChange}
       />
       <Field
         component={renderTextField}
-        name="contactPerson.phone"
+        name="client.phone"
         label="Phone"
         onChange={handleChange}
       />
 
       <Field
         component={renderTextField}
-        name="contactPerson.link"
+        name="client.link"
         label="Link"
         onChange={handleChange}
       />
@@ -43,4 +43,4 @@ const ContactPersonForm = props => {
   )
 }
 
-export default ContactPersonForm
+export default ClientForm

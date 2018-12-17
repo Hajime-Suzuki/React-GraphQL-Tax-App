@@ -1,7 +1,7 @@
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-koa'
 import { Context } from 'koa'
 import { mergeTypes } from 'merge-graphql-schemas'
-import { contactPersonSchema } from './GraphQL/contactPerson/schema'
+import { clientSchema } from './GraphQL/client/schema'
 import { expenseSchema } from './GraphQL/expense/schema'
 import { projectResolvers } from './GraphQL/project/resolvers'
 import { projectSchema } from './GraphQL/project/schema'
@@ -15,7 +15,7 @@ export interface ICtx {
 }
 
 const typeDefs = mergeTypes(
-  [userSchema, projectSchema, expenseSchema, contactPersonSchema, sharedTypes],
+  [userSchema, projectSchema, expenseSchema, clientSchema, sharedTypes],
   {
     all: true
   }

@@ -11,7 +11,7 @@ export const projectSchema = gql`
     city: String
     link: String
     status: INVOICE_STATUS!
-    contactPerson: ContactPerson
+    client: Client
     user: String!
     expenses: [ExpenseAndIncome!]
     incomes: [ExpenseAndIncome!]
@@ -46,8 +46,9 @@ export const projectSchema = gql`
     name: String
     date: String
     status: INVOICE_STATUS
-    expenses: [ExpenseAndIncomeInput]
-    incomes: [ExpenseAndIncomeInput]
+    client: ClientInput
+    expenses: [ExpenseAndIncomeInput!]
+    incomes: [ExpenseAndIncomeInput!]
   }
 
   scalar Date

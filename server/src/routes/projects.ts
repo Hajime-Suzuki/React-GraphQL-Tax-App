@@ -1,7 +1,7 @@
 import { addDays, addMonths, format, subMonths } from 'date-fns'
 import * as faker from 'faker'
 import * as Router from 'koa-router'
-import { ContactPerson } from '../Models/ContactPerson'
+import { Client } from '../Models/Client'
 import { Expense } from '../Models/Expense'
 import { Project } from '../Models/Project'
 import { User } from '../Models/User'
@@ -18,17 +18,14 @@ const router = new Router({
 })
 
 router.get('/:id', authMiddleware, async ctx => {
-  const project = await Project.findById(ctx.params.id).populate(
-    'contactPerson'
-  )
+  const project = await Project.findById(ctx.params.id).populate('client')
   if (!project) ctx.throw(404, 'project not found')
   ctx.body = { project }
 })
 
 router.post('/', authMiddleware, async ctx => {
   const jwtPayload: IJwtPayload = (ctx.req as any).user
-  const { contactPerson: contactPersonData, ...data } = ctx.request
-    .body as IProject
+  const { client: clientData, ...data } = ctx.request.body as IProject
 
   const user = await User.findById(jwtPayload.id).populate('projects')
   if (!user) return ctx.throw(404, 'no user found')
@@ -37,11 +34,11 @@ router.post('/', authMiddleware, async ctx => {
 
   newProject.user = user.id
 
-  if (contactPersonData) {
-    const { firstName, lastName, email, phone, link } = contactPersonData
+  if (clientData) {
+    const { firstName, lastName, email, phone, link } = clientData
 
     // replace this to find by id later
-    const existintContactPerson = await ContactPerson.findOne({
+    const existingClientPerson = await Client.findOne({
       ...(firstName && { firstName }),
       ...(lastName && { lastName }),
       ...(email && { email }),
@@ -49,11 +46,11 @@ router.post('/', authMiddleware, async ctx => {
       ...(link && { link })
     })
 
-    if (existintContactPerson) {
-      newProject.contactPerson = existintContactPerson._id
+    if (existingClientPerson) {
+      newProject.client = existingClientPerson._id
     } else {
-      const newContactPerson = await ContactPerson.create(contactPersonData)
-      newProject.contactPerson = newContactPerson._id
+      const newClient = await Client.create(clientData)
+      newProject.client = newClient._id
     }
   }
 
@@ -66,7 +63,7 @@ router.post('/', authMiddleware, async ctx => {
   )
 
   console.log('update')
-  const p = await Project.findById(newProject.id).populate(['contactPerson'])
+  const p = await Project.findById(newProject.id).populate(['client'])
 
   ctx.status = 201
   ctx.body = p

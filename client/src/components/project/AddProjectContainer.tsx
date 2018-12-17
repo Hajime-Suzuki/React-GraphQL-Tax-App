@@ -1,8 +1,7 @@
-import { Formik, FormikProps } from 'formik'
+import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
-import { AddProject } from 'src/graphql/components/projects'
+import { AddProject, AddProjectInput } from 'src/graphql/components/projects'
 import InvoiceInfoForm from './formConponents/invoiceForm/InvoiceInfoForm'
-import { addProjectSchema } from './helper/addProjectValidationSchema'
 
 export const addProjectInitialValues = {
   invoiceNumber: '',
@@ -12,44 +11,43 @@ export const addProjectInitialValues = {
   incomes: [
     {
       name: '',
-      price: '',
-      quantity: '',
+      price: 0,
+      quantity: 0,
       taxRate: 21
     }
   ],
   expenses: [],
-  contactPerson: {
-    name: '',
+  client: {
+    firstName: '',
+    lastName: '',
     email: '',
-    phoneNumber: '',
+    phone: '',
+    postalCode: '',
     address: ''
   }
 }
 
-export type AddProjectInitialValues = typeof addProjectInitialValues & {
-  expenses: typeof addProjectInitialValues['incomes']
-}
-
-type Props = AddProject.Props<{}>
-
-class AddProjectContainer extends React.PureComponent<Props> {
-  handleSubmit = (values: AddProjectInitialValues) => {
+class AddProjectContainer extends React.PureComponent<AddProject.Props<{}>> {
+  handleSubmit = async (
+    values: AddProjectInput,
+    formikActions: FormikActions<AddProjectInput>
+  ) => {
     const { mutate: addProject } = this.props
-    const { contactPerson, incomes, expenses, ...rest } = values
-    // TODO: update
-    addProject!({
+    await addProject!({
       variables: {
-        data: rest
+        data: values
       }
     })
+
+    formikActions.resetForm()
   }
   render = () => {
     return (
       <Formik
         onSubmit={this.handleSubmit}
         initialValues={addProjectInitialValues}
-        validationSchema={addProjectSchema}
-        render={(formProps: FormikProps<AddProjectInitialValues>) => {
+        // validationSchema={addProjectSchema}
+        render={(formProps: FormikProps<AddProjectInput>) => {
           return <InvoiceInfoForm {...formProps} />
         }}
       />

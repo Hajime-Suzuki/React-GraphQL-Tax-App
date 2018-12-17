@@ -15,9 +15,23 @@ export interface AddProjectInput {
 
   status?: InvoiceStatus | null;
 
-  expenses?: (ExpenseAndIncomeInput | null)[] | null;
+  client?: ClientInput | null;
 
-  incomes?: (ExpenseAndIncomeInput | null)[] | null;
+  expenses?: ExpenseAndIncomeInput[] | null;
+
+  incomes?: ExpenseAndIncomeInput[] | null;
+}
+
+export interface ClientInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  phone?: string | null;
+
+  postalCode?: string | null;
 }
 
 export interface ExpenseAndIncomeInput {
@@ -87,7 +101,7 @@ export interface Project {
 
   status: InvoiceStatus;
 
-  contactPerson?: ContactPerson | null;
+  client?: Client | null;
 
   user: string;
 
@@ -96,7 +110,7 @@ export interface Project {
   incomes?: ExpenseAndIncome[] | null;
 }
 
-export interface ContactPerson {
+export interface Client {
   firstName?: string | null;
 
   lastName?: string | null;
@@ -105,7 +119,7 @@ export interface ContactPerson {
 
   phone?: string | null;
 
-  link?: string | null;
+  postalCode?: string | null;
 }
 
 export interface ExpenseAndIncome {

@@ -1,8 +1,6 @@
-import { MutationResolvers, QueryResolvers } from '../@types/types'
-import { getProjectsByUserId, updateProject, addProject } from './methods'
 import { ICtx } from '../../server'
-import { AuthenticationError } from 'apollo-server-koa'
-import { Project } from '../../Models/Project'
+import { MutationResolvers, QueryResolvers } from '../@types/types'
+import { addProject, getProjectsByUserId, updateProject } from './methods'
 
 export const projectResolvers: {
   Query: QueryResolvers.Resolvers

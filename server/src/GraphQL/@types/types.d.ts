@@ -7,15 +7,31 @@ export interface IAddProjectInput {
 
   invoiceDate?: string | null;
 
+  projectDate?: string | null;
+
   name?: string | null;
 
   date?: string | null;
 
   status?: IInvoiceStatus | null;
 
-  expenses?: (IExpenseAndIncomeInput | null)[] | null;
+  client?: IClientInput | null;
 
-  incomes?: (IExpenseAndIncomeInput | null)[] | null;
+  expenses?: IExpenseAndIncomeInput[] | null;
+
+  incomes?: IExpenseAndIncomeInput[] | null;
+}
+
+export interface IClientInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  phone?: string | null;
+
+  postalCode?: string | null;
 }
 
 export interface IExpenseAndIncomeInput {
@@ -85,7 +101,7 @@ export interface IProject {
 
   status: IInvoiceStatus;
 
-  contactPerson?: IContactPerson | null;
+  client?: IClient | null;
 
   user: string;
 
@@ -94,7 +110,7 @@ export interface IProject {
   incomes?: IExpenseAndIncome[] | null;
 }
 
-export interface IContactPerson {
+export interface IClient {
   firstName?: string | null;
 
   lastName?: string | null;
@@ -103,7 +119,7 @@ export interface IContactPerson {
 
   phone?: string | null;
 
-  link?: string | null;
+  postalCode?: string | null;
 }
 
 export interface IExpenseAndIncome {
@@ -346,11 +362,7 @@ export namespace ProjectResolvers {
 
     status?: StatusResolver<IInvoiceStatus, TypeParent, Context>;
 
-    contactPerson?: ContactPersonResolver<
-      IContactPerson | null,
-      TypeParent,
-      Context
-    >;
+    client?: ClientResolver<IClient | null, TypeParent, Context>;
 
     user?: UserResolver<string, TypeParent, Context>;
 
@@ -408,8 +420,8 @@ export namespace ProjectResolvers {
     Parent = IProject,
     Context = {}
   > = Resolver<R, Parent, Context>;
-  export type ContactPersonResolver<
-    R = IContactPerson | null,
+  export type ClientResolver<
+    R = IClient | null,
     Parent = IProject,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -430,8 +442,8 @@ export namespace ProjectResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace ContactPersonResolvers {
-  export interface Resolvers<Context = {}, TypeParent = IContactPerson> {
+export namespace ClientResolvers {
+  export interface Resolvers<Context = {}, TypeParent = IClient> {
     firstName?: FirstNameResolver<string | null, TypeParent, Context>;
 
     lastName?: LastNameResolver<string | null, TypeParent, Context>;
@@ -440,32 +452,32 @@ export namespace ContactPersonResolvers {
 
     phone?: PhoneResolver<string | null, TypeParent, Context>;
 
-    link?: LinkResolver<string | null, TypeParent, Context>;
+    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
   }
 
   export type FirstNameResolver<
     R = string | null,
-    Parent = IContactPerson,
+    Parent = IClient,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type LastNameResolver<
     R = string | null,
-    Parent = IContactPerson,
+    Parent = IClient,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type EmailResolver<
     R = string | null,
-    Parent = IContactPerson,
+    Parent = IClient,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PhoneResolver<
     R = string | null,
-    Parent = IContactPerson,
+    Parent = IClient,
     Context = {}
   > = Resolver<R, Parent, Context>;
-  export type LinkResolver<
+  export type PostalCodeResolver<
     R = string | null,
-    Parent = IContactPerson,
+    Parent = IClient,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }
