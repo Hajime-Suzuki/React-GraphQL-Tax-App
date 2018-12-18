@@ -1,11 +1,11 @@
-import { Project } from '../../Models/Project'
 import { ApolloError, AuthenticationError } from 'apollo-server-koa'
-import {
-  IUpdateProjectInput,
-  AddProjectMutationArgs,
-  IAddProjectInput
-} from '../@types/types'
+import { removeEmptyProperty } from '../../helpers/transform'
+import { Client } from '../../Models/Client'
+import { Project } from '../../Models/Project'
 import { User } from '../../Models/User'
+import { IAddProjectInput, IUpdateProjectInput } from '../@types/types'
+import { isEmptyObject } from '../../helpers/object'
+import { Types } from 'mongoose'
 
 export const getProjectsByUserId = async (userId: string) => {
   const projects = await Project.find({ user: userId })
@@ -34,12 +34,28 @@ export const addProject = async (userId: string, data: IAddProjectInput) => {
   const user = await User.findById(userId)
   if (!user) throw new Error('user is not found')
 
-  const newProject = new Project({ ...data, user })
+  const newProject = new Project({ ...data, user: user.id })
+  const clientData = removeEmptyProperty<typeof data.client>(data.client)
+
+  if (!isEmptyObject(clientData)) {
+    const clientDataWithUser = { ...clientData, user: userId }
+    const client = await Client.findOne(clientDataWithUser).then(
+      existingClient => {
+        console.log(existingClient)
+        if (!existingClient) return Client.create(clientDataWithUser)
+        return existingClient
+      }
+    )
+    newProject.client = client
+  }
+
   const savedProject = await newProject.save()
+
   await User.findOneAndUpdate(
     { _id: user.id },
     { $push: { projects: savedProject } }
   )
+
   return {
     success: true,
     message: 'project has been added',

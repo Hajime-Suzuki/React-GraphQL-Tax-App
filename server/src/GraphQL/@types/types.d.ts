@@ -32,6 +32,8 @@ export interface IClientInput {
   phone?: string | null;
 
   postalCode?: string | null;
+
+  address?: string | null;
 }
 
 export interface IExpenseAndIncomeInput {
@@ -120,6 +122,10 @@ export interface IClient {
   phone?: string | null;
 
   postalCode?: string | null;
+
+  address?: string | null;
+
+  user?: string | null;
 }
 
 export interface IExpenseAndIncome {
@@ -453,6 +459,10 @@ export namespace ClientResolvers {
     phone?: PhoneResolver<string | null, TypeParent, Context>;
 
     postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
+
+    address?: AddressResolver<string | null, TypeParent, Context>;
+
+    user?: UserResolver<string | null, TypeParent, Context>;
   }
 
   export type FirstNameResolver<
@@ -476,6 +486,16 @@ export namespace ClientResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PostalCodeResolver<
+    R = string | null,
+    Parent = IClient,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type AddressResolver<
+    R = string | null,
+    Parent = IClient,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type UserResolver<
     R = string | null,
     Parent = IClient,
     Context = {}

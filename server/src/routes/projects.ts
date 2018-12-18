@@ -35,15 +35,14 @@ router.post('/', authMiddleware, async ctx => {
   newProject.user = user.id
 
   if (clientData) {
-    const { firstName, lastName, email, phone, link } = clientData
+    const { firstName, lastName, email, phone } = clientData
 
     // replace this to find by id later
     const existingClientPerson = await Client.findOne({
       ...(firstName && { firstName }),
       ...(lastName && { lastName }),
       ...(email && { email }),
-      ...(phone && { phone }),
-      ...(link && { link })
+      ...(phone && { phone })
     })
 
     if (existingClientPerson) {

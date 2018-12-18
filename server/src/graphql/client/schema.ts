@@ -7,6 +7,8 @@ export const clientSchema = gql`
     email: String
     phone: String
     postalCode: String
+    address: String
+    user: String
   }
   input ClientInput {
     firstName: String
@@ -14,5 +16,6 @@ export const clientSchema = gql`
     email: String
     phone: String
     postalCode: String
+    address: String
   }
 `

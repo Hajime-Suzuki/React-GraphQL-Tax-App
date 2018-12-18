@@ -32,6 +32,8 @@ export interface ClientInput {
   phone?: string | null;
 
   postalCode?: string | null;
+
+  address?: string | null;
 }
 
 export interface ExpenseAndIncomeInput {

@@ -24,10 +24,16 @@ const ClientSchema = new Schema({
       message: () => 'invalid email'
     }
   },
+  user: {
+    type: Schema.Types.ObjectId
+  },
   phone: {
     type: String
   },
   postalCode: {
+    type: String
+  },
+  address: {
     type: String
   }
 })

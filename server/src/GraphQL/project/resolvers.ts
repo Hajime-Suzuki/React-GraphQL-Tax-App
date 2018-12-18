@@ -13,6 +13,7 @@ export const projectResolvers: {
     }
   },
   Mutation: {
+    addProject: async (_, { data }, { userId }) => addProject(userId, data),
     updateProject: async (_, { projectId, data }) => {
       const project = await updateProject(projectId, data)
       return {
@@ -20,7 +21,6 @@ export const projectResolvers: {
         message: `Project "${projectId}" has been updated`,
         project
       }
-    },
-    addProject: async (_, { data }, { userId }) => addProject(userId, data)
+    }
   }
 }
