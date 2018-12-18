@@ -38,16 +38,17 @@ class AddProjectContainer extends React.PureComponent<AddProject.Props<{}>> {
         data: values
       }
     })
-
     formikActions.resetForm()
   }
   render = () => {
+    console.log({ props: this.props })
     return (
       <Formik
         onSubmit={this.handleSubmit}
         initialValues={addProjectInitialValues}
         // validationSchema={addProjectSchema}
         render={(formProps: FormikProps<AddProjectInput>) => {
+          console.log({ formProps })
           return <InvoiceInfoForm {...formProps} />
         }}
       />

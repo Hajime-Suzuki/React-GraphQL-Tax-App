@@ -29,13 +29,18 @@ export default class LoginForm extends React.Component<Props> {
               spacing={40}
             >
               <Grid item>
-                <Field name="email" component={renderFormikTextField} />
+                <Field
+                  name="email"
+                  label="email"
+                  component={renderFormikTextField}
+                />
                 <ErrorMessage name="email" component="div" />
               </Grid>
               <Grid item>
                 <Field
                   type="password"
                   name="password"
+                  label="password"
                   component={renderFormikTextField}
                 />
                 <ErrorMessage name="password" component="div" />

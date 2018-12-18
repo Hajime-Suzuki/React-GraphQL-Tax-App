@@ -31,6 +31,7 @@ export default class SignupForm extends React.Component<Props> {
               <Grid item>
                 <Field
                   name="firstName"
+                  label="firstName"
                   component={renderFormikTextField}
                   required
                 />
@@ -39,6 +40,7 @@ export default class SignupForm extends React.Component<Props> {
               <Grid item>
                 <Field
                   name="lastName"
+                  label="lastName"
                   component={renderFormikTextField}
                   required
                 />
@@ -47,6 +49,7 @@ export default class SignupForm extends React.Component<Props> {
               <Grid item>
                 <Field
                   name="email"
+                  label="email"
                   component={renderFormikTextField}
                   required
                 />
@@ -56,6 +59,7 @@ export default class SignupForm extends React.Component<Props> {
                 <Field
                   type="password"
                   name="password"
+                  label="password"
                   component={renderFormikTextField}
                   required
                 />
