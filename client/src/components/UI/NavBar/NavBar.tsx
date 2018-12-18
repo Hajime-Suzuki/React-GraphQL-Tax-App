@@ -39,7 +39,7 @@ const styles = theme =>
 
 interface Props {
   user?: GetUser.GetUser | null
-  logout: () => void
+  logout?: () => void
   path: string
 }
 
