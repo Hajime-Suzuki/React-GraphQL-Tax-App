@@ -66,6 +66,8 @@ export interface Query {
   getUser?: User | null;
 
   getProjectsByUserId: Project[];
+
+  getSingleProject?: Project | null;
 }
 
 export interface User {
@@ -122,6 +124,10 @@ export interface Client {
   phone?: string | null;
 
   postalCode?: string | null;
+
+  address?: string | null;
+
+  user?: string | null;
 }
 
 export interface ExpenseAndIncome {
@@ -183,6 +189,9 @@ export interface GetUserQueryArgs {
 }
 export interface GetProjectsByUserIdQueryArgs {
   userId: string;
+}
+export interface GetSingleProjectQueryArgs {
+  projectId: string;
 }
 export interface RegisterUserMutationArgs {
   firstName: string;

@@ -66,6 +66,8 @@ export interface IQuery {
   getUser?: IUser | null;
 
   getProjectsByUserId: IProject[];
+
+  getSingleProject?: IProject | null;
 }
 
 export interface IUser {
@@ -188,6 +190,9 @@ export interface GetUserQueryArgs {
 export interface GetProjectsByUserIdQueryArgs {
   userId: string;
 }
+export interface GetSingleProjectQueryArgs {
+  projectId: string;
+}
 export interface RegisterUserMutationArgs {
   firstName: string;
 
@@ -273,6 +278,12 @@ export namespace QueryResolvers {
       TypeParent,
       Context
     >;
+
+    getSingleProject?: GetSingleProjectResolver<
+      IProject | null,
+      TypeParent,
+      Context
+    >;
   }
 
   export type GetUserResolver<
@@ -291,6 +302,15 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, Context, GetProjectsByUserIdArgs>;
   export interface GetProjectsByUserIdArgs {
     userId: string;
+  }
+
+  export type GetSingleProjectResolver<
+    R = IProject | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetSingleProjectArgs>;
+  export interface GetSingleProjectArgs {
+    projectId: string;
   }
 }
 

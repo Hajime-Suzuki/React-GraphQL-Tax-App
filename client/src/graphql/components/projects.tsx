@@ -94,6 +94,48 @@ export namespace GetProjectOverview {
   };
 }
 
+export namespace GetSingleProject {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    getSingleProject: GetSingleProject | null;
+  };
+
+  export type GetSingleProject = {
+    __typename?: "Project";
+
+    id: string;
+
+    invoiceNumber: string;
+
+    invoiceDate: string | null;
+
+    name: string;
+
+    date: Date | null;
+
+    streetAddress: string | null;
+
+    city: string | null;
+
+    status: InvoiceStatus;
+
+    client: Client | null;
+  };
+
+  export type Client = {
+    __typename?: "Client";
+
+    firstName: string | null;
+
+    lastName: string | null;
+  };
+}
+
 export namespace UpdateStatus {
   export type Variables = {
     projectId: string;
@@ -177,6 +219,57 @@ export namespace GetProjectOverview {
           quantity
         }
         status
+      }
+    }
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.QueryProps<Query, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Query<Query, Variables>
+          query={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.DataProps<Query, Variables>
+  > &
+    TChildProps;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Query,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace GetSingleProject {
+  export const Document = gql`
+    query getSingleProject($id: String!) {
+      getSingleProject(projectId: $id) {
+        id
+        invoiceNumber
+        invoiceDate
+        name
+        date
+        streetAddress
+        city
+        status
+        client {
+          firstName
+          lastName
+        }
       }
     }
   `;

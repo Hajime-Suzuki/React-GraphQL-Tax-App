@@ -116,6 +116,12 @@ export namespace QueryResolvers {
       Context
     >;
 
+    getSingleProject?: GetSingleProjectResolver<
+      Project | null,
+      TypeParent,
+      Context
+    >;
+
     token?: TokenResolver<string, TypeParent, Context>;
 
     userId?: UserIdResolver<string | null, TypeParent, Context>;
@@ -137,6 +143,15 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, Context, GetProjectsByUserIdArgs>;
   export interface GetProjectsByUserIdArgs {
     userId: string;
+  }
+
+  export type GetSingleProjectResolver<
+    R = Project | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetSingleProjectArgs>;
+  export interface GetSingleProjectArgs {
+    projectId: string;
   }
 
   export type TokenResolver<R = string, Parent = {}, Context = {}> = Resolver<
@@ -312,6 +327,10 @@ export namespace ClientResolvers {
     phone?: PhoneResolver<string | null, TypeParent, Context>;
 
     postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
+
+    address?: AddressResolver<string | null, TypeParent, Context>;
+
+    user?: UserResolver<string | null, TypeParent, Context>;
   }
 
   export type FirstNameResolver<
@@ -335,6 +354,16 @@ export namespace ClientResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PostalCodeResolver<
+    R = string | null,
+    Parent = Client,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type AddressResolver<
+    R = string | null,
+    Parent = Client,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type UserResolver<
     R = string | null,
     Parent = Client,
     Context = {}

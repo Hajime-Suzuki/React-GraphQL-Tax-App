@@ -3,13 +3,23 @@ import { removeEmptyProperty } from '../../helpers/transform'
 import { Client } from '../../Models/Client'
 import { Project } from '../../Models/Project'
 import { User } from '../../Models/User'
-import { IAddProjectInput, IUpdateProjectInput } from '../@types/types'
+import {
+  IAddProjectInput,
+  IUpdateProjectInput,
+  GetSingleProjectQueryArgs
+} from '../@types/types'
 import { isEmptyObject } from '../../helpers/object'
-import { Types } from 'mongoose'
 
 export const getProjectsByUserId = async (userId: string) => {
   const projects = await Project.find({ user: userId })
   return projects
+}
+
+export const getSingleProject = async (
+  projectId: GetSingleProjectQueryArgs['projectId']
+) => {
+  const project = await Project.findById(projectId)
+  return project
 }
 
 export const updateProject = async (

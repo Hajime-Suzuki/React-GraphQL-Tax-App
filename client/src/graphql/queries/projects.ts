@@ -16,6 +16,25 @@ export const GET_PROJECT_OVERVIEW = gql`
   }
 `
 
+export const GET_SINGLE_PROJECT = gql`
+  query getSingleProject($id: String!) {
+    getSingleProject(projectId: $id) {
+      id
+      invoiceNumber
+      invoiceDate
+      name
+      date
+      streetAddress
+      city
+      status
+      client {
+        firstName
+        lastName
+      }
+    }
+  }
+`
+
 export const UPDATE_STATUS = gql`
   mutation updateStatus($projectId: String!, $data: UpdateProjectInput!) {
     updateProject(projectId: $projectId, data: $data) {

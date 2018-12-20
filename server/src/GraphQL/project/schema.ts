@@ -19,6 +19,7 @@ export const projectSchema = gql`
 
   type Query {
     getProjectsByUserId(userId: String!): [Project!]!
+    getSingleProject(projectId: String!): Project
   }
 
   type Mutation {
