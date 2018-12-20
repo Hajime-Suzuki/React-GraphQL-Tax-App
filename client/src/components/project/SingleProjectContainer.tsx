@@ -7,25 +7,43 @@ import SingleProject from './SingleProject'
 type OwnProps = RouteComponentProps<{ id: string }>
 
 class SingleProjectContainer extends React.Component<
-  GetSingleProject.Props<OwnProps>
+  GetSingleProject.Props<OwnProps>,
+  { isModalOpen: boolean }
 > {
+  state = {
+    isModalOpen: false
+  }
+
+  handleOpenModal = () => this.setState({ isModalOpen: true })
+
+  handleCloseModal = () => this.setState({ isModalOpen: false })
+
   render() {
-    const data = this.props.data
-    if (!data) return null
+    return (
+      <GetSingleProject.Component
+        variables={{ id: this.props.match.params.id }}
+      >
+        {({ data, error, loading }) => {
+          if (!data) return null
 
-    const { getSingleProject: project, loading, error } = data
-    if (error) return <p>{error}</p>
-    if (loading) return <LoadingIcon />
-    if (!project) return <p>Project not found</p>
+          const { getSingleProject: project } = data
 
-    return <SingleProject project={project} />
+          if (error) return <p>{error}</p>
+          if (loading) return <LoadingIcon />
+          if (!project) return <p>Project not found</p>
+
+          return (
+            <SingleProject
+              project={project}
+              isModalOpen={this.state.isModalOpen}
+              handleOpenModal={this.handleOpenModal}
+              handleCloseModal={this.handleCloseModal}
+            />
+          )
+        }}
+      </GetSingleProject.Component>
+    )
   }
 }
 
-export default GetSingleProject.HOC<OwnProps>({
-  options: props => {
-    return {
-      variables: { id: props.match.params.id }
-    }
-  }
-})(SingleProjectContainer)
+export default SingleProjectContainer

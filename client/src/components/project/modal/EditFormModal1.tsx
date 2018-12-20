@@ -7,22 +7,15 @@ import {
 } from '@material-ui/core'
 import React from 'react'
 
-interface Props {
-  handleCloseModal: () => void
-  confirmAndEdit: () => void
-  handleEntering: () => void
-  isOpen: boolean
-  type: string
-}
-const EditFormModal: React.SFC<Props> = props => {
+const EditFormModal = props => {
   const {
-    handleCloseModal,
-    confirmAndEdit,
-    isOpen,
+    closeModal,
+    cofirmAndEdit,
     handleEntering,
-    children
+    isOpen,
+    children,
+    type
   } = props
-
   return (
     <Dialog
       disableBackdropClick
@@ -34,10 +27,10 @@ const EditFormModal: React.SFC<Props> = props => {
       <DialogTitle>Edit Income</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button onClick={handleCloseModal} color="primary">
+        <Button onClick={closeModal} color="primary">
           Cancel
         </Button>
-        <Button onClick={confirmAndEdit} color="primary">
+        <Button onClick={() => cofirmAndEdit(type)} color="primary">
           Ok
         </Button>
       </DialogActions>

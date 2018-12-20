@@ -6,6 +6,7 @@ import format from 'date-fns/format'
 import * as React from 'react'
 import { GetSingleProject } from 'src/graphql/components/projects'
 import styled from 'styled-components'
+import EditFormModal from './modal/EditFormModal'
 
 const ProjectDetails: any = styled(Grid)`
   .invoice-number,
@@ -20,19 +21,33 @@ const ProjectDetails: any = styled(Grid)`
 
 interface Props {
   project: GetSingleProject.GetSingleProject
-  openModal?: any
+  isModalOpen: boolean
+  handleOpenModal: () => void
+  handleCloseModal: () => void
 }
-const SingleProject: React.SFC<Props> = ({ project, openModal }) => {
+const SingleProject: React.SFC<Props> = props => {
+  const { project, handleOpenModal, handleCloseModal, isModalOpen } = props
   const { client } = project
   return (
     <div>
+      <EditFormModal
+        isOpen={isModalOpen}
+        handleCloseModal={handleCloseModal}
+        confirmAndEdit={() => console.log('confirm!')}
+        handleEntering={() => console.log('enter')}
+        type={'something'}
+        // key={type}
+      >
+        Test!!!!
+      </EditFormModal>
+
       <ProjectDetails container justify="center">
         <Grid item xs={12} container justify="flex-end">
           <Button
             variant="outlined"
             color="primary"
             className="edit-button"
-            onClick={() => console.log('edit')}
+            onClick={handleOpenModal}
           >
             Edit
           </Button>
