@@ -125,6 +125,8 @@ export namespace GetSingleProject {
     status: InvoiceStatus;
 
     client: Client | null;
+
+    incomes: Incomes[] | null;
   };
 
   export type Client = {
@@ -133,6 +135,22 @@ export namespace GetSingleProject {
     firstName: string | null;
 
     lastName: string | null;
+
+    email: string | null;
+
+    phone: string | null;
+  };
+
+  export type Incomes = {
+    __typename?: "ExpenseAndIncome";
+
+    name: string;
+
+    price: number;
+
+    quantity: number;
+
+    taxRate: number;
   };
 }
 
@@ -269,6 +287,14 @@ export namespace GetSingleProject {
         client {
           firstName
           lastName
+          email
+          phone
+        }
+        incomes {
+          name
+          price
+          quantity
+          taxRate
         }
       }
     }

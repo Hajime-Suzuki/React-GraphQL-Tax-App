@@ -30,6 +30,14 @@ export const GET_SINGLE_PROJECT = gql`
       client {
         firstName
         lastName
+        email
+        phone
+      }
+      incomes {
+        name
+        price
+        quantity
+        taxRate
       }
     }
   }
