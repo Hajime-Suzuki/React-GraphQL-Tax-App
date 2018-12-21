@@ -41,7 +41,7 @@ class AddProjectContainer extends React.PureComponent<AddProject.Props<{}>> {
     formikActions.resetForm()
   }
   render = () => {
-    console.log({ props: this.props })
+    // console.log({ props: this.props })
     return (
       <Formik
         onSubmit={this.handleSubmit}

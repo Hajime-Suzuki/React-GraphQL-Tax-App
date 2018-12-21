@@ -1,15 +1,16 @@
 import * as React from 'react'
-import { Redirect, RouteComponentProps } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { client } from 'src/graphql/client'
 import { GetToken } from 'src/graphql/components/client/login'
 import { Login } from 'src/graphql/components/login'
+import { SignUp } from 'src/graphql/components/signup'
 import { decodeJwt, storeJwt } from 'src/libs/jwt'
+import { IRouterComponentProps } from 'src/routes/types'
 import { routes } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
-import { SignUp } from 'src/graphql/components/signup'
 
-type Props = GetToken.Props<RouteComponentProps>
+type Props = GetToken.Props<IRouterComponentProps>
 
 class LoginAndSignupFormContainer extends React.Component<Props> {
   render() {

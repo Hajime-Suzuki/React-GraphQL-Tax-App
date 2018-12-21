@@ -1,13 +1,11 @@
 import * as React from 'react'
 import { GetSingleProject } from 'src/graphql/components/projects'
-import { RouteComponentProps } from 'react-router'
+import { IRouterComponentProps } from 'src/routes/types'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import SingleProject from './SingleProject'
 
-type OwnProps = RouteComponentProps<{ id: string }>
-
 class SingleProjectContainer extends React.Component<
-  GetSingleProject.Props<OwnProps>,
+  GetSingleProject.Props<IRouterComponentProps>,
   { isModalOpen: boolean }
 > {
   state = {

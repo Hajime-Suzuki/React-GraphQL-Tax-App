@@ -3,14 +3,13 @@ import { Route, Switch } from 'react-router-dom'
 import LoginAndSignupFormContainer from 'src/components/loginAndSignup/LoginAndSignupFormContainer'
 import AddProjectContainer from 'src/components/project/AddProjectContainer'
 import ProjectsListContainer from 'src/components/project/ProjectsListContainer'
+import SingleProjectContainer from 'src/components/project/SingleProjectContainer'
 import NavBarContainer from 'src/components/UI/NavBar/NavBarContainer'
 import DashBoardComponent from '../components/dashBoard/DashBoardComponent'
-import SingleProjectComponent from '../components/project/SingleProjectComponent'
 import TopPage from '../components/topPage/TopPage'
 import { MainWrapper } from '../styles/sharedStyles'
 import { routes } from './constants'
 import PrivateRoutes from './PrivateRoutes'
-import SingleProjectContainer from 'src/components/project/SingleProjectContainer'
 
 class Routes extends React.Component {
   render() {

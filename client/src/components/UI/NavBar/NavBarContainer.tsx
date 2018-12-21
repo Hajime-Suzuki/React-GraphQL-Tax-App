@@ -1,13 +1,13 @@
 import ApolloClient from 'apollo-client'
 import React from 'react'
 import { ApolloConsumer } from 'react-apollo'
-import { RouteComponentProps } from 'react-router-dom'
 import { GetToken } from 'src/graphql/components/client/login'
 import { GetUser } from 'src/graphql/components/login'
+import { IRouterComponentProps } from 'src/routes/types'
 import NavBar from './NavBar'
 
 class NavBarContainer extends React.PureComponent<
-  GetToken.Props<RouteComponentProps>
+  GetToken.Props<IRouterComponentProps>
 > {
   handleLogout = (client: ApolloClient<any>) => {
     localStorage.removeItem('jwt')

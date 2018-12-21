@@ -23,17 +23,18 @@ const StyledPaper: any = styled(Paper)`
 `
 interface Props {
   projects: GetProjectOverview.GetProjectsByUserId[]
+  sortProjectsByProjectDate: () => void
 }
 
 const ProjectsList: React.SFC<Props> = props => {
-  const { projects } = props
+  const { projects, sortProjectsByProjectDate } = props
   return (
     <StyledPaper style={{ overflow: 'auto' }}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell onClick={() => console.log('project date')}>
+            <TableCell onClick={sortProjectsByProjectDate}>
               Project Date
             </TableCell>
             <TableCell onClick={() => console.log('invoice date')}>

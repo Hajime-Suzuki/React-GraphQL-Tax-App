@@ -1,28 +1,19 @@
 import * as React from 'react'
 import { Redirect, Route, RouteProps } from 'react-router-dom'
-import { GetToken } from 'src/graphql/components/client/login'
 import { routes } from './constants'
+import { GetToken } from 'src/graphql/components/client/login'
 
-interface Props {
-  path: string
-}
-interface ApolloProps {
-  data: GetToken.Query
-}
+class PrivateRoutes extends React.PureComponent<GetToken.Props<RouteProps>> {
+  render() {
+    const { data, component, ...rest } = this.props
 
-const PrivateRoutes: React.SFC<Props & RouteProps & ApolloProps> = props => {
-  const {
-    data: { userId },
-    component,
-    ...rest
-  } = props
+    if (!data!.userId) {
+      return <Redirect to={routes.login} />
+    }
 
-  if (!userId) {
-    return <Redirect to={routes.login} />
+    const Component = component as any
+    return <Route {...rest} render={props => <Component {...props} />} />
   }
-
-  const Component = component as any
-  return <Route {...rest} render={props => <Component {...props} />} />
 }
 
-export default GetToken.HOC<Props & RouteProps>({})(PrivateRoutes)
+export default GetToken.HOC<RouteProps>({})(PrivateRoutes)
