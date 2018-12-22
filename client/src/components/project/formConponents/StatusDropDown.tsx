@@ -13,13 +13,13 @@ interface DropdownStatusProps {
 interface OwnProps {
   projectId: string
 }
-interface MutationProps {
+interface StatusDropDownProps {
   onSubmit: MutationFn<UpdateStatus.Mutation, UpdateStatus.Variables>
   data?: MutationResult<UpdateStatus.Mutation>
 }
 
 export const StatusDropdown: React.SFC<
-  DropdownStatusProps & OwnProps & MutationProps
+  DropdownStatusProps & OwnProps & StatusDropDownProps
 > = props => {
   if (props.data && props.data.loading) return <LoadingIcon size={25} />
 

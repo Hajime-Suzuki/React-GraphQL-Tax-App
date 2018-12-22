@@ -1,6 +1,13 @@
 import { Document, model, Model, Schema } from 'mongoose'
 import { IProject } from '../GraphQL/@types/types'
 
+import * as mongoose from 'mongoose'
+import faker = require('faker')
+// import md = require('mongoose-double')
+// md(mongoose)
+
+// console.log(faker.finance.amount(50, 300, 2))
+
 type ProjectDocument = IProject & Document
 
 const expenseSchema: Schema = new Schema({
@@ -8,8 +15,7 @@ const expenseSchema: Schema = new Schema({
     type: String
   },
   price: {
-    type: Number,
-    required: true
+    type: Number
   },
   quantity: {
     type: Number,

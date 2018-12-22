@@ -133,7 +133,7 @@ export interface Client {
 export interface ExpenseAndIncome {
   name: string;
 
-  price: number;
+  price: string;
 
   quantity: number;
 
@@ -143,7 +143,7 @@ export interface ExpenseAndIncome {
 export interface Expense {
   name: string;
 
-  price: number;
+  price: string;
 
   quantity: number;
 

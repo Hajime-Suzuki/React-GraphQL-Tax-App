@@ -1,20 +1,14 @@
-import ApolloClient from 'apollo-client'
 import React from 'react'
-import { ApolloConsumer } from 'react-apollo'
+import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'
 import { GetUser } from 'src/graphql/components/login'
 import { IRouterComponentProps } from 'src/routes/types'
 import NavBar from './NavBar'
 
-class NavBarContainer extends React.PureComponent<
-  GetToken.Props<IRouterComponentProps>
-> {
-  handleLogout = (client: ApolloClient<any>) => {
-    localStorage.removeItem('jwt')
-    client.resetStore()
-    client.writeData({ data: { userId: null } })
-    this.props.history.replace('/')
-  }
+type Props = GetToken.Props<IRouterComponentProps>
+
+class NavBarContainer extends React.Component<Props> {
+  handleLogout = async () => LoginActions.logout()
 
   render() {
     const userId = this.props.data!.userId
@@ -23,23 +17,17 @@ class NavBarContainer extends React.PureComponent<
       return <NavBar path={this.props.location.pathname} />
     }
     return (
-      <ApolloConsumer>
-        {client => {
+      <GetUser.Component variables={{ id: userId }}>
+        {({ data }) => {
           return (
-            <GetUser.Component variables={{ id: userId }}>
-              {({ data }) => {
-                return (
-                  <NavBar
-                    user={data && data.getUser}
-                    path={this.props.location.pathname}
-                    logout={() => this.handleLogout(client)}
-                  />
-                )
-              }}
-            </GetUser.Component>
+            <NavBar
+              user={data && data.getUser}
+              path={this.props.location.pathname}
+              logout={this.handleLogout}
+            />
           )
         }}
-      </ApolloConsumer>
+      </GetUser.Component>
     )
   }
 }

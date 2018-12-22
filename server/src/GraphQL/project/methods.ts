@@ -11,9 +11,7 @@ import {
 import { isEmptyObject } from '../../helpers/object'
 
 export const getProjectsByUserId = async (userId: string) => {
-  const projects = await Project.find({ user: userId })
-    .sort({ date: -1 })
-    .limit(10)
+  const projects = await Project.find({ user: userId }).sort({ date: -1 })
   return projects
 }
 

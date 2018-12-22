@@ -137,7 +137,7 @@ export interface Client {
 export interface ExpenseAndIncome {
   name: string;
 
-  price: number;
+  price: string;
 
   quantity: number;
 
@@ -147,7 +147,7 @@ export interface ExpenseAndIncome {
 export interface Expense {
   name: string;
 
-  price: number;
+  price: string;
 
   quantity: number;
 
@@ -167,7 +167,9 @@ export interface Mutation {
 
   addProject?: MutationProjectResponse | null;
 
-  sortProject?: Project | null;
+  logout?: string | null;
+
+  sortProject?: string | null;
 }
 
 export interface RegisterResponse {
@@ -543,7 +545,7 @@ export namespace ExpenseAndIncomeResolvers {
   export interface Resolvers<Context = {}, TypeParent = ExpenseAndIncome> {
     name?: NameResolver<string, TypeParent, Context>;
 
-    price?: PriceResolver<number, TypeParent, Context>;
+    price?: PriceResolver<string, TypeParent, Context>;
 
     quantity?: QuantityResolver<number, TypeParent, Context>;
 
@@ -556,7 +558,7 @@ export namespace ExpenseAndIncomeResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PriceResolver<
-    R = number,
+    R = string,
     Parent = ExpenseAndIncome,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -576,7 +578,7 @@ export namespace ExpenseResolvers {
   export interface Resolvers<Context = {}, TypeParent = Expense> {
     name?: NameResolver<string, TypeParent, Context>;
 
-    price?: PriceResolver<number, TypeParent, Context>;
+    price?: PriceResolver<string, TypeParent, Context>;
 
     quantity?: QuantityResolver<number, TypeParent, Context>;
 
@@ -593,7 +595,7 @@ export namespace ExpenseResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PriceResolver<
-    R = number,
+    R = string,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -637,7 +639,9 @@ export namespace MutationResolvers {
       Context
     >;
 
-    sortProject?: SortProjectResolver<Project | null, TypeParent, Context>;
+    logout?: LogoutResolver<string | null, TypeParent, Context>;
+
+    sortProject?: SortProjectResolver<string | null, TypeParent, Context>;
   }
 
   export type RegisterUserResolver<
@@ -686,8 +690,13 @@ export namespace MutationResolvers {
     data: AddProjectInput;
   }
 
+  export type LogoutResolver<
+    R = string | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context>;
   export type SortProjectResolver<
-    R = Project | null,
+    R = string | null,
     Parent = {},
     Context = {}
   > = Resolver<R, Parent, Context>;

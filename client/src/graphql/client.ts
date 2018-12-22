@@ -40,3 +40,5 @@ export const client = new ApolloClient({
   cache,
   link
 })
+
+client.onResetStore(async () => stateLink.writeDefaults())

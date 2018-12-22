@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Hajime\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add graphql-codegen-typescript-cli
+  C:\Program Files\nodejs\node.exe C:\Users\Hajime\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/mongoose-double
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Hajime\bin;C:\WinAVR-20100110\bin;C:\WinAVR-20100110\utils\bin;C:\Windows\System32;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0;%SYSTEMROOT%\System32\OpenSSH;%NVM_HOME%;%NVM_SYMLINK%;C:\Program Files\PostgreSQL\10\bin;C:\Android;C:\Users\Hajime\AppData\Local\Programs\Python\Python37\Scripts;C:\Users\Hajime\AppData\Local\Programs\Python\Python37;C:\Ruby23-x64\bin;C:\Users\Hajime\AppData\Local\Microsoft\WindowsApps;C:\Users\Hajime\AppData\Local\atom\bin;C:\Users\Hajime\AppData\Roaming\Composer\vendor\bin;C:\Users\Hajime\AppData\Local\Microsoft\WindowsApps;C:\Users\Hajime\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\Heroku\bin;C:\Program Files (x86)\Atmel\Flip 3.4.7\bin;D:\Application\cmder;D:\Application\cmder\vendor\git-for-windows\bin;C:\xampp\mysql\bin;C:\ffmpeg\bin;C:\aria2;C:\Users\Hajime\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Hajime\AppData\Roaming\npm;C:\Users\Hajime\AppData\Roaming\nvm;C:\Program Files\nodejs
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Hajime\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\WinAVR-20100110\bin;C:\WinAVR-20100110\utils\bin;C:\Windows\System32;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Users\Hajime\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\PostgreSQL\10\bin;C:\Android;C:\Program Files\Amazon\AWSCLI\bin;C:\Users\Hajime\AppData\Local\Programs\Python\Python37\Scripts;C:\Users\Hajime\AppData\Local\Programs\Python\Python37;C:\Program Files\PostgreSQL\10\bin;C:\Ruby23-x64\bin;C:\Users\Hajime\AppData\Local\Microsoft\WindowsApps;C:\Users\Hajime\AppData\Local\atom\bin;C:\Users\Hajime\AppData\Local\Microsoft\WindowsApps;C:\Users\Hajime\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\Heroku\bin;C:\Program Files (x86)\Atmel\Flip 3.4.7\bin;C:\Windows\System32;D:\Application\cmder;D:\Application\cmder\vendor\git-for-windows\bin;C:\xampp\mysql\bin;C:\ffmpeg\bin;C:\aria2;C:\Users\Hajime\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Hajime\AppData\Roaming\npm;C:\Users\Hajime\AppData\Roaming\nvm;C:\Program Files\nodejs;B:\Download\watchman
 
 Yarn version: 
   1.3.2
@@ -21,17 +21,22 @@ npm manifest:
     "license": "MIT",
     "dependencies": {
       "@types/dotenv": "^4.0.3",
+      "@types/graphql": "^14.0.3",
       "apollo-server-koa": "^2.0.0-rc.12",
       "bcrypt": "^3.0.0",
       "date-fns": "^1.29.0",
       "dotenv": "^6.0.0",
       "graphql": "^14.0.2",
+      "graphql-codegen-typescript-resolvers": "^0.14.5",
       "koa": "^2.5.2",
       "koa-bodyparser": "^4.2.1",
       "koa-cors": "^0.0.16",
       "koa-passport": "^4.1.1",
       "koa-router": "^7.4.0",
+      "merge-graphql-schemas": "^1.5.8",
       "mongoose": "^5.2.14",
+      "mongoose-double": "^0.0.1",
+      "mongoose-float": "^1.0.3",
       "passport": "^0.4.0",
       "passport-jwt": "^4.0.0",
       "passport-local": "^1.0.0",
@@ -59,9 +64,9 @@ npm manifest:
       "apollo": "^2.1.3",
       "cross-env": "^5.2.0",
       "faker": "^4.1.0",
-      "graphql-code-generator": "^0.14.1",
-      "graphql-codegen-typescript-common": "^0.14.1",
-      "graphql-codegen-typescript-server": "^0.14.1",
+      "graphql-code-generator": "^0.14.5",
+      "graphql-codegen-typescript-common": "^0.14.5",
+      "graphql-codegen-typescript-server": "^0.14.5",
       "jest": "^23.6.0",
       "nodemon": "^1.18.4",
       "supertest": "^3.3.0",
@@ -72,7 +77,7 @@ npm manifest:
     "scripts": {
       "dev": "ts-node-dev src/starter.ts",
       "gen:introspection": "apollo schema:download ./schema.json --endpoint=http://localhost:4000/graphql",
-      "generateTypes": "yarn gen:introspection && gql-gen --schema schema.json --template typescript --out ./src/GraphQL/@types/types.d.ts",
+      "gen": "gql-gen",
       "test-w": "cross-env NODE_ENV=test jest --watch",
       "test": "cross-env NODE_ENV=test jest",
       "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts",
@@ -140,15 +145,34 @@ Lockfile:
     dependencies:
       "@apollographql/graphql-language-service-types" "^2.0.0"
   
-  "@apollographql/graphql-playground-html@^1.6.4":
-    version "1.6.4"
-    resolved "https://registry.yarnpkg.com/@apollographql/graphql-playground-html/-/graphql-playground-html-1.6.4.tgz#8945edf73df846d50e027bb3b813d018a1c5925f"
+  "@apollographql/graphql-playground-html@^1.6.6":
+    version "1.6.6"
+    resolved "https://registry.yarnpkg.com/@apollographql/graphql-playground-html/-/graphql-playground-html-1.6.6.tgz#022209e28a2b547dcde15b219f0c50f47aa5beb3"
   
-  "@babel/code-frame@^7.0.0-beta.35":
+  "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.0.0-beta.35":
     version "7.0.0"
     resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
     dependencies:
       "@babel/highlight" "^7.0.0"
+  
+  "@babel/core@^7.1.6":
+    version "7.1.6"
+    resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.1.6.tgz#3733cbee4317429bc87c62b29cf8587dba7baeb3"
+    dependencies:
+      "@babel/code-frame" "^7.0.0"
+      "@babel/generator" "^7.1.6"
+      "@babel/helpers" "^7.1.5"
+      "@babel/parser" "^7.1.6"
+      "@babel/template" "^7.1.2"
+      "@babel/traverse" "^7.1.6"
+      "@babel/types" "^7.1.6"
+      convert-source-map "^1.1.0"
+      debug "^4.1.0"
+      json5 "^2.1.0"
+      lodash "^4.17.10"
+      resolve "^1.3.2"
+      semver "^5.4.1"
+      source-map "^0.5.0"
   
   "@babel/generator@7.1.3":
     version "7.1.3"
@@ -160,6 +184,78 @@ Lockfile:
       source-map "^0.5.0"
       trim-right "^1.0.1"
   
+  "@babel/generator@^7.1.6":
+    version "7.1.6"
+    resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.1.6.tgz#001303cf87a5b9d093494a4bf251d7b5d03d3999"
+    dependencies:
+      "@babel/types" "^7.1.6"
+      jsesc "^2.5.1"
+      lodash "^4.17.10"
+      source-map "^0.5.0"
+      trim-right "^1.0.1"
+  
+  "@babel/helper-function-name@^7.1.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.1.0.tgz#a0ceb01685f73355d4360c1247f582bfafc8ff53"
+    dependencies:
+      "@babel/helper-get-function-arity" "^7.0.0"
+      "@babel/template" "^7.1.0"
+      "@babel/types" "^7.0.0"
+  
+  "@babel/helper-get-function-arity@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.0.0.tgz#83572d4320e2a4657263734113c42868b64e49c3"
+    dependencies:
+      "@babel/types" "^7.0.0"
+  
+  "@babel/helper-member-expression-to-functions@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.0.0.tgz#8cd14b0a0df7ff00f009e7d7a436945f47c7a16f"
+    dependencies:
+      "@babel/types" "^7.0.0"
+  
+  "@babel/helper-optimise-call-expression@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.0.0.tgz#a2920c5702b073c15de51106200aa8cad20497d5"
+    dependencies:
+      "@babel/types" "^7.0.0"
+  
+  "@babel/helper-plugin-utils@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0.tgz#bbb3fbee98661c569034237cc03967ba99b4f250"
+  
+  "@babel/helper-replace-supers@^7.1.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-replace-supers/-/helper-replace-supers-7.1.0.tgz#5fc31de522ec0ef0899dc9b3e7cf6a5dd655f362"
+    dependencies:
+      "@babel/helper-member-expression-to-functions" "^7.0.0"
+      "@babel/helper-optimise-call-expression" "^7.0.0"
+      "@babel/traverse" "^7.1.0"
+      "@babel/types" "^7.0.0"
+  
+  "@babel/helper-split-export-declaration@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.0.0.tgz#3aae285c0311c2ab095d997b8c9a94cad547d813"
+    dependencies:
+      "@babel/types" "^7.0.0"
+  
+  "@babel/helper-wrap-function@^7.1.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-wrap-function/-/helper-wrap-function-7.1.0.tgz#8cf54e9190706067f016af8f75cb3df829cc8c66"
+    dependencies:
+      "@babel/helper-function-name" "^7.1.0"
+      "@babel/template" "^7.1.0"
+      "@babel/traverse" "^7.1.0"
+      "@babel/types" "^7.0.0"
+  
+  "@babel/helpers@^7.1.5":
+    version "7.1.5"
+    resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.1.5.tgz#68bfc1895d685f2b8f1995e788dbfe1f6ccb1996"
+    dependencies:
+      "@babel/template" "^7.1.2"
+      "@babel/traverse" "^7.1.5"
+      "@babel/types" "^7.1.5"
+  
   "@babel/highlight@^7.0.0":
     version "7.0.0"
     resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.0.0.tgz#f710c38c8d458e6dd9a201afb637fcb781ce99e4"
@@ -168,9 +264,230 @@ Lockfile:
       esutils "^2.0.2"
       js-tokens "^4.0.0"
   
-  "@babel/parser@^7.1.3":
+  "@babel/parser@^7.1.2", "@babel/parser@^7.1.3", "@babel/parser@^7.1.6":
     version "7.1.6"
     resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.1.6.tgz#16e97aca1ec1062324a01c5a6a7d0df8dd189854"
+  
+  "@babel/plugin-proposal-class-properties@^7.0.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.1.0.tgz#9af01856b1241db60ec8838d84691aa0bd1e8df4"
+    dependencies:
+      "@babel/helper-function-name" "^7.1.0"
+      "@babel/helper-member-expression-to-functions" "^7.0.0"
+      "@babel/helper-optimise-call-expression" "^7.0.0"
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/helper-replace-supers" "^7.1.0"
+      "@babel/plugin-syntax-class-properties" "^7.0.0"
+  
+  "@babel/plugin-proposal-decorators@^7.0.0":
+    version "7.1.6"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-decorators/-/plugin-proposal-decorators-7.1.6.tgz#460c31edbd01953efe45d491583b3ec31661d689"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/helper-replace-supers" "^7.1.0"
+      "@babel/helper-split-export-declaration" "^7.0.0"
+      "@babel/plugin-syntax-decorators" "^7.1.0"
+  
+  "@babel/plugin-proposal-do-expressions@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-do-expressions/-/plugin-proposal-do-expressions-7.0.0.tgz#4fe2f29c56a4b18d292caab0dfcb8119c89cc8d8"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-do-expressions" "^7.0.0"
+  
+  "@babel/plugin-proposal-export-default-from@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-export-default-from/-/plugin-proposal-export-default-from-7.0.0.tgz#a057bbfd4649facfe39f33a537e18554bdd2b5da"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-export-default-from" "^7.0.0"
+  
+  "@babel/plugin-proposal-export-namespace-from@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-export-namespace-from/-/plugin-proposal-export-namespace-from-7.0.0.tgz#ce847cc62c3626547107a1b835592b8ee494af51"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-export-namespace-from" "^7.0.0"
+  
+  "@babel/plugin-proposal-function-bind@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-function-bind/-/plugin-proposal-function-bind-7.0.0.tgz#030bb3dd7affb5a0df8326cdd3e9f6776e95a225"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-function-bind" "^7.0.0"
+  
+  "@babel/plugin-proposal-function-sent@^7.0.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-function-sent/-/plugin-proposal-function-sent-7.1.0.tgz#1c4eb7748812c89b772a2d699cf6a9c074f3e166"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/helper-wrap-function" "^7.1.0"
+      "@babel/plugin-syntax-function-sent" "^7.0.0"
+  
+  "@babel/plugin-proposal-json-strings@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-json-strings/-/plugin-proposal-json-strings-7.0.0.tgz#3b4d7b5cf51e1f2e70f52351d28d44fc2970d01e"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-json-strings" "^7.0.0"
+  
+  "@babel/plugin-proposal-logical-assignment-operators@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-logical-assignment-operators/-/plugin-proposal-logical-assignment-operators-7.0.0.tgz#f2a290bcb266e8c9ddae08c6bae5ad3df57c362d"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-logical-assignment-operators" "^7.0.0"
+  
+  "@babel/plugin-proposal-nullish-coalescing-operator@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.0.0.tgz#b72ec31adf612d062dc0348316246127a451e45f"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-nullish-coalescing-operator" "^7.0.0"
+  
+  "@babel/plugin-proposal-numeric-separator@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-numeric-separator/-/plugin-proposal-numeric-separator-7.0.0.tgz#08aa02ce62481a84bfd0d9ce7a718adaaaa773dd"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-numeric-separator" "^7.0.0"
+  
+  "@babel/plugin-proposal-optional-chaining@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.0.0.tgz#3d344d4152253379b8758e7d041148e8787c4a9d"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-optional-chaining" "^7.0.0"
+  
+  "@babel/plugin-proposal-pipeline-operator@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-pipeline-operator/-/plugin-proposal-pipeline-operator-7.0.0.tgz#ab60169a5c4a598292de59a14f9810d4e47b00b8"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-pipeline-operator" "^7.0.0"
+  
+  "@babel/plugin-proposal-throw-expressions@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-throw-expressions/-/plugin-proposal-throw-expressions-7.0.0.tgz#fd44563c742c5e0df764b1a41ab86b22dde5a5b7"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-throw-expressions" "^7.0.0"
+  
+  "@babel/plugin-syntax-class-properties@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-class-properties/-/plugin-syntax-class-properties-7.0.0.tgz#e051af5d300cbfbcec4a7476e37a803489881634"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-decorators@^7.1.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-decorators/-/plugin-syntax-decorators-7.1.0.tgz#2fa7c1a7905a299c9853ebcef340306675f9cbdc"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-do-expressions@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-do-expressions/-/plugin-syntax-do-expressions-7.0.0.tgz#069119d1d2fd2c13a3203b172619af5f95b6f696"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-dynamic-import@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-dynamic-import/-/plugin-syntax-dynamic-import-7.0.0.tgz#6dfb7d8b6c3be14ce952962f658f3b7eb54c33ee"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-export-default-from@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-export-default-from/-/plugin-syntax-export-default-from-7.0.0.tgz#084b639bce3d42f3c5bf3f68ccb42220bb2d729d"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-export-namespace-from@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-export-namespace-from/-/plugin-syntax-export-namespace-from-7.0.0.tgz#17a7389a1d2571ac4d9b77ea2defa74a930edf5d"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-function-bind@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-function-bind/-/plugin-syntax-function-bind-7.0.0.tgz#04ad5fac3f68460ef028b1d92abc09781f2e7478"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-function-sent@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-function-sent/-/plugin-syntax-function-sent-7.0.0.tgz#583f904c86019dbbf486170e79e2d8f2d373f543"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-import-meta@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-meta/-/plugin-syntax-import-meta-7.0.0.tgz#ca946b73216c29c39a55ef2d739097fee8a85d69"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-json-strings@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-json-strings/-/plugin-syntax-json-strings-7.0.0.tgz#0d259a68090e15b383ce3710e01d5b23f3770cbd"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-logical-assignment-operators@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-logical-assignment-operators/-/plugin-syntax-logical-assignment-operators-7.0.0.tgz#8c567dcc4caea33d2743307758684656184d20cc"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-nullish-coalescing-operator@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-nullish-coalescing-operator/-/plugin-syntax-nullish-coalescing-operator-7.0.0.tgz#b60931d5a15da82625fff6657c39419969598743"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-numeric-separator@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-numeric-separator/-/plugin-syntax-numeric-separator-7.0.0.tgz#9594c7ce6ce8089a14d732cb9f6b1eeb047413ba"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-optional-chaining@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-optional-chaining/-/plugin-syntax-optional-chaining-7.0.0.tgz#1e6ecba124310b5d3a8fc1e00d50b1c4c2e05e68"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-pipeline-operator@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-pipeline-operator/-/plugin-syntax-pipeline-operator-7.0.0.tgz#29106ddb293898192780ff48159c77e6f20c1768"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-throw-expressions@^7.0.0":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-throw-expressions/-/plugin-syntax-throw-expressions-7.0.0.tgz#c0764da188afd99828ffdf78085c5f3c40bb661e"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-syntax-typescript@^7.0.0":
+    version "7.1.5"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.1.5.tgz#956a1f43dec8a9d6b36221f5c865335555fdcb98"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+  
+  "@babel/plugin-transform-typescript@^7.1.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.1.0.tgz#81e7b4be90e7317cbd04bf1163ebf06b2adee60b"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-syntax-typescript" "^7.0.0"
+  
+  "@babel/preset-typescript@^7.1.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.1.0.tgz#49ad6e2084ff0bfb5f1f7fb3b5e76c434d442c7f"
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.0.0"
+      "@babel/plugin-transform-typescript" "^7.1.0"
   
   "@babel/runtime-corejs2@^7.0.0-rc.1":
     version "7.1.5"
@@ -178,6 +495,28 @@ Lockfile:
     dependencies:
       core-js "^2.5.7"
       regenerator-runtime "^0.12.0"
+  
+  "@babel/template@^7.1.0", "@babel/template@^7.1.2":
+    version "7.1.2"
+    resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.1.2.tgz#090484a574fef5a2d2d7726a674eceda5c5b5644"
+    dependencies:
+      "@babel/code-frame" "^7.0.0"
+      "@babel/parser" "^7.1.2"
+      "@babel/types" "^7.1.2"
+  
+  "@babel/traverse@^7.1.0", "@babel/traverse@^7.1.5", "@babel/traverse@^7.1.6":
+    version "7.1.6"
+    resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.1.6.tgz#c8db9963ab4ce5b894222435482bd8ea854b7b5c"
+    dependencies:
+      "@babel/code-frame" "^7.0.0"
+      "@babel/generator" "^7.1.6"
+      "@babel/helper-function-name" "^7.1.0"
+      "@babel/helper-split-export-declaration" "^7.0.0"
+      "@babel/parser" "^7.1.6"
+      "@babel/types" "^7.1.6"
+      debug "^4.1.0"
+      globals "^11.1.0"
+      lodash "^4.17.10"
   
   "@babel/types@7.1.3":
     version "7.1.3"
@@ -187,7 +526,7 @@ Lockfile:
       lodash "^4.17.10"
       to-fast-properties "^2.0.0"
   
-  "@babel/types@^7.1.3":
+  "@babel/types@^7.0.0", "@babel/types@^7.1.2", "@babel/types@^7.1.3", "@babel/types@^7.1.5", "@babel/types@^7.1.6":
     version "7.1.6"
     resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.1.6.tgz#0adb330c3a281348a190263aceb540e10f04bcce"
     dependencies:
@@ -202,9 +541,9 @@ Lockfile:
       lodash.get "^4"
       ts-node "^7"
   
-  "@graphql-modules/epoxy@0.2.4":
-    version "0.2.4"
-    resolved "https://registry.yarnpkg.com/@graphql-modules/epoxy/-/epoxy-0.2.4.tgz#0571e232d4aa48d21c0213dab2c75e91fd04f129"
+  "@graphql-modules/epoxy@0.2.14":
+    version "0.2.14"
+    resolved "https://registry.yarnpkg.com/@graphql-modules/epoxy/-/epoxy-0.2.14.tgz#f8068a2cc2445988fa6f0994de1c6d1c79ef2974"
     dependencies:
       "@types/deepmerge" "2.1.0"
       deepmerge "2.2.1"
@@ -491,6 +830,10 @@ Lockfile:
     dependencies:
       "@types/node" "*"
   
+  "@types/graphql@^14.0.3":
+    version "14.0.3"
+    resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.3.tgz#389e2e5b83ecdb376d9f98fae2094297bc112c1c"
+  
   "@types/http-assert@*":
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/@types/http-assert/-/http-assert-1.3.0.tgz#5e932606153da28e1d04f9043f4912cf61fd55dd"
@@ -500,8 +843,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/is-glob/-/is-glob-4.0.0.tgz#fb8a2bff539025d4dcd6d5efe7689e03341b876d"
   
   "@types/jest@^23.3.2":
-    version "23.3.9"
-    resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.9.tgz#c16b55186ee73ae65e001fbee69d392c51337ad1"
+    version "23.3.10"
+    resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.10.tgz#4897974cc317bf99d4fe6af1efa15957fa9c94de"
   
   "@types/jsonwebtoken@*":
     version "8.3.0"
@@ -568,8 +911,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
   
   "@types/mongodb@*", "@types/mongodb@^3.1.6":
-    version "3.1.14"
-    resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.1.14.tgz#979335f89725b30eeb2e6719562ee9173e7a9ad9"
+    version "3.1.15"
+    resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.1.15.tgz#230c224e4981867b1920f415406597255c1875a8"
     dependencies:
       "@types/bson" "*"
       "@types/node" "*"
@@ -614,9 +957,9 @@ Lockfile:
     dependencies:
       "@types/express" "*"
   
-  "@types/prettier@1.15.0":
-    version "1.15.0"
-    resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.15.0.tgz#1c3e97298dec7614a6ff35b705815391630adfaa"
+  "@types/prettier@1.15.2":
+    version "1.15.2"
+    resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.15.2.tgz#91594ea7cb6f3b1f7ea69f32621246654c7cc231"
   
   "@types/range-parser@*":
     version "1.2.2"
@@ -700,8 +1043,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.0.4.tgz#77377e7353b72ec5104550aa2d2097a2fd40b754"
   
   ajv@^6.5.5:
-    version "6.5.5"
-    resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.5.5.tgz#cf97cdade71c6399a92c6d6c4177381291b781a1"
+    version "6.6.1"
+    resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.6.1.tgz#6360f5ed0d80f232cc2b294c362d5dc2e538dd61"
     dependencies:
       fast-deep-equal "^2.0.1"
       fast-json-stable-stringify "^2.0.0"
@@ -713,10 +1056,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-2.0.0.tgz#c36aeccba563b89ceb556f3690f0b1d9e3547f7f"
     dependencies:
       string-width "^2.0.0"
-  
-  ansi-escapes@^1.0.0:
-    version "1.4.0"
-    resolved "http://registry.npmjs.org/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
   
   ansi-escapes@^3.0.0, ansi-escapes@^3.1.0:
     version "3.1.0"
@@ -763,69 +1102,69 @@ Lockfile:
       micromatch "^3.1.4"
       normalize-path "^2.1.1"
   
-  apollo-cache-control@0.3.2:
-    version "0.3.2"
-    resolved "https://registry.yarnpkg.com/apollo-cache-control/-/apollo-cache-control-0.3.2.tgz#fc98781e6df60346a20b0540450d02842c1212f2"
+  apollo-cache-control@0.3.3:
+    version "0.3.3"
+    resolved "https://registry.yarnpkg.com/apollo-cache-control/-/apollo-cache-control-0.3.3.tgz#ad71d8f786e06f0275b2432004c15c2d37c48484"
     dependencies:
       apollo-server-env "2.2.0"
-      graphql-extensions "0.3.2"
+      graphql-extensions "0.3.3"
   
-  apollo-codegen-core@0.30.3:
-    version "0.30.3"
-    resolved "https://registry.yarnpkg.com/apollo-codegen-core/-/apollo-codegen-core-0.30.3.tgz#4fe35a211fd3b848d8e2f260561332a68859d0a4"
+  apollo-codegen-core@0.30.6:
+    version "0.30.6"
+    resolved "https://registry.yarnpkg.com/apollo-codegen-core/-/apollo-codegen-core-0.30.6.tgz#2e6151527ed6fdb32f7ff4ce9b3d10285b3df987"
     dependencies:
       "@babel/generator" "7.1.3"
       "@babel/parser" "^7.1.3"
       "@babel/types" "7.1.3"
       apollo-env "0.2.5"
-      apollo-language-server "1.1.3"
+      apollo-language-server "1.1.6"
       ast-types "^0.11.6"
       common-tags "^1.5.1"
       recast "^0.15.3"
   
-  apollo-codegen-flow@0.30.3:
-    version "0.30.3"
-    resolved "https://registry.yarnpkg.com/apollo-codegen-flow/-/apollo-codegen-flow-0.30.3.tgz#1a2ae348f79728ce7c9335f89cad66ac2ca359cd"
+  apollo-codegen-flow@0.30.6:
+    version "0.30.6"
+    resolved "https://registry.yarnpkg.com/apollo-codegen-flow/-/apollo-codegen-flow-0.30.6.tgz#e348079aba603a43f31cda46e84461481357ee11"
     dependencies:
       "@babel/types" "7.1.3"
-      apollo-codegen-core "0.30.3"
+      apollo-codegen-core "0.30.6"
       apollo-env "0.2.5"
       change-case "^3.0.1"
       inflected "^2.0.3"
   
-  apollo-codegen-scala@0.30.3:
-    version "0.30.3"
-    resolved "https://registry.yarnpkg.com/apollo-codegen-scala/-/apollo-codegen-scala-0.30.3.tgz#37f05428d920d9df0c7892abaf97aaa37ec857d5"
+  apollo-codegen-scala@0.30.6:
+    version "0.30.6"
+    resolved "https://registry.yarnpkg.com/apollo-codegen-scala/-/apollo-codegen-scala-0.30.6.tgz#7eb1f87b257354dde07e01f8b2cdabf337db65a4"
     dependencies:
-      apollo-codegen-core "0.30.3"
+      apollo-codegen-core "0.30.6"
       apollo-env "0.2.5"
       change-case "^3.0.1"
       inflected "^2.0.3"
   
-  apollo-codegen-swift@0.30.3:
-    version "0.30.3"
-    resolved "https://registry.yarnpkg.com/apollo-codegen-swift/-/apollo-codegen-swift-0.30.3.tgz#c1f1b8ae3e5aed14663fbfea76e6a6b7d2dc528d"
+  apollo-codegen-swift@0.30.6:
+    version "0.30.6"
+    resolved "https://registry.yarnpkg.com/apollo-codegen-swift/-/apollo-codegen-swift-0.30.6.tgz#7c363320fc4550e1a5452cca8a9021a402fb88fb"
     dependencies:
-      apollo-codegen-core "0.30.3"
+      apollo-codegen-core "0.30.6"
       apollo-env "0.2.5"
       change-case "^3.0.1"
       inflected "^2.0.3"
   
-  apollo-codegen-typescript@0.30.3:
-    version "0.30.3"
-    resolved "https://registry.yarnpkg.com/apollo-codegen-typescript/-/apollo-codegen-typescript-0.30.3.tgz#918fecc098c51f502e7eb7e400af1e0232dff2f2"
+  apollo-codegen-typescript@0.30.6:
+    version "0.30.6"
+    resolved "https://registry.yarnpkg.com/apollo-codegen-typescript/-/apollo-codegen-typescript-0.30.6.tgz#b8d4f2cdd318d2ace8b41452f03998234bb1cac1"
     dependencies:
       "@babel/types" "7.1.3"
-      apollo-codegen-core "0.30.3"
+      apollo-codegen-core "0.30.6"
       apollo-env "0.2.5"
       change-case "^3.0.1"
       inflected "^2.0.3"
   
-  apollo-datasource@0.2.0:
-    version "0.2.0"
-    resolved "https://registry.yarnpkg.com/apollo-datasource/-/apollo-datasource-0.2.0.tgz#ea28313689073150b18f0dbe35bedffc86a62b57"
+  apollo-datasource@0.2.1:
+    version "0.2.1"
+    resolved "https://registry.yarnpkg.com/apollo-datasource/-/apollo-datasource-0.2.1.tgz#3ecef4efe64f7a04a43862f32027d38ac09e142c"
     dependencies:
-      apollo-server-caching "0.2.0"
+      apollo-server-caching "0.2.1"
       apollo-server-env "2.2.0"
   
   apollo-datasource@^0.1.3:
@@ -857,14 +1196,14 @@ Lockfile:
       graphql-extensions "0.1.2"
       lodash "^4.17.10"
   
-  apollo-engine-reporting@0.1.2:
-    version "0.1.2"
-    resolved "https://registry.yarnpkg.com/apollo-engine-reporting/-/apollo-engine-reporting-0.1.2.tgz#6247e8d618da5c084ccb1bc76c665ce7a1b1ba55"
+  apollo-engine-reporting@0.1.3:
+    version "0.1.3"
+    resolved "https://registry.yarnpkg.com/apollo-engine-reporting/-/apollo-engine-reporting-0.1.3.tgz#85ad6ffd71db8f877202ce8b3d7dbfa7cabfbcf9"
     dependencies:
       apollo-engine-reporting-protobuf "0.1.0"
       apollo-server-env "2.2.0"
       async-retry "^1.2.1"
-      graphql-extensions "0.3.2"
+      graphql-extensions "0.3.3"
       lodash "^4.17.10"
   
   apollo-env@0.2.5:
@@ -874,9 +1213,9 @@ Lockfile:
       core-js "^3.0.0-beta.3"
       node-fetch "^2.2.0"
   
-  apollo-language-server@1.1.3:
-    version "1.1.3"
-    resolved "https://registry.yarnpkg.com/apollo-language-server/-/apollo-language-server-1.1.3.tgz#2762cd57ce781681282c4b2de9a39ae35488b2af"
+  apollo-language-server@1.1.6:
+    version "1.1.6"
+    resolved "https://registry.yarnpkg.com/apollo-language-server/-/apollo-language-server-1.1.6.tgz#98f39160dfada3dc8576da14ea1366843331de47"
     dependencies:
       "@apollographql/apollo-tools" "0.2.8"
       "@apollographql/graphql-language-service-interface" "^2.0.2"
@@ -950,29 +1289,29 @@ Lockfile:
     dependencies:
       lru-cache "^4.1.3"
   
-  apollo-server-caching@0.2.0:
-    version "0.2.0"
-    resolved "https://registry.yarnpkg.com/apollo-server-caching/-/apollo-server-caching-0.2.0.tgz#fe560752d364f14d34c1eaacd9df629f8ed1cf5c"
+  apollo-server-caching@0.2.1:
+    version "0.2.1"
+    resolved "https://registry.yarnpkg.com/apollo-server-caching/-/apollo-server-caching-0.2.1.tgz#7e67f8c8cac829e622b394f0fb82579cabbeadfd"
     dependencies:
-      lru-cache "^4.1.3"
+      lru-cache "^5.0.0"
   
-  apollo-server-core@2.2.2:
-    version "2.2.2"
-    resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-2.2.2.tgz#66ca6b4af6c7cdd8155de946d0c4fea3357b0432"
+  apollo-server-core@2.2.5:
+    version "2.2.5"
+    resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-2.2.5.tgz#bf1538c10213be38a37dd8e6461461f7b808c57e"
     dependencies:
       "@apollographql/apollo-tools" "^0.2.6"
       "@apollographql/apollo-upload-server" "^5.0.3"
-      "@apollographql/graphql-playground-html" "^1.6.4"
+      "@apollographql/graphql-playground-html" "^1.6.6"
       "@types/ws" "^6.0.0"
-      apollo-cache-control "0.3.2"
-      apollo-datasource "0.2.0"
-      apollo-engine-reporting "0.1.2"
-      apollo-server-caching "0.2.0"
+      apollo-cache-control "0.3.3"
+      apollo-datasource "0.2.1"
+      apollo-engine-reporting "0.1.3"
+      apollo-server-caching "0.2.1"
       apollo-server-env "2.2.0"
       apollo-server-errors "2.2.0"
-      apollo-server-plugin-base "0.1.2"
-      apollo-tracing "0.3.2"
-      graphql-extensions "0.3.2"
+      apollo-server-plugin-base "0.1.5"
+      apollo-tracing "0.3.3"
+      graphql-extensions "0.3.5"
       graphql-subscriptions "^1.0.0"
       graphql-tag "^2.9.2"
       graphql-tools "^4.0.0"
@@ -1007,11 +1346,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/apollo-server-errors/-/apollo-server-errors-2.2.0.tgz#5b452a1d6ff76440eb0f127511dc58031a8f3cb5"
   
   apollo-server-koa@^2.0.0-rc.12:
-    version "2.2.2"
-    resolved "https://registry.yarnpkg.com/apollo-server-koa/-/apollo-server-koa-2.2.2.tgz#e36484dfee2b5b4ab1781e2d8f07150e88499408"
+    version "2.2.5"
+    resolved "https://registry.yarnpkg.com/apollo-server-koa/-/apollo-server-koa-2.2.5.tgz#6a4cc152e84ecd5fca79b4a0c57e83a9a9118516"
     dependencies:
       "@apollographql/apollo-upload-server" "^5.0.3"
-      "@apollographql/graphql-playground-html" "^1.6.4"
+      "@apollographql/graphql-playground-html" "^1.6.6"
       "@koa/cors" "^2.2.1"
       "@types/accepts" "^1.3.5"
       "@types/cors" "^2.8.4"
@@ -1020,7 +1359,7 @@ Lockfile:
       "@types/koa-compose" "^3.2.2"
       "@types/koa__cors" "^2.2.1"
       accepts "^1.3.5"
-      apollo-server-core "2.2.2"
+      apollo-server-core "2.2.5"
       graphql-subscriptions "^1.0.0"
       graphql-tools "^4.0.0"
       koa "2.6.2"
@@ -1028,16 +1367,16 @@ Lockfile:
       koa-router "^7.4.0"
       type-is "^1.6.16"
   
-  apollo-server-plugin-base@0.1.2:
-    version "0.1.2"
-    resolved "https://registry.yarnpkg.com/apollo-server-plugin-base/-/apollo-server-plugin-base-0.1.2.tgz#4c1ebb769b630a16ff8ade03f12759cde17a21dc"
+  apollo-server-plugin-base@0.1.5:
+    version "0.1.5"
+    resolved "https://registry.yarnpkg.com/apollo-server-plugin-base/-/apollo-server-plugin-base-0.1.5.tgz#899c4d7bc0d9a6d9f1181cc83a791479409086f8"
   
-  apollo-tracing@0.3.2:
-    version "0.3.2"
-    resolved "https://registry.yarnpkg.com/apollo-tracing/-/apollo-tracing-0.3.2.tgz#1a6b695813791b8404b5adaa10925a7f2642f15d"
+  apollo-tracing@0.3.3:
+    version "0.3.3"
+    resolved "https://registry.yarnpkg.com/apollo-tracing/-/apollo-tracing-0.3.3.tgz#b819942180480c1c4d89e613cf2eff8f6d8b595a"
     dependencies:
       apollo-server-env "2.2.0"
-      graphql-extensions "0.3.2"
+      graphql-extensions "0.3.3"
   
   apollo-utilities@^1.0.0, apollo-utilities@^1.0.1:
     version "1.0.26"
@@ -1046,8 +1385,8 @@ Lockfile:
       fast-json-stable-stringify "^2.0.0"
   
   apollo@^2.1.3:
-    version "2.1.3"
-    resolved "https://registry.yarnpkg.com/apollo/-/apollo-2.1.3.tgz#e91d6646f3d94e35dc383196774d9c8e6fe3de79"
+    version "2.1.6"
+    resolved "https://registry.yarnpkg.com/apollo/-/apollo-2.1.6.tgz#f0f3b9753ac39227bb5dbd029680577e7fc7ce52"
     dependencies:
       "@apollographql/apollo-tools" "0.2.8"
       "@oclif/command" "^1.4.21"
@@ -1057,14 +1396,14 @@ Lockfile:
       "@oclif/plugin-not-found" "^1.0.9"
       "@oclif/plugin-plugins" "^1.7.2"
       "@oclif/plugin-warn-if-update-available" "^1.3.9"
-      apollo-codegen-core "0.30.3"
-      apollo-codegen-flow "0.30.3"
-      apollo-codegen-scala "0.30.3"
-      apollo-codegen-swift "0.30.3"
-      apollo-codegen-typescript "0.30.3"
+      apollo-codegen-core "0.30.6"
+      apollo-codegen-flow "0.30.6"
+      apollo-codegen-scala "0.30.6"
+      apollo-codegen-swift "0.30.6"
+      apollo-codegen-typescript "0.30.6"
       apollo-engine-reporting "0.0.2"
       apollo-env "0.2.5"
-      apollo-language-server "1.1.3"
+      apollo-language-server "1.1.6"
       chalk "^2.4.1"
       cli-ux "^4.3.0"
       env-ci "^2.1.0"
@@ -1161,8 +1500,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.11.5.tgz#9890825d660c03c28339f315e9fa0a360e31ec28"
   
   ast-types@^0.11.6:
-    version "0.11.6"
-    resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.11.6.tgz#4e2266c2658829aef3b40cc33ad599c4e9eb89ef"
+    version "0.11.7"
+    resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.11.7.tgz#f318bf44e339db6a320be0009ded64ec1471f46c"
   
   astral-regex@^1.0.0:
     version "1.0.0"
@@ -1197,8 +1536,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   
   await-to-js@^2.0.1:
-    version "2.1.0"
-    resolved "https://registry.yarnpkg.com/await-to-js/-/await-to-js-2.1.0.tgz#6391fce43f66ecb09895d934b695f7e104b150f4"
+    version "2.1.1"
+    resolved "https://registry.yarnpkg.com/await-to-js/-/await-to-js-2.1.1.tgz#c2093cd5a386f2bb945d79b292817bbc3f41b31b"
   
   aws-sign2@~0.7.0:
     version "0.7.0"
@@ -1694,12 +2033,6 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-1.0.0.tgz#4fa917c3e59c94a004cd61f8ee509da651687143"
   
-  cli-cursor@^1.0.2:
-    version "1.0.2"
-    resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-1.0.2.tgz#64da3f7d56a54412e59794bd62dc35295e8f2987"
-    dependencies:
-      restore-cursor "^1.0.1"
-  
   cli-cursor@^2.0.0, cli-cursor@^2.1.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-2.1.0.tgz#b35dac376479facc3e94747d41d0d0f5238ffcb5"
@@ -1902,7 +2235,7 @@ Lockfile:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   
-  convert-source-map@^1.4.0, convert-source-map@^1.5.1:
+  convert-source-map@^1.1.0, convert-source-map@^1.4.0, convert-source-map@^1.5.1:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.6.0.tgz#51b537a8c43e0f04dec1993bffcdd504e758ac20"
     dependencies:
@@ -2085,7 +2418,7 @@ Lockfile:
     version "0.1.3"
     resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   
-  deepmerge@2.2.1:
+  deepmerge@2.2.1, deepmerge@^2.2.1:
     version "2.2.1"
     resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
   
@@ -2358,10 +2691,6 @@ Lockfile:
       signal-exit "^3.0.0"
       strip-eof "^1.0.0"
   
-  exit-hook@^1.0.0:
-    version "1.1.1"
-    resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-1.1.1.tgz#f05ca233b48c05d54fff07765df8507e95c02ff8"
-  
   exit@^0.1.2:
     version "0.1.2"
     resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
@@ -2386,7 +2715,7 @@ Lockfile:
   
   expand-range@^1.8.1:
     version "1.8.2"
-    resolved "https://registry.yarnpkg.com/expand-range/-/expand-range-1.8.2.tgz#a299effd335fe2721ebae8e257ec79644fc85337"
+    resolved "http://registry.npmjs.org/expand-range/-/expand-range-1.8.2.tgz#a299effd335fe2721ebae8e257ec79644fc85337"
     dependencies:
       fill-range "^2.1.0"
   
@@ -2725,6 +3054,10 @@ Lockfile:
     dependencies:
       ini "^1.3.4"
   
+  globals@^11.1.0:
+    version "11.9.0"
+    resolved "https://registry.yarnpkg.com/globals/-/globals-11.9.0.tgz#bde236808e987f290768a93d065060d78e6ab249"
+  
   globals@^9.18.0:
     version "9.18.0"
     resolved "https://registry.yarnpkg.com/globals/-/globals-9.18.0.tgz#aa3896b3e69b487f17e31ed2143d69a8e30c2d8a"
@@ -2783,14 +3116,14 @@ Lockfile:
     version "4.1.15"
     resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   
-  graphql-code-generator@^0.14.1:
-    version "0.14.1"
-    resolved "https://registry.yarnpkg.com/graphql-code-generator/-/graphql-code-generator-0.14.1.tgz#6e91a76d05dba1bd13bddfe45799bffa959224ae"
+  graphql-code-generator@^0.14.5:
+    version "0.14.5"
+    resolved "https://registry.yarnpkg.com/graphql-code-generator/-/graphql-code-generator-0.14.5.tgz#b7efc118cec681aa73acefb62fd5dfd0a57b09b6"
     dependencies:
-      "@graphql-modules/epoxy" "0.2.4"
+      "@graphql-modules/epoxy" "0.2.14"
       "@types/babylon" "6.16.4"
       "@types/is-glob" "4.0.0"
-      "@types/prettier" "1.15.0"
+      "@types/prettier" "1.15.2"
       "@types/valid-url" "1.0.2"
       babel-types "7.0.0-beta.3"
       babylon "7.0.0-beta.47"
@@ -2798,15 +3131,16 @@ Lockfile:
       commander "2.19.0"
       fb-watchman "2.0.0"
       glob "7.1.3"
-      graphql-codegen-core "0.14.1"
+      graphql-codegen-core "0.14.5"
       graphql-config "2.2.1"
       graphql-import "0.7.1"
+      graphql-tag-pluck "0.2.4"
       indent-string "3.2.0"
       is-glob "4.0.0"
       is-valid-path "0.1.1"
       js-yaml "3.12.0"
       json-to-pretty-yaml "1.2.2"
-      listr "0.14.2"
+      listr "0.14.3"
       log-update "2.3.0"
       mkdirp "0.5.1"
       pify "4.0.1"
@@ -2814,39 +3148,46 @@ Lockfile:
       request "2.88.0"
       valid-url "1.0.9"
   
-  graphql-codegen-core@0.14.1:
-    version "0.14.1"
-    resolved "https://registry.yarnpkg.com/graphql-codegen-core/-/graphql-codegen-core-0.14.1.tgz#335a88d03a4093d7c6212bb27ba4f7cf9326d081"
+  graphql-codegen-core@0.14.5:
+    version "0.14.5"
+    resolved "https://registry.yarnpkg.com/graphql-codegen-core/-/graphql-codegen-core-0.14.5.tgz#e4bdcd996c1bc90c674145a2c69dc4d9d2df2d8d"
     dependencies:
       chalk "2.4.1"
       change-case "3.0.2"
       common-tags "1.8.0"
       graphql-tag "2.10.0"
       graphql-tools "4.0.3"
-      ts-log "2.1.3"
+      ts-log "2.1.4"
       winston "3.1.0"
   
-  graphql-codegen-plugin-helpers@0.14.1:
-    version "0.14.1"
-    resolved "https://registry.yarnpkg.com/graphql-codegen-plugin-helpers/-/graphql-codegen-plugin-helpers-0.14.1.tgz#848be32b0f69888d84b03e2801dd91a7f110e1ab"
+  graphql-codegen-plugin-helpers@0.14.5:
+    version "0.14.5"
+    resolved "https://registry.yarnpkg.com/graphql-codegen-plugin-helpers/-/graphql-codegen-plugin-helpers-0.14.5.tgz#15e2c802d7bc5550107bf81ad2f8f8dd04da772f"
     dependencies:
-      graphql-codegen-core "0.14.1"
+      graphql-codegen-core "0.14.5"
       import-from "2.1.0"
   
-  graphql-codegen-typescript-common@0.14.1, graphql-codegen-typescript-common@^0.14.1:
-    version "0.14.1"
-    resolved "https://registry.yarnpkg.com/graphql-codegen-typescript-common/-/graphql-codegen-typescript-common-0.14.1.tgz#4e95782ec4458807c9c712ae3e4b6dc828428c66"
+  graphql-codegen-typescript-common@0.14.5, graphql-codegen-typescript-common@^0.14.5:
+    version "0.14.5"
+    resolved "https://registry.yarnpkg.com/graphql-codegen-typescript-common/-/graphql-codegen-typescript-common-0.14.5.tgz#26259820cf9429c817b061ab0ab4bc09c5b95549"
     dependencies:
       change-case "3.0.2"
       common-tags "1.8.0"
-      graphql-codegen-core "0.14.1"
-      graphql-codegen-plugin-helpers "0.14.1"
+      graphql-codegen-core "0.14.5"
+      graphql-codegen-plugin-helpers "0.14.5"
   
-  graphql-codegen-typescript-server@^0.14.1:
-    version "0.14.1"
-    resolved "https://registry.yarnpkg.com/graphql-codegen-typescript-server/-/graphql-codegen-typescript-server-0.14.1.tgz#20612cb3cf7229593dccac38b8dca7197e5017b9"
+  graphql-codegen-typescript-resolvers@^0.14.5:
+    version "0.14.5"
+    resolved "https://registry.yarnpkg.com/graphql-codegen-typescript-resolvers/-/graphql-codegen-typescript-resolvers-0.14.5.tgz#17331d4fcace768fa893b86eacf176f0ff6d1b33"
     dependencies:
-      graphql-codegen-typescript-common "0.14.1"
+      graphql-codegen-plugin-helpers "0.14.5"
+      graphql-codegen-typescript-common "0.14.5"
+  
+  graphql-codegen-typescript-server@^0.14.5:
+    version "0.14.5"
+    resolved "https://registry.yarnpkg.com/graphql-codegen-typescript-server/-/graphql-codegen-typescript-server-0.14.5.tgz#9c4877175f1a68a1558faee854555b235ab71ed1"
+    dependencies:
+      graphql-codegen-typescript-common "0.14.5"
   
   graphql-config@2.2.1:
     version "2.2.1"
@@ -2864,9 +3205,15 @@ Lockfile:
     dependencies:
       apollo-server-env "2.0.2"
   
-  graphql-extensions@0.3.2:
-    version "0.3.2"
-    resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.3.2.tgz#a19dd62b62d769f4d1b9c4b4781cc353b2174998"
+  graphql-extensions@0.3.3:
+    version "0.3.3"
+    resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.3.3.tgz#277efe11976bbdfd59915551606a2d550247bb45"
+    dependencies:
+      "@apollographql/apollo-tools" "^0.2.6"
+  
+  graphql-extensions@0.3.5:
+    version "0.3.5"
+    resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.3.5.tgz#95b742185d0016a9d65385a7a9e10753eadf0537"
     dependencies:
       "@apollographql/apollo-tools" "^0.2.6"
   
@@ -2888,6 +3235,31 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/graphql-subscriptions/-/graphql-subscriptions-1.0.0.tgz#475267694b3bd465af6477dbab4263a3f62702b8"
     dependencies:
       iterall "^1.2.1"
+  
+  graphql-tag-pluck@0.2.4:
+    version "0.2.4"
+    resolved "https://registry.yarnpkg.com/graphql-tag-pluck/-/graphql-tag-pluck-0.2.4.tgz#8d446d95d064cb2467c7c09f9da599ad211fa770"
+    dependencies:
+      "@babel/core" "^7.1.6"
+      "@babel/plugin-proposal-class-properties" "^7.0.0"
+      "@babel/plugin-proposal-decorators" "^7.0.0"
+      "@babel/plugin-proposal-do-expressions" "^7.0.0"
+      "@babel/plugin-proposal-export-default-from" "^7.0.0"
+      "@babel/plugin-proposal-export-namespace-from" "^7.0.0"
+      "@babel/plugin-proposal-function-bind" "^7.0.0"
+      "@babel/plugin-proposal-function-sent" "^7.0.0"
+      "@babel/plugin-proposal-json-strings" "^7.0.0"
+      "@babel/plugin-proposal-logical-assignment-operators" "^7.0.0"
+      "@babel/plugin-proposal-nullish-coalescing-operator" "^7.0.0"
+      "@babel/plugin-proposal-numeric-separator" "^7.0.0"
+      "@babel/plugin-proposal-optional-chaining" "^7.0.0"
+      "@babel/plugin-proposal-pipeline-operator" "^7.0.0"
+      "@babel/plugin-proposal-throw-expressions" "^7.0.0"
+      "@babel/plugin-syntax-dynamic-import" "^7.0.0"
+      "@babel/plugin-syntax-import-meta" "^7.0.0"
+      "@babel/preset-typescript" "^7.1.0"
+      lodash.mergewith "^4.6.1"
+      source-map-support "0.5.0"
   
   graphql-tag@2.10.0, graphql-tag@^2.10.0, graphql-tag@^2.9.2:
     version "2.10.0"
@@ -3996,7 +4368,7 @@ Lockfile:
       remedial "^1.0.7"
       remove-trailing-spaces "^1.0.6"
   
-  json5@2.x:
+  json5@2.x, json5@^2.1.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/json5/-/json5-2.1.0.tgz#e7a0c62c48285c628d20a10b85c89bb807c32850"
     dependencies:
@@ -4213,19 +4585,6 @@ Lockfile:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/listr-silent-renderer/-/listr-silent-renderer-1.1.1.tgz#924b5a3757153770bf1a8e3fbf74b8bbf3f9242e"
   
-  listr-update-renderer@^0.4.0:
-    version "0.4.0"
-    resolved "https://registry.yarnpkg.com/listr-update-renderer/-/listr-update-renderer-0.4.0.tgz#344d980da2ca2e8b145ba305908f32ae3f4cc8a7"
-    dependencies:
-      chalk "^1.1.3"
-      cli-truncate "^0.2.1"
-      elegant-spinner "^1.0.1"
-      figures "^1.7.0"
-      indent-string "^3.0.0"
-      log-symbols "^1.0.2"
-      log-update "^1.0.2"
-      strip-ansi "^3.0.1"
-  
   listr-update-renderer@^0.5.0:
     version "0.5.0"
     resolved "https://registry.yarnpkg.com/listr-update-renderer/-/listr-update-renderer-0.5.0.tgz#4ea8368548a7b8aecb7e06d8c95cb45ae2ede6a2"
@@ -4239,15 +4598,6 @@ Lockfile:
       log-update "^2.3.0"
       strip-ansi "^3.0.1"
   
-  listr-verbose-renderer@^0.4.0:
-    version "0.4.1"
-    resolved "https://registry.yarnpkg.com/listr-verbose-renderer/-/listr-verbose-renderer-0.4.1.tgz#8206f4cf6d52ddc5827e5fd14989e0e965933a35"
-    dependencies:
-      chalk "^1.1.3"
-      cli-cursor "^1.0.2"
-      date-fns "^1.27.2"
-      figures "^1.7.0"
-  
   listr-verbose-renderer@^0.5.0:
     version "0.5.0"
     resolved "https://registry.yarnpkg.com/listr-verbose-renderer/-/listr-verbose-renderer-0.5.0.tgz#f1132167535ea4c1261102b9f28dac7cba1e03db"
@@ -4257,21 +4607,7 @@ Lockfile:
       date-fns "^1.27.2"
       figures "^2.0.0"
   
-  listr@0.14.2:
-    version "0.14.2"
-    resolved "https://registry.yarnpkg.com/listr/-/listr-0.14.2.tgz#cbe44b021100a15376addfc2d79349ee430bfe14"
-    dependencies:
-      "@samverschueren/stream-to-observable" "^0.3.0"
-      is-observable "^1.1.0"
-      is-promise "^2.1.0"
-      is-stream "^1.1.0"
-      listr-silent-renderer "^1.1.1"
-      listr-update-renderer "^0.4.0"
-      listr-verbose-renderer "^0.4.0"
-      p-map "^1.1.1"
-      rxjs "^6.1.0"
-  
-  listr@^0.14.1:
+  listr@0.14.3, listr@^0.14.1:
     version "0.14.3"
     resolved "https://registry.yarnpkg.com/listr/-/listr-0.14.3.tgz#2fea909604e434be464c50bddba0d496928fa586"
     dependencies:
@@ -4416,6 +4752,10 @@ Lockfile:
       lodash.isarguments "^3.0.0"
       lodash.isarray "^3.0.0"
   
+  lodash.mergewith@^4.6.1:
+    version "4.6.1"
+    resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.1.tgz#639057e726c3afbdb3e7d42741caa8d6e4335927"
+  
   lodash.once@^4.0.0:
     version "4.1.1"
     resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
@@ -4458,13 +4798,6 @@ Lockfile:
       ansi-escapes "^3.0.0"
       cli-cursor "^2.0.0"
       wrap-ansi "^3.0.1"
-  
-  log-update@^1.0.2:
-    version "1.0.2"
-    resolved "https://registry.yarnpkg.com/log-update/-/log-update-1.0.2.tgz#19929f64c4093d2d2e7075a1dad8af59c296b8d1"
-    dependencies:
-      ansi-escapes "^1.0.0"
-      cli-cursor "^1.0.2"
   
   logform@^1.9.1:
     version "1.10.0"
@@ -4512,10 +4845,16 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.1.tgz#6f9e30b47084d971a7c820ff15a6c5167b74c26f"
   
   lru-cache@^4.0.1, lru-cache@^4.1.3:
-    version "4.1.4"
-    resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.4.tgz#51cc46e8e6d9530771c857e24ccc720ecdbcc031"
+    version "4.1.5"
+    resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
     dependencies:
       pseudomap "^1.0.2"
+      yallist "^2.1.2"
+  
+  lru-cache@^5.0.0:
+    version "5.1.1"
+    resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
+    dependencies:
       yallist "^3.0.2"
   
   make-dir@^1.0.0:
@@ -4594,6 +4933,14 @@ Lockfile:
       read-pkg-up "^1.0.1"
       redent "^1.0.0"
       trim-newlines "^1.0.0"
+  
+  merge-graphql-schemas@^1.5.8:
+    version "1.5.8"
+    resolved "https://registry.yarnpkg.com/merge-graphql-schemas/-/merge-graphql-schemas-1.5.8.tgz#89457b60312aabead44d5b2b7625643f8ab9e369"
+    dependencies:
+      deepmerge "^2.2.1"
+      glob "^7.1.3"
+      is-glob "^4.0.0"
   
   merge-stream@^1.0.1:
     version "1.0.1"
@@ -4732,13 +5079,21 @@ Lockfile:
       mongodb-core "3.1.9"
       safe-buffer "^5.1.2"
   
+  mongoose-double@^0.0.1:
+    version "0.0.1"
+    resolved "https://registry.yarnpkg.com/mongoose-double/-/mongoose-double-0.0.1.tgz#c0be57852e7adc9cb9dcf9228b5cc6a9130a46ef"
+  
+  mongoose-float@^1.0.3:
+    version "1.0.3"
+    resolved "https://registry.yarnpkg.com/mongoose-float/-/mongoose-float-1.0.3.tgz#cc7bf6aad46014cbf5b49360fb3103e1a9c37325"
+  
   mongoose-legacy-pluralize@1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
   
   mongoose@^5.2.14:
-    version "5.3.13"
-    resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.3.13.tgz#043d6fd387ea5c13db857b20cf59088f9f393af6"
+    version "5.3.14"
+    resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.3.14.tgz#14fb782423561187e8e4264deb9e213156ca3ea6"
     dependencies:
       async "2.6.1"
       bson "~1.1.0"
@@ -4899,14 +5254,14 @@ Lockfile:
       tar "^4"
   
   nodemon@^1.18.4:
-    version "1.18.6"
-    resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.18.6.tgz#89b1136634d6c0afc7de24cc932a760e999e2c76"
+    version "1.18.7"
+    resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.18.7.tgz#716b66bf3e89ac4fcfb38a9e61887a03fc82efbb"
     dependencies:
       chokidar "^2.0.4"
       debug "^3.1.0"
       ignore-by-default "^1.0.1"
       minimatch "^3.0.4"
-      pstree.remy "^1.1.0"
+      pstree.remy "^1.1.2"
       semver "^5.5.0"
       supports-color "^5.2.0"
       touch "^3.1.0"
@@ -5057,10 +5412,6 @@ Lockfile:
     version "0.0.4"
     resolved "https://registry.yarnpkg.com/one-time/-/one-time-0.0.4.tgz#f8cdf77884826fe4dff93e3a9cc37b1e4480742e"
   
-  onetime@^1.0.0:
-    version "1.1.0"
-    resolved "http://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
-  
   onetime@^2.0.0:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/onetime/-/onetime-2.0.1.tgz#067428230fd67443b2794b22bba528b6867962d4"
@@ -5141,10 +5492,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/p-locate/-/p-locate-2.0.0.tgz#20a0103b222a70c8fd39cc2e580680f3dde5ec43"
     dependencies:
       p-limit "^1.1.0"
-  
-  p-map@^1.1.1:
-    version "1.2.0"
-    resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
   
   p-map@^2.0.0:
     version "2.0.0"
@@ -5405,11 +5752,11 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
   
-  psl@^1.1.24:
+  psl@^1.1.24, psl@^1.1.28:
     version "1.1.29"
     resolved "https://registry.yarnpkg.com/psl/-/psl-1.1.29.tgz#60f580d360170bb722a797cc704411e6da850c67"
   
-  pstree.remy@^1.1.0:
+  pstree.remy@^1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/pstree.remy/-/pstree.remy-1.1.2.tgz#4448bbeb4b2af1fed242afc8dc7416a6f504951a"
   
@@ -5424,17 +5771,21 @@ Lockfile:
     version "1.4.1"
     resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
   
-  punycode@^2.1.0:
+  punycode@^2.1.0, punycode@^2.1.1:
     version "2.1.1"
     resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   
-  qs@^6.5.1, qs@^6.5.2, qs@~6.5.2:
-    version "6.5.2"
-    resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
+  qs@^6.5.1, qs@^6.5.2:
+    version "6.6.0"
+    resolved "https://registry.yarnpkg.com/qs/-/qs-6.6.0.tgz#a99c0f69a8d26bf7ef012f871cdabb0aee4424c2"
   
   qs@~4.0.0:
     version "4.0.0"
-    resolved "https://registry.yarnpkg.com/qs/-/qs-4.0.0.tgz#c31d9b74ec27df75e543a86c78728ed8d4623607"
+    resolved "http://registry.npmjs.org/qs/-/qs-4.0.0.tgz#c31d9b74ec27df75e543a86c78728ed8d4623607"
+  
+  qs@~6.5.2:
+    version "6.5.2"
+    resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   
   query-string@^5.0.1:
     version "5.1.1"
@@ -5722,13 +6073,6 @@ Lockfile:
     dependencies:
       lowercase-keys "^1.0.0"
   
-  restore-cursor@^1.0.1:
-    version "1.0.1"
-    resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-1.0.1.tgz#34661f46886327fed2991479152252df92daa541"
-    dependencies:
-      exit-hook "^1.0.0"
-      onetime "^1.0.0"
-  
   restore-cursor@^2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-2.0.0.tgz#9f7ee287f82fd326d4fd162923d62129eee0dfaf"
@@ -5754,7 +6098,7 @@ Lockfile:
     version "3.6.2"
     resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"
   
-  rxjs@^6.1.0, rxjs@^6.3.3:
+  rxjs@^6.3.3:
     version "6.3.3"
     resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.3.tgz#3c6a7fa420e844a81390fb1158a9ec614f4bad55"
     dependencies:
@@ -5805,7 +6149,7 @@ Lockfile:
     dependencies:
       semver "^5.0.3"
   
-  "semver@2 || 3 || 4 || 5", semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.5, semver@^5.5.0, semver@^5.6.0:
+  "semver@2 || 3 || 4 || 5", semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5, semver@^5.5.0, semver@^5.6.0:
     version "5.6.0"
     resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   
@@ -5939,6 +6283,12 @@ Lockfile:
       source-map-url "^0.4.0"
       urix "^0.1.0"
   
+  source-map-support@0.5.0:
+    version "0.5.0"
+    resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.0.tgz#2018a7ad2bdf8faf2691e5fddab26bed5a2bacab"
+    dependencies:
+      source-map "^0.6.0"
+  
   source-map-support@^0.4.15:
     version "0.4.18"
     resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.18.tgz#0286a6de8be42641338594e97ccea75f0a2c585f"
@@ -6071,11 +6421,11 @@ Lockfile:
   
   string_decoder@~0.10.x:
     version "0.10.31"
-    resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
+    resolved "http://registry.npmjs.org/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
   
   string_decoder@~1.1.1:
     version "1.1.1"
-    resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
+    resolved "http://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
     dependencies:
       safe-buffer "~5.1.0"
   
@@ -6282,7 +6632,14 @@ Lockfile:
     dependencies:
       nopt "~1.0.10"
   
-  tough-cookie@>=2.3.3, tough-cookie@^2.3.4, tough-cookie@~2.4.3:
+  tough-cookie@>=2.3.3, tough-cookie@^2.3.4:
+    version "2.5.0"
+    resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.5.0.tgz#cd9fb2a0aa1d5a12b473bd9fb96fa3dcff65ade2"
+    dependencies:
+      psl "^1.1.28"
+      punycode "^2.1.1"
+  
+  tough-cookie@~2.4.3:
     version "2.4.3"
     resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.4.3.tgz#53f36da3f47783b0925afa06ff9f3b165280f781"
     dependencies:
@@ -6325,13 +6682,13 @@ Lockfile:
       semver "^5.5"
       yargs-parser "10.x"
   
-  ts-log@2.1.3:
-    version "2.1.3"
-    resolved "https://registry.yarnpkg.com/ts-log/-/ts-log-2.1.3.tgz#9e30aca1baffe7693a2e4142b8f07ecb01cb8340"
+  ts-log@2.1.4:
+    version "2.1.4"
+    resolved "https://registry.yarnpkg.com/ts-log/-/ts-log-2.1.4.tgz#063c5ad1cbab5d49d258d18015963489fb6fb59a"
   
   ts-node-dev@^1.0.0-pre.30:
-    version "1.0.0-pre.30"
-    resolved "https://registry.yarnpkg.com/ts-node-dev/-/ts-node-dev-1.0.0-pre.30.tgz#11446f273d8adee9fa4b8de6661ef5885abb5431"
+    version "1.0.0-pre.31"
+    resolved "https://registry.yarnpkg.com/ts-node-dev/-/ts-node-dev-1.0.0-pre.31.tgz#6026879405969e74681c945b0e5d36110b0cc6f8"
     dependencies:
       dateformat "~1.0.4-1.2.3"
       dynamic-dedupe "^0.2.0"
@@ -6771,6 +7128,10 @@ Lockfile:
     version "3.2.1"
     resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
   
+  yallist@^2.1.2:
+    version "2.1.2"
+    resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
+  
   yallist@^3.0.0, yallist@^3.0.2:
     version "3.0.3"
     resolved "https://registry.yarnpkg.com/yallist/-/yallist-3.0.3.tgz#b4b049e314be545e3ce802236d6cd22cd91c3de9"
@@ -6827,7 +7188,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.11.tgz#d3415885eeeb42ee5abb9821c95bb518fcd6d199"
 
 Trace: 
-  Error: https://registry.yarnpkg.com/graphql-codegen-typescript-cli: Not found
+  Error: https://registry.yarnpkg.com/@types%2fmongoose-double: Not found
       at Request.params.callback [as _callback] (C:\Users\Hajime\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:62098:18)
       at Request.self.callback (C:\Users\Hajime\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:123085:22)
       at Request.emit (events.js:180:13)

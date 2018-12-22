@@ -1,5 +1,9 @@
+import * as mongoose from 'mongoose'
 import { Document, model, Model, Schema } from 'mongoose'
 import { IExpenseAndIncome } from '../GraphQL/@types/types'
+import * as mongooseFloat from 'mongoose-float'
+
+const Float = mongooseFloat.loadType(mongoose, 2)
 
 type ExpenseDocument = IExpenseAndIncome & Document
 

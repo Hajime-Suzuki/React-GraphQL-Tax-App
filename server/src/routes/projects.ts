@@ -138,7 +138,7 @@ router.post('/populate', async ctx => {
         .map(__ => {
           return {
             name: faker.commerce.product(),
-            price: faker.commerce.price(50, 300, 2),
+            price: faker.finance.amount(50, 300, 2),
             taxRate: taxRates[faker.random.number(2)],
             quantity: faker.random.number({ min: 1, max: 3 })
           }
@@ -148,7 +148,7 @@ router.post('/populate', async ctx => {
         .map(__ => {
           return {
             name: faker.commerce.product(),
-            price: faker.commerce.price(5, 50, 2),
+            price: faker.finance.amount(5, 50, 2),
             taxRate: taxRates[faker.random.number(2)],
             quantity: faker.random.number({ min: 1, max: 3 })
           }
@@ -186,7 +186,7 @@ router.post('/populate', async ctx => {
     .map(_ => {
       return new Expense({
         name: faker.commerce.productName(),
-        price: faker.commerce.price(10, 300, 2),
+        price: faker.finance.amount(10, 300, 2),
         quantity: faker.random.number({ min: 1, max: 3 }),
         taxRate: taxRates[faker.random.number(2)],
         date: faker.date.between(format(pastLimit, 'YYYY-MM-DD'), new Date()),

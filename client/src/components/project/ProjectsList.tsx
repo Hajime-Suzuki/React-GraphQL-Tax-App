@@ -10,11 +10,11 @@ import {
   GetProjectOverview,
   UpdateStatus
 } from 'src/graphql/components/projects'
-import { calcTotalvalueWithoutTax2 } from 'src/libs/singleProject/totalValues'
 import styled from 'styled-components'
 import { routes } from '../../routes/constants'
-import { StyledLink } from '../../styles/sharedStyles'
+import { Styles } from '../../styles/sharedStyles'
 import { StatusDropdown } from './formConponents/StatusDropDown'
+import { Calculations } from './helper/calcutation'
 
 const StyledPaper: any = styled(Paper)`
   overflow: 'auto';
@@ -50,9 +50,12 @@ const ProjectsList: React.SFC<Props> = props => {
             return (
               <TableRow key={p.id} hover className="table-item">
                 <TableCell>
-                  <StyledLink to={routes.singleProject(p.id)} weight="bold">
+                  <Styles.StyledLink
+                    to={routes.singleProject(p.id)}
+                    weight="bold"
+                  >
                     {p.name}
-                  </StyledLink>
+                  </Styles.StyledLink>
                 </TableCell>
                 <TableCell>
                   {p.date ? format(p.date, 'Y-MM-dd') : '-'}
@@ -63,11 +66,10 @@ const ProjectsList: React.SFC<Props> = props => {
                     : '-'}
                 </TableCell>
                 <TableCell>
-                  {calcTotalvalueWithoutTax2(p.incomes || [])}
+                  {Calculations.getSubtotal(p.incomes || [])}
                 </TableCell>
                 {/* <TableCell>{p.get('location') || '-'}</TableCell> */}
                 <TableCell>
-                  {/* <LoadingIcon size="2em" /> */}
                   <UpdateStatus.Component>
                     {(update, data) => (
                       <StatusDropdown

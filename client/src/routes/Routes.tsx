@@ -7,7 +7,7 @@ import SingleProjectContainer from 'src/components/project/SingleProjectContaine
 import NavBarContainer from 'src/components/UI/NavBar/NavBarContainer'
 import DashBoardComponent from '../components/dashBoard/DashBoardComponent'
 import TopPage from '../components/topPage/TopPage'
-import { MainWrapper } from '../styles/sharedStyles'
+import { Styles } from '../styles/sharedStyles'
 import { routes } from './constants'
 import PrivateRoutes from './PrivateRoutes'
 
@@ -16,7 +16,7 @@ class Routes extends React.Component {
     return (
       <React.Fragment>
         <Route path={routes.top} component={NavBarContainer} />
-        <MainWrapper>
+        <Styles.AppWrapper>
           <Switch>
             <Route path="/" exact component={TopPage} />
             <PrivateRoutes
@@ -50,7 +50,7 @@ class Routes extends React.Component {
               component={LoginAndSignupFormContainer}
             />
           </Switch>
-        </MainWrapper>
+        </Styles.AppWrapper>
       </React.Fragment>
     )
   }

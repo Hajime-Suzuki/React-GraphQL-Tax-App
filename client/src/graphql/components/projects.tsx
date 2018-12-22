@@ -88,7 +88,7 @@ export namespace GetProjectOverview {
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
-    price: number;
+    price: string;
 
     quantity: number;
   };
@@ -127,6 +127,8 @@ export namespace GetSingleProject {
     client: Client | null;
 
     incomes: Incomes[] | null;
+
+    expenses: Expenses[] | null;
   };
 
   export type Client = {
@@ -146,7 +148,19 @@ export namespace GetSingleProject {
 
     name: string;
 
-    price: number;
+    price: string;
+
+    quantity: number;
+
+    taxRate: number;
+  };
+
+  export type Expenses = {
+    __typename?: "ExpenseAndIncome";
+
+    name: string;
+
+    price: string;
 
     quantity: number;
 
@@ -291,6 +305,12 @@ export namespace GetSingleProject {
           phone
         }
         incomes {
+          name
+          price
+          quantity
+          taxRate
+        }
+        expenses {
           name
           price
           quantity

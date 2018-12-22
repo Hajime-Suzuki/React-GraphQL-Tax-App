@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 
 class DashBoardComponent extends React.Component<any> {
   componentDidMount() {
-    this.props.getEntities()
+    // this.props.getEntities()
   }
   render() {
     const { projects, fetching } = this.props

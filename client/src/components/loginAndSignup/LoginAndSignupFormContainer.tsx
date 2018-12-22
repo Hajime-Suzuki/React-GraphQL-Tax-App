@@ -1,16 +1,16 @@
 import * as React from 'react'
+import { withApollo, WithApolloClient } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
-import { client } from 'src/graphql/client'
+import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'
 import { Login } from 'src/graphql/components/login'
 import { SignUp } from 'src/graphql/components/signup'
-import { decodeJwt, storeJwt } from 'src/libs/jwt'
 import { IRouterComponentProps } from 'src/routes/types'
 import { routes } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 
-type Props = GetToken.Props<IRouterComponentProps>
+type Props = WithApolloClient<GetToken.Props<IRouterComponentProps>>
 
 class LoginAndSignupFormContainer extends React.Component<Props> {
   render() {
@@ -21,11 +21,8 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
     return path === routes.login ? <this.LoginForm /> : <this.SignUpForm />
   }
 
-  handleComplete(token: string) {
-    storeJwt(token)
-    client.writeData({
-      data: { userId: decodeJwt(token).id }
-    })
+  handleComplete = (token: string) => {
+    LoginActions.onLogin(token)
   }
 
   SignUpForm = () => {

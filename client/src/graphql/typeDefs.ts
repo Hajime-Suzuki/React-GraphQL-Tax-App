@@ -14,7 +14,7 @@ export const typeDefs = gql`
     userId: String
   }
   type Mutation {
-    sortProject: Project
+    logout: String
   }
 `
 

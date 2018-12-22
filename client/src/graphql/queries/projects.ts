@@ -39,6 +39,12 @@ export const GET_SINGLE_PROJECT = gql`
         quantity
         taxRate
       }
+      expenses {
+        name
+        price
+        quantity
+        taxRate
+      }
     }
   }
 `

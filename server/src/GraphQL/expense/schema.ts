@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-koa'
 export const expenseSchema = gql`
   type Expense {
     name: String!
-    price: Int!
+    price: String!
     quantity: Int!
     taxRate: Int! # 0 | 6 | 21
     date: String
@@ -11,7 +11,7 @@ export const expenseSchema = gql`
   }
   type ExpenseAndIncome {
     name: String!
-    price: Int!
+    price: String!
     quantity: Int!
     taxRate: Int!
   }

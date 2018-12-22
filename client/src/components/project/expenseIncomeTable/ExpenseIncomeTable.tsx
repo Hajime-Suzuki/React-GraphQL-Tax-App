@@ -1,49 +1,29 @@
-import React from 'react'
-import {
-  calcTotalvalueWithoutTax,
-  calcOnlyTax
-} from '../../../libs/singleProject/totalValues'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
-import TableBody from '@material-ui/core/TableBody'
 import Typography from '@material-ui/core/Typography'
+import React from 'react'
+import { GetSingleProject } from 'src/graphql/components/projects'
+import { Currency } from 'src/libs/currency'
 
-const renderItems = items => {
-  return items.map((item, i) => {
-    return (
-      <TableRow key={i}>
-        <TableCell>{item.get('name')}</TableCell>
-        <TableCell>{item.get('price')}</TableCell>
-        <TableCell>{item.get('quantity')}</TableCell>
-        <TableCell>{item.get('taxRate')}%</TableCell>
-      </TableRow>
-    )
-  })
+interface Props {
+  items: GetSingleProject.Incomes[] | GetSingleProject.Expenses[]
+  totalValues: {
+    subtotal?: string
+    tax: string
+    total: string
+  }
+  type: 'expenses' | 'incomes'
 }
 
-const renderTotalRows = (type, items) => {
-  const totalValue =
-    type === 'total' ? calcTotalvalueWithoutTax(items) : calcOnlyTax(items)
-  const text = type === 'total' ? 'Total' : 'Tax Total'
+const ExpenseIncomeTable: React.SFC<Props> = props => {
+  const { items, totalValues, type } = props
+  const isIncome = type === 'incomes'
   return (
-    <TableRow>
-      <TableCell>
-        <Typography variant="title">{text}</Typography>
-      </TableCell>
-      <TableCell>{totalValue}</TableCell>
-      <TableCell>-</TableCell>
-      <TableCell>-</TableCell>
-    </TableRow>
-  )
-}
-
-const ExpenseIncomeTable = props => {
-  const { items } = props
-  return (
-    <Paper>
+    <Paper style={{ overflowX: 'auto' }}>
       <Table>
         <TableHead>
           <TableRow>
@@ -55,11 +35,58 @@ const ExpenseIncomeTable = props => {
         </TableHead>
         <TableBody>
           {renderItems(items)}
-          {renderTotalRows('total', items)}
-          {renderTotalRows('tax', items)}
+          {isIncome && renderTotalRows('subtotal', totalValues)}
+          {renderTotalRows('tax', totalValues)}
+          {renderTotalRows('total', totalValues)}
         </TableBody>
       </Table>
     </Paper>
+  )
+}
+
+const renderItems = (items: Props['items']) => {
+  return items.map((item, i) => {
+    return (
+      <TableRow key={i}>
+        <TableCell>{item.name}</TableCell>
+        <TableCell>{Currency.format(item.price)}</TableCell>
+        <TableCell>{item.quantity}</TableCell>
+        <TableCell>{item.taxRate}%</TableCell>
+      </TableRow>
+    )
+  })
+}
+
+const renderTotalRows = (
+  type: 'subtotal' | 'tax' | 'total',
+  totalValues: Props['totalValues']
+) => {
+  const totalValue =
+    type === 'subtotal'
+      ? totalValues.subtotal
+      : type === 'tax'
+      ? totalValues.tax
+      : type === 'total'
+      ? totalValues.total
+      : null
+
+  const text =
+    type === 'subtotal'
+      ? 'Subtotal'
+      : type === 'tax'
+      ? 'VAT'
+      : type === 'total'
+      ? 'Total'
+      : null
+  return (
+    <TableRow>
+      <TableCell>
+        <Typography variant="title">{text}</Typography>
+      </TableCell>
+      <TableCell>{totalValue}</TableCell>
+      <TableCell>-</TableCell>
+      <TableCell>-</TableCell>
+    </TableRow>
   )
 }
 

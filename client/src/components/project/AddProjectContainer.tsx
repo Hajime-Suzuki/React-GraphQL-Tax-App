@@ -56,11 +56,4 @@ class AddProjectContainer extends React.PureComponent<AddProject.Props<{}>> {
   }
 }
 
-// export default withFormik<AddProject.Props, AddProjectInitialValues>({
-//   // validationSchema: addProjectSchema,
-//   // validateOnBlur: false,
-//   // validateOnChange: false,
-//   mapPropsToValues: () => addProjectInitialValues,
-//   handleSubmit: (values, props) => console.log(values)
-// })(AddProject.HOC({})(AddProjectContainer))
 export default AddProject.HOC({})(AddProjectContainer)

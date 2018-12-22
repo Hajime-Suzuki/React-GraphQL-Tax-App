@@ -10,6 +10,7 @@ import { StatusField } from 'src/libs/forms/renderDropdown'
 import styled from 'styled-components'
 import { addProjectInitialValues } from '../../AddProjectContainer'
 import { renderFields } from '../../helper/renderFields'
+import { Styles } from 'src/styles/sharedStyles'
 
 class InvoiceInfoForm extends React.PureComponent<
   FormikProps<AddProjectInput>
@@ -139,14 +140,10 @@ const generateArrayFields = (type: 'incomes' | 'expenses', index: number) => [
 ]
 
 const StyledForm = styled(Form)`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  ${Styles.flexContainerProps}
   .form-section {
+    ${Styles.flexContainerProps}
     width: 90%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     margin-bottom: 4em;
     .title {
       width: 100%;
