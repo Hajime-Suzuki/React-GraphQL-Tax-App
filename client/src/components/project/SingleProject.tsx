@@ -11,20 +11,18 @@ import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
 import { Calculations } from './helper/calcutation'
 import { Styles } from 'src/styles/sharedStyles'
 import IconButton from '@material-ui/core/IconButton'
+import { theme } from 'src/styles/theme'
 
-const ProjectDetails = styled(Styles.flexContainer)`
-  .invoice-number,
-  .invoice-date {
-    width: 35%;
-    text-align: left;
-  }
-  .edit-button {
-    margin: 0 1em 2em;
-  }
+const phone = theme.breakpoints.down('sm')
+const tablet = theme.breakpoints.up('md')
+
+const ProjectDetails: any = styled(Grid)`
+  width: 100%;
 `
-const InvoiceMeta: any = styled(Grid)`
+
+const ButtonWrapper: any = styled(Grid)`
   && {
-    text-align: center;
+    margin: 2em;
   }
 `
 
@@ -34,15 +32,21 @@ interface Props {
   handleOpenModal: () => void
   handleCloseModal: () => void
 }
+
 const SingleProject: React.SFC<Props> = props => {
   const { project, handleOpenModal, handleCloseModal, isModalOpen } = props
-  const { client, incomes, expenses } = project
-
-  const prices = getPriceOverview(project)
 
   return (
-    <Grid container justify="center" style={{ width: '100%' }}>
-      {/* <EditFormModal
+    <ProjectDetails container justify="center">
+      <ButtonWrapper item xs={10} container justify="flex-end">
+        <Button variant="outlined" color="primary" onClick={handleOpenModal}>
+          Edit
+        </Button>
+      </ButtonWrapper>
+      <InvoiceMetaSection {...props} />
+      <hr style={{ width: '100%', margin: '2em 0' }} />
+      <IncomesAndExpenseSection {...props} />
+      <EditFormModal
         isOpen={isModalOpen}
         handleCloseModal={handleCloseModal}
         confirmAndEdit={() => console.log('confirm!')}
@@ -51,50 +55,7 @@ const SingleProject: React.SFC<Props> = props => {
         // key={type}
       >
         Test!!!!
-      </EditFormModal> */}
-
-      <Grid item xs={12} container justify="flex-end">
-        <Button
-          variant="outlined"
-          color="primary"
-          className="edit-button"
-          onClick={handleOpenModal}
-        >
-          Edit
-        </Button>
-      </Grid>
-      <Grid item xs={11} sm={10}>
-        <Typography variant="display2">{project.name}</Typography>
-      </Grid>
-      <Grid item xs={11} sm={2}>
-        <Grid container justify="flex-end">
-          <InvoiceMeta item xs={5} sm={5}>
-            <Icon className="far fa-file-alt" />
-            <Typography className="invoice-number">
-              {project.invoiceNumber}
-            </Typography>
-          </InvoiceMeta>
-        </Grid>
-        <Grid container justify="flex-end">
-          <InvoiceMeta item xs={5} sm={5}>
-            <Icon className="far fa-calendar-alt" />
-            <Typography className="invoice-date">
-              {project.invoiceDate
-                ? format(project.invoiceDate, 'Y-MM-dd')
-                : '-'}
-            </Typography>
-          </InvoiceMeta>
-        </Grid>
-        <Grid container justify="flex-end">
-          <InvoiceMeta item xs={5} sm={5}>
-            <Typography className="invoice-date">
-              Status: {project.status}
-            </Typography>
-          </InvoiceMeta>
-        </Grid>
-      </Grid>
-      <hr style={{ width: '100%' }} />
-
+      </EditFormModal>
       {/* <Grid item xs={11} sm={6}>
           <Typography>Contact Person</Typography>
           {client ? (
@@ -109,40 +70,103 @@ const SingleProject: React.SFC<Props> = props => {
             '-'
           )}
         </Grid> */}
+    </ProjectDetails>
+  )
+}
 
-      <hr style={{ width: '100%' }} />
+const InvoiceMetaSectionWrapper: any = styled(Grid)`
+  && {
+    .title {
+      text-align: center;
+      ${phone} {
+        margin-bottom: 20px;
+      }
+      ${tablet} {
+        text-align: left;
+      }
+    }
+    .details-wrapper {
+      flex-direction: row;
+      ${phone} {
+        justify-content: center;
+      }
+      ${tablet} {
+        align-items: center;
+      }
+    }
+    .meta-item {
+      width: 33%;
+      text-align: center;
+    }
+  }
+`
 
-      <Grid container item xs={12} spacing={40} justify="space-evenly">
-        {incomes && (
-          <Grid item xs={11} lg={6}>
-            <Typography variant="title">Income</Typography>
-            <IconButton onClick={() => console.log('open')}>
-              <Icon className="fas fa-pen" />
-            </IconButton>
-            {/* <Grid item xs={11}> */}
-            <ExpenseIncomeTable
-              items={incomes}
-              totalValues={prices.incomes}
-              type="incomes"
-            />
-            {/* </Grid> */}
-          </Grid>
-        )}
-        {expenses && (
-          <Grid item xs={11} lg={6}>
-            <Typography variant="title">Expense</Typography>
-            <IconButton onClick={() => console.log('open')}>
-              <Icon className="fas fa-pen" />
-            </IconButton>
-
-            <ExpenseIncomeTable
-              items={expenses}
-              totalValues={prices.expenses}
-              type="expenses"
-            />
-          </Grid>
-        )}
+const InvoiceMetaSection: React.SFC<Props> = ({ project }) => {
+  return (
+    <InvoiceMetaSectionWrapper
+      item
+      container
+      alignItems="center"
+      justify="center"
+    >
+      <Grid item xs={11} md={10}>
+        <Typography variant="display2" className="title">
+          {project.name}
+        </Typography>
       </Grid>
+
+      <Grid className="details-wrapper" item container xs={11} md={1}>
+        <Grid className="meta-item" item xs={3} md={10}>
+          <Icon className="far fa-file-alt" />
+          <Typography className="invoice-number">
+            {project.invoiceNumber}
+          </Typography>
+        </Grid>
+
+        <Grid className="meta-item" item xs={3} md={10}>
+          <Icon className="far fa-calendar-alt" />
+          <Typography className="invoice-date">
+            {project.invoiceDate ? format(project.invoiceDate, 'Y-MM-dd') : '-'}
+          </Typography>
+        </Grid>
+
+        <Grid className="meta-item" item xs={3} md={10}>
+          <Icon className="fas fa-check" />
+          <Typography className="invoice-date">{project.status}</Typography>
+        </Grid>
+      </Grid>
+    </InvoiceMetaSectionWrapper>
+  )
+}
+
+const IncomesAndExpenseSection: React.SFC<Props> = ({ project }) => {
+  const prices = getPriceOverview(project)
+  const settings = [
+    { type: 'incomes', title: 'Incomes', totalValues: prices.incomes },
+    { type: 'expenses', title: 'Expenses', totalValues: prices.expenses }
+  ]
+  return (
+    <Grid container item xs={12} spacing={40} justify="space-evenly">
+      {settings.map(({ type, title, totalValues }) => {
+        return (
+          project[type] && (
+            <Grid item xs={11} lg={6}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="title">{title}</Typography>
+                <IconButton onClick={() => console.log('open')}>
+                  <Icon className="fas fa-pen" />
+                </IconButton>
+              </div>
+
+              <ExpenseIncomeTable
+                items={project[type]}
+                totalValues={totalValues}
+                type={type as any}
+              />
+            </Grid>
+          )
+        )
+      })}
     </Grid>
   )
 }

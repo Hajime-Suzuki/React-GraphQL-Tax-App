@@ -27,7 +27,7 @@ const EditFormModal: React.SFC<Props> = props => {
     <Dialog
       disableBackdropClick
       disableEscapeKeyDown
-      maxWidth="xs"
+      maxWidth="md"
       onEntering={handleEntering}
       open={isOpen}
     >
