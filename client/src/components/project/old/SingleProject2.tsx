@@ -10,7 +10,7 @@ import {
   calcOnlyTax,
   calcTotalvalueWithoutTax
 } from '../../libs/singleProject/totalValues'
-import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
+import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable.1'
 import { LoadingIcon } from '../UI/LoadingIcon'
 
 const ProjectDetails: any = styled(Grid)`

@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { ProjectActions } from 'src/graphql/actions/projects'
-import {
-  GetProjectOverview,
-  UpdateStatus
-} from 'src/graphql/components/projects'
+import { GetProjectOverview } from 'src/graphql/components/projects'
 import {
   IRouterComponentProps,
   PrivateRoutesChildProps

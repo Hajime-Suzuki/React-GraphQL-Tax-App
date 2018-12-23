@@ -1,17 +1,17 @@
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Icon from '@material-ui/core/Icon'
+import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import format from 'date-fns/format'
 import * as React from 'react'
-import { GetSingleProject } from 'src/graphql/components/projects'
-import styled from 'styled-components'
-import EditFormModal from './modal/EditFormModal'
-import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
-import { Calculations } from './helper/calcutation'
-import { Styles } from 'src/styles/sharedStyles'
-import IconButton from '@material-ui/core/IconButton'
 import { theme } from 'src/styles/theme'
+import styled from 'styled-components'
+import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
+import { Calculations } from './helper/calculations'
+import EditFormModal from './modal/EditFormModal'
+import { SingleProjectChildProps } from './SingleProjectContainer'
+import { EditExpenseAndIncomeForm } from './formConponents/incomesAndExpensesForm/EditIncomesAndExpenseForm'
 
 const phone = theme.breakpoints.down('sm')
 const tablet = theme.breakpoints.up('md')
@@ -26,39 +26,32 @@ const ButtonWrapper: any = styled(Grid)`
   }
 `
 
-interface Props {
-  project: GetSingleProject.GetSingleProject
-  isModalOpen: boolean
-  handleOpenModal: () => void
-  handleCloseModal: () => void
-}
-
-const SingleProject: React.SFC<Props> = props => {
-  const { project, handleOpenModal, handleCloseModal, isModalOpen } = props
+const SingleProject: React.SFC<SingleProjectChildProps> = props => {
+  const {
+    project: { client, expenses, incomes },
+    handleOpenModal,
+    handleCloseModal,
+    selectedModal,
+    handleSubmit
+  } = props
 
   return (
     <ProjectDetails container justify="center">
       <ButtonWrapper item xs={10} container justify="flex-end">
-        <Button variant="outlined" color="primary" onClick={handleOpenModal}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleOpenModal('base')}
+        >
           Edit
         </Button>
       </ButtonWrapper>
       <InvoiceMetaSection {...props} />
-      <hr style={{ width: '100%', margin: '2em 0' }} />
-      <IncomesAndExpenseSection {...props} />
-      <EditFormModal
-        isOpen={isModalOpen}
-        handleCloseModal={handleCloseModal}
-        confirmAndEdit={() => console.log('confirm!')}
-        handleEntering={() => console.log('enter')}
-        type={'something'}
-        // key={type}
-      >
-        Test!!!!
-      </EditFormModal>
-      {/* <Grid item xs={11} sm={6}>
-          <Typography>Contact Person</Typography>
-          {client ? (
+      {client && (
+        <React.Fragment>
+          <hr style={{ width: '100%', margin: '2em 0' }} />
+          <Grid item xs={11} sm={6}>
+            <Typography>Contact Person</Typography>
             <React.Fragment>
               <Typography>
                 {client.firstName} {client.lastName}
@@ -66,10 +59,32 @@ const SingleProject: React.SFC<Props> = props => {
               <Typography>{client.email}</Typography>
               <Typography>{client.phone}</Typography>
             </React.Fragment>
-          ) : (
-            '-'
-          )}
-        </Grid> */}
+          </Grid>
+        </React.Fragment>
+      )}
+      <hr style={{ width: '100%', margin: '2em 0' }} />
+      <IncomesAndExpenseSection {...props} />
+
+      {incomes && (
+        <EditFormModal
+          title="Edit Incomes"
+          handleCloseModal={handleCloseModal('incomes')}
+          isOpen={selectedModal === 'incomes'}
+          handleConfirm={handleSubmit}
+        >
+          <EditExpenseAndIncomeForm incomes={incomes as any} />
+        </EditFormModal>
+      )}
+      {expenses && (
+        <EditFormModal
+          title="Edit Incomes"
+          handleCloseModal={handleCloseModal('expenses')}
+          isOpen={selectedModal === 'expenses'}
+          handleConfirm={handleSubmit}
+        >
+          <EditExpenseAndIncomeForm expenses={expenses as any} />
+        </EditFormModal>
+      )}
     </ProjectDetails>
   )
 }
@@ -91,7 +106,7 @@ const InvoiceMetaSectionWrapper: any = styled(Grid)`
         justify-content: center;
       }
       ${tablet} {
-        align-items: center;
+        justify-content: flex-end;
       }
     }
     .meta-item {
@@ -101,7 +116,9 @@ const InvoiceMetaSectionWrapper: any = styled(Grid)`
   }
 `
 
-const InvoiceMetaSection: React.SFC<Props> = ({ project }) => {
+const InvoiceMetaSection: React.SFC<SingleProjectChildProps> = ({
+  project
+}) => {
   return (
     <InvoiceMetaSectionWrapper
       item
@@ -139,7 +156,10 @@ const InvoiceMetaSection: React.SFC<Props> = ({ project }) => {
   )
 }
 
-const IncomesAndExpenseSection: React.SFC<Props> = ({ project }) => {
+const IncomesAndExpenseSection: React.SFC<SingleProjectChildProps> = ({
+  project,
+  handleOpenModal
+}) => {
   const prices = getPriceOverview(project)
   const settings = [
     { type: 'incomes', title: 'Incomes', totalValues: prices.incomes },
@@ -147,13 +167,15 @@ const IncomesAndExpenseSection: React.SFC<Props> = ({ project }) => {
   ]
   return (
     <Grid container item xs={12} spacing={40} justify="space-evenly">
-      {settings.map(({ type, title, totalValues }) => {
-        return (
+      {settings.map(
+        ({ type, title, totalValues }, i) =>
           project[type] && (
-            <Grid item xs={11} lg={6}>
+            <Grid item xs={11} lg={6} key={i}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="title">{title}</Typography>
-                <IconButton onClick={() => console.log('open')}>
+                <Typography variant="title" color="secondary">
+                  {title}
+                </Typography>
+                <IconButton onClick={handleOpenModal(type)}>
                   <Icon className="fas fa-pen" />
                 </IconButton>
               </div>
@@ -165,13 +187,12 @@ const IncomesAndExpenseSection: React.SFC<Props> = ({ project }) => {
               />
             </Grid>
           )
-        )
-      })}
+      )}
     </Grid>
   )
 }
 
-const getPriceOverview = (project: Props['project']) => {
+const getPriceOverview = (project: SingleProjectChildProps['project']) => {
   const { incomes, expenses } = project
   return {
     incomes: {

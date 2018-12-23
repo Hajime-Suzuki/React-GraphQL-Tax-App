@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { withApollo, WithApolloClient } from 'react-apollo'
+import { WithApolloClient } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
 import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'

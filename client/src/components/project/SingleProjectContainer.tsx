@@ -4,17 +4,32 @@ import { IRouterComponentProps } from 'src/routes/types'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import SingleProject from './SingleProject'
 
+export interface SingleProjectChildProps {
+  project: GetSingleProject.GetSingleProject
+  selectedModal: string | undefined
+  handleOpenModal: (type: string) => () => void
+  handleCloseModal: (type: string) => () => void
+  handleSubmit: () => void
+}
+
 class SingleProjectContainer extends React.Component<
   GetSingleProject.Props<IRouterComponentProps>,
-  { isModalOpen: boolean }
+  { selectedModal: string | undefined }
 > {
   state = {
-    isModalOpen: false
+    selectedModal: undefined
   }
 
-  handleOpenModal = () => this.setState({ isModalOpen: true })
+  handleOpenModal = (type: string) => () =>
+    this.setState({ selectedModal: type })
 
-  handleCloseModal = () => this.setState({ isModalOpen: false })
+  handleCloseModal = (type: string) => () =>
+    this.setState({ selectedModal: undefined })
+
+  handleSubmit = () => {
+    console.log('submit!!!')
+    this.setState({ selectedModal: undefined })
+  }
 
   render() {
     return (
@@ -33,9 +48,10 @@ class SingleProjectContainer extends React.Component<
           return (
             <SingleProject
               project={project}
-              isModalOpen={this.state.isModalOpen}
+              selectedModal={this.state.selectedModal}
               handleOpenModal={this.handleOpenModal}
               handleCloseModal={this.handleCloseModal}
+              handleSubmit={this.handleSubmit}
             />
           )
         }}

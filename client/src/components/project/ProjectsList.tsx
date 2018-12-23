@@ -14,7 +14,7 @@ import styled from 'styled-components'
 import { routes } from '../../routes/constants'
 import { Styles } from '../../styles/sharedStyles'
 import { StatusDropdown } from './formConponents/StatusDropDown'
-import { Calculations } from './helper/calcutation'
+import { Calculations } from './helper/calculations'
 
 const StyledPaper: any = styled(Paper)`
   overflow: 'auto';
