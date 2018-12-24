@@ -16,7 +16,7 @@ const clientFields = [
 
 const generateArrayFields = (type: 'incomes' | 'expenses', index: number) => [
   { name: `${type}.${index}.name`, label: 'Name' },
-  { name: `${type}.${index}.price`, label: 'Price', type: 'number' },
+  { name: `${type}.${index}.price`, label: 'Price' },
   { name: `${type}.${index}.quantity`, label: 'Quantity', type: 'number' }
 ]
 

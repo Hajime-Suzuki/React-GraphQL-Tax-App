@@ -1,31 +1,37 @@
 import * as React from 'react'
 import {
-  GetSingleProject,
-  AddProjectInput,
-  ExpenseAndIncomeInput
+  ExpenseAndIncomeInput,
+  ProjectInput
 } from 'src/graphql/components/projects'
-import { Formik, FormikProps } from 'formik'
+import styled from 'styled-components'
 import { IncomesAndExpenseFields } from '../../helper/IncomesAndExpenseFields'
 import { StyledForm } from '../invoiceForm/InvoiceInfoForm'
-import styled from 'styled-components'
+import { SingleProjectChildProps } from '../../SingleProjectContainer'
+import { Formik, FormikProps } from 'formik'
+import EditFormModal from '../../modal/EditFormModal'
 
+// price from server is String, while price for forms is number.
 interface Props {
   incomes?: ExpenseAndIncomeInput[]
   expenses?: ExpenseAndIncomeInput[]
-  handleSubmit: () => void
+  handleSubmit: SingleProjectChildProps['handleSubmit']
+  selectedModal: SingleProjectChildProps['selectedModal']
+  handleCloseModal: SingleProjectChildProps['handleCloseModal']
 }
 
-const StyledForm2: any = styled(StyledForm)`
+const CustomStyledForm: any = styled(StyledForm)`
   .form-section {
     margin-bottom: 0;
     padding-bottom: 0;
   }
 `
 
-export const EditExpenseAndIncomeForm: React.SFC<Props> = ({
+const EditExpenseAndIncomeForm: React.SFC<Props> = ({
   incomes,
   expenses,
-  handleSubmit
+  selectedModal,
+  handleSubmit: updateProject,
+  handleCloseModal
 }) => {
   if (!incomes && !expenses) return null
   const type = !!incomes ? 'incomes' : 'expenses'
@@ -33,20 +39,34 @@ export const EditExpenseAndIncomeForm: React.SFC<Props> = ({
   return (
     <Formik
       initialValues={{ incomes, expenses }}
-      onSubmit={handleSubmit}
-      render={({ handleChange, values }: FormikProps<Partial<Props>>) => {
+      validateOnChange={false}
+      onSubmit={updateProject}
+      render={({
+        handleChange,
+        values,
+        handleSubmit
+      }: FormikProps<ProjectInput>) => {
         return (
-          <StyledForm2>
-            <div className="form-section">
-              <IncomesAndExpenseFields
-                type={type}
-                handleChange={handleChange}
-                values={values}
-              />
-            </div>
-          </StyledForm2>
+          <EditFormModal
+            title="Edit Incomes"
+            isOpen={selectedModal === type}
+            handleCloseModal={handleCloseModal}
+            handleConfirm={handleSubmit}
+          >
+            <CustomStyledForm>
+              <div className="form-section">
+                <IncomesAndExpenseFields
+                  type={type}
+                  handleChange={handleChange}
+                  values={values}
+                />
+              </div>
+            </CustomStyledForm>
+          </EditFormModal>
         )
       }}
     />
   )
 }
+
+export default EditExpenseAndIncomeForm

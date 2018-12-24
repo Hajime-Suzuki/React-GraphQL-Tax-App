@@ -8,10 +8,9 @@ import * as React from 'react'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
 import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
+import EditExpenseAndIncomeForm from './formConponents/incomesAndExpensesForm/EditIncomesAndExpenseForm'
 import { Calculations } from './helper/calculations'
-import EditFormModal from './modal/EditFormModal'
 import { SingleProjectChildProps } from './SingleProjectContainer'
-import { EditExpenseAndIncomeForm } from './formConponents/incomesAndExpensesForm/EditIncomesAndExpenseForm'
 
 const phone = theme.breakpoints.down('sm')
 const tablet = theme.breakpoints.up('md')
@@ -27,14 +26,8 @@ const ButtonWrapper: any = styled(Grid)`
 `
 
 const SingleProject: React.SFC<SingleProjectChildProps> = props => {
-  const {
-    project: { client, expenses, incomes },
-    handleOpenModal,
-    handleCloseModal,
-    selectedModal,
-    handleSubmit
-  } = props
-
+  const { project, handleOpenModal, selectedModal } = props
+  const { client, expenses, incomes } = project
   return (
     <ProjectDetails container justify="center">
       <ButtonWrapper item xs={10} container justify="flex-end">
@@ -65,25 +58,11 @@ const SingleProject: React.SFC<SingleProjectChildProps> = props => {
       <hr style={{ width: '100%', margin: '2em 0' }} />
       <IncomesAndExpenseSection {...props} />
 
-      {incomes && (
-        <EditFormModal
-          title="Edit Incomes"
-          handleCloseModal={handleCloseModal('incomes')}
-          isOpen={selectedModal === 'incomes'}
-          handleConfirm={handleSubmit}
-        >
-          <EditExpenseAndIncomeForm incomes={incomes as any} />
-        </EditFormModal>
+      {selectedModal === 'incomes' && (
+        <EditExpenseAndIncomeForm incomes={incomes as any} {...props} />
       )}
-      {expenses && (
-        <EditFormModal
-          title="Edit Incomes"
-          handleCloseModal={handleCloseModal('expenses')}
-          isOpen={selectedModal === 'expenses'}
-          handleConfirm={handleSubmit}
-        >
-          <EditExpenseAndIncomeForm expenses={expenses as any} />
-        </EditFormModal>
+      {selectedModal === 'expenses' && (
+        <EditExpenseAndIncomeForm expenses={expenses as any} {...props} />
       )}
     </ProjectDetails>
   )

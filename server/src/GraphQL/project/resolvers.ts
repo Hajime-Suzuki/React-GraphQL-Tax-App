@@ -18,6 +18,7 @@ export const projectResolvers: {
   Mutation: {
     addProject: async (_, { data }, { userId }) => addProject(userId, data),
     updateProject: async (_, { projectId, data }) => {
+      console.log(projectId, data)
       const project = await updateProject(projectId, data)
       return {
         success: true,

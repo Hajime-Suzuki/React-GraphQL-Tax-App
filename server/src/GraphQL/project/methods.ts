@@ -3,11 +3,7 @@ import { removeEmptyProperty } from '../../helpers/transform'
 import { Client } from '../../Models/Client'
 import { Project } from '../../Models/Project'
 import { User } from '../../Models/User'
-import {
-  IAddProjectInput,
-  IUpdateProjectInput,
-  GetSingleProjectQueryArgs
-} from '../@types/types'
+import { IProjectInput, GetSingleProjectQueryArgs } from '../@types/types'
 import { isEmptyObject } from '../../helpers/object'
 
 export const getProjectsByUserId = async (userId: string) => {
@@ -22,10 +18,7 @@ export const getSingleProject = async (
   return project
 }
 
-export const updateProject = async (
-  projectId: string,
-  data: IUpdateProjectInput
-) => {
+export const updateProject = async (projectId: string, data: IProjectInput) => {
   console.log(data)
 
   const updatedProject = await Project.findByIdAndUpdate(
@@ -39,7 +32,7 @@ export const updateProject = async (
   return updatedProject
 }
 
-export const addProject = async (userId: string, data: IAddProjectInput) => {
+export const addProject = async (userId: string, data: IProjectInput) => {
   if (!userId) throw new AuthenticationError('you are not logged in')
   const user = await User.findById(userId)
   if (!user) throw new Error('user is not found')

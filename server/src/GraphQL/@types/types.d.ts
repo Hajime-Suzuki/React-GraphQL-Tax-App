@@ -1,8 +1,4 @@
-export interface IUpdateProjectInput {
-  status: IInvoiceStatus;
-}
-
-export interface IAddProjectInput {
+export interface IProjectInput {
   invoiceNumber?: string | null;
 
   invoiceDate?: string | null;
@@ -39,7 +35,7 @@ export interface IClientInput {
 export interface IExpenseAndIncomeInput {
   name?: string | null;
 
-  price?: number | null;
+  price?: string | null;
 
   quantity?: number | null;
 
@@ -133,7 +129,7 @@ export interface IClient {
 export interface IExpenseAndIncome {
   name: string;
 
-  price: number;
+  price: string;
 
   quantity: number;
 
@@ -143,7 +139,7 @@ export interface IExpenseAndIncome {
 export interface IExpense {
   name: string;
 
-  price: number;
+  price: string;
 
   quantity: number;
 
@@ -210,10 +206,10 @@ export interface LoginUserMutationArgs {
 export interface UpdateProjectMutationArgs {
   projectId: string;
 
-  data: IUpdateProjectInput;
+  data: IProjectInput;
 }
 export interface AddProjectMutationArgs {
-  data: IAddProjectInput;
+  data: IProjectInput;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -526,7 +522,7 @@ export namespace ExpenseAndIncomeResolvers {
   export interface Resolvers<Context = {}, TypeParent = IExpenseAndIncome> {
     name?: NameResolver<string, TypeParent, Context>;
 
-    price?: PriceResolver<number, TypeParent, Context>;
+    price?: PriceResolver<string, TypeParent, Context>;
 
     quantity?: QuantityResolver<number, TypeParent, Context>;
 
@@ -539,7 +535,7 @@ export namespace ExpenseAndIncomeResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PriceResolver<
-    R = number,
+    R = string,
     Parent = IExpenseAndIncome,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -559,7 +555,7 @@ export namespace ExpenseResolvers {
   export interface Resolvers<Context = {}, TypeParent = IExpense> {
     name?: NameResolver<string, TypeParent, Context>;
 
-    price?: PriceResolver<number, TypeParent, Context>;
+    price?: PriceResolver<string, TypeParent, Context>;
 
     quantity?: QuantityResolver<number, TypeParent, Context>;
 
@@ -576,7 +572,7 @@ export namespace ExpenseResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PriceResolver<
-    R = number,
+    R = string,
     Parent = IExpense,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -655,7 +651,7 @@ export namespace MutationResolvers {
   export interface UpdateProjectArgs {
     projectId: string;
 
-    data: IUpdateProjectInput;
+    data: IProjectInput;
   }
 
   export type AddProjectResolver<
@@ -664,7 +660,7 @@ export namespace MutationResolvers {
     Context = {}
   > = Resolver<R, Parent, Context, AddProjectArgs>;
   export interface AddProjectArgs {
-    data: IAddProjectInput;
+    data: IProjectInput;
   }
 }
 

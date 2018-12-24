@@ -1,8 +1,4 @@
-export interface UpdateProjectInput {
-  status: InvoiceStatus;
-}
-
-export interface AddProjectInput {
+export interface ProjectInput {
   invoiceNumber?: string | null;
 
   invoiceDate?: string | null;
@@ -39,7 +35,7 @@ export interface ClientInput {
 export interface ExpenseAndIncomeInput {
   name?: string | null;
 
-  price?: number | null;
+  price?: string | null;
 
   quantity?: number | null;
 
@@ -171,7 +167,7 @@ export namespace GetSingleProject {
 export namespace UpdateStatus {
   export type Variables = {
     projectId: string;
-    data: UpdateProjectInput;
+    data: ProjectInput;
   };
 
   export type Mutation = {
@@ -201,7 +197,7 @@ export namespace UpdateStatus {
 
 export namespace AddProject {
   export type Variables = {
-    data: AddProjectInput;
+    data: ProjectInput;
   };
 
   export type Mutation = {
@@ -211,6 +207,37 @@ export namespace AddProject {
   };
 
   export type AddProject = {
+    __typename?: "MutationProjectResponse";
+
+    success: boolean;
+
+    message: string | null;
+
+    project: Project | null;
+  };
+
+  export type Project = {
+    __typename?: "Project";
+
+    id: string;
+
+    status: InvoiceStatus;
+  };
+}
+
+export namespace UpdateProject {
+  export type Variables = {
+    projectId: string;
+    data: ProjectInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateProject: UpdateProject;
+  };
+
+  export type UpdateProject = {
     __typename?: "MutationProjectResponse";
 
     success: boolean;
@@ -353,7 +380,7 @@ export namespace GetSingleProject {
 }
 export namespace UpdateStatus {
   export const Document = gql`
-    mutation updateStatus($projectId: String!, $data: UpdateProjectInput!) {
+    mutation updateStatus($projectId: String!, $data: ProjectInput!) {
       updateProject(projectId: $projectId, data: $data) {
         success
         message
@@ -399,8 +426,54 @@ export namespace UpdateStatus {
 }
 export namespace AddProject {
   export const Document = gql`
-    mutation addProject($data: AddProjectInput!) {
+    mutation addProject($data: ProjectInput!) {
       addProject(data: $data) {
+        success
+        message
+        project {
+          id
+          status
+        }
+      }
+    }
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace UpdateProject {
+  export const Document = gql`
+    mutation updateProject($projectId: String!, $data: ProjectInput!) {
+      updateProject(projectId: $projectId, data: $data) {
         success
         message
         project {

@@ -8,45 +8,43 @@ import Dialog from '@material-ui/core/Dialog'
 
 interface Props {
   title: string
-  type: string
-  handleEntering: () => void
   handleCloseModal: () => void
   handleConfirm: () => void
   isOpen: boolean
 }
 
-const EditFormModal: React.SFC<Props> = props => {
-  const {
-    handleCloseModal,
-    handleConfirm,
-    isOpen,
-    handleEntering,
-    children,
-    title
-  } = props
+class EditFormModal extends React.Component<Props> {
+  render() {
+    const {
+      handleCloseModal,
+      handleConfirm,
+      isOpen,
+      children,
+      title
+    } = this.props
 
-  return (
-    <DialogWrapper
-      disableBackdropClick
-      disableEscapeKeyDown
-      maxWidth="lg"
-      fullWidth={true}
-      onEntering={handleEntering}
-      open={isOpen}
-    >
-      <DialogTitle className="title">{title}</DialogTitle>
-      <DialogContent>{children}</DialogContent>
+    return (
+      <DialogWrapper
+        disableBackdropClick
+        disableEscapeKeyDown
+        maxWidth="lg"
+        fullWidth={true}
+        open={isOpen}
+      >
+        <DialogTitle className="title">{title}</DialogTitle>
+        {<DialogContent>{children}</DialogContent>}
 
-      <DialogActions className="actions-section">
-        <Button onClick={handleCloseModal} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={handleConfirm} color="primary">
-          Ok
-        </Button>
-      </DialogActions>
-    </DialogWrapper>
-  )
+        <DialogActions className="actions-section">
+          <Button onClick={handleCloseModal} color="primary" type="submit">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirm} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </DialogWrapper>
+    )
+  }
 }
 
 const DialogWrapper: any = styled(Dialog)`

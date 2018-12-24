@@ -1,8 +1,4 @@
-export interface UpdateProjectInput {
-  status: InvoiceStatus;
-}
-
-export interface AddProjectInput {
+export interface ProjectInput {
   invoiceNumber?: string | null;
 
   invoiceDate?: string | null;
@@ -39,7 +35,7 @@ export interface ClientInput {
 export interface ExpenseAndIncomeInput {
   name?: string | null;
 
-  price?: number | null;
+  price?: string | null;
 
   quantity?: number | null;
 
@@ -210,8 +206,8 @@ export interface LoginUserMutationArgs {
 export interface UpdateProjectMutationArgs {
   projectId: string;
 
-  data: UpdateProjectInput;
+  data: ProjectInput;
 }
 export interface AddProjectMutationArgs {
-  data: AddProjectInput;
+  data: ProjectInput;
 }

@@ -17,7 +17,7 @@ export const expenseSchema = gql`
   }
   input ExpenseAndIncomeInput {
     name: String
-    price: Int
+    price: String
     quantity: Int
     taxRate: Int
   }

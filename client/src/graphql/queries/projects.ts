@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const GET_PROJECT_OVERVIEW = gql`
+const GET_PROJECT_OVERVIEW = gql`
   query getProjectOverview($userId: String!) {
     getProjectsByUserId(userId: $userId) {
       id
@@ -16,7 +16,7 @@ export const GET_PROJECT_OVERVIEW = gql`
   }
 `
 
-export const GET_SINGLE_PROJECT = gql`
+const GET_SINGLE_PROJECT = gql`
   query getSingleProject($id: String!) {
     getSingleProject(projectId: $id) {
       id
@@ -49,8 +49,8 @@ export const GET_SINGLE_PROJECT = gql`
   }
 `
 
-export const UPDATE_STATUS = gql`
-  mutation updateStatus($projectId: String!, $data: UpdateProjectInput!) {
+const UPDATE_STATUS = gql`
+  mutation updateStatus($projectId: String!, $data: ProjectInput!) {
     updateProject(projectId: $projectId, data: $data) {
       success
       message
@@ -62,8 +62,8 @@ export const UPDATE_STATUS = gql`
   }
 `
 
-export const ADD_PROJECT = gql`
-  mutation addProject($data: AddProjectInput!) {
+const ADD_PROJECT = gql`
+  mutation addProject($data: ProjectInput!) {
     addProject(data: $data) {
       success
       message
@@ -74,3 +74,24 @@ export const ADD_PROJECT = gql`
     }
   }
 `
+
+const UPDATE_PROJECT = gql`
+  mutation updateProject($projectId: String!, $data: ProjectInput!) {
+    updateProject(projectId: $projectId, data: $data) {
+      success
+      message
+      project {
+        id
+        status
+      }
+    }
+  }
+`
+
+export const projectQueries = {
+  GET_PROJECT_OVERVIEW,
+  GET_SINGLE_PROJECT,
+  UPDATE_STATUS,
+  ADD_PROJECT,
+  UPDATE_PROJECT
+}

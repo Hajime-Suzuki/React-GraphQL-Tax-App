@@ -2,16 +2,14 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { Form, FormikProps } from 'formik'
 import * as React from 'react'
-import { AddProjectInput } from 'src/graphql/components/projects'
+
 import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
 import { IncomesAndExpenseFields } from '../../helper/IncomesAndExpenseFields'
 import { renderFields } from '../../helper/renderFields'
 import { GenerateFieldSettings } from '../../helper/genrateFieldSettings'
 
-class InvoiceInfoForm extends React.PureComponent<
-  FormikProps<AddProjectInput>
-> {
+class InvoiceInfoForm extends React.PureComponent<FormikProps<ProjectInput>> {
   render() {
     const { isSubmitting, handleChange, values } = this.props
     return (

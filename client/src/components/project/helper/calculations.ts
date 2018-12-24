@@ -1,4 +1,4 @@
-import { Currency } from 'src/libs/currency'
+import { Currency } from '../../../libs/currency'
 
 const getSubtotal = (items: { price: string; quantity: number }[]) => {
   const total = items.reduce(

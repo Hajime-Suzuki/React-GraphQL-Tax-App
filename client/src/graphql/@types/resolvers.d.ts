@@ -1,8 +1,4 @@
-export interface UpdateProjectInput {
-  status: InvoiceStatus;
-}
-
-export interface AddProjectInput {
+export interface ProjectInput {
   invoiceNumber?: string | null;
 
   invoiceDate?: string | null;
@@ -39,7 +35,7 @@ export interface ClientInput {
 export interface ExpenseAndIncomeInput {
   name?: string | null;
 
-  price?: number | null;
+  price?: string | null;
 
   quantity?: number | null;
 
@@ -218,10 +214,10 @@ export interface LoginUserMutationArgs {
 export interface UpdateProjectMutationArgs {
   projectId: string;
 
-  data: UpdateProjectInput;
+  data: ProjectInput;
 }
 export interface AddProjectMutationArgs {
-  data: AddProjectInput;
+  data: ProjectInput;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -678,7 +674,7 @@ export namespace MutationResolvers {
   export interface UpdateProjectArgs {
     projectId: string;
 
-    data: UpdateProjectInput;
+    data: ProjectInput;
   }
 
   export type AddProjectResolver<
@@ -687,7 +683,7 @@ export namespace MutationResolvers {
     Context = {}
   > = Resolver<R, Parent, Context, AddProjectArgs>;
   export interface AddProjectArgs {
-    data: AddProjectInput;
+    data: ProjectInput;
   }
 
   export type LogoutResolver<
