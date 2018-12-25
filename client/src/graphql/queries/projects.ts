@@ -7,11 +7,11 @@ const GET_PROJECT_OVERVIEW = gql`
       name
       date
       invoiceDate
+      status
       incomes {
         price
         quantity
       }
-      status
     }
   }
 `
@@ -67,7 +67,29 @@ const ADD_PROJECT = gql`
       message
       project {
         id
+        invoiceNumber
+        invoiceDate
+        name
+        date
         status
+        client {
+          firstName
+          lastName
+          email
+          phone
+        }
+        incomes {
+          name
+          price
+          quantity
+          taxRate
+        }
+        expenses {
+          name
+          price
+          quantity
+          taxRate
+        }
       }
     }
   }

@@ -127,27 +127,25 @@ export interface Client {
 }
 
 export interface ExpenseAndIncome {
-  name: string;
+  name?: string | null;
 
-  price: string;
+  price?: string | null;
 
-  quantity: number;
+  quantity?: number | null;
 
-  taxRate: number;
+  taxRate?: number | null;
 }
 
 export interface Expense {
-  name: string;
+  name?: string | null;
 
-  price: string;
+  price?: string | null;
 
-  quantity: number;
+  quantity?: number | null;
 
-  taxRate: number;
+  taxRate?: number | null;
 
   date?: string | null;
-
-  user?: User | null;
 }
 
 export interface Mutation {

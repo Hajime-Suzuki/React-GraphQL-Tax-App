@@ -76,17 +76,17 @@ export namespace GetProjectOverview {
 
     invoiceDate: string | null;
 
-    incomes: Incomes[] | null;
-
     status: InvoiceStatus;
+
+    incomes: Incomes[] | null;
   };
 
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
-    price: string;
+    price: string | null;
 
-    quantity: number;
+    quantity: number | null;
   };
 }
 
@@ -138,25 +138,25 @@ export namespace GetSingleProject {
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
-    name: string;
+    name: string | null;
 
-    price: string;
+    price: string | null;
 
-    quantity: number;
+    quantity: number | null;
 
-    taxRate: number;
+    taxRate: number | null;
   };
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
-    name: string;
+    name: string | null;
 
-    price: string;
+    price: string | null;
 
-    quantity: number;
+    quantity: number | null;
 
-    taxRate: number;
+    taxRate: number | null;
   };
 }
 
@@ -217,7 +217,57 @@ export namespace AddProject {
 
     id: string;
 
+    invoiceNumber: string;
+
+    invoiceDate: string | null;
+
+    name: string;
+
+    date: Date | null;
+
     status: InvoiceStatus;
+
+    client: Client | null;
+
+    incomes: Incomes[] | null;
+
+    expenses: Expenses[] | null;
+  };
+
+  export type Client = {
+    __typename?: "Client";
+
+    firstName: string | null;
+
+    lastName: string | null;
+
+    email: string | null;
+
+    phone: string | null;
+  };
+
+  export type Incomes = {
+    __typename?: "ExpenseAndIncome";
+
+    name: string | null;
+
+    price: string | null;
+
+    quantity: number | null;
+
+    taxRate: number | null;
+  };
+
+  export type Expenses = {
+    __typename?: "ExpenseAndIncome";
+
+    name: string | null;
+
+    price: string | null;
+
+    quantity: number | null;
+
+    taxRate: number | null;
   };
 }
 
@@ -256,25 +306,25 @@ export namespace UpdateIncomesAndExpenses {
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
-    name: string;
+    name: string | null;
 
-    price: string;
+    price: string | null;
 
-    quantity: number;
+    quantity: number | null;
 
-    taxRate: number;
+    taxRate: number | null;
   };
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
-    name: string;
+    name: string | null;
 
-    price: string;
+    price: string | null;
 
-    quantity: number;
+    quantity: number | null;
 
-    taxRate: number;
+    taxRate: number | null;
   };
 }
 
@@ -348,11 +398,11 @@ export namespace GetProjectOverview {
         name
         date
         invoiceDate
+        status
         incomes {
           price
           quantity
         }
-        status
       }
     }
   `;
@@ -505,7 +555,29 @@ export namespace AddProject {
         message
         project {
           id
+          invoiceNumber
+          invoiceDate
+          name
+          date
           status
+          client {
+            firstName
+            lastName
+            email
+            phone
+          }
+          incomes {
+            name
+            price
+            quantity
+            taxRate
+          }
+          expenses {
+            name
+            price
+            quantity
+            taxRate
+          }
         }
       }
     }

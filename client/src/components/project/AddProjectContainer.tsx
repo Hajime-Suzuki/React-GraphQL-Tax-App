@@ -3,6 +3,7 @@ import * as React from 'react'
 import { AddProject, ProjectInput } from 'src/graphql/components/projects'
 import InvoiceInfoForm from './formConponents/InvoiceInfoForm'
 import { addProjectSchema } from './helper/addProjectValidationSchema'
+import { ProjectActions } from 'src/graphql/actions/projects'
 
 export const addProjectInitialValues = {
   invoiceNumber: '',
@@ -31,7 +32,7 @@ export const addProjectInitialValues = {
 class AddProjectContainer extends React.PureComponent {
   render = () => {
     return (
-      <AddProject.Component>
+      <AddProject.Component onCompleted={ProjectActions.addNewProjectToList}>
         {(addProject, { data, error, loading }) => {
           return (
             <Formik
@@ -48,7 +49,7 @@ class AddProjectContainer extends React.PureComponent {
               }}
               validateOnChange={false}
               initialValues={addProjectInitialValues}
-              validationSchema={addProjectSchema}
+              // validationSchema={addProjectSchema}
               render={(formProps: FormikProps<ProjectInput>) => (
                 <InvoiceInfoForm
                   error={error && 'something went wrong'}

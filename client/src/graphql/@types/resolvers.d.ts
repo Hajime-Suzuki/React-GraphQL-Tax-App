@@ -131,27 +131,25 @@ export interface Client {
 }
 
 export interface ExpenseAndIncome {
-  name: string;
+  name?: string | null;
 
-  price: string;
+  price?: string | null;
 
-  quantity: number;
+  quantity?: number | null;
 
-  taxRate: number;
+  taxRate?: number | null;
 }
 
 export interface Expense {
-  name: string;
+  name?: string | null;
 
-  price: string;
+  price?: string | null;
 
-  quantity: number;
+  quantity?: number | null;
 
-  taxRate: number;
+  taxRate?: number | null;
 
   date?: string | null;
-
-  user?: User | null;
 }
 
 export interface Mutation {
@@ -535,32 +533,32 @@ export namespace ClientResolvers {
 
 export namespace ExpenseAndIncomeResolvers {
   export interface Resolvers<Context = {}, TypeParent = ExpenseAndIncome> {
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string | null, TypeParent, Context>;
 
-    price?: PriceResolver<string, TypeParent, Context>;
+    price?: PriceResolver<string | null, TypeParent, Context>;
 
-    quantity?: QuantityResolver<number, TypeParent, Context>;
+    quantity?: QuantityResolver<number | null, TypeParent, Context>;
 
-    taxRate?: TaxRateResolver<number, TypeParent, Context>;
+    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
   }
 
   export type NameResolver<
-    R = string,
+    R = string | null,
     Parent = ExpenseAndIncome,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PriceResolver<
-    R = string,
+    R = string | null,
     Parent = ExpenseAndIncome,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type QuantityResolver<
-    R = number,
+    R = number | null,
     Parent = ExpenseAndIncome,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type TaxRateResolver<
-    R = number,
+    R = number | null,
     Parent = ExpenseAndIncome,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -568,46 +566,39 @@ export namespace ExpenseAndIncomeResolvers {
 
 export namespace ExpenseResolvers {
   export interface Resolvers<Context = {}, TypeParent = Expense> {
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string | null, TypeParent, Context>;
 
-    price?: PriceResolver<string, TypeParent, Context>;
+    price?: PriceResolver<string | null, TypeParent, Context>;
 
-    quantity?: QuantityResolver<number, TypeParent, Context>;
+    quantity?: QuantityResolver<number | null, TypeParent, Context>;
 
-    taxRate?: TaxRateResolver<number, TypeParent, Context>;
+    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
 
     date?: DateResolver<string | null, TypeParent, Context>;
-
-    user?: UserResolver<User | null, TypeParent, Context>;
   }
 
   export type NameResolver<
-    R = string,
+    R = string | null,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PriceResolver<
-    R = string,
+    R = string | null,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type QuantityResolver<
-    R = number,
+    R = number | null,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type TaxRateResolver<
-    R = number,
+    R = number | null,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type DateResolver<
     R = string | null,
-    Parent = Expense,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type UserResolver<
-    R = User | null,
     Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;

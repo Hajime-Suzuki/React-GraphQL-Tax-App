@@ -32,15 +32,20 @@ export const updateProject = async (projectId: string, data: IProjectInput) => {
   return updatedProject
 }
 
-export const addProject = async (userId: string, data: IProjectInput) => {
+export const addProject = async (
+  userId: string,
+  { client: clientInput, ...data }: IProjectInput
+) => {
   if (!userId) throw new AuthenticationError('you are not logged in')
   const user = await User.findById(userId)
   if (!user) throw new Error('user is not found')
 
   const newProject = new Project({ ...data, user: user.id })
-  const clientData = removeEmptyProperty<typeof data.client>(data.client)
+
+  const clientData = removeEmptyProperty<typeof clientInput>(clientInput)
 
   if (!isEmptyObject(clientData)) {
+    // TODO: MORE PRECISE
     const clientDataWithUser = { ...clientData, user: userId }
     const client = await Client.findOne(clientDataWithUser).then(
       existingClient => {
@@ -49,6 +54,7 @@ export const addProject = async (userId: string, data: IProjectInput) => {
         return existingClient
       }
     )
+    console.log({ client })
     newProject.client = client
   }
 
@@ -58,7 +64,7 @@ export const addProject = async (userId: string, data: IProjectInput) => {
     { _id: user.id },
     { $push: { projects: savedProject } }
   )
-
+  console.log(savedProject)
   return {
     success: true,
     message: 'project has been added',

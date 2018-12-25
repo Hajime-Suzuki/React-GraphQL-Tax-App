@@ -1,8 +1,6 @@
 import { client } from '../client'
 import { JWT } from 'src/libs/jwt'
 
-// mutation vs action
-
 export const logout = () => {
   localStorage.removeItem('jwt')
   client.writeData({ data: { userId: null } })
