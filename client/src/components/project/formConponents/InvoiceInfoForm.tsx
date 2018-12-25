@@ -27,6 +27,7 @@ class InvoiceInfoForm extends React.Component<
       loading,
       successMessage
     } = this.props
+    const { incomes, expenses } = values
     return (
       <StyledForm>
         <div className="form-section">
@@ -45,26 +46,30 @@ class InvoiceInfoForm extends React.Component<
             <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
           ))}
         </div>
-        <div className="form-section">
-          <Typography variant="h5" className="title">
-            Incomes
-          </Typography>
-          <IncomesAndExpenseFields
-            type="incomes"
-            handleChange={handleChange}
-            values={values}
-          />
-        </div>
-        <div className="form-section">
-          <Typography variant="h5" className="title">
-            Expenses
-          </Typography>
-          <IncomesAndExpenseFields
-            type="expenses"
-            handleChange={handleChange}
-            values={values}
-          />
-        </div>
+        {incomes && (
+          <div className="form-section">
+            <Typography variant="h5" className="title">
+              Incomes
+            </Typography>
+            <IncomesAndExpenseFields
+              type="incomes"
+              handleChange={handleChange}
+              values={values}
+            />
+          </div>
+        )}
+        {expenses && (
+          <div className="form-section">
+            <Typography variant="h5" className="title">
+              Expenses
+            </Typography>
+            <IncomesAndExpenseFields
+              type="expenses"
+              handleChange={handleChange}
+              values={values}
+            />
+          </div>
+        )}
         {error && (
           <Typography color="error" variant="h6" gutterBottom>
             {error}

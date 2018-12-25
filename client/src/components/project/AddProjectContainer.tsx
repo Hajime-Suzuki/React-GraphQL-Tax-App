@@ -10,14 +10,7 @@ export const addProjectInitialValues = {
   invoiceDate: '',
   name: '',
   projectDate: '',
-  incomes: [
-    {
-      name: '',
-      price: '0',
-      quantity: 0,
-      taxRate: 21
-    }
-  ],
+  incomes: [],
   expenses: [],
   client: {
     firstName: '',
@@ -49,7 +42,7 @@ class AddProjectContainer extends React.PureComponent {
               }}
               validateOnChange={false}
               initialValues={addProjectInitialValues}
-              // validationSchema={addProjectSchema}
+              validationSchema={addProjectSchema}
               render={(formProps: FormikProps<ProjectInput>) => (
                 <InvoiceInfoForm
                   error={error && 'something went wrong'}

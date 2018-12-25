@@ -59,7 +59,7 @@ const addNewProjectToList = ({ addProject }: AddProject.Mutation) => {
   if (!projects || !queryOption) return
 
   const newProject = addProject!.project!
-  writeData(queryOption, projects!.concat([newProject]))
+  writeData(queryOption, [...projects!, newProject])
 }
 
 export const ProjectActions = {
