@@ -162,8 +162,6 @@ export interface Mutation {
   updateProject: MutationProjectResponse;
 
   addProject?: MutationProjectResponse | null;
-
-  logout?: string | null;
 }
 
 export interface RegisterResponse {
@@ -632,8 +630,6 @@ export namespace MutationResolvers {
       TypeParent,
       Context
     >;
-
-    logout?: LogoutResolver<string | null, TypeParent, Context>;
   }
 
   export type RegisterUserResolver<
@@ -681,12 +677,6 @@ export namespace MutationResolvers {
   export interface AddProjectArgs {
     data: ProjectInput;
   }
-
-  export type LogoutResolver<
-    R = string | null,
-    Parent = {},
-    Context = {}
-  > = Resolver<R, Parent, Context>;
 }
 
 export namespace RegisterResponseResolvers {

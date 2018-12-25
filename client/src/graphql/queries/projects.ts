@@ -24,8 +24,6 @@ const GET_SINGLE_PROJECT = gql`
       invoiceDate
       name
       date
-      streetAddress
-      city
       status
       client {
         firstName
@@ -99,10 +97,34 @@ const UPDATE_INCOMES_EXPENSES = gql`
   }
 `
 
+const UPDATE_BASIC_INFO = gql`
+  mutation updateBasicInfo($projectId: String!, $data: ProjectInput!) {
+    updateProject(projectId: $projectId, data: $data) {
+      success
+      message
+      project {
+        id
+        invoiceNumber
+        invoiceDate
+        name
+        date
+        status
+        client {
+          firstName
+          lastName
+          email
+          phone
+        }
+      }
+    }
+  }
+`
+
 export const projectQueries = {
   GET_PROJECT_OVERVIEW,
   GET_SINGLE_PROJECT,
   UPDATE_STATUS,
   ADD_PROJECT,
-  UPDATE_INCOMES_EXPENSES
+  UPDATE_INCOMES_EXPENSES,
+  UPDATE_BASIC_INFO
 }

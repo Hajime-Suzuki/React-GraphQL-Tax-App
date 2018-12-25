@@ -114,10 +114,6 @@ export namespace GetSingleProject {
 
     date: Date | null;
 
-    streetAddress: string | null;
-
-    city: string | null;
-
     status: InvoiceStatus;
 
     client: Client | null;
@@ -282,6 +278,59 @@ export namespace UpdateIncomesAndExpenses {
   };
 }
 
+export namespace UpdateBasicInfo {
+  export type Variables = {
+    projectId: string;
+    data: ProjectInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateProject: UpdateProject;
+  };
+
+  export type UpdateProject = {
+    __typename?: "MutationProjectResponse";
+
+    success: boolean;
+
+    message: string | null;
+
+    project: Project | null;
+  };
+
+  export type Project = {
+    __typename?: "Project";
+
+    id: string;
+
+    invoiceNumber: string;
+
+    invoiceDate: string | null;
+
+    name: string;
+
+    date: Date | null;
+
+    status: InvoiceStatus;
+
+    client: Client | null;
+  };
+
+  export type Client = {
+    __typename?: "Client";
+
+    firstName: string | null;
+
+    lastName: string | null;
+
+    email: string | null;
+
+    phone: string | null;
+  };
+}
+
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 
@@ -348,8 +397,6 @@ export namespace GetSingleProject {
         invoiceDate
         name
         date
-        streetAddress
-        city
         status
         client {
           firstName
@@ -518,6 +565,62 @@ export namespace UpdateIncomesAndExpenses {
             price
             quantity
             taxRate
+          }
+        }
+      }
+    }
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace UpdateBasicInfo {
+  export const Document = gql`
+    mutation updateBasicInfo($projectId: String!, $data: ProjectInput!) {
+      updateProject(projectId: $projectId, data: $data) {
+        success
+        message
+        project {
+          id
+          invoiceNumber
+          invoiceDate
+          name
+          date
+          status
+          client {
+            firstName
+            lastName
+            email
+            phone
           }
         }
       }

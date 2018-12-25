@@ -8,13 +8,10 @@ const dummyTypes = gql`
 `
 
 export const typeDefs = gql`
-  ${dummyTypes}
+  # ${dummyTypes}
   type Query {
     token: String!
     userId: String
-  }
-  type Mutation {
-    logout: String
   }
 `
 

@@ -13,7 +13,7 @@ import {
 import styled from 'styled-components'
 import { routes } from '../../routes/constants'
 import { Styles } from '../../styles/sharedStyles'
-import { StatusDropdown } from './formConponents/StatusDropDown'
+import { EditStatusDropdown } from './formConponents/edit/EditStatusDropDown'
 import { Calculations } from './helper/calculations'
 
 const StyledPaper: any = styled(Paper)`
@@ -72,7 +72,7 @@ const ProjectsList: React.SFC<Props> = props => {
                 <TableCell>
                   <UpdateStatus.Component>
                     {(update, data) => (
-                      <StatusDropdown
+                      <EditStatusDropdown
                         status={p.status}
                         projectId={p.id}
                         onSubmit={update}

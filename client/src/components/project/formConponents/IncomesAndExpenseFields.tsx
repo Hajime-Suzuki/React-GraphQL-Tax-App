@@ -3,16 +3,17 @@ import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
 import { FieldArray } from 'formik'
 import * as React from 'react'
-import { AddProjectInput } from 'src/graphql/@types/types'
+
 import { StatusField } from 'src/libs/forms/renderDropdown'
 import { addProjectInitialValues } from '../AddProjectContainer'
-import { GenerateFieldSettings } from './genrateFieldSettings'
+import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
 import { renderFields } from './renderFields'
+import { ProjectInput } from 'src/graphql/components/projects'
 
 interface IncomesAndExpenseFieldsProps {
   type: 'incomes' | 'expenses'
   handleChange: (e: React.ChangeEvent<any>) => void
-  values: AddProjectInput
+  values: ProjectInput
 }
 export const IncomesAndExpenseFields: React.SFC<
   IncomesAndExpenseFieldsProps

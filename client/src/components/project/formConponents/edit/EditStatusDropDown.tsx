@@ -5,7 +5,7 @@ import * as React from 'react'
 import { MutationFn, MutationResult } from 'react-apollo'
 import { InvoiceStatus } from 'src/graphql/@types/types'
 import { UpdateStatus } from 'src/graphql/components/projects'
-import { LoadingIcon } from '../../UI/LoadingIcon'
+import { LoadingIcon } from '../../../UI/LoadingIcon'
 
 interface DropdownStatusProps {
   status: InvoiceStatus
@@ -18,7 +18,7 @@ interface StatusDropDownProps {
   data?: MutationResult<UpdateStatus.Mutation>
 }
 
-export const StatusDropdown: React.SFC<
+export const EditStatusDropdown: React.SFC<
   DropdownStatusProps & OwnProps & StatusDropDownProps
 > = props => {
   if (props.data && props.data.loading) return <LoadingIcon size={25} />

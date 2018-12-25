@@ -7,10 +7,11 @@ import format from 'date-fns/format'
 import * as React from 'react'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
-import ExpenseIncomeTable from './expenseIncomeTable/ExpenseIncomeTable'
-import EditExpenseAndIncomeForm from './formConponents/incomesAndExpensesForm/EditIncomesAndExpenseForm'
+import ExpenseIncomeTable from './helper/ExpenseIncomeTable'
+import EditExpenseAndIncomeForm from './formConponents/edit/EditIncomesAndExpenseForm'
 import { Calculations } from './helper/calculations'
 import { SingleProjectChildProps } from './SingleProjectContainer'
+import EditBasicInfoFormAndClient from './formConponents/edit/EditBasicInfoForm'
 
 const phone = theme.breakpoints.down('sm')
 const tablet = theme.breakpoints.up('md')
@@ -27,14 +28,14 @@ const ButtonWrapper: any = styled(Grid)`
 
 const SingleProject: React.SFC<SingleProjectChildProps> = props => {
   const { project, handleOpenModal, selectedModal } = props
-  const { client, expenses, incomes } = project
+  const { client, expenses, incomes, ...basic } = project
   return (
     <ProjectDetails container justify="center">
       <ButtonWrapper item xs={10} container justify="flex-end">
         <Button
           variant="outlined"
           color="primary"
-          onClick={handleOpenModal('base')}
+          onClick={handleOpenModal('basic')}
         >
           Edit
         </Button>
@@ -63,6 +64,9 @@ const SingleProject: React.SFC<SingleProjectChildProps> = props => {
       )}
       {selectedModal === 'expenses' && (
         <EditExpenseAndIncomeForm expenses={expenses as any} {...props} />
+      )}
+      {selectedModal === 'basic' && (
+        <EditBasicInfoFormAndClient basic={basic} client={client} {...props} />
       )}
     </ProjectDetails>
   )

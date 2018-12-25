@@ -1,24 +1,20 @@
+import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
+import { withRouter } from 'react-router'
 import {
   ExpenseAndIncomeInput,
-  ProjectInput,
   UpdateIncomesAndExpenses
 } from 'src/graphql/components/projects'
-import styled from 'styled-components'
-import { IncomesAndExpenseFields } from '../../helper/IncomesAndExpenseFields'
-import { StyledForm } from '../invoiceForm/InvoiceInfoForm'
-import { SingleProjectChildProps } from '../../SingleProjectContainer'
-import { Formik, FormikProps } from 'formik'
-import EditFormModal from '../../modal/EditFormModal'
-import { AddProjectInput } from 'src/graphql/@types/clientTypes'
-import { withRouter } from 'react-router'
 import { IRouterComponentProps } from 'src/routes/types'
+import styled from 'styled-components'
+import { IncomesAndExpenseFields } from '../IncomesAndExpenseFields'
+import EditFormModal from '../../modal/EditFormModal'
+import { SingleProjectChildProps } from '../../SingleProjectContainer'
+import { StyledForm } from '../InvoiceInfoForm'
 
-// price from server is String, while price for forms is number.
 interface Props {
   incomes?: ExpenseAndIncomeInput[]
   expenses?: ExpenseAndIncomeInput[]
-  // handleSubmit: SingleProjectChildProps['handleSubmit']
   selectedModal: SingleProjectChildProps['selectedModal']
   handleCloseModal: SingleProjectChildProps['handleCloseModal']
 }
@@ -69,7 +65,9 @@ class EditExpenseAndIncomeForm extends React.Component<
               }: FormikProps<typeof initialValues>) => {
                 return (
                   <EditFormModal
-                    title="Edit Incomes"
+                    title={
+                      type === 'incomes' ? 'Edit Incomes' : 'Edit Expenses'
+                    }
                     isOpen={selectedModal === type}
                     handleCloseModal={handleCloseModal}
                     handleConfirm={handleSubmit}

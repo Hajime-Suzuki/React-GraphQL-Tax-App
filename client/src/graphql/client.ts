@@ -1,6 +1,6 @@
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-client'
-import { ApolloLink, Operation } from 'apollo-link'
+import { ApolloLink } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
@@ -28,10 +28,9 @@ const removeTypenameLink = new ApolloLink((operation, forward) => {
   if (Object.keys(operation.variables).length) {
     operation.variables = JSON.parse(
       JSON.stringify(operation.variables),
-      (key, value) => (key === '__typename' ? undefined : value)
+      (key, value) => (key === '__typename' || value === '' ? undefined : value)
     )
   }
-
   return forward!(operation)
 })
 

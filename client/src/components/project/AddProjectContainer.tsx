@@ -1,7 +1,7 @@
 import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
-import { AddProject, AddProjectInput } from 'src/graphql/components/projects'
-import InvoiceInfoForm from './formConponents/invoiceForm/InvoiceInfoForm'
+import { AddProject, ProjectInput } from 'src/graphql/components/projects'
+import InvoiceInfoForm from './formConponents/InvoiceInfoForm'
 
 export const addProjectInitialValues = {
   invoiceNumber: '',
@@ -11,7 +11,7 @@ export const addProjectInitialValues = {
   incomes: [
     {
       name: '',
-      price: 0,
+      price: '0',
       quantity: 0,
       taxRate: 21
     }
@@ -29,8 +29,8 @@ export const addProjectInitialValues = {
 
 class AddProjectContainer extends React.PureComponent<AddProject.Props<{}>> {
   handleSubmit = async (
-    values: AddProjectInput,
-    formikActions: FormikActions<AddProjectInput>
+    values: ProjectInput,
+    formikActions: FormikActions<ProjectInput>
   ) => {
     const { mutate: addProject } = this.props
     await addProject!({
@@ -47,7 +47,7 @@ class AddProjectContainer extends React.PureComponent<AddProject.Props<{}>> {
         onSubmit={this.handleSubmit}
         initialValues={addProjectInitialValues}
         // validationSchema={addProjectSchema}
-        render={(formProps: FormikProps<AddProjectInput>) => {
+        render={(formProps: FormikProps<ProjectInput>) => {
           console.log({ formProps })
           return <InvoiceInfoForm {...formProps} />
         }}

@@ -5,9 +5,10 @@ import * as React from 'react'
 
 import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
-import { IncomesAndExpenseFields } from '../../helper/IncomesAndExpenseFields'
-import { renderFields } from '../../helper/renderFields'
-import { GenerateFieldSettings } from '../../helper/genrateFieldSettings'
+import { IncomesAndExpenseFields } from './IncomesAndExpenseFields'
+import { renderFields } from './renderFields'
+import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
+import { ProjectInput } from 'src/graphql/components/projects'
 
 class InvoiceInfoForm extends React.PureComponent<FormikProps<ProjectInput>> {
   render() {
