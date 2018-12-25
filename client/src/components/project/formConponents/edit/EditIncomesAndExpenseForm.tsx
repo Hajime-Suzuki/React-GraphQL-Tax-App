@@ -7,10 +7,10 @@ import {
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
 import styled from 'styled-components'
-import { IncomesAndExpenseFields } from '../IncomesAndExpenseFields'
-import EditFormModal from '../../modal/EditFormModal'
 import { SingleProjectChildProps } from '../../SingleProjectContainer'
+import { IncomesAndExpenseFields } from '../IncomesAndExpenseFields'
 import { StyledForm } from '../InvoiceInfoForm'
+import EditFormModal from '../modal/EditFormModal'
 
 interface Props {
   incomes?: ExpenseAndIncomeInput[]

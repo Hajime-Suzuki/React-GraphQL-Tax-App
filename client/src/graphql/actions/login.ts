@@ -1,5 +1,5 @@
-import { decodeJwt, storeJwt } from 'src/libs/jwt'
 import { client } from '../client'
+import { JWT } from 'src/libs/jwt'
 
 // mutation vs action
 
@@ -9,9 +9,9 @@ export const logout = () => {
 }
 
 export const onLogin = (token: string) => {
-  storeJwt(token)
+  JWT.storeJwt(token)
   client.writeData({
-    data: { userId: decodeJwt(token).id }
+    data: { userId: JWT.decodeJwt(token).id }
   })
 }
 

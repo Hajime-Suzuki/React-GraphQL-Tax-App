@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Field } from 'formik'
-import { renderFormikTextField } from 'src/libs/forms/renderTextField'
+import { renderFormikTextField } from './renderTextField'
 
 interface Field {
   name: string

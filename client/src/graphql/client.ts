@@ -4,9 +4,9 @@ import { ApolloLink } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
-import { getJwt, USER_ID } from 'src/libs/jwt'
 import { resolvers } from './resolvers'
 import typeDefs from './typeDefs'
+import { JWT } from 'src/libs/jwt'
 
 const cache = new InMemoryCache()
 
@@ -15,7 +15,7 @@ const httpLink = new HttpLink({
 })
 
 const authLink = setContext((_, { headers }) => {
-  const token = getJwt()
+  const token = JWT.getJwt()
   return {
     headers: {
       ...headers,
@@ -35,8 +35,7 @@ const removeTypenameLink = new ApolloLink((operation, forward) => {
 })
 
 export const defaults = {
-  userId: USER_ID || null,
-  editProjectMutationError: null
+  userId: JWT.userId
 }
 
 const stateLink = withClientState({

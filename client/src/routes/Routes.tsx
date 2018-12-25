@@ -5,7 +5,6 @@ import AddProjectContainer from 'src/components/project/AddProjectContainer'
 import ProjectsListContainer from 'src/components/project/ProjectsListContainer'
 import SingleProjectContainer from 'src/components/project/SingleProjectContainer'
 import NavBarContainer from 'src/components/UI/NavBar/NavBarContainer'
-import DashBoardComponent from '../components/dashBoard/DashBoardComponent'
 import TopPage from '../components/topPage/TopPage'
 import { Styles } from '../styles/sharedStyles'
 import { routes } from './constants'
@@ -22,7 +21,7 @@ class Routes extends React.Component {
             <PrivateRoutes
               path={routes.dashboard}
               exact
-              component={DashBoardComponent}
+              component={() => <h1>Dashboard</h1>}
             />
             <PrivateRoutes
               path={routes.projects}

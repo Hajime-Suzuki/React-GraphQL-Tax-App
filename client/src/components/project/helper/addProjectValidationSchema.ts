@@ -32,7 +32,7 @@ const expenseShape = yup.object().shape({
 
 const clientShape = yup.object().shape({
   firstName: yup.string().required(requiredMessage),
-  lastName: yup.string().required(),
+  lastName: yup.string().required(requiredMessage),
   email: yup.string().email(emailMessage),
   phone: yup.string(),
   address: yup.string(),

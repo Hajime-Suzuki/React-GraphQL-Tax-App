@@ -4,10 +4,10 @@ import InputLabel from '@material-ui/core/InputLabel'
 import { FieldArray } from 'formik'
 import * as React from 'react'
 
-import { StatusField } from 'src/libs/forms/renderDropdown'
+import { StatusField } from 'src/components/project/formConponents/renderFields/renderDropdown'
 import { addProjectInitialValues } from '../AddProjectContainer'
 import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
-import { renderFields } from './renderFields'
+import { renderFields } from './renderFields/renderFields'
 import { ProjectInput } from 'src/graphql/components/projects'
 
 interface IncomesAndExpenseFieldsProps {

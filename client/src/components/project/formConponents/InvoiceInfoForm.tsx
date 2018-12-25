@@ -2,17 +2,31 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { Form, FormikProps } from 'formik'
 import * as React from 'react'
-
 import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
 import { IncomesAndExpenseFields } from './IncomesAndExpenseFields'
-import { renderFields } from './renderFields'
+import { renderFields } from './renderFields/renderFields'
 import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
 import { ProjectInput } from 'src/graphql/components/projects'
 
-class InvoiceInfoForm extends React.PureComponent<FormikProps<ProjectInput>> {
+interface OwnProps {
+  error: string
+  loading: boolean
+  successMessage?: string | null
+}
+
+class InvoiceInfoForm extends React.Component<
+  FormikProps<ProjectInput> & OwnProps
+> {
   render() {
-    const { isSubmitting, handleChange, values } = this.props
+    const {
+      isSubmitting,
+      handleChange,
+      values,
+      error,
+      loading,
+      successMessage
+    } = this.props
     return (
       <StyledForm>
         <div className="form-section">
@@ -23,7 +37,6 @@ class InvoiceInfoForm extends React.PureComponent<FormikProps<ProjectInput>> {
             <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
           ))}
         </div>
-
         <div className="form-section">
           <Typography variant="h5" className="title">
             Client Info
@@ -32,7 +45,6 @@ class InvoiceInfoForm extends React.PureComponent<FormikProps<ProjectInput>> {
             <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
           ))}
         </div>
-
         <div className="form-section">
           <Typography variant="h5" className="title">
             Incomes
@@ -43,7 +55,6 @@ class InvoiceInfoForm extends React.PureComponent<FormikProps<ProjectInput>> {
             values={values}
           />
         </div>
-
         <div className="form-section">
           <Typography variant="h5" className="title">
             Expenses
@@ -54,13 +65,22 @@ class InvoiceInfoForm extends React.PureComponent<FormikProps<ProjectInput>> {
             values={values}
           />
         </div>
-
+        {error && (
+          <Typography color="error" variant="h6" gutterBottom>
+            {error}
+          </Typography>
+        )}
+        {successMessage && (
+          <Typography color="primary" variant="h6" gutterBottom>
+            {successMessage}
+          </Typography>
+        )}
         <div className="form-section">
           <Button
             type="submit"
             variant="contained"
             color="primary"
-            disabled={isSubmitting}
+            disabled={isSubmitting && loading}
           >
             Submit
           </Button>

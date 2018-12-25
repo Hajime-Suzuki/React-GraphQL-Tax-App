@@ -8,7 +8,7 @@ import { SingleProjectChildProps } from '../../SingleProjectContainer'
 import { StyledForm } from '../InvoiceInfoForm'
 import Typography from '@material-ui/core/Typography'
 import { GenerateFieldSettings } from '../../helper/genrateFieldSettings'
-import { renderFields } from '../renderFields'
+import { renderFields } from '../renderFields/renderFields'
 import EditFormModal from '../modal/EditFormModal'
 
 interface Props {

@@ -2,6 +2,7 @@ import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
 import { AddProject, ProjectInput } from 'src/graphql/components/projects'
 import InvoiceInfoForm from './formConponents/InvoiceInfoForm'
+import { addProjectSchema } from './helper/addProjectValidationSchema'
 
 export const addProjectInitialValues = {
   invoiceNumber: '',
@@ -27,33 +28,43 @@ export const addProjectInitialValues = {
   }
 }
 
-class AddProjectContainer extends React.PureComponent<AddProject.Props<{}>> {
-  handleSubmit = async (
-    values: ProjectInput,
-    formikActions: FormikActions<ProjectInput>
-  ) => {
-    const { mutate: addProject } = this.props
-    await addProject!({
-      variables: {
-        data: values
-      }
-    })
-    formikActions.resetForm()
-  }
+class AddProjectContainer extends React.PureComponent {
   render = () => {
-    // console.log({ props: this.props })
     return (
-      <Formik
-        onSubmit={this.handleSubmit}
-        initialValues={addProjectInitialValues}
-        // validationSchema={addProjectSchema}
-        render={(formProps: FormikProps<ProjectInput>) => {
-          console.log({ formProps })
-          return <InvoiceInfoForm {...formProps} />
+      <AddProject.Component>
+        {(addProject, { data, error, loading }) => {
+          return (
+            <Formik
+              onSubmit={async (
+                values: ProjectInput,
+                { resetForm }: FormikActions<ProjectInput>
+              ) => {
+                await addProject!({
+                  variables: {
+                    data: values
+                  }
+                })
+                resetForm()
+              }}
+              validateOnChange={false}
+              initialValues={addProjectInitialValues}
+              validationSchema={addProjectSchema}
+              render={(formProps: FormikProps<ProjectInput>) => (
+                <InvoiceInfoForm
+                  error={error && 'something went wrong'}
+                  loading={loading}
+                  successMessage={
+                    data && data.addProject && data.addProject.message
+                  }
+                  {...formProps}
+                />
+              )}
+            />
+          )
         }}
-      />
+      </AddProject.Component>
     )
   }
 }
 
-export default AddProject.HOC({})(AddProjectContainer)
+export default AddProjectContainer

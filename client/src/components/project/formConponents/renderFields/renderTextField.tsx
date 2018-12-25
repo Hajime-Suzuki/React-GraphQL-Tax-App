@@ -1,20 +1,6 @@
-import React from 'react'
 import TextField from '@material-ui/core/TextField'
-import Grid from '@material-ui/core/Grid'
 import { FieldProps, getIn } from 'formik'
-
-export const renderTextField: React.SFC<any> = ({
-  input,
-  meta: { touched, error, dirty },
-  defaultValue,
-  ...custom
-}) => {
-  return (
-    <Grid item className="item" xs={11}>
-      <TextField {...input} {...custom} />
-    </Grid>
-  )
-}
+import React from 'react'
 
 export const renderFormikTextField = (
   { field, form: { touched, errors }, ...props }: FieldProps,
