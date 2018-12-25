@@ -225,7 +225,7 @@ export namespace AddProject {
   };
 }
 
-export namespace UpdateProject {
+export namespace UpdateIncomesAndExpenses {
   export type Variables = {
     projectId: string;
     data: ProjectInput;
@@ -252,7 +252,33 @@ export namespace UpdateProject {
 
     id: string;
 
-    status: InvoiceStatus;
+    incomes: Incomes[] | null;
+
+    expenses: Expenses[] | null;
+  };
+
+  export type Incomes = {
+    __typename?: "ExpenseAndIncome";
+
+    name: string;
+
+    price: string;
+
+    quantity: number;
+
+    taxRate: number;
+  };
+
+  export type Expenses = {
+    __typename?: "ExpenseAndIncome";
+
+    name: string;
+
+    price: string;
+
+    quantity: number;
+
+    taxRate: number;
   };
 }
 
@@ -470,15 +496,29 @@ export namespace AddProject {
     );
   }
 }
-export namespace UpdateProject {
+export namespace UpdateIncomesAndExpenses {
   export const Document = gql`
-    mutation updateProject($projectId: String!, $data: ProjectInput!) {
+    mutation updateIncomesAndExpenses(
+      $projectId: String!
+      $data: ProjectInput!
+    ) {
       updateProject(projectId: $projectId, data: $data) {
         success
         message
         project {
           id
-          status
+          incomes {
+            name
+            price
+            quantity
+            taxRate
+          }
+          expenses {
+            name
+            price
+            quantity
+            taxRate
+          }
         }
       }
     }

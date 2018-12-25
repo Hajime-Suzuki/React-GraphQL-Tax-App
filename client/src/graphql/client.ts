@@ -1,12 +1,14 @@
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-client'
-import { ApolloLink } from 'apollo-link'
+import { ApolloLink, Operation } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
 import { getJwt, USER_ID } from 'src/libs/jwt'
 import { resolvers } from './resolvers'
 import typeDefs from './typeDefs'
+
+const cache = new InMemoryCache()
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:4000/graphql'
@@ -22,11 +24,22 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
+const removeTypenameLink = new ApolloLink((operation, forward) => {
+  if (Object.keys(operation.variables).length) {
+    operation.variables = JSON.parse(
+      JSON.stringify(operation.variables),
+      (key, value) => (key === '__typename' ? undefined : value)
+    )
+  }
+
+  return forward!(operation)
+})
+
 export const defaults = {
-  userId: USER_ID || null
+  userId: USER_ID || null,
+  editProjectMutationError: null
 }
 
-const cache = new InMemoryCache()
 const stateLink = withClientState({
   cache,
   typeDefs,
@@ -34,11 +47,9 @@ const stateLink = withClientState({
   defaults
 })
 
-const link = ApolloLink.from([authLink, stateLink, httpLink])
-
 export const client = new ApolloClient({
   cache,
-  link
+  link: ApolloLink.from([authLink, stateLink, removeTypenameLink, httpLink])
 })
 
 client.onResetStore(async () => stateLink.writeDefaults())

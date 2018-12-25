@@ -75,14 +75,25 @@ const ADD_PROJECT = gql`
   }
 `
 
-const UPDATE_PROJECT = gql`
-  mutation updateProject($projectId: String!, $data: ProjectInput!) {
+const UPDATE_INCOMES_EXPENSES = gql`
+  mutation updateIncomesAndExpenses($projectId: String!, $data: ProjectInput!) {
     updateProject(projectId: $projectId, data: $data) {
       success
       message
       project {
         id
-        status
+        incomes {
+          name
+          price
+          quantity
+          taxRate
+        }
+        expenses {
+          name
+          price
+          quantity
+          taxRate
+        }
       }
     }
   }
@@ -93,5 +104,5 @@ export const projectQueries = {
   GET_SINGLE_PROJECT,
   UPDATE_STATUS,
   ADD_PROJECT,
-  UPDATE_PROJECT
+  UPDATE_INCOMES_EXPENSES
 }

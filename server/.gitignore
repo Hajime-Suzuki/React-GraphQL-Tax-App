@@ -83,3 +83,4 @@ dist/
 **/*.http
 **/database/connectionString.ts
 **/jwt
+**/_gql_gen/*.js

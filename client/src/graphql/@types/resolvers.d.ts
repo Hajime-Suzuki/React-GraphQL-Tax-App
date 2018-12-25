@@ -164,8 +164,6 @@ export interface Mutation {
   addProject?: MutationProjectResponse | null;
 
   logout?: string | null;
-
-  sortProject?: string | null;
 }
 
 export interface RegisterResponse {
@@ -636,8 +634,6 @@ export namespace MutationResolvers {
     >;
 
     logout?: LogoutResolver<string | null, TypeParent, Context>;
-
-    sortProject?: SortProjectResolver<string | null, TypeParent, Context>;
   }
 
   export type RegisterUserResolver<
@@ -687,11 +683,6 @@ export namespace MutationResolvers {
   }
 
   export type LogoutResolver<
-    R = string | null,
-    Parent = {},
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type SortProjectResolver<
     R = string | null,
     Parent = {},
     Context = {}
