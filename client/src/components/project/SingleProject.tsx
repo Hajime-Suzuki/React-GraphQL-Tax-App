@@ -8,10 +8,10 @@ import * as React from 'react'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
 import ExpenseIncomeTable from './helper/ExpenseIncomeTable'
-import EditExpenseAndIncomeForm from './formConponents/edit/EditIncomesAndExpenseForm'
+import EditExpenseAndIncomeForm from './formComponents/edit/EditIncomesAndExpenseForm'
 import { Calculations } from './helper/calculations'
 import { SingleProjectChildProps } from './SingleProjectContainer'
-import EditBasicInfoFormAndClient from './formConponents/edit/EditBasicInfoForm'
+import EditBasicInfoFormAndClient from './formComponents/edit/EditBasicInfoForm'
 
 const phone = theme.breakpoints.down('sm')
 const tablet = theme.breakpoints.up('md')

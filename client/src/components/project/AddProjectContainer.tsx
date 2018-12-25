@@ -1,7 +1,7 @@
 import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
 import { AddProject, ProjectInput } from 'src/graphql/components/projects'
-import InvoiceInfoForm from './formConponents/InvoiceInfoForm'
+import InvoiceInfoForm from './formComponents/InvoiceInfoForm'
 import { addProjectSchema } from './helper/addProjectValidationSchema'
 import { ProjectActions } from 'src/graphql/actions/projects'
 

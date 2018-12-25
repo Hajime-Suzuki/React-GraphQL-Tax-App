@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as React from 'react'
-import { renderFormikTextField } from 'src/components/project/formConponents/renderFields/renderTextField'
+import { renderFormikTextField } from 'src/components/project/formComponents/renderFields/renderTextField'
 import { Login } from 'src/graphql/components/login'
 import { StyledGridFormItem } from 'src/styles/forms'
 

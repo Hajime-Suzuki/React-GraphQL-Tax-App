@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as React from 'react'
 import { SignUp } from 'src/graphql/components/signup'
-import { renderFormikTextField } from 'src/components/project/formConponents/renderFields/renderTextField'
+import { renderFormikTextField } from 'src/components/project/formComponents/renderFields/renderTextField'
 import { StyledGridFormItem } from 'src/styles/forms'
 
 interface Props {
