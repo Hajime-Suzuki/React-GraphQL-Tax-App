@@ -58,7 +58,18 @@ const SingleProject: React.SFC<SingleProjectChildProps> = props => {
       )}
       <hr style={{ width: '100%', margin: '2em 0' }} />
       <IncomesAndExpenseSection {...props} />
+      <EditForms {...props} />
+    </ProjectDetails>
+  )
+}
 
+const EditForms: React.SFC<SingleProjectChildProps> = props => {
+  const {
+    selectedModal,
+    project: { client, incomes, expenses, ...basic }
+  } = props
+  return (
+    <React.Fragment>
       {selectedModal === 'incomes' && (
         <EditExpenseAndIncomeForm incomes={incomes as any} {...props} />
       )}
@@ -68,7 +79,7 @@ const SingleProject: React.SFC<SingleProjectChildProps> = props => {
       {selectedModal === 'basic' && (
         <EditBasicInfoFormAndClient basic={basic} client={client} {...props} />
       )}
-    </ProjectDetails>
+    </React.Fragment>
   )
 }
 
@@ -100,8 +111,14 @@ const InvoiceMetaSectionWrapper: any = styled(Grid)`
 `
 
 const InvoiceMetaSection: React.SFC<SingleProjectChildProps> = ({
-  project
+  project: { name, invoiceNumber, invoiceDate, status }
 }) => {
+  const iconColor =
+    status === 'paid'
+      ? 'primary'
+      : status === 'invoice'
+      ? 'secondary'
+      : undefined
   return (
     <InvoiceMetaSectionWrapper
       item
@@ -111,28 +128,26 @@ const InvoiceMetaSection: React.SFC<SingleProjectChildProps> = ({
     >
       <Grid item xs={11} md={10}>
         <Typography variant="display2" className="title">
-          {project.name}
+          {name}
         </Typography>
       </Grid>
 
       <Grid className="details-wrapper" item container xs={11} md={1}>
         <Grid className="meta-item" item xs={3} md={10}>
           <Icon className="far fa-file-alt" />
-          <Typography className="invoice-number">
-            {project.invoiceNumber}
-          </Typography>
+          <Typography className="invoice-number">{invoiceNumber}</Typography>
         </Grid>
 
         <Grid className="meta-item" item xs={3} md={10}>
           <Icon className="far fa-calendar-alt" />
           <Typography className="invoice-date">
-            {project.invoiceDate ? format(project.invoiceDate, 'Y-MM-dd') : '-'}
+            {invoiceDate ? format(invoiceDate, 'Y-MM-dd') : '-'}
           </Typography>
         </Grid>
 
         <Grid className="meta-item" item xs={3} md={10}>
-          <Icon className="fas fa-check" />
-          <Typography className="invoice-date">{project.status}</Typography>
+          <Icon className="fas fa-check" color={iconColor} />
+          <Typography className="invoice-date">{status}</Typography>
         </Grid>
       </Grid>
     </InvoiceMetaSectionWrapper>

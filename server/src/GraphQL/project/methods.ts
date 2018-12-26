@@ -7,7 +7,7 @@ import { GetSingleProjectQueryArgs, IProjectInput } from '../@types/types'
 import { updateOrCreateClient } from '../client/methods'
 
 export const getProjectsByUserId = async (userId: string) => {
-  const projects = await Project.find({ user: userId }).sort({ date: -1 })
+  const projects = await Project.find({ user: userId }).sort({ createdAt: -1 })
   return projects
 }
 

@@ -85,7 +85,7 @@ router.post('/populate', async ctx => {
         user: newUser._id,
         expenses: projectExpenses,
         incomes: projectIncomes,
-        date,
+        projectDate: date,
         invoiceDate:
           invoiceStatus === 'none' || invoiceDate > new Date()
             ? null
@@ -101,7 +101,10 @@ router.post('/populate', async ctx => {
         price: faker.finance.amount(10, 300, 2),
         quantity: faker.random.number({ min: 1, max: 3 }),
         taxRate: taxRates[faker.random.number(2)],
-        date: faker.date.between(format(pastLimit, 'YYYY-MM-DD'), new Date()),
+        projectDate: faker.date.between(
+          format(pastLimit, 'YYYY-MM-DD'),
+          new Date()
+        ),
         user: newUser._id
       })
     })

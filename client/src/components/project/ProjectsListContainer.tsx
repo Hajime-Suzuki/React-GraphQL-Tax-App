@@ -12,8 +12,9 @@ type Props = PrivateRoutesChildProps & IRouterComponentProps
 
 class ProjectsListContainer extends React.Component<Props> {
   sortProjectsByProjectDate = () =>
-    ProjectActions.sortProjectsByProjectDate('1')
-
+    ProjectActions.sortProjectsByProjectDate('-1')
+  sortProjectByInvoiceDate = () =>
+    ProjectActions.sortProjectsByInvoiceDate('-1')
   render() {
     const { userId } = this.props
     if (!userId) return null
@@ -28,6 +29,7 @@ class ProjectsListContainer extends React.Component<Props> {
             <ProjectsList
               projects={data.getProjectsByUserId}
               sortProjectsByProjectDate={this.sortProjectsByProjectDate}
+              sortProjectByInvoiceDate={this.sortProjectByInvoiceDate}
             />
           )
         }}

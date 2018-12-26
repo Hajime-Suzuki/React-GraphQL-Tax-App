@@ -4,10 +4,11 @@ import { Form, FormikProps } from 'formik'
 import * as React from 'react'
 import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
-import { IncomesAndExpenseFields } from './IncomesAndExpenseFields'
-import { renderFields } from './renderFields/renderFields'
-import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
+import { IncomesAndExpenseFields } from './formComponents/IncomesAndExpenseFields'
+import { renderFields } from './formComponents/renderFields/renderFields'
+import { GenerateFieldSettings } from './helper/genrateFieldSettings'
 import { ProjectInput } from 'src/graphql/components/projects'
+import { renderDatePicker } from './formComponents/renderFields/renderDatePicker'
 
 interface OwnProps {
   mutationError?: string
@@ -15,7 +16,7 @@ interface OwnProps {
   successMessage?: string | null
 }
 
-class InvoiceInfoForm extends React.Component<
+class AddProjectForm extends React.Component<
   FormikProps<ProjectInput> & OwnProps
 > {
   render() {
@@ -27,6 +28,7 @@ class InvoiceInfoForm extends React.Component<
       errors: validationErrors,
       loading,
       touched,
+      setFieldValue,
       successMessage
     } = this.props
     const { incomes, expenses } = values
@@ -37,9 +39,23 @@ class InvoiceInfoForm extends React.Component<
           <Typography variant="h5" className="title">
             Basic Info
           </Typography>
-          {GenerateFieldSettings.generalFields.map((field, i) => (
-            <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
-          ))}
+          {GenerateFieldSettings.generalFields.map((field, i) => {
+            if (field.type === 'date') {
+              return (
+                <React.Fragment key={i}>
+                  {renderDatePicker({
+                    field,
+                    values,
+                    setFieldValue,
+                    error: validationErrors[field.name]
+                  })}
+                </React.Fragment>
+              )
+            }
+            return (
+              <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
+            )
+          })}
         </div>
         <div className="form-section">
           <Typography variant="h5" className="title">
@@ -89,7 +105,6 @@ class InvoiceInfoForm extends React.Component<
             You have invalid value(s)
           </Typography>
         )}
-        {console.log(this.props)}
         <div className="form-section">
           <Button
             type="submit"
@@ -130,4 +145,4 @@ export const StyledForm = styled(Form)`
   }
 `
 
-export default InvoiceInfoForm
+export default AddProjectForm

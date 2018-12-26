@@ -10,14 +10,14 @@ interface IClientModel extends Model<IClientDocument> {
 
 const clientSchema = new Schema({
   firstName: {
-    type: String,
-    required: true,
-    minlength: [2, 'first name is too short']
+    type: String
+    // required: true,
+    // minlength: [2, 'first name is too short']
   },
   lastName: {
-    type: String,
-    required: true,
-    minlength: [2, 'last name is too short']
+    type: String
+    // required: true,
+    // minlength: [2, 'last name is too short']
   },
   email: {
     type: String,

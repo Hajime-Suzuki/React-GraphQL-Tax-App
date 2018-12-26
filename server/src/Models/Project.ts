@@ -31,7 +31,7 @@ const projectSchema: Schema = new Schema({
     type: String,
     required: true
   },
-  date: {
+  projectDate: {
     type: Date
   },
   streetAddress: {
@@ -57,6 +57,10 @@ const projectSchema: Schema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
+  },
+  createdAt: {
+    type: Date,
+    default: () => new Date()
   }
 })
 

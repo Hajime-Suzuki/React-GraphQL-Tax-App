@@ -1,8 +1,8 @@
 import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
 import { AddProject, ProjectInput } from 'src/graphql/components/projects'
-import InvoiceInfoForm from './formComponents/InvoiceInfoForm'
-import { addProjectSchema } from './helper/addProjectValidationSchema'
+import AddProjectForm from './AddProjectForm'
+import { addProjectValidationSchema } from './helper/addProjectValidationSchema'
 import { ProjectActions } from 'src/graphql/actions/projects'
 
 export const addProjectInitialValues = {
@@ -25,7 +25,12 @@ export const addProjectInitialValues = {
 class AddProjectContainer extends React.PureComponent {
   render = () => {
     return (
-      <AddProject.Component onCompleted={ProjectActions.addNewProjectToList}>
+      <AddProject.Component
+        onCompleted={data => {
+          ProjectActions.addNewProjectToList(data)
+          ProjectActions.sortProjectsByProjectDate('-1')
+        }}
+      >
         {(addProject, { data, error: mutationError, loading }) => {
           return (
             <Formik
@@ -43,9 +48,9 @@ class AddProjectContainer extends React.PureComponent {
               validateOnChange={false}
               validateOnBlur={false}
               initialValues={addProjectInitialValues}
-              validationSchema={addProjectSchema}
+              validationSchema={addProjectValidationSchema}
               render={(formProps: FormikProps<ProjectInput>) => (
-                <InvoiceInfoForm
+                <AddProjectForm
                   mutationError={mutationError && 'something went wrong'}
                   loading={loading}
                   successMessage={

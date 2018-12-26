@@ -91,11 +91,11 @@ export interface IProject {
 
   invoiceNumber: string;
 
-  invoiceDate?: string | null;
+  invoiceDate?: Date | null;
 
   name: string;
 
-  date?: Date | null;
+  projectDate?: Date | null;
 
   streetAddress?: string | null;
 
@@ -401,11 +401,11 @@ export namespace ProjectResolvers {
 
     invoiceNumber?: InvoiceNumberResolver<string, TypeParent, Context>;
 
-    invoiceDate?: InvoiceDateResolver<string | null, TypeParent, Context>;
+    invoiceDate?: InvoiceDateResolver<Date | null, TypeParent, Context>;
 
     name?: NameResolver<string, TypeParent, Context>;
 
-    date?: DateResolver<Date | null, TypeParent, Context>;
+    projectDate?: ProjectDateResolver<Date | null, TypeParent, Context>;
 
     streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
 
@@ -439,7 +439,7 @@ export namespace ProjectResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type InvoiceDateResolver<
-    R = string | null,
+    R = Date | null,
     Parent = IProject,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -448,7 +448,7 @@ export namespace ProjectResolvers {
     Parent = IProject,
     Context = {}
   > = Resolver<R, Parent, Context>;
-  export type DateResolver<
+  export type ProjectDateResolver<
     R = Date | null,
     Parent = IProject,
     Context = {}

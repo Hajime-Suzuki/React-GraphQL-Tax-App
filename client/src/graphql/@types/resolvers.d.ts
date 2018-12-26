@@ -65,6 +65,8 @@ export interface Query {
 
   getSingleProject?: Project | null;
 
+  getClientsByUser?: Client[] | null;
+
   token: string;
 
   userId?: string | null;
@@ -84,6 +86,8 @@ export interface User {
   projects?: Project[] | null;
 
   expenses?: Expense[] | null;
+
+  clients?: Client[] | null;
 }
 
 export interface Project {
@@ -91,11 +95,11 @@ export interface Project {
 
   invoiceNumber: string;
 
-  invoiceDate?: string | null;
+  invoiceDate?: Date | null;
 
   name: string;
 
-  date?: Date | null;
+  projectDate?: Date | null;
 
   streetAddress?: string | null;
 
@@ -115,6 +119,8 @@ export interface Project {
 }
 
 export interface Client {
+  id: string;
+
   firstName?: string | null;
 
   lastName?: string | null;
@@ -128,6 +134,8 @@ export interface Client {
   address?: string | null;
 
   user?: string | null;
+
+  projects?: string[] | null;
 }
 
 export interface ExpenseAndIncome {
@@ -190,6 +198,9 @@ export interface GetProjectsByUserIdQueryArgs {
 }
 export interface GetSingleProjectQueryArgs {
   projectId: string;
+}
+export interface GetClientsByUserQueryArgs {
+  userId: string;
 }
 export interface RegisterUserMutationArgs {
   firstName: string;
@@ -283,6 +294,12 @@ export namespace QueryResolvers {
       Context
     >;
 
+    getClientsByUser?: GetClientsByUserResolver<
+      Client[] | null,
+      TypeParent,
+      Context
+    >;
+
     token?: TokenResolver<string, TypeParent, Context>;
 
     userId?: UserIdResolver<string | null, TypeParent, Context>;
@@ -315,6 +332,15 @@ export namespace QueryResolvers {
     projectId: string;
   }
 
+  export type GetClientsByUserResolver<
+    R = Client[] | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetClientsByUserArgs>;
+  export interface GetClientsByUserArgs {
+    userId: string;
+  }
+
   export type TokenResolver<R = string, Parent = {}, Context = {}> = Resolver<
     R,
     Parent,
@@ -342,6 +368,8 @@ export namespace UserResolvers {
     projects?: ProjectsResolver<Project[] | null, TypeParent, Context>;
 
     expenses?: ExpensesResolver<Expense[] | null, TypeParent, Context>;
+
+    clients?: ClientsResolver<Client[] | null, TypeParent, Context>;
   }
 
   export type IdResolver<R = string, Parent = User, Context = {}> = Resolver<
@@ -379,6 +407,11 @@ export namespace UserResolvers {
     Parent = User,
     Context = {}
   > = Resolver<R, Parent, Context>;
+  export type ClientsResolver<
+    R = Client[] | null,
+    Parent = User,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace ProjectResolvers {
@@ -387,11 +420,11 @@ export namespace ProjectResolvers {
 
     invoiceNumber?: InvoiceNumberResolver<string, TypeParent, Context>;
 
-    invoiceDate?: InvoiceDateResolver<string | null, TypeParent, Context>;
+    invoiceDate?: InvoiceDateResolver<Date | null, TypeParent, Context>;
 
     name?: NameResolver<string, TypeParent, Context>;
 
-    date?: DateResolver<Date | null, TypeParent, Context>;
+    projectDate?: ProjectDateResolver<Date | null, TypeParent, Context>;
 
     streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
 
@@ -421,7 +454,7 @@ export namespace ProjectResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type InvoiceDateResolver<
-    R = string | null,
+    R = Date | null,
     Parent = Project,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -430,7 +463,7 @@ export namespace ProjectResolvers {
     Parent = Project,
     Context = {}
   > = Resolver<R, Parent, Context>;
-  export type DateResolver<
+  export type ProjectDateResolver<
     R = Date | null,
     Parent = Project,
     Context = {}
@@ -479,6 +512,8 @@ export namespace ProjectResolvers {
 
 export namespace ClientResolvers {
   export interface Resolvers<Context = {}, TypeParent = Client> {
+    id?: IdResolver<string, TypeParent, Context>;
+
     firstName?: FirstNameResolver<string | null, TypeParent, Context>;
 
     lastName?: LastNameResolver<string | null, TypeParent, Context>;
@@ -492,8 +527,15 @@ export namespace ClientResolvers {
     address?: AddressResolver<string | null, TypeParent, Context>;
 
     user?: UserResolver<string | null, TypeParent, Context>;
+
+    projects?: ProjectsResolver<string[] | null, TypeParent, Context>;
   }
 
+  export type IdResolver<R = string, Parent = Client, Context = {}> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
   export type FirstNameResolver<
     R = string | null,
     Parent = Client,
@@ -526,6 +568,11 @@ export namespace ClientResolvers {
   > = Resolver<R, Parent, Context>;
   export type UserResolver<
     R = string | null,
+    Parent = Client,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ProjectsResolver<
+    R = string[] | null,
     Parent = Client,
     Context = {}
   > = Resolver<R, Parent, Context>;

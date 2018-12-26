@@ -5,7 +5,7 @@ const GET_PROJECT_OVERVIEW = gql`
     getProjectsByUserId(userId: $userId) {
       id
       name
-      date
+      projectDate
       invoiceDate
       status
       incomes {
@@ -23,7 +23,7 @@ const GET_SINGLE_PROJECT = gql`
       invoiceNumber
       invoiceDate
       name
-      date
+      projectDate
       status
       client {
         firstName
@@ -70,7 +70,7 @@ const ADD_PROJECT = gql`
         invoiceNumber
         invoiceDate
         name
-        date
+        projectDate
         status
         client {
           firstName
@@ -129,7 +129,7 @@ const UPDATE_BASIC_INFO = gql`
         invoiceNumber
         invoiceDate
         name
-        date
+        projectDate
         status
         client {
           firstName

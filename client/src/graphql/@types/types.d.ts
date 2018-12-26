@@ -64,6 +64,8 @@ export interface Query {
   getProjectsByUserId: Project[];
 
   getSingleProject?: Project | null;
+
+  getClientsByUser?: Client[] | null;
 }
 
 export interface User {
@@ -80,6 +82,8 @@ export interface User {
   projects?: Project[] | null;
 
   expenses?: Expense[] | null;
+
+  clients?: Client[] | null;
 }
 
 export interface Project {
@@ -87,11 +91,11 @@ export interface Project {
 
   invoiceNumber: string;
 
-  invoiceDate?: string | null;
+  invoiceDate?: Date | null;
 
   name: string;
 
-  date?: Date | null;
+  projectDate?: Date | null;
 
   streetAddress?: string | null;
 
@@ -111,6 +115,8 @@ export interface Project {
 }
 
 export interface Client {
+  id: string;
+
   firstName?: string | null;
 
   lastName?: string | null;
@@ -124,6 +130,8 @@ export interface Client {
   address?: string | null;
 
   user?: string | null;
+
+  projects?: string[] | null;
 }
 
 export interface ExpenseAndIncome {
@@ -186,6 +194,9 @@ export interface GetProjectsByUserIdQueryArgs {
 }
 export interface GetSingleProjectQueryArgs {
   projectId: string;
+}
+export interface GetClientsByUserQueryArgs {
+  userId: string;
 }
 export interface RegisterUserMutationArgs {
   firstName: string;

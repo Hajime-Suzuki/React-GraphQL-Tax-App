@@ -1,8 +1,8 @@
 const generalFields = [
-  { name: 'invoiceNumber', label: 'Invoice Number' },
-  { name: 'projectDate', label: 'Project Date' },
-  { name: 'invoiceDate', label: 'Invoice Date' },
-  { name: 'name', label: 'Name' }
+  { name: 'invoiceNumber', label: 'Invoice Number', required: true },
+  { name: 'projectDate', label: 'Project Date', type: 'date', required: true },
+  { name: 'invoiceDate', label: 'Invoice Date', type: 'date' },
+  { name: 'name', label: 'Name', required: true }
 ]
 
 const clientFields = [
@@ -15,9 +15,14 @@ const clientFields = [
 ]
 
 const generateArrayFields = (type: 'incomes' | 'expenses', index: number) => [
-  { name: `${type}.${index}.name`, label: 'Name' },
-  { name: `${type}.${index}.price`, label: 'Price' },
-  { name: `${type}.${index}.quantity`, label: 'Quantity', type: 'number' }
+  { name: `${type}.${index}.name`, label: 'Name', required: true },
+  { name: `${type}.${index}.price`, label: 'Price', required: true },
+  {
+    name: `${type}.${index}.quantity`,
+    label: 'Quantity',
+    type: 'number',
+    required: true
+  }
 ]
 
 export const GenerateFieldSettings = {

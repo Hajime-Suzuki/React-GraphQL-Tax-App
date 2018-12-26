@@ -47,7 +47,19 @@ const sortProjectsByProjectDate = (sort: '1' | '-1') => {
   if (!projects || !queryOption) return
 
   const newData = [...projects].sort((p1, p2) => {
-    const diff = differenceInDays(p1.date || 0, p2.date || 0)
+    const diff = differenceInDays(p1.projectDate || 0, p2.projectDate || 0)
+    return sort === '1' ? diff : -diff
+  })
+
+  writeData(queryOption, newData)
+}
+
+const sortProjectsByInvoiceDate = (sort: '1' | '-1') => {
+  const { projects, queryOption } = getProjectOverview()
+  if (!projects || !queryOption) return
+
+  const newData = [...projects].sort((p1, p2) => {
+    const diff = differenceInDays(p1.invoiceDate || 0, p2.invoiceDate || 0)
     return sort === '1' ? diff : -diff
   })
 
@@ -64,5 +76,6 @@ const addNewProjectToList = ({ addProject }: AddProject.Mutation) => {
 
 export const ProjectActions = {
   sortProjectsByProjectDate,
+  sortProjectsByInvoiceDate,
   addNewProjectToList
 }

@@ -7,14 +7,16 @@ import App from './App'
 import { client } from './graphql/client'
 import registerServiceWorker from './registerServiceWorker'
 import { theme } from './styles/theme'
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
+import DateFnsUtils from '@date-io/date-fns'
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
       <MuiThemeProvider theme={theme}>
-        {/* <MuiPickersUtilsProvider utils={DateFnsUtils}> */}
-        <App />
-        {/* </MuiPickersUtilsProvider> */}
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     </BrowserRouter>
   </ApolloProvider>,

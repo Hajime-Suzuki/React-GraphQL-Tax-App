@@ -4,9 +4,9 @@ export const projectSchema = gql`
   type Project {
     id: String!
     invoiceNumber: String!
-    invoiceDate: String
+    invoiceDate: Date
     name: String!
-    date: Date
+    projectDate: Date
     streetAddress: String
     city: String
     link: String

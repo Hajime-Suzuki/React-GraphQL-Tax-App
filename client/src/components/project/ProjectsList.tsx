@@ -24,10 +24,15 @@ const StyledPaper: any = styled(Paper)`
 interface Props {
   projects: GetProjectOverview.GetProjectsByUserId[]
   sortProjectsByProjectDate: () => void
+  sortProjectByInvoiceDate: () => void
 }
 
 const ProjectsList: React.SFC<Props> = props => {
-  const { projects, sortProjectsByProjectDate } = props
+  const {
+    projects,
+    sortProjectsByProjectDate,
+    sortProjectByInvoiceDate
+  } = props
   return (
     <StyledPaper style={{ overflow: 'auto' }}>
       <Table>
@@ -37,11 +42,10 @@ const ProjectsList: React.SFC<Props> = props => {
             <TableCell onClick={sortProjectsByProjectDate}>
               Project Date
             </TableCell>
-            <TableCell onClick={() => console.log('invoice date')}>
+            <TableCell onClick={sortProjectByInvoiceDate}>
               Invoice Date
             </TableCell>
             <TableCell>Price</TableCell>
-            {/* <TableCell>Location</TableCell> */}
             <TableCell>Status</TableCell>
           </TableRow>
         </TableHead>
@@ -58,17 +62,14 @@ const ProjectsList: React.SFC<Props> = props => {
                   </Styles.StyledLink>
                 </TableCell>
                 <TableCell>
-                  {p.date ? format(p.date, 'Y-MM-dd') : '-'}
+                  {p.projectDate ? format(p.projectDate, 'Y-MM-dd') : '-'}
                 </TableCell>
                 <TableCell>
-                  {p.invoiceDate
-                    ? format(Number(p.invoiceDate), 'Y-MM-dd')
-                    : '-'}
+                  {p.invoiceDate ? format(p.invoiceDate, 'Y-MM-dd') : '-'}
                 </TableCell>
                 <TableCell>
                   {Calculations.getSubtotal(p.incomes || [])}
                 </TableCell>
-                {/* <TableCell>{p.get('location') || '-'}</TableCell> */}
                 <TableCell>
                   <UpdateStatus.Component>
                     {(update, data) => (

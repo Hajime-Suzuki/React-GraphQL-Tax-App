@@ -1,15 +1,17 @@
+import Typography from '@material-ui/core/Typography'
 import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { UpdateBasicInfo, ProjectInput } from 'src/graphql/components/projects'
+import { ProjectInput, UpdateBasicInfo } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
 import styled from 'styled-components'
-import { SingleProjectChildProps } from '../../SingleProjectContainer'
-import { StyledForm } from '../InvoiceInfoForm'
-import Typography from '@material-ui/core/Typography'
+import { StyledForm } from '../../AddProjectForm'
 import { GenerateFieldSettings } from '../../helper/genrateFieldSettings'
-import { renderFields } from '../renderFields/renderFields'
+import { SingleProjectChildProps } from '../../SingleProjectContainer'
 import EditFormModal from '../modal/EditFormModal'
+import { renderFields } from '../renderFields/renderFields'
+import { addProjectValidationSchema } from '../../helper/addProjectValidationSchema'
+import { renderDatePicker } from '../renderFields/renderDatePicker'
 
 interface Props {
   selectedModal: SingleProjectChildProps['selectedModal']
@@ -51,13 +53,20 @@ class EditBasicInfoFormAndClient extends React.Component<
             <Formik
               initialValues={initialValues}
               validateOnChange={false}
+              validationSchema={addProjectValidationSchema}
               onSubmit={async (values: typeof initialValues) => {
                 await updateProject({
                   variables: { data: values, projectId: id }
                 })
                 handleCloseModal()
               }}
-              render={({ handleSubmit }: FormikProps<typeof initialValues>) => {
+              render={({
+                handleSubmit,
+                values,
+                errors,
+                setFieldValue
+              }: FormikProps<typeof initialValues>) => {
+                console.log({ values, errors })
                 return (
                   <EditFormModal
                     title="Edit Info"
@@ -71,11 +80,25 @@ class EditBasicInfoFormAndClient extends React.Component<
                   >
                     <CustomStyledForm>
                       <div className="form-section">
-                        {GenerateFieldSettings.generalFields.map((field, i) => (
-                          <React.Fragment key={i}>
-                            {renderFields(field)}
-                          </React.Fragment>
-                        ))}
+                        {GenerateFieldSettings.generalFields.map((field, i) => {
+                          if (field.type === 'date') {
+                            return (
+                              <React.Fragment key={i}>
+                                {renderDatePicker({
+                                  field,
+                                  values,
+                                  setFieldValue,
+                                  error: errors[field.name]
+                                })}
+                              </React.Fragment>
+                            )
+                          }
+                          return (
+                            <React.Fragment key={i}>
+                              {renderFields(field)}
+                            </React.Fragment>
+                          )
+                        })}
                       </div>
 
                       <div className="form-section">

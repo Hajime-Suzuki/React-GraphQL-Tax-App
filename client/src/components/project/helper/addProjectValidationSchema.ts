@@ -32,12 +32,15 @@ const clientShape = yup.object().shape({
   postalCode: yup.string()
 })
 
-export const addProjectSchema = yup.object().shape({
+export const addProjectValidationSchema = yup.object().shape({
   invoiceNumber: yup.string().required(requiredMessage),
-  invoiceDate: yup.string(),
+  invoiceDate: yup.string().nullable(),
   name: yup.string().required(requiredMessage),
-  projectDate: yup.string().required(requiredMessage),
+  projectDate: yup
+    .string()
+    .nullable()
+    .required(requiredMessage),
   incomes: yup.array().of(incomesShape),
   expenses: yup.array().of(expenseShape),
-  client: clientShape
+  client: clientShape.nullable()
 })

@@ -9,7 +9,7 @@ import { IRouterComponentProps } from 'src/routes/types'
 import styled from 'styled-components'
 import { SingleProjectChildProps } from '../../SingleProjectContainer'
 import { IncomesAndExpenseFields } from '../IncomesAndExpenseFields'
-import { StyledForm } from '../InvoiceInfoForm'
+import { StyledForm } from '../../AddProjectForm'
 import EditFormModal from '../modal/EditFormModal'
 
 interface Props {

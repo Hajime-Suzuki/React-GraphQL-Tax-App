@@ -6,6 +6,7 @@ interface Field {
   name: string
   label?: string
   type?: string
+  required?: boolean
 }
 
 // if arrow function is passed to component, input is interrupted character by character

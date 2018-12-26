@@ -72,9 +72,9 @@ export namespace GetProjectOverview {
 
     name: string;
 
-    date: Date | null;
+    projectDate: Date | null;
 
-    invoiceDate: string | null;
+    invoiceDate: Date | null;
 
     status: InvoiceStatus;
 
@@ -108,11 +108,11 @@ export namespace GetSingleProject {
 
     invoiceNumber: string;
 
-    invoiceDate: string | null;
+    invoiceDate: Date | null;
 
     name: string;
 
-    date: Date | null;
+    projectDate: Date | null;
 
     status: InvoiceStatus;
 
@@ -219,11 +219,11 @@ export namespace AddProject {
 
     invoiceNumber: string;
 
-    invoiceDate: string | null;
+    invoiceDate: Date | null;
 
     name: string;
 
-    date: Date | null;
+    projectDate: Date | null;
 
     status: InvoiceStatus;
 
@@ -357,11 +357,11 @@ export namespace UpdateBasicInfo {
 
     invoiceNumber: string;
 
-    invoiceDate: string | null;
+    invoiceDate: Date | null;
 
     name: string;
 
-    date: Date | null;
+    projectDate: Date | null;
 
     status: InvoiceStatus;
 
@@ -396,7 +396,7 @@ export namespace GetProjectOverview {
       getProjectsByUserId(userId: $userId) {
         id
         name
-        date
+        projectDate
         invoiceDate
         status
         incomes {
@@ -446,7 +446,7 @@ export namespace GetSingleProject {
         invoiceNumber
         invoiceDate
         name
-        date
+        projectDate
         status
         client {
           firstName
@@ -558,7 +558,7 @@ export namespace AddProject {
           invoiceNumber
           invoiceDate
           name
-          date
+          projectDate
           status
           client {
             firstName
@@ -686,7 +686,7 @@ export namespace UpdateBasicInfo {
           invoiceNumber
           invoiceDate
           name
-          date
+          projectDate
           status
           client {
             firstName
