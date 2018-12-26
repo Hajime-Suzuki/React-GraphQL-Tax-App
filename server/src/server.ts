@@ -9,6 +9,7 @@ import { sharedTypes } from './GraphQL/shared/sharedTypes'
 import { userResolvers } from './GraphQL/user/resolvers'
 import { userSchema } from './GraphQL/user/schema'
 import { User } from './Models/User'
+import { clientResolvers } from './graphql/client/resolvers'
 
 export interface ICtx {
   userId: string
@@ -24,7 +25,7 @@ const typeDefs = mergeTypes(
 const server = new ApolloServer({
   schema: makeExecutableSchema({
     typeDefs,
-    resolvers: [userResolvers, projectResolvers] as any
+    resolvers: [userResolvers, projectResolvers, clientResolvers] as any
   }),
 
   context: async ({ ctx: { headers } }: { ctx: Context }) => {
@@ -33,7 +34,7 @@ const server = new ApolloServer({
     if (headers.jwt) {
       const user = await User.findByToken(headers.jwt)
       return {
-        userId: user
+        userId: user.id
       }
     }
   }

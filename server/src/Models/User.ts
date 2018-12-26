@@ -17,7 +17,7 @@ interface IUserModel extends Model<IUserDocument> {
   findByToken: (token: string) => IUserDocument
 }
 
-const userSchema: Schema = new Schema({
+const userSchema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -48,19 +48,23 @@ const userSchema: Schema = new Schema({
   },
   projects: [
     {
-      type: Schema.Types.ObjectId,
+      type: [Schema.Types.ObjectId],
       ref: 'Project'
     }
   ],
   expenses: [
     {
-      type: Schema.Types.ObjectId,
+      type: [Schema.Types.ObjectId],
       ref: 'Expense'
     }
   ],
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  clients: {
+    type: [Schema.Types.ObjectId],
+    ref: 'Client'
   }
 })
 

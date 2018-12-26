@@ -14,7 +14,8 @@
     "curly": [true, "ignore-same-line"],
     "no-unused-variable": [true, { "ignore-pattern": "^_" }],
     "member-access": false,
-    "variable-name": false
+    "variable-name": false,
+    "align": false
   },
   "linterOptions": {
     "exclude": ["node_modules/**/*.ts", "src/GraphQL/@types/**"]

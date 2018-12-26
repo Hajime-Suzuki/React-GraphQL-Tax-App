@@ -5,6 +5,7 @@ import { Project } from '../../Models/Project'
 import { User } from '../../Models/User'
 import { IProjectInput, GetSingleProjectQueryArgs } from '../@types/types'
 import { isEmptyObject } from '../../helpers/object'
+import { updateOrCreateClient } from '../client/methods'
 
 export const getProjectsByUserId = async (userId: string) => {
   const projects = await Project.find({ user: userId }).sort({ date: -1 })
@@ -14,21 +15,24 @@ export const getProjectsByUserId = async (userId: string) => {
 export const getSingleProject = async (
   projectId: GetSingleProjectQueryArgs['projectId']
 ) => {
-  const project = await Project.findById(projectId)
+  const project = await Project.findById(projectId).populate('client')
   return project
 }
 
-export const updateProject = async (projectId: string, data: IProjectInput) => {
-  console.log(data)
+export const updateProject = async (
+  projectId: string,
+  { client: clientInput, ...data }: IProjectInput
+) => {
+  const project = await Project.findById(projectId).populate('client')
 
-  const updatedProject = await Project.findByIdAndUpdate(
-    projectId,
-    { ...data },
-    { new: true }
-  )
+  if (!project) throw new ApolloError('project not found')
 
-  if (!updatedProject) throw new ApolloError('project not found')
-
+  if (clientInput) {
+    await Client.findOneAndUpdate({ project: projectId }, clientInput)
+  }
+  const updatedProject = await Project.findByIdAndUpdate(projectId, data, {
+    new: true
+  }).populate('client')
   return updatedProject
 }
 
@@ -45,26 +49,21 @@ export const addProject = async (
   const clientData = removeEmptyProperty<typeof clientInput>(clientInput)
 
   if (!isEmptyObject(clientData)) {
-    // TODO: MORE PRECISE
-    const clientDataWithUser = { ...clientData, user: userId }
-    const client = await Client.findOne(clientDataWithUser).then(
-      existingClient => {
-        console.log(existingClient)
-        if (!existingClient) return Client.create(clientDataWithUser)
-        return existingClient
-      }
-    )
-    console.log({ client })
-    newProject.client = client
+    const client = await updateOrCreateClient(clientData!, {
+      ...clientData!,
+      project: newProject.id,
+      user: userId
+    })
+    newProject.client = client.id
   }
 
   const savedProject = await newProject.save()
 
   await User.findOneAndUpdate(
     { _id: user.id },
-    { $push: { projects: savedProject } }
+    { $addToSet: { projects: savedProject } }
   )
-  console.log(savedProject)
+
   return {
     success: true,
     message: 'project has been added',

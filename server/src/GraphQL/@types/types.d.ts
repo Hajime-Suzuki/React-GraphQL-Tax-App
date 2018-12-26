@@ -64,6 +64,8 @@ export interface IQuery {
   getProjectsByUserId: IProject[];
 
   getSingleProject?: IProject | null;
+
+  getClientsByUser?: IClient[] | null;
 }
 
 export interface IUser {
@@ -80,6 +82,8 @@ export interface IUser {
   projects?: IProject[] | null;
 
   expenses?: IExpense[] | null;
+
+  clients?: IClient[] | null;
 }
 
 export interface IProject {
@@ -111,6 +115,8 @@ export interface IProject {
 }
 
 export interface IClient {
+  id: string;
+
   firstName?: string | null;
 
   lastName?: string | null;
@@ -124,6 +130,8 @@ export interface IClient {
   address?: string | null;
 
   user?: string | null;
+
+  projects?: string[] | null;
 }
 
 export interface IExpenseAndIncome {
@@ -186,6 +194,9 @@ export interface GetProjectsByUserIdQueryArgs {
 }
 export interface GetSingleProjectQueryArgs {
   projectId: string;
+}
+export interface GetClientsByUserQueryArgs {
+  userId: string;
 }
 export interface RegisterUserMutationArgs {
   firstName: string;
@@ -278,6 +289,12 @@ export namespace QueryResolvers {
       TypeParent,
       Context
     >;
+
+    getClientsByUser?: GetClientsByUserResolver<
+      IClient[] | null,
+      TypeParent,
+      Context
+    >;
   }
 
   export type GetUserResolver<
@@ -306,6 +323,15 @@ export namespace QueryResolvers {
   export interface GetSingleProjectArgs {
     projectId: string;
   }
+
+  export type GetClientsByUserResolver<
+    R = IClient[] | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetClientsByUserArgs>;
+  export interface GetClientsByUserArgs {
+    userId: string;
+  }
 }
 
 export namespace UserResolvers {
@@ -323,6 +349,8 @@ export namespace UserResolvers {
     projects?: ProjectsResolver<IProject[] | null, TypeParent, Context>;
 
     expenses?: ExpensesResolver<IExpense[] | null, TypeParent, Context>;
+
+    clients?: ClientsResolver<IClient[] | null, TypeParent, Context>;
   }
 
   export type IdResolver<R = string, Parent = IUser, Context = {}> = Resolver<
@@ -357,6 +385,11 @@ export namespace UserResolvers {
   > = Resolver<R, Parent, Context>;
   export type ExpensesResolver<
     R = IExpense[] | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ClientsResolver<
+    R = IClient[] | null,
     Parent = IUser,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -464,6 +497,8 @@ export namespace ProjectResolvers {
 
 export namespace ClientResolvers {
   export interface Resolvers<Context = {}, TypeParent = IClient> {
+    id?: IdResolver<string, TypeParent, Context>;
+
     firstName?: FirstNameResolver<string | null, TypeParent, Context>;
 
     lastName?: LastNameResolver<string | null, TypeParent, Context>;
@@ -477,8 +512,15 @@ export namespace ClientResolvers {
     address?: AddressResolver<string | null, TypeParent, Context>;
 
     user?: UserResolver<string | null, TypeParent, Context>;
+
+    projects?: ProjectsResolver<string[] | null, TypeParent, Context>;
   }
 
+  export type IdResolver<R = string, Parent = IClient, Context = {}> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
   export type FirstNameResolver<
     R = string | null,
     Parent = IClient,
@@ -511,6 +553,11 @@ export namespace ClientResolvers {
   > = Resolver<R, Parent, Context>;
   export type UserResolver<
     R = string | null,
+    Parent = IClient,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ProjectsResolver<
+    R = string[] | null,
     Parent = IClient,
     Context = {}
   > = Resolver<R, Parent, Context>;

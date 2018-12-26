@@ -2,9 +2,13 @@ import { Document, model, Model, Schema } from 'mongoose'
 import * as validator from 'validator'
 import { IClient } from '../GraphQL/@types/types'
 
-type ClientDocument = IClient & Document
+type IClientDocument = IClient & Document
 
-const ClientSchema = new Schema({
+interface IClientModel extends Model<IClientDocument> {
+  findOneOrCreate: (condition: any, data: any) => IClientDocument
+}
+
+const clientSchema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -19,13 +23,18 @@ const ClientSchema = new Schema({
     type: String,
     validate: {
       validator(v: string) {
+        if (!v) return true
         return validator.isEmail(v)
       },
       message: () => 'invalid email'
     }
   },
   user: {
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  projects: {
+    type: [Schema.Types.ObjectId]
   },
   phone: {
     type: String
@@ -38,7 +47,26 @@ const ClientSchema = new Schema({
   }
 })
 
-export const Client: Model<ClientDocument> = model<ClientDocument>(
+clientSchema.set('toJSON', {
+  virtuals: true
+})
+
+clientSchema.statics.findOneAndUpdateOrCreate = async function(
+  condition: any,
+  data: any
+): Promise<IClient> {
+  const existingClient = await this.findOne({ ...condition })
+  console.log({ existingClient })
+  if (!existingClient) {
+    const newClient = await Client.create(data)
+    console.log({ newClient })
+    return newClient
+  } else {
+    return await existingClient.update(data)
+  }
+}
+
+export const Client = model<IClientDocument, IClientModel>(
   'Client',
-  ClientSchema
+  clientSchema
 )

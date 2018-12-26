@@ -5,7 +5,6 @@ type Quantity = number | null
 type TaxRate = number | null
 
 const getSubtotal = (items: { price?: Price; quantity?: Quantity }[]) => {
-  console.log(items)
   const total = items.reduce((sum, item) => {
     if (!item.price || !item.quantity) return sum
     return (sum += +item.price * item.quantity)

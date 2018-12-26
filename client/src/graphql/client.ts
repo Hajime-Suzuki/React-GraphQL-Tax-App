@@ -28,7 +28,7 @@ const removeTypenameLink = new ApolloLink((operation, forward) => {
   if (Object.keys(operation.variables).length) {
     operation.variables = JSON.parse(
       JSON.stringify(operation.variables),
-      (key, value) => (key === '__typename' || value === '' ? undefined : value)
+      (key, value) => (key === '__typename' ? undefined : value)
     )
   }
   return forward!(operation)
