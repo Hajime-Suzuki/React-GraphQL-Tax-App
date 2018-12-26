@@ -1,28 +1,39 @@
-import { Client } from '../../Models/Client'
-import { User } from '../../Models/User'
 import { removeEmptyProperty } from '../../helpers/transform'
-import { IClient, IClientInput } from '../@types/types'
+import { Client } from '../../Models/Client'
+import { IClientInput } from '../@types/types'
 
 export const getClientsByUserId = async (userId: string) => {
   return Client.find({ user: userId })
 }
 
 export const updateOrCreateClient = async (
-  condition: IClientInput & { user?: string; project?: string },
-  data: IClientInput & { user?: string; project?: string }
+  {
+    projectId: conditionPId,
+    userId: conditionUId,
+    ...condition
+  }: IClientInput & { userId?: string; projectId?: string },
+  data: IClientInput & { userId?: string; projectId?: string }
 ) => {
-  const client = await Client.findOne(removeEmptyProperty(condition))
+  const client = await Client.findOne({
+    ...removeEmptyProperty(condition),
+    ...(conditionPId && { projects: conditionPId }),
+    ...(conditionUId && { user: conditionUId })
+  })
 
   if (!client) {
-    const newClient = await Client.create(data)
+    const newClient = await Client.create({
+      ...data,
+      projects: data.projectId,
+      user: data.userId
+    })
     return newClient
   } else {
-    const { project, ...rest } = data // if project is passed, it makes conflict to '$push'
+    const { projectId: _, ...rest } = data
     const updateClient = await Client.findByIdAndUpdate(
       client.id,
       {
         ...rest,
-        $addToSet: { projects: data.project }
+        $addToSet: { projects: data.projectId }
       },
       {
         new: true

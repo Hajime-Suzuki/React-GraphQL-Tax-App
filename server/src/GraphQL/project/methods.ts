@@ -1,10 +1,9 @@
 import { ApolloError, AuthenticationError } from 'apollo-server-koa'
+import { isEmptyObject } from '../../helpers/object'
 import { removeEmptyProperty } from '../../helpers/transform'
-import { Client } from '../../Models/Client'
 import { Project } from '../../Models/Project'
 import { User } from '../../Models/User'
-import { IProjectInput, GetSingleProjectQueryArgs } from '../@types/types'
-import { isEmptyObject } from '../../helpers/object'
+import { GetSingleProjectQueryArgs, IProjectInput } from '../@types/types'
 import { updateOrCreateClient } from '../client/methods'
 
 export const getProjectsByUserId = async (userId: string) => {
@@ -28,8 +27,16 @@ export const updateProject = async (
   if (!project) throw new ApolloError('project not found')
 
   if (clientInput) {
-    await Client.findOneAndUpdate({ project: projectId }, clientInput)
+    const client = await updateOrCreateClient(
+      { projectId },
+      {
+        ...clientInput,
+        projectId
+      }
+    )
+    ; (data as any).client = client.id
   }
+
   const updatedProject = await Project.findByIdAndUpdate(projectId, data, {
     new: true
   }).populate('client')
@@ -47,12 +54,11 @@ export const addProject = async (
   const newProject = new Project({ ...data, user: user.id })
 
   const clientData = removeEmptyProperty<typeof clientInput>(clientInput)
-
   if (!isEmptyObject(clientData)) {
-    const client = await updateOrCreateClient(clientData!, {
+    const client = await updateOrCreateClient({ ...clientData, userId }!, {
       ...clientData!,
-      project: newProject.id,
-      user: userId
+      projectId: newProject.id,
+      userId
     })
     newProject.client = client.id
   }

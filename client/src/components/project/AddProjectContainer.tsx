@@ -26,7 +26,7 @@ class AddProjectContainer extends React.PureComponent {
   render = () => {
     return (
       <AddProject.Component onCompleted={ProjectActions.addNewProjectToList}>
-        {(addProject, { data, error, loading }) => {
+        {(addProject, { data, error: mutationError, loading }) => {
           return (
             <Formik
               onSubmit={async (
@@ -41,11 +41,12 @@ class AddProjectContainer extends React.PureComponent {
                 resetForm()
               }}
               validateOnChange={false}
+              validateOnBlur={false}
               initialValues={addProjectInitialValues}
               validationSchema={addProjectSchema}
               render={(formProps: FormikProps<ProjectInput>) => (
                 <InvoiceInfoForm
-                  error={error && 'something went wrong'}
+                  mutationError={mutationError && 'something went wrong'}
                   loading={loading}
                   successMessage={
                     data && data.addProject && data.addProject.message

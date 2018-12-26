@@ -10,7 +10,7 @@ import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
 import { ProjectInput } from 'src/graphql/components/projects'
 
 interface OwnProps {
-  error: string
+  mutationError?: string
   loading: boolean
   successMessage?: string | null
 }
@@ -23,11 +23,14 @@ class InvoiceInfoForm extends React.Component<
       isSubmitting,
       handleChange,
       values,
-      error,
+      mutationError,
+      errors: validationErrors,
       loading,
+      touched,
       successMessage
     } = this.props
     const { incomes, expenses } = values
+    const isTouched = !!Object.keys(touched).length
     return (
       <StyledForm>
         <div className="form-section">
@@ -70,16 +73,23 @@ class InvoiceInfoForm extends React.Component<
             />
           </div>
         )}
-        {error && (
+        {!mutationError && !isTouched && (
           <Typography color="error" variant="h6" gutterBottom>
-            {error}
+            {mutationError}
           </Typography>
         )}
-        {successMessage && (
+        {successMessage && !isTouched && (
           <Typography color="primary" variant="h6" gutterBottom>
             {successMessage}
           </Typography>
         )}
+        {!!Object.keys(validationErrors).length && (
+          <Typography color="error" variant="h6" gutterBottom>
+            {console.log(validationErrors)}
+            You have invalid value(s)
+          </Typography>
+        )}
+        {console.log(this.props)}
         <div className="form-section">
           <Button
             type="submit"

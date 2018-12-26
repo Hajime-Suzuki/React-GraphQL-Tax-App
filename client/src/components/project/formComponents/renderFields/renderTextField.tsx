@@ -1,6 +1,7 @@
 import TextField from '@material-ui/core/TextField'
 import { FieldProps, getIn } from 'formik'
 import React from 'react'
+import Typography from '@material-ui/core/Typography'
 
 export const renderFormikTextField = (
   { field, form: { touched, errors }, ...props }: FieldProps,
@@ -21,7 +22,9 @@ export const renderFormikTextField = (
       }}
     >
       <TextField type="text" {...field} {...props} />
-      {isTouched && errorMessage && <div className="error">{errorMessage}</div>}
+      {isTouched && errorMessage && (
+        <Typography color="error">{errorMessage}</Typography>
+      )}
     </div>
   )
 }

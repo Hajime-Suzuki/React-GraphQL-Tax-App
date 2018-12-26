@@ -8,6 +8,7 @@ interface Field {
   type?: string
 }
 
+// if arrow function is passed to component, input is interrupted character by character
 export const renderFields = (field: Field) => {
   return (
     <Field
