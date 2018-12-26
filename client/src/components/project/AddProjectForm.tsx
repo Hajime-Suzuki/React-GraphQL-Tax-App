@@ -89,22 +89,25 @@ class AddProjectForm extends React.Component<
             />
           </div>
         )}
-        {!mutationError && !isTouched && (
-          <Typography color="error" variant="h6" gutterBottom>
-            {mutationError}
-          </Typography>
-        )}
-        {successMessage && !isTouched && (
-          <Typography color="primary" variant="h6" gutterBottom>
-            {successMessage}
-          </Typography>
-        )}
-        {!!Object.keys(validationErrors).length && (
-          <Typography color="error" variant="h6" gutterBottom>
-            {console.log(validationErrors)}
-            You have invalid value(s)
-          </Typography>
-        )}
+        <div className="message-section">
+          {!mutationError && !isTouched && (
+            <Typography color="error" variant="h6">
+              {mutationError}
+            </Typography>
+          )}
+          {successMessage && !isTouched && (
+            <Typography color="primary" variant="h6">
+              {successMessage}
+            </Typography>
+          )}
+          {!!Object.keys(validationErrors).length && (
+            <Typography color="error" variant="h6">
+              {console.log(validationErrors)}
+              You have invalid value(s)
+            </Typography>
+          )}
+        </div>
+
         <div className="form-section">
           <Button
             type="submit"
@@ -125,6 +128,7 @@ export const StyledForm = styled(Form)`
   .form-section {
     ${Styles.flexContainerProps}
     width: 90%;
+    max-width: 1000px;
     margin-bottom: 4em;
     .title {
       width: 100%;
@@ -142,6 +146,11 @@ export const StyledForm = styled(Form)`
       width: 100%;
       text-align: center;
     }
+  }
+  .message-section {
+    text-align: center;
+    margin-bottom: 2em;
+    width: 100%;
   }
 `
 

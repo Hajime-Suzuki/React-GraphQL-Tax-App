@@ -66,7 +66,6 @@ class EditBasicInfoFormAndClient extends React.Component<
                 errors,
                 setFieldValue
               }: FormikProps<typeof initialValues>) => {
-                console.log({ values, errors })
                 return (
                   <EditFormModal
                     title="Edit Info"
