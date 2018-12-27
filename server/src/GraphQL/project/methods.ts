@@ -76,3 +76,12 @@ export const addProject = async (
     project: savedProject
   }
 }
+
+export const deleteProject = async (projectId: string) => {
+  const deletedProject = await Project.findByIdAndDelete(projectId)
+  return {
+    success: true,
+    message: 'project has been added',
+    project: deletedProject
+  }
+}

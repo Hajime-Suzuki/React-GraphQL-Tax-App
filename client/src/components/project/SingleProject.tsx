@@ -1,17 +1,17 @@
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Icon from '@material-ui/core/Icon'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import format from 'date-fns/format'
 import * as React from 'react'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
-import ExpenseIncomeTable from './helper/ExpenseIncomeTable'
+import { EditIcon } from '../UI/EditIcon'
+import EditBasicInfoFormAndClient from './formComponents/edit/EditBasicInfoForm'
 import EditExpenseAndIncomeForm from './formComponents/edit/EditIncomesAndExpenseForm'
 import { Calculations } from './helper/calculations'
+import ExpenseIncomeTable from './helper/ExpenseIncomeTable'
 import { SingleProjectChildProps } from './SingleProjectContainer'
-import EditBasicInfoFormAndClient from './formComponents/edit/EditBasicInfoForm'
 
 const phone = theme.breakpoints.down('sm')
 const tablet = theme.breakpoints.up('md')
@@ -27,8 +27,8 @@ const ButtonWrapper: any = styled(Grid)`
 `
 
 const SingleProject: React.SFC<SingleProjectChildProps> = props => {
-  const { project, handleOpenModal, selectedModal } = props
-  const { client, expenses, incomes, ...basic } = project
+  const { project, handleOpenModal } = props
+  const { client } = project
   return (
     <ProjectDetails container justify="center">
       <ButtonWrapper item xs={10} container justify="flex-end">
@@ -173,9 +173,10 @@ const IncomesAndExpenseSection: React.SFC<SingleProjectChildProps> = ({
                 <Typography variant="title" color="secondary">
                   {title}
                 </Typography>
-                <IconButton onClick={handleOpenModal(type)}>
-                  <Icon className="fas fa-pen" />
-                </IconButton>
+                <EditIcon
+                  onClick={handleOpenModal(type)}
+                  style={{ marginLeft: '10px' }}
+                />
               </div>
 
               <ExpenseIncomeTable

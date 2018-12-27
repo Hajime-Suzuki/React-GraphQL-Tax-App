@@ -4,7 +4,8 @@ import {
   addProject,
   getProjectsByUserId,
   updateProject,
-  getSingleProject
+  getSingleProject,
+  deleteProject
 } from './methods'
 
 export const projectResolvers: {
@@ -24,6 +25,7 @@ export const projectResolvers: {
         message: `Project "${projectId}" has been updated`,
         project
       }
-    }
+    },
+    deleteProject: async (_, { projectId }) => deleteProject(projectId)
   }
 }

@@ -28,6 +28,7 @@ export const projectSchema = gql`
       data: ProjectInput!
     ): MutationProjectResponse!
     addProject(data: ProjectInput!): MutationProjectResponse
+    deleteProject(projectId: String!): MutationProjectResponse
   }
 
   type MutationProjectResponse {

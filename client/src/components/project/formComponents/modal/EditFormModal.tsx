@@ -8,12 +8,13 @@ import Dialog from '@material-ui/core/Dialog'
 import Typography from '@material-ui/core/Typography'
 
 interface Props {
-  title: string
+  title?: string
   handleCloseModal: () => void
   handleConfirm: () => void
   isOpen: boolean
   error?: string
   loading?: boolean
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | false
 }
 
 const EditFormModal: React.SFC<Props> = props => {
@@ -24,14 +25,15 @@ const EditFormModal: React.SFC<Props> = props => {
     children,
     title,
     error,
-    loading
+    loading,
+    maxWidth = 'lg'
   } = props
 
   return (
     <DialogWrapper
       disableBackdropClick
       disableEscapeKeyDown
-      maxWidth="lg"
+      maxWidth={maxWidth}
       fullWidth={true}
       open={isOpen}
     >

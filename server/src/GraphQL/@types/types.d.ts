@@ -164,6 +164,8 @@ export interface IMutation {
   updateProject: IMutationProjectResponse;
 
   addProject?: IMutationProjectResponse | null;
+
+  deleteProject?: IMutationProjectResponse | null;
 }
 
 export interface IRegisterResponse {
@@ -219,6 +221,9 @@ export interface UpdateProjectMutationArgs {
 }
 export interface AddProjectMutationArgs {
   data: IProjectInput;
+}
+export interface DeleteProjectMutationArgs {
+  projectId: string;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -653,6 +658,12 @@ export namespace MutationResolvers {
       TypeParent,
       Context
     >;
+
+    deleteProject?: DeleteProjectResolver<
+      IMutationProjectResponse | null,
+      TypeParent,
+      Context
+    >;
   }
 
   export type RegisterUserResolver<
@@ -699,6 +710,15 @@ export namespace MutationResolvers {
   > = Resolver<R, Parent, Context, AddProjectArgs>;
   export interface AddProjectArgs {
     data: IProjectInput;
+  }
+
+  export type DeleteProjectResolver<
+    R = IMutationProjectResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, DeleteProjectArgs>;
+  export interface DeleteProjectArgs {
+    projectId: string;
   }
 }
 

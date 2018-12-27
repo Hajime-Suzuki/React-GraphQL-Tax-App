@@ -381,6 +381,56 @@ export namespace UpdateBasicInfo {
   };
 }
 
+export namespace DeleteProject {
+  export type Variables = {
+    projectId: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteProject: DeleteProject | null;
+  };
+
+  export type DeleteProject = {
+    __typename?: "MutationProjectResponse";
+
+    message: string | null;
+
+    project: Project | null;
+  };
+
+  export type Project = {
+    __typename?: "Project";
+
+    id: string;
+
+    invoiceNumber: string;
+
+    invoiceDate: Date | null;
+
+    name: string;
+
+    projectDate: Date | null;
+
+    status: InvoiceStatus;
+
+    client: Client | null;
+  };
+
+  export type Client = {
+    __typename?: "Client";
+
+    firstName: string | null;
+
+    lastName: string | null;
+
+    email: string | null;
+
+    phone: string | null;
+  };
+}
+
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 
@@ -680,6 +730,61 @@ export namespace UpdateBasicInfo {
     mutation updateBasicInfo($projectId: String!, $data: ProjectInput!) {
       updateProject(projectId: $projectId, data: $data) {
         success
+        message
+        project {
+          id
+          invoiceNumber
+          invoiceDate
+          name
+          projectDate
+          status
+          client {
+            firstName
+            lastName
+            email
+            phone
+          }
+        }
+      }
+    }
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace DeleteProject {
+  export const Document = gql`
+    mutation deleteProject($projectId: String!) {
+      deleteProject(projectId: $projectId) {
         message
         project {
           id

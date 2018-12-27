@@ -83,3 +83,5 @@ dist/
 **/*.http
 **/database/connectionString.ts
 **/jwt
+
+.netlify

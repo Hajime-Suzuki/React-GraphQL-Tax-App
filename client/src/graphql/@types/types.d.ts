@@ -164,6 +164,8 @@ export interface Mutation {
   updateProject: MutationProjectResponse;
 
   addProject?: MutationProjectResponse | null;
+
+  deleteProject?: MutationProjectResponse | null;
 }
 
 export interface RegisterResponse {
@@ -219,4 +221,7 @@ export interface UpdateProjectMutationArgs {
 }
 export interface AddProjectMutationArgs {
   data: ProjectInput;
+}
+export interface DeleteProjectMutationArgs {
+  projectId: string;
 }

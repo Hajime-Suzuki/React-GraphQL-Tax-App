@@ -74,8 +74,15 @@ const addNewProjectToList = ({ addProject }: AddProject.Mutation) => {
   writeData(queryOption, [...projects!, newProject])
 }
 
+const removeProject = (projectId: string) => {
+  const { projects, queryOption } = getProjectOverview()
+  if (!projects || !queryOption) return
+  writeData(queryOption, projects.filter(p => p.id !== projectId))
+}
+
 export const ProjectActions = {
   sortProjectsByProjectDate,
   sortProjectsByInvoiceDate,
-  addNewProjectToList
+  addNewProjectToList,
+  removeProject
 }

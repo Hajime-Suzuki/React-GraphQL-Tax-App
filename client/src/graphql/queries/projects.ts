@@ -142,11 +142,34 @@ const UPDATE_BASIC_INFO = gql`
   }
 `
 
+const DELETE_PROJECT = gql`
+  mutation deleteProject($projectId: String!) {
+    deleteProject(projectId: $projectId) {
+      message
+      project {
+        id
+        invoiceNumber
+        invoiceDate
+        name
+        projectDate
+        status
+        client {
+          firstName
+          lastName
+          email
+          phone
+        }
+      }
+    }
+  }
+`
+
 export const projectQueries = {
   GET_PROJECT_OVERVIEW,
   GET_SINGLE_PROJECT,
   UPDATE_STATUS,
   ADD_PROJECT,
   UPDATE_INCOMES_EXPENSES,
-  UPDATE_BASIC_INFO
+  UPDATE_BASIC_INFO,
+  DELETE_PROJECT
 }
