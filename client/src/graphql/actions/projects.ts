@@ -71,7 +71,7 @@ const addNewProjectToList = ({ addProject }: AddProject.Mutation) => {
   if (!projects || !queryOption) return
 
   const newProject = addProject!.project!
-  writeData(queryOption, [...projects!, newProject])
+  writeData(queryOption, [newProject, ...projects!])
 }
 
 const removeProject = (projectId: string) => {

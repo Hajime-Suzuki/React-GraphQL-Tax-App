@@ -68,7 +68,7 @@ const ProjectsList: React.SFC<Props> = props => {
                   {p.invoiceDate ? format(p.invoiceDate, 'Y-MM-dd') : '-'}
                 </TableCell>
                 <TableCell>
-                  {Calculations.getSubtotal(p.incomes || [])}
+                  {Calculations.getGrandTotal(p.incomes || [])}
                 </TableCell>
                 <TableCell>
                   <UpdateStatus.Component>

@@ -90,7 +90,8 @@
     "test": "node scripts/test.js --env=jsdom",
     "gen:introspection": "apollo schema:download ./schema.json --endpoint=http://localhost:4000/graphql",
     "gen:compile": "tsc ./src/graphql/typeDefs.ts --outDir ./_gql-gen/ --target ES5",
-    "gen": "gql-gen"
+    "gen": "gql-gen",
+    "gen:debug": "gql-gen DEBUG=true"
   },
   "devDependencies": {
     "@types/graphql": "^14.0.3",
@@ -99,6 +100,7 @@
     "@types/react": "^16.7.11",
     "@types/react-dom": "^16.0.11",
     "@types/styled-components": "^4.1.2",
+    "graphql-codegen-fragment-matcher": "^0.15.2",
     "graphql-codegen-typescript-react-apollo": "^0.14.5",
     "graphql-codegen-typescript-resolvers": "^0.14.5",
     "typescript": "^3.2.1"

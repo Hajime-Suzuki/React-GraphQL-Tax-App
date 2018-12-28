@@ -68,26 +68,10 @@ export namespace GetProjectOverview {
   export type GetProjectsByUserId = {
     __typename?: "Project";
 
-    id: string;
-
-    name: string;
-
-    projectDate: Date | null;
-
-    invoiceDate: Date | null;
-
-    status: InvoiceStatus;
-
     incomes: Incomes[] | null;
-  };
+  } & BasicInfoFragments.Fragment;
 
-  export type Incomes = {
-    __typename?: "ExpenseAndIncome";
-
-    price: string | null;
-
-    quantity: number | null;
-  };
+  export type Incomes = PriceFragments.Fragment;
 }
 
 export namespace GetSingleProject {
@@ -104,24 +88,14 @@ export namespace GetSingleProject {
   export type GetSingleProject = {
     __typename?: "Project";
 
-    id: string;
-
     invoiceNumber: string;
-
-    invoiceDate: Date | null;
-
-    name: string;
-
-    projectDate: Date | null;
-
-    status: InvoiceStatus;
 
     client: Client | null;
 
     incomes: Incomes[] | null;
 
     expenses: Expenses[] | null;
-  };
+  } & BasicInfoFragments.Fragment;
 
   export type Client = {
     __typename?: "Client";
@@ -139,25 +113,13 @@ export namespace GetSingleProject {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-
-    price: string | null;
-
-    quantity: number | null;
-
-    taxRate: number | null;
-  };
+  } & PriceFragments.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-
-    price: string | null;
-
-    quantity: number | null;
-
-    taxRate: number | null;
-  };
+  } & PriceFragments.Fragment;
 }
 
 export namespace UpdateStatus {
@@ -215,24 +177,14 @@ export namespace AddProject {
   export type Project = {
     __typename?: "Project";
 
-    id: string;
-
     invoiceNumber: string;
-
-    invoiceDate: Date | null;
-
-    name: string;
-
-    projectDate: Date | null;
-
-    status: InvoiceStatus;
 
     client: Client | null;
 
     incomes: Incomes[] | null;
 
     expenses: Expenses[] | null;
-  };
+  } & BasicInfoFragments.Fragment;
 
   export type Client = {
     __typename?: "Client";
@@ -250,25 +202,13 @@ export namespace AddProject {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-
-    price: string | null;
-
-    quantity: number | null;
-
-    taxRate: number | null;
-  };
+  } & PriceFragments.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-
-    price: string | null;
-
-    quantity: number | null;
-
-    taxRate: number | null;
-  };
+  } & PriceFragments.Fragment;
 }
 
 export namespace UpdateIncomesAndExpenses {
@@ -307,25 +247,13 @@ export namespace UpdateIncomesAndExpenses {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-
-    price: string | null;
-
-    quantity: number | null;
-
-    taxRate: number | null;
-  };
+  } & PriceFragments.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-
-    price: string | null;
-
-    quantity: number | null;
-
-    taxRate: number | null;
-  };
+  } & PriceFragments.Fragment;
 }
 
 export namespace UpdateBasicInfo {
@@ -353,20 +281,10 @@ export namespace UpdateBasicInfo {
   export type Project = {
     __typename?: "Project";
 
-    id: string;
-
     invoiceNumber: string;
 
-    invoiceDate: Date | null;
-
-    name: string;
-
-    projectDate: Date | null;
-
-    status: InvoiceStatus;
-
     client: Client | null;
-  };
+  } & BasicInfoFragments.Fragment;
 
   export type Client = {
     __typename?: "Client";
@@ -403,20 +321,10 @@ export namespace DeleteProject {
   export type Project = {
     __typename?: "Project";
 
-    id: string;
-
     invoiceNumber: string;
 
-    invoiceDate: Date | null;
-
-    name: string;
-
-    projectDate: Date | null;
-
-    status: InvoiceStatus;
-
     client: Client | null;
-  };
+  } & BasicInfoFragments.Fragment;
 
   export type Client = {
     __typename?: "Client";
@@ -431,10 +339,64 @@ export namespace DeleteProject {
   };
 }
 
+export namespace PriceFragments {
+  export type Fragment = {
+    __typename?: "ExpenseAndIncome";
+
+    price: string | null;
+
+    quantity: number | null;
+
+    taxRate: number | null;
+  };
+}
+
+export namespace BasicInfoFragments {
+  export type Fragment = {
+    __typename?: "Project";
+
+    id: string;
+
+    name: string;
+
+    projectDate: Date | null;
+
+    invoiceDate: Date | null;
+
+    status: InvoiceStatus;
+  };
+}
+
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 
 import gql from "graphql-tag";
+
+// ====================================================
+// Fragments
+// ====================================================
+
+export namespace PriceFragments {
+  export const FragmentDoc = gql`
+    fragment PriceFragments on ExpenseAndIncome {
+      price
+      quantity
+      taxRate
+    }
+  `;
+}
+
+export namespace BasicInfoFragments {
+  export const FragmentDoc = gql`
+    fragment BasicInfoFragments on Project {
+      id
+      name
+      projectDate
+      invoiceDate
+      status
+    }
+  `;
+}
 
 // ====================================================
 // Components
@@ -444,17 +406,15 @@ export namespace GetProjectOverview {
   export const Document = gql`
     query getProjectOverview($userId: String!) {
       getProjectsByUserId(userId: $userId) {
-        id
-        name
-        projectDate
-        invoiceDate
-        status
+        ...BasicInfoFragments
         incomes {
-          price
-          quantity
+          ...PriceFragments
         }
       }
     }
+
+    ${BasicInfoFragments.FragmentDoc}
+    ${PriceFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.QueryProps<Query, Variables>>
@@ -492,12 +452,8 @@ export namespace GetSingleProject {
   export const Document = gql`
     query getSingleProject($id: String!) {
       getSingleProject(projectId: $id) {
-        id
         invoiceNumber
-        invoiceDate
-        name
-        projectDate
-        status
+        ...BasicInfoFragments
         client {
           firstName
           lastName
@@ -506,18 +462,17 @@ export namespace GetSingleProject {
         }
         incomes {
           name
-          price
-          quantity
-          taxRate
+          ...PriceFragments
         }
         expenses {
           name
-          price
-          quantity
-          taxRate
+          ...PriceFragments
         }
       }
     }
+
+    ${BasicInfoFragments.FragmentDoc}
+    ${PriceFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.QueryProps<Query, Variables>>
@@ -604,12 +559,8 @@ export namespace AddProject {
         success
         message
         project {
-          id
           invoiceNumber
-          invoiceDate
-          name
-          projectDate
-          status
+          ...BasicInfoFragments
           client {
             firstName
             lastName
@@ -618,19 +569,18 @@ export namespace AddProject {
           }
           incomes {
             name
-            price
-            quantity
-            taxRate
+            ...PriceFragments
           }
           expenses {
             name
-            price
-            quantity
-            taxRate
+            ...PriceFragments
           }
         }
       }
     }
+
+    ${BasicInfoFragments.FragmentDoc}
+    ${PriceFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
@@ -678,19 +628,17 @@ export namespace UpdateIncomesAndExpenses {
           id
           incomes {
             name
-            price
-            quantity
-            taxRate
+            ...PriceFragments
           }
           expenses {
             name
-            price
-            quantity
-            taxRate
+            ...PriceFragments
           }
         }
       }
     }
+
+    ${PriceFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
@@ -732,12 +680,8 @@ export namespace UpdateBasicInfo {
         success
         message
         project {
-          id
           invoiceNumber
-          invoiceDate
-          name
-          projectDate
-          status
+          ...BasicInfoFragments
           client {
             firstName
             lastName
@@ -747,6 +691,8 @@ export namespace UpdateBasicInfo {
         }
       }
     }
+
+    ${BasicInfoFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
@@ -787,12 +733,8 @@ export namespace DeleteProject {
       deleteProject(projectId: $projectId) {
         message
         project {
-          id
           invoiceNumber
-          invoiceDate
-          name
-          projectDate
-          status
+          ...BasicInfoFragments
           client {
             firstName
             lastName
@@ -802,6 +744,8 @@ export namespace DeleteProject {
         }
       }
     }
+
+    ${BasicInfoFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
