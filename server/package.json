@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/dotenv": "^4.0.3",
     "@types/graphql": "^14.0.3",
+    "@types/koa-pug": "^3.0.4",
     "apollo-server-koa": "^2.0.0-rc.12",
     "bcrypt": "^3.0.0",
     "date-fns": "^1.29.0",
@@ -16,6 +17,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-cors": "^0.0.16",
     "koa-passport": "^4.1.1",
+    "koa-pug": "^3.0.0-2",
     "koa-router": "^7.4.0",
     "merge-graphql-schemas": "^1.5.8",
     "mongoose": "^5.2.14",
@@ -24,6 +26,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "puppeteer": "^1.11.0",
     "ts-node": "^7.0.1",
     "typescript": "2.9.2",
     "validator": "^10.7.1"
@@ -43,6 +46,7 @@
     "@types/passport": "^0.4.6",
     "@types/passport-jwt": "^3.0.1",
     "@types/passport-local": "^1.0.33",
+    "@types/puppeteer": "^1.11.1",
     "@types/supertest": "^2.0.6",
     "@types/validator": "^9.4.1",
     "apollo": "^2.1.3",
