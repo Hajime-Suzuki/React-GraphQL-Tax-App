@@ -1,16 +1,16 @@
 import * as Router from 'koa-router'
-import * as fs from 'fs'
-import * as path from 'path'
 import { generatePDF } from '../pdf/generatePDF'
 
-const router = new Router({ prefix: '/pdf' })
+const router = new Router({ prefix: '/invoice' })
 
 // router.get('/download', ctx => {
 //   ctx.response.attachment('./test.pdf')
 //   ctx.body = fs.readFileSync(path.join(__dirname, '../document.pdf'))
 // })
 
-router.get('/', async ctx => {
+router.get('/generate', async ctx => {
+  const projectId = ctx.query.projectId
+
   try {
     const pdf = await generatePDF()
     ctx.response.attachment('pdf-item.pdf')
@@ -21,7 +21,13 @@ router.get('/', async ctx => {
   }
 })
 
-router.get('/invoice', async ctx => {
+router.get('/render', async ctx => {
+  const config = {
+    test: {
+      title: 'TEST!',
+      name: 'Hajime'
+    }
+  }
   ctx.render('index')
 })
 

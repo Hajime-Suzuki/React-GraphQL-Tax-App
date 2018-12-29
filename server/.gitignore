@@ -84,3 +84,5 @@ dist/
 **/database/connectionString.ts
 **/jwt
 **/_gql_gen/*.js
+**/pdf/build
+**/pdf/pdf-files

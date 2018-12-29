@@ -1,0 +1,16 @@
+- 
+  var test = {
+    title: 'Invoice',
+    name: 'Hajime Suzuki'
+  } 
+
+html
+  head
+    style
+      include ../build/index.css
+  body
+    h1 test
+    h1.title something
+    p #{test.title}
+    p #{test.name}
+    h2 something

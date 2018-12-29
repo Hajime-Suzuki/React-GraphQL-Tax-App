@@ -50,13 +50,17 @@
     "@types/supertest": "^2.0.6",
     "@types/validator": "^9.4.1",
     "apollo": "^2.1.3",
+    "browser-sync": "^2.26.3",
     "cross-env": "^5.2.0",
     "faker": "^4.1.0",
     "graphql-code-generator": "^0.14.5",
     "graphql-codegen-typescript-common": "^0.14.5",
     "graphql-codegen-typescript-server": "^0.14.5",
+    "gulp": "^4.0.0",
+    "gulp-pug": "^4.0.1",
+    "gulp-sass": "^4.0.2",
     "jest": "^23.6.0",
-    "nodemon": "^1.18.4",
+    "node-sass": "^4.11.0",
     "supertest": "^3.3.0",
     "ts-jest": "^23.1.4",
     "ts-node-dev": "^1.0.0-pre.30",
@@ -69,7 +73,8 @@
     "test-w": "cross-env NODE_ENV=test jest --watch",
     "test": "cross-env NODE_ENV=test jest",
     "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts",
-    "test-e": "cross-env NODE_ENV=test jest ./test/expense.test.ts --watch"
+    "test-e": "cross-env NODE_ENV=test jest ./test/expense.test.ts --watch",
+    "pdf": "gulp"
   },
   "jest": {
     "transform": {
