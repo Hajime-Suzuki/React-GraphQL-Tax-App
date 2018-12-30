@@ -1,13 +1,30 @@
 import * as React from 'react'
-import { GetToken } from 'src/graphql/components/client/login'
-import { IRouterComponentProps } from 'src/routes/types'
+import { PrivateRoutesChildProps } from 'src/routes/types'
+import { GetUserProfile } from 'src/graphql/components/userProfile'
+import { LoadingIcon } from '../UI/LoadingIcon'
 
-type Props = GetToken.Props<IRouterComponentProps>
+type Props = GetUserProfile.Props<PrivateRoutesChildProps>
 
 class EditUserProfileContainer extends React.Component<Props> {
   render() {
-    return 'test'
+    console.log(this.props)
+    const { data } = this.props
+    if (!data) return null
+    const { loading, error, getUser } = data
+    if (error) return <p>{error.message}</p>
+    if (loading) return <LoadingIcon />
+    if (!getUser) return 'Error!'
+    return (
+      <div>
+        {getUser.firstName} {getUser.lastName}
+      </div>
+    )
   }
 }
 
-export default GetToken.HOC({})(EditUserProfileContainer)
+export default GetUserProfile.HOC<Props>({
+  options: props => {
+    console.log({ props })
+    return { variables: { id: props.userId } }
+  }
+})(EditUserProfileContainer)

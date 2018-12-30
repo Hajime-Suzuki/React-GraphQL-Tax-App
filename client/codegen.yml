@@ -40,6 +40,14 @@ generates:
       - typescript-common
       - typescript-client
       - typescript-react-apollo
+
+  ./src/graphql/components/userProfile.tsx:
+    schema: http://localhost:4000/graphql
+    documents: ./src/graphql/queries/userProfile.ts
+    plugins:
+      - typescript-common
+      - typescript-client
+      - typescript-react-apollo
   ###### /components ######
 
   ###### client components ######

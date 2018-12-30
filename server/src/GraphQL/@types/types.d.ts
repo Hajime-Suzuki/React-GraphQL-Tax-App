@@ -81,8 +81,6 @@ export interface IUser {
 
   email: string;
 
-  password: string;
-
   projects?: IProject[] | null;
 
   expenses?: IExpense[] | null;
@@ -404,8 +402,6 @@ export namespace UserResolvers {
 
     email?: EmailResolver<string, TypeParent, Context>;
 
-    password?: PasswordResolver<string, TypeParent, Context>;
-
     projects?: ProjectsResolver<IProject[] | null, TypeParent, Context>;
 
     expenses?: ExpensesResolver<IExpense[] | null, TypeParent, Context>;
@@ -445,11 +441,6 @@ export namespace UserResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type EmailResolver<
-    R = string,
-    Parent = IUser,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type PasswordResolver<
     R = string,
     Parent = IUser,
     Context = {}

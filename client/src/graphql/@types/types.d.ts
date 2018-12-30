@@ -81,8 +81,6 @@ export interface User {
 
   email: string;
 
-  password: string;
-
   projects?: Project[] | null;
 
   expenses?: Expense[] | null;
