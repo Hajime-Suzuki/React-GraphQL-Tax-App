@@ -27,9 +27,11 @@ export interface ClientInput {
 
   phone?: string | null;
 
+  streetAddress?: string | null;
+
   postalCode?: string | null;
 
-  address?: string | null;
+  city?: string | null;
 }
 
 export interface ExpenseAndIncomeInput {

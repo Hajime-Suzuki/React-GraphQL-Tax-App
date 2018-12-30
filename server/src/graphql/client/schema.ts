@@ -7,18 +7,20 @@ export const clientSchema = gql`
     lastName: String
     email: String
     phone: String
-    postalCode: String
-    address: String
     user: String
     projects: [String!]
+    streetAddress: String
+    postalCode: String
+    city: String
   }
   input ClientInput {
     firstName: String
     lastName: String
     email: String
     phone: String
+    streetAddress: String
     postalCode: String
-    address: String
+    city: String
   }
 
   type Query {

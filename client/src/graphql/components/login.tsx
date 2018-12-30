@@ -27,9 +27,11 @@ export interface ClientInput {
 
   phone?: string | null;
 
+  streetAddress?: string | null;
+
   postalCode?: string | null;
 
-  address?: string | null;
+  city?: string | null;
 }
 
 export interface ExpenseAndIncomeInput {
@@ -88,6 +90,8 @@ export namespace GetUser {
 
   export type GetUser = {
     __typename?: "User";
+
+    id: string;
 
     firstName: string;
 
@@ -151,6 +155,7 @@ export namespace GetUser {
   export const Document = gql`
     query getUser($id: String!) {
       getUser(id: $id) {
+        id
         firstName
         lastName
         email

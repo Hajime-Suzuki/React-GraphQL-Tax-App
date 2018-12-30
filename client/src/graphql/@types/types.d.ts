@@ -27,9 +27,11 @@ export interface ClientInput {
 
   phone?: string | null;
 
+  streetAddress?: string | null;
+
   postalCode?: string | null;
 
-  address?: string | null;
+  city?: string | null;
 }
 
 export interface ExpenseAndIncomeInput {
@@ -86,6 +88,22 @@ export interface User {
   expenses?: Expense[] | null;
 
   clients?: Client[] | null;
+
+  btw?: string | null;
+
+  kvk?: string | null;
+
+  iban?: string | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
+
+  createdAt?: Date | null;
+
+  updatedAt?: Date | null;
 }
 
 export interface Project {
@@ -127,13 +145,15 @@ export interface Client {
 
   phone?: string | null;
 
-  postalCode?: string | null;
-
-  address?: string | null;
-
   user?: string | null;
 
   projects?: string[] | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
 }
 
 export interface ExpenseAndIncome {
@@ -192,6 +212,28 @@ export interface GenerateInvoiceResponse {
   message?: string | null;
 
   data?: Blob | null;
+}
+
+export interface EditUserInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  password?: string | null;
+
+  btw?: string | null;
+
+  kvk?: string | null;
+
+  iban?: string | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
 }
 
 // ====================================================

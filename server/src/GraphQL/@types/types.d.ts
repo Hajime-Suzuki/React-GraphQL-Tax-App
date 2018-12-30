@@ -27,9 +27,11 @@ export interface IClientInput {
 
   phone?: string | null;
 
+  streetAddress?: string | null;
+
   postalCode?: string | null;
 
-  address?: string | null;
+  city?: string | null;
 }
 
 export interface IExpenseAndIncomeInput {
@@ -86,6 +88,22 @@ export interface IUser {
   expenses?: IExpense[] | null;
 
   clients?: IClient[] | null;
+
+  btw?: string | null;
+
+  kvk?: string | null;
+
+  iban?: string | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
+
+  createdAt?: Date | null;
+
+  updatedAt?: Date | null;
 }
 
 export interface IProject {
@@ -127,13 +145,15 @@ export interface IClient {
 
   phone?: string | null;
 
-  postalCode?: string | null;
-
-  address?: string | null;
-
   user?: string | null;
 
   projects?: string[] | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
 }
 
 export interface IExpenseAndIncome {
@@ -192,6 +212,28 @@ export interface IGenerateInvoiceResponse {
   message?: string | null;
 
   data?: Blob | null;
+}
+
+export interface IEditUserInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  password?: string | null;
+
+  btw?: string | null;
+
+  kvk?: string | null;
+
+  iban?: string | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
 }
 
 // ====================================================
@@ -369,6 +411,22 @@ export namespace UserResolvers {
     expenses?: ExpensesResolver<IExpense[] | null, TypeParent, Context>;
 
     clients?: ClientsResolver<IClient[] | null, TypeParent, Context>;
+
+    btw?: BtwResolver<string | null, TypeParent, Context>;
+
+    kvk?: KvkResolver<string | null, TypeParent, Context>;
+
+    iban?: IbanResolver<string | null, TypeParent, Context>;
+
+    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
+
+    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
+
+    city?: CityResolver<string | null, TypeParent, Context>;
+
+    createdAt?: CreatedAtResolver<Date | null, TypeParent, Context>;
+
+    updatedAt?: UpdatedAtResolver<Date | null, TypeParent, Context>;
   }
 
   export type IdResolver<R = string, Parent = IUser, Context = {}> = Resolver<
@@ -408,6 +466,46 @@ export namespace UserResolvers {
   > = Resolver<R, Parent, Context>;
   export type ClientsResolver<
     R = IClient[] | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type BtwResolver<
+    R = string | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type KvkResolver<
+    R = string | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type IbanResolver<
+    R = string | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type StreetAddressResolver<
+    R = string | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type PostalCodeResolver<
+    R = string | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type CityResolver<
+    R = string | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type CreatedAtResolver<
+    R = Date | null,
+    Parent = IUser,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type UpdatedAtResolver<
+    R = Date | null,
     Parent = IUser,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -525,13 +623,15 @@ export namespace ClientResolvers {
 
     phone?: PhoneResolver<string | null, TypeParent, Context>;
 
-    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
-
-    address?: AddressResolver<string | null, TypeParent, Context>;
-
     user?: UserResolver<string | null, TypeParent, Context>;
 
     projects?: ProjectsResolver<string[] | null, TypeParent, Context>;
+
+    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
+
+    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
+
+    city?: CityResolver<string | null, TypeParent, Context>;
   }
 
   export type IdResolver<R = string, Parent = IClient, Context = {}> = Resolver<
@@ -559,16 +659,6 @@ export namespace ClientResolvers {
     Parent = IClient,
     Context = {}
   > = Resolver<R, Parent, Context>;
-  export type PostalCodeResolver<
-    R = string | null,
-    Parent = IClient,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type AddressResolver<
-    R = string | null,
-    Parent = IClient,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
   export type UserResolver<
     R = string | null,
     Parent = IClient,
@@ -576,6 +666,21 @@ export namespace ClientResolvers {
   > = Resolver<R, Parent, Context>;
   export type ProjectsResolver<
     R = string[] | null,
+    Parent = IClient,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type StreetAddressResolver<
+    R = string | null,
+    Parent = IClient,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type PostalCodeResolver<
+    R = string | null,
+    Parent = IClient,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type CityResolver<
+    R = string | null,
     Parent = IClient,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -823,6 +928,81 @@ export namespace GenerateInvoiceResponseResolvers {
   export type DataResolver<
     R = Blob | null,
     Parent = IGenerateInvoiceResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace EditUserInputResolvers {
+  export interface Resolvers<Context = {}, TypeParent = IEditUserInput> {
+    firstName?: FirstNameResolver<string | null, TypeParent, Context>;
+
+    lastName?: LastNameResolver<string | null, TypeParent, Context>;
+
+    email?: EmailResolver<string | null, TypeParent, Context>;
+
+    password?: PasswordResolver<string | null, TypeParent, Context>;
+
+    btw?: BtwResolver<string | null, TypeParent, Context>;
+
+    kvk?: KvkResolver<string | null, TypeParent, Context>;
+
+    iban?: IbanResolver<string | null, TypeParent, Context>;
+
+    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
+
+    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
+
+    city?: CityResolver<string | null, TypeParent, Context>;
+  }
+
+  export type FirstNameResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type LastNameResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type EmailResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type PasswordResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type BtwResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type KvkResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type IbanResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type StreetAddressResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type PostalCodeResolver<
+    R = string | null,
+    Parent = IEditUserInput,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type CityResolver<
+    R = string | null,
+    Parent = IEditUserInput,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }

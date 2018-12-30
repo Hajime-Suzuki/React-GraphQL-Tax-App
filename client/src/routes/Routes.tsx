@@ -9,6 +9,7 @@ import TopPage from '../components/topPage/TopPage'
 import { Styles } from '../styles/sharedStyles'
 import { routes } from './constants'
 import PrivateRoutes from './PrivateRoutes'
+import EditUserProfileContainer from 'src/components/userProfile/EditUserProfileContainer'
 
 class Routes extends React.Component {
   render() {
@@ -37,6 +38,11 @@ class Routes extends React.Component {
               path={routes.singleProject()}
               exact
               component={SingleProjectContainer}
+            />
+            <PrivateRoutes
+              path={routes.editUserProfile()}
+              exact
+              component={EditUserProfileContainer}
             />
             <Route
               path={routes.login}

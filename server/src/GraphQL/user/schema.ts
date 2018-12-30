@@ -10,7 +10,29 @@ export const userSchema = gql`
     projects: [Project!]
     expenses: [Expense!]
     clients: [Client!]
+    btw: String
+    kvk: String
+    iban: String
+    streetAddress: String
+    postalCode: String
+    city: String
+    createdAt: Date
+    updatedAt: Date
   }
+
+  type EditUserInput {
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+    btw: String
+    kvk: String
+    iban: String
+    streetAddress: String
+    postalCode: String
+    city: String
+  }
+
   type Query {
     getUser(id: String!): User
   }

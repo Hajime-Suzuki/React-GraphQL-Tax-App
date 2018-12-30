@@ -58,9 +58,30 @@ const userSchema = new Schema({
       ref: 'Expense'
     }
   ],
+  btw: {
+    type: String
+  },
+  kvk: {
+    type: String
+  },
+  iban: {
+    type: String
+  },
+  streetAddress: {
+    type: String
+  },
+  postalCode: {
+    type: String
+  },
+  city: {
+    type: String
+  },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: () => new Date()
+  },
+  updatedAt: {
+    type: Date
   },
   clients: {
     type: [Schema.Types.ObjectId],
