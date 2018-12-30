@@ -50,6 +50,8 @@ export enum InvoiceStatus {
 
 export type Date = any;
 
+export type Blob = any;
+
 // ====================================================
 // Documents
 // ====================================================

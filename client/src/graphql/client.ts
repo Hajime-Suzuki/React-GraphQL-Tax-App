@@ -7,11 +7,12 @@ import { withClientState } from 'apollo-link-state'
 import { resolvers } from './resolvers'
 import typeDefs from './typeDefs'
 import { JWT } from 'src/libs/jwt'
+import { BASE_URL } from 'src/constants'
 
 const cache = new InMemoryCache()
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
+  uri: `${BASE_URL}/graphql`
 })
 
 const authLink = setContext((_, { headers }) => {

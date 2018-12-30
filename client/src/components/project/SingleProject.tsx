@@ -12,6 +12,7 @@ import EditExpenseAndIncomeForm from './formComponents/edit/EditIncomesAndExpens
 import { Calculations } from './helper/calculations'
 import ExpenseIncomeTable from './helper/ExpenseIncomeTable'
 import { SingleProjectChildProps } from './SingleProjectContainer'
+import IconButton from '@material-ui/core/IconButton'
 
 const phone = theme.breakpoints.down('sm')
 const tablet = theme.breakpoints.up('md')
@@ -111,7 +112,10 @@ const InvoiceMetaSectionWrapper: any = styled(Grid)`
 `
 
 const InvoiceMetaSection: React.SFC<SingleProjectChildProps> = ({
-  project: { name, invoiceNumber, invoiceDate, status }
+  project: { name, invoiceNumber, invoiceDate, status },
+  handleDownload,
+  pdfLoading,
+  pdfError
 }) => {
   const iconColor =
     status === 'paid'
@@ -148,6 +152,13 @@ const InvoiceMetaSection: React.SFC<SingleProjectChildProps> = ({
         <Grid className="meta-item" item xs={3} md={10}>
           <Icon className="fas fa-check" color={iconColor} />
           <Typography className="invoice-date">{status}</Typography>
+        </Grid>
+
+        <Grid className="meta-item" item xs={3} md={10}>
+          {pdfError && <Typography>{pdfError}</Typography>}
+          <IconButton onClick={handleDownload} disabled={pdfLoading}>
+            <Icon className="fas fa-file-download" />
+          </IconButton>
         </Grid>
       </Grid>
     </InvoiceMetaSectionWrapper>

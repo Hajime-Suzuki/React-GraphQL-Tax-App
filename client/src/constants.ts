@@ -1,5 +1,1 @@
-export const baseUrl = 'http://localhost:4000'
-
-// export const FetchEntityType = {
-//   dashBoard: 'dashBoard'
-// }
+export const BASE_URL = 'http://localhost:4000'

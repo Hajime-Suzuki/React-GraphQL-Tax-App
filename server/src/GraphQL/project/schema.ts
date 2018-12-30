@@ -29,12 +29,18 @@ export const projectSchema = gql`
     ): MutationProjectResponse!
     addProject(data: ProjectInput!): MutationProjectResponse
     deleteProject(projectId: String!): MutationProjectResponse
+    generateInvoice(projectId: String!): GenerateInvoiceResponse
   }
 
   type MutationProjectResponse {
     success: Boolean!
     message: String
     project: Project
+  }
+
+  type GenerateInvoiceResponse {
+    message: String
+    data: Blob
   }
 
   input ProjectInput {
@@ -50,4 +56,5 @@ export const projectSchema = gql`
   }
 
   scalar Date
+  scalar Blob
 `

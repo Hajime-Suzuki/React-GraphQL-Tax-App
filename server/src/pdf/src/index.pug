@@ -1,39 +1,39 @@
-- 
-  var userInfo = {
-    name: 'Hajime Suzuki',
-    email: 'test@test.com',
-    phone: '0612345678',
-    btw: 'NL123408910238',
-    kvk: 12341234,
-    iban: 'NL12INGB1234567890',
-    streetAddress: 'Super-test Street test test',
-    postalCode: '1234AB',
-    city: 'Amsterdam'
-  } 
+//- - 
+//-   var userInfo = {
+//-     name: 'Hajime Suzuki',
+//-     email: 'test@test.com',
+//-     phone: '0612345678',
+//-     btw: 'NL123408910238',
+//-     kvk: 12341234,
+//-     iban: 'NL12INGB1234567890',
+//-     streetAddress: 'Super-test Street test test',
+//-     postalCode: '1234AB',
+//-     city: 'Amsterdam'
+//-   } 
 
-- 
-  var invoiceInfo = {
-    name: 'Invoice Title',
-    invoiceNumber: '20185843',
-    invoiceDate: '2018-12-22',
-  }
+//- - 
+//-   var invoiceInfo = {
+//-     name: 'Invoice Title',
+//-     invoiceNumber: '20185843',
+//-     invoiceDate: '2018-12-22',
+//-   }
 
-- 
-  var clientInfo = {
-    name: 'Test company international B.V',
-    streetAddress: 'Another test street address',
-    postalCode: '9875AB',
-    city: 'Rotterdam'
-  }
+//- - 
+//-   var clientInfo = {
+//-     name: 'Test company international B.V',
+//-     streetAddress: 'Another test street address',
+//-     postalCode: '9875AB',
+//-     city: 'Rotterdam'
+//-   }
 
-- 
-  var incomes = [
-    {name: 'test', price:'12.01', quantity: 5, taxRate: 21},
-    {name: 'some', price:'10550.01', quantity: 2, taxRate: 21},
-    {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
-    {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
-    {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
-  ]
+//- - 
+//-   var incomes = [
+//-     {name: 'test', price:'12.01', quantity: 5, taxRate: 21},
+//-     {name: 'some', price:'10550.01', quantity: 2, taxRate: 21},
+//-     {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
+//-     {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
+//-     {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
+//-   ]
 
 html 
   head
@@ -58,8 +58,8 @@ html
           .group
             p.invoice-number Factuur #{invoiceInfo.invoiceNumber}
           .group
-            p.name #{clientInfo.name}
-            p.address #{clientInfo.streetAddress}, #{clientInfo.postalCode} #{clientInfo.city}
+            p.name #{clientInfo.name || ''}
+            p.address #{clientInfo.streetAddress || ''}, #{clientInfo.postalCode} #{clientInfo.city || ''}
 
         .basic-info
           .group
@@ -67,20 +67,20 @@ html
           .group
             p.phone 
               i.material-icons local_phone
-              | #{userInfo.phone}
+              | #{userInfo.phone || ''}
             p.email 
               i.material-icons email
               | #{userInfo.email}
             p.address 
               i.material-icons location_on
-              | #{userInfo.streetAddress}, #{userInfo.postalCode} #{userInfo.city}
+              | #{userInfo.streetAddress || ''}, #{userInfo.postalCode || ''} #{userInfo.city || ''}
           .group
-            p.btw BTW: #{userInfo.btw}
-            p.kvk KvK: #{userInfo.kvk}
-            p.bank IBAN: #{userInfo.iban}
+            p.btw BTW: #{userInfo.btw || ''}
+            p.kvk KvK: #{userInfo.kvk || ''}
+            p.bank IBAN: #{userInfo.iban || ''}
           .group
-            p.invoice-date Factuurdatum: #{invoiceInfo.invoiceDate}
-            p.invoice-number Factuurnummer: #{invoiceInfo.invoiceNumber}
+            p.invoice-date Factuurdatum: #{invoiceInfo.invoiceDate || ''}
+            p.invoice-number Factuurnummer: #{invoiceInfo.invoiceNumber || ''}
         
         .spacer
 
@@ -95,10 +95,10 @@ html
             tbody
               each income in incomes
                 tr
-                  td.name #{income.name}
-                  td.narrow.price #{income.price}
-                  td.narrow #{income.quantity}
-                  td.narrow #{income.taxRate}%
+                  td.name #{income.name || ''}
+                  td.narrow.price #{income.price || ''}
+                  td.narrow #{income.quantity || ''}
+                  td.narrow #{income.taxRate || ''}%
           table
             tbody.total-table-body
               tr.total-section

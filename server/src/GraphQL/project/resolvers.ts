@@ -5,7 +5,8 @@ import {
   getProjectsByUserId,
   updateProject,
   getSingleProject,
-  deleteProject
+  deleteProject,
+  generateInvoice
 } from './methods'
 
 export const projectResolvers: {
@@ -26,6 +27,13 @@ export const projectResolvers: {
         project
       }
     },
-    deleteProject: async (_, { projectId }) => deleteProject(projectId)
+    deleteProject: async (_, { projectId }) => deleteProject(projectId),
+    generateInvoice: async (_, { projectId }, { token }) => {
+      const pdf = await generateInvoice(projectId, token)
+      return {
+        message: 'test',
+        data: pdf
+      }
+    }
   }
 }

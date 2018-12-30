@@ -1,4 +1,8 @@
-import { ApolloServer, makeExecutableSchema } from 'apollo-server-koa'
+import {
+  ApolloServer,
+  makeExecutableSchema,
+  AuthenticationError
+} from 'apollo-server-koa'
 import { Context } from 'koa'
 import { mergeTypes } from 'merge-graphql-schemas'
 import { clientSchema } from './GraphQL/client/schema'
@@ -13,6 +17,7 @@ import { clientResolvers } from './graphql/client/resolvers'
 
 export interface ICtx {
   userId: string
+  token: string
 }
 
 const typeDefs = mergeTypes(
@@ -29,12 +34,16 @@ const server = new ApolloServer({
   }),
 
   context: async ({ ctx: { headers } }: { ctx: Context }) => {
-    // console.log({ jwt: headers.jwt })
-    // console.log(!!headers.jwt)
     if (headers.jwt) {
-      const user = await User.findByToken(headers.jwt)
-      return {
-        userId: user.id
+      try {
+        const user = await User.findByToken(headers.jwt)
+        user.verifyToken(headers.jwt)
+        return {
+          userId: user.id,
+          token: headers.jwt
+        }
+      } catch (e) {
+        throw new AuthenticationError('You are not authorized')
       }
     }
   }

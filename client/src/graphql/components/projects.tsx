@@ -50,6 +50,8 @@ export enum InvoiceStatus {
 
 export type Date = any;
 
+export type Blob = any;
+
 // ====================================================
 // Documents
 // ====================================================
@@ -336,6 +338,26 @@ export namespace DeleteProject {
     email: string | null;
 
     phone: string | null;
+  };
+}
+
+export namespace DownloadInvoice {
+  export type Variables = {
+    projectId: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    generateInvoice: GenerateInvoice | null;
+  };
+
+  export type GenerateInvoice = {
+    __typename?: "GenerateInvoiceResponse";
+
+    message: string | null;
+
+    data: Blob | null;
   };
 }
 
@@ -746,6 +768,48 @@ export namespace DeleteProject {
     }
 
     ${BasicInfoFragments.FragmentDoc}
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace DownloadInvoice {
+  export const Document = gql`
+    mutation downloadInvoice($projectId: String!) {
+      generateInvoice(projectId: $projectId) {
+        message
+        data
+      }
+    }
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>

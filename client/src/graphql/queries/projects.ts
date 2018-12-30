@@ -158,6 +158,15 @@ const DELETE_PROJECT = gql`
   ${BASIC_INFO_FRAGMENTS}
 `
 
+const GENERATE_INVOICE = gql`
+  mutation downloadInvoice($projectId: String!) {
+    generateInvoice(projectId: $projectId) {
+      message
+      data
+    }
+  }
+`
+
 export const projectQueries = {
   GET_PROJECT_OVERVIEW,
   GET_SINGLE_PROJECT,
@@ -165,7 +174,8 @@ export const projectQueries = {
   ADD_PROJECT,
   UPDATE_INCOMES_EXPENSES,
   UPDATE_BASIC_INFO,
-  DELETE_PROJECT
+  DELETE_PROJECT,
+  GENERATE_INVOICE
 }
 
 export const projectFragments = {

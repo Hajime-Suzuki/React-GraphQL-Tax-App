@@ -3,6 +3,7 @@ import { isEmptyObject } from '../../helpers/object'
 import { removeEmptyProperty } from '../../helpers/transform'
 import { Project } from '../../Models/Project'
 import { User } from '../../Models/User'
+import { getInvoicePDF } from '../../pdf/generatePDF'
 import { GetSingleProjectQueryArgs, IProjectInput } from '../@types/types'
 import { updateOrCreateClient } from '../client/methods'
 
@@ -85,3 +86,6 @@ export const deleteProject = async (projectId: string) => {
     project: deletedProject
   }
 }
+
+export const generateInvoice = async (projectId: string, token: string) =>
+  getInvoicePDF(projectId, token)

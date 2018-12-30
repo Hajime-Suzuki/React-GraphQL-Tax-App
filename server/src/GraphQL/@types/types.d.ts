@@ -50,6 +50,8 @@ export enum IInvoiceStatus {
 
 export type Date = any;
 
+export type Blob = any;
+
 // ====================================================
 // Scalars
 // ====================================================
@@ -166,6 +168,8 @@ export interface IMutation {
   addProject?: IMutationProjectResponse | null;
 
   deleteProject?: IMutationProjectResponse | null;
+
+  generateInvoice?: IGenerateInvoiceResponse | null;
 }
 
 export interface IRegisterResponse {
@@ -182,6 +186,12 @@ export interface IMutationProjectResponse {
   message?: string | null;
 
   project?: IProject | null;
+}
+
+export interface IGenerateInvoiceResponse {
+  message?: string | null;
+
+  data?: Blob | null;
 }
 
 // ====================================================
@@ -223,6 +233,9 @@ export interface AddProjectMutationArgs {
   data: IProjectInput;
 }
 export interface DeleteProjectMutationArgs {
+  projectId: string;
+}
+export interface GenerateInvoiceMutationArgs {
   projectId: string;
 }
 
@@ -664,6 +677,12 @@ export namespace MutationResolvers {
       TypeParent,
       Context
     >;
+
+    generateInvoice?: GenerateInvoiceResolver<
+      IGenerateInvoiceResponse | null,
+      TypeParent,
+      Context
+    >;
   }
 
   export type RegisterUserResolver<
@@ -718,6 +737,15 @@ export namespace MutationResolvers {
     Context = {}
   > = Resolver<R, Parent, Context, DeleteProjectArgs>;
   export interface DeleteProjectArgs {
+    projectId: string;
+  }
+
+  export type GenerateInvoiceResolver<
+    R = IGenerateInvoiceResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GenerateInvoiceArgs>;
+  export interface GenerateInvoiceArgs {
     projectId: string;
   }
 }
@@ -777,6 +805,28 @@ export namespace MutationProjectResponseResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
+export namespace GenerateInvoiceResponseResolvers {
+  export interface Resolvers<
+    Context = {},
+    TypeParent = IGenerateInvoiceResponse
+  > {
+    message?: MessageResolver<string | null, TypeParent, Context>;
+
+    data?: DataResolver<Blob | null, TypeParent, Context>;
+  }
+
+  export type MessageResolver<
+    R = string | null,
+    Parent = IGenerateInvoiceResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type DataResolver<
+    R = Blob | null,
+    Parent = IGenerateInvoiceResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
 export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
@@ -812,4 +862,7 @@ export interface DeprecatedDirectiveArgs {
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
   name: "Date";
+}
+export interface BlobScalarConfig extends GraphQLScalarTypeConfig<Blob, any> {
+  name: "Blob";
 }

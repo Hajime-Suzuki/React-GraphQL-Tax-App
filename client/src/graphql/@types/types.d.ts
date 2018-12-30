@@ -50,6 +50,8 @@ export enum InvoiceStatus {
 
 export type Date = any;
 
+export type Blob = any;
+
 // ====================================================
 // Scalars
 // ====================================================
@@ -166,6 +168,8 @@ export interface Mutation {
   addProject?: MutationProjectResponse | null;
 
   deleteProject?: MutationProjectResponse | null;
+
+  generateInvoice?: GenerateInvoiceResponse | null;
 }
 
 export interface RegisterResponse {
@@ -182,6 +186,12 @@ export interface MutationProjectResponse {
   message?: string | null;
 
   project?: Project | null;
+}
+
+export interface GenerateInvoiceResponse {
+  message?: string | null;
+
+  data?: Blob | null;
 }
 
 // ====================================================
@@ -223,5 +233,8 @@ export interface AddProjectMutationArgs {
   data: ProjectInput;
 }
 export interface DeleteProjectMutationArgs {
+  projectId: string;
+}
+export interface GenerateInvoiceMutationArgs {
   projectId: string;
 }

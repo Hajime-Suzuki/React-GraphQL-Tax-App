@@ -8,11 +8,6 @@ import { User } from '../Models/User'
 import { authMiddleware, IJwtPayload } from '../passport/passport'
 import { IProject, IExpenseAndIncome } from '../GraphQL/@types/types'
 
-interface IProjectBody {
-  incomes: IExpenseAndIncome[]
-  expenses: IExpenseAndIncome[]
-}
-
 const router = new Router({
   prefix: '/projects'
 })
