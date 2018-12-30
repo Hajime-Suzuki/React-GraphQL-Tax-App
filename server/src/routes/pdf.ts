@@ -1,5 +1,6 @@
 import * as Router from 'koa-router'
 import { generatePDF } from '../pdf/generatePDF'
+import { Constants } from '../constants'
 
 const router = new Router({ prefix: '/invoice' })
 
@@ -10,10 +11,9 @@ const router = new Router({ prefix: '/invoice' })
 
 router.get('/generate', async ctx => {
   const projectId = ctx.query.projectId
-
   try {
-    const pdf = await generatePDF()
-    ctx.response.attachment('pdf-item.pdf')
+    const pdf = await generatePDF(projectId)
+    ctx.response.attachment('invoice.pdf')
     ctx.body = pdf
   } catch (error) {
     console.log(error)
@@ -22,13 +22,15 @@ router.get('/generate', async ctx => {
 })
 
 router.get('/render', async ctx => {
+  console.log(ctx.query.projectId)
   const config = {
+    publicPath: Constants.BASE_URL,
     test: {
       title: 'TEST!',
       name: 'Hajime'
     }
   }
-  ctx.render('index')
+  ctx.render('./src/index', config)
 })
 
 export default router

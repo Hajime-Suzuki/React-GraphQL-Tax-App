@@ -9,11 +9,17 @@ const browserSync = require('browser-sync').create()
 const src = './src/pdf/src'
 const build = './src/pdf/build'
 
+const initBrowserSync = () =>
+  browserSync.init({
+    server: build
+  })
+
 const compileSass = () =>
   gulp
     .src(`${src}/*.scss`)
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(build))
+    .pipe(browserSync.stream())
 
 const compilePug = () =>
   gulp
@@ -21,14 +27,14 @@ const compilePug = () =>
     .pipe(pug())
     .pipe(gulp.dest(build))
 
-const initBrowser = () =>
-  browserSync.init({
-    server: build
-  })
-
 gulp.task('default', () => {
-  initBrowser()
-  gulp.watch(`${src}/*.scss`, compileSass)
-  gulp.watch(`${src}/*.pug`, compilePug)
+  initBrowserSync()
+  gulp
+    .watch(
+      [`${src}/*.scss`, `${src}/*.pug`],
+      gulp.series(compileSass, compilePug)
+    )
+    .on('change', browserSync.reload)
+  // gulp.watch(`${src}/*.pug`, compilePug)
   gulp.watch(`${build}/*.html`).on('change', browserSync.reload)
 })

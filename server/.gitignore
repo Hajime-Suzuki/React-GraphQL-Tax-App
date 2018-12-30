@@ -85,4 +85,4 @@ dist/
 **/jwt
 **/_gql_gen/*.js
 **/pdf/build
-**/pdf/pdf-files
+**/pdf/generated/*.pdf

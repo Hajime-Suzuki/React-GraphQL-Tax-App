@@ -8,20 +8,23 @@ import passport from './passport/passport'
 import pdfRoutes from './routes/pdf'
 import projectRoutes from './routes/projects'
 import server from './server'
+import * as serve from 'koa-static'
 
 dotenv.config()
 
 const app = new Koa()
 const router = new Router()
 
-const pug = new Pug({
-  viewPath: `${__dirname}/pdf`
-})
-
 app.use(cors())
 app.use(bodyParser())
 app.use(passport.initialize())
+
+const pug = new Pug({
+  viewPath: `${__dirname}/pdf`
+})
 pug.use(app)
+
+app.use(serve(`${__dirname}/pdf`))
 
 app.use(async (ctx, next) => {
   try {
