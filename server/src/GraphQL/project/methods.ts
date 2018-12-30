@@ -78,14 +78,8 @@ export const addProject = async (
   }
 }
 
-export const deleteProject = async (projectId: string) => {
-  const deletedProject = await Project.findByIdAndDelete(projectId)
-  return {
-    success: true,
-    message: 'project has been added',
-    project: deletedProject
-  }
-}
+export const deleteProject = async (projectId: string) =>
+  Project.findByIdAndDelete(projectId)
 
 export const generateInvoice = async (projectId: string, token: string) =>
   getInvoicePDF(projectId, token)

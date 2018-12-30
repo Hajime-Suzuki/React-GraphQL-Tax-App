@@ -27,8 +27,15 @@ export const projectResolvers: {
         project
       }
     },
-    deleteProject: async (_, { projectId }) => deleteProject(projectId),
-    generateInvoice: async (_, { projectId }, { token }) => {
+    deleteProject: async (_, { projectId }) => {
+      const deletedProject = await deleteProject(projectId)
+      return {
+        success: true,
+        message: 'project has been added',
+        project: deletedProject
+      }
+    },
+    downloadInvoice: async (_, { projectId }, { token }) => {
       const pdf = await generateInvoice(projectId, token)
       return {
         message: 'test',

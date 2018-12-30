@@ -169,7 +169,7 @@ export interface Mutation {
 
   deleteProject?: MutationProjectResponse | null;
 
-  generateInvoice?: GenerateInvoiceResponse | null;
+  downloadInvoice?: GenerateInvoiceResponse | null;
 }
 
 export interface RegisterResponse {
@@ -235,6 +235,6 @@ export interface AddProjectMutationArgs {
 export interface DeleteProjectMutationArgs {
   projectId: string;
 }
-export interface GenerateInvoiceMutationArgs {
+export interface DownloadInvoiceMutationArgs {
   projectId: string;
 }

@@ -1,6 +1,7 @@
 import * as puppeteer from 'puppeteer'
 import { Project } from '../Models/Project'
 import { User } from '../Models/User'
+import { Calculations } from '../helpers/calculation'
 
 export const getInvoicePDF = async (projectId: string, token: string) => {
   const browser = await puppeteer.launch()
@@ -16,16 +17,6 @@ export const getInvoicePDF = async (projectId: string, token: string) => {
   const buffer = await page.pdf({
     path: `${__dirname}/generated/test.pdf`,
     format: 'A4'
-    // displayHeaderFooter: true,
-    // headerTemplate: '<span></span>',
-    // footerTemplate: `<div style="
-    //   font-size:10px;
-    //   color: #535353;
-    //   width:230mm;
-    //   text-align: center;
-    // ">
-    //   <span class="pageNumber"></span>/<span class="totalPages"></span>
-    //   </div>`
   })
   await browser.close()
   return buffer
@@ -58,7 +49,8 @@ export const getAllDataForInvoice = async (
     userInfo,
     invoiceInfo,
     clientInfo: project.client || {},
-    incomes
+    incomes,
+    totalPrices: Calculations.getGrandTotal(incomes)
   }
 }
 

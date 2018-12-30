@@ -173,7 +173,7 @@ export interface Mutation {
 
   deleteProject?: MutationProjectResponse | null;
 
-  generateInvoice?: GenerateInvoiceResponse | null;
+  downloadInvoice?: GenerateInvoiceResponse | null;
 }
 
 export interface RegisterResponse {
@@ -239,7 +239,7 @@ export interface AddProjectMutationArgs {
 export interface DeleteProjectMutationArgs {
   projectId: string;
 }
-export interface GenerateInvoiceMutationArgs {
+export interface DownloadInvoiceMutationArgs {
   projectId: string;
 }
 
@@ -693,7 +693,7 @@ export namespace MutationResolvers {
       Context
     >;
 
-    generateInvoice?: GenerateInvoiceResolver<
+    downloadInvoice?: DownloadInvoiceResolver<
       GenerateInvoiceResponse | null,
       TypeParent,
       Context
@@ -755,12 +755,12 @@ export namespace MutationResolvers {
     projectId: string;
   }
 
-  export type GenerateInvoiceResolver<
+  export type DownloadInvoiceResolver<
     R = GenerateInvoiceResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, GenerateInvoiceArgs>;
-  export interface GenerateInvoiceArgs {
+  > = Resolver<R, Parent, Context, DownloadInvoiceArgs>;
+  export interface DownloadInvoiceArgs {
     projectId: string;
   }
 }

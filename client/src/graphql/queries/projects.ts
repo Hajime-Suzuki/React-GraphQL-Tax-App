@@ -160,7 +160,7 @@ const DELETE_PROJECT = gql`
 
 const GENERATE_INVOICE = gql`
   mutation downloadInvoice($projectId: String!) {
-    generateInvoice(projectId: $projectId) {
+    downloadInvoice(projectId: $projectId) {
       message
       data
     }

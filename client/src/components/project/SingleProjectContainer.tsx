@@ -39,13 +39,21 @@ class SingleProjectContainer extends React.Component<
     const res = await download({
       variables: { projectId: this.props.match.params.id }
     })
-    if (!res || !res.data || !res.data.generateInvoice) return
+    if (!res || !res.data || !res.data.downloadInvoice) return
 
-    const data = res.data.generateInvoice.data.data
-    const file = new Blob([new Uint8Array(data)], {
+    const buffer = res.data.downloadInvoice.data.data
+    const file = new Blob([new Uint8Array(buffer)], {
       type: 'application/pdf'
     })
-    window.open(URL.createObjectURL(file))
+    const fileUrl = URL.createObjectURL(file)
+
+    const invoiceNumber = this.props.data!.getSingleProject!.invoiceNumber
+
+    const a = document.createElement('a')
+    a.href = fileUrl
+    a.download = `invoice-${invoiceNumber}.pdf`
+    a.click()
+    URL.revokeObjectURL(fileUrl)
   }
 
   render() {
@@ -57,6 +65,7 @@ class SingleProjectContainer extends React.Component<
     if (error) return <p>{error.message}</p>
     if (loading) return <LoadingIcon />
     if (!project) return <p>Project not found</p>
+
     return (
       <DownloadInvoice.Component>
         {(mutate, { error: mutationError, loading: mutationLoading }) => {

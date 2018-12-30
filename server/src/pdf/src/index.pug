@@ -103,10 +103,10 @@ html
             tbody.total-table-body
               tr.total-section
                 td.label Subtotaal             
-                td.price €1.341,56
+                td.price #{totalPrices.subtotal}
               tr.total-section
                 td.label BTW
-                td.price €435,12
+                td.price #{totalPrices.taxTotal}
               tr.total-section
                 td.label Totaal            
-                td.price €1.986,35
+                td.price #{totalPrices.grandTotal}

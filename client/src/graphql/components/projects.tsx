@@ -349,10 +349,10 @@ export namespace DownloadInvoice {
   export type Mutation = {
     __typename?: "Mutation";
 
-    generateInvoice: GenerateInvoice | null;
+    downloadInvoice: DownloadInvoice | null;
   };
 
-  export type GenerateInvoice = {
+  export type DownloadInvoice = {
     __typename?: "GenerateInvoiceResponse";
 
     message: string | null;
@@ -805,7 +805,7 @@ export namespace DeleteProject {
 export namespace DownloadInvoice {
   export const Document = gql`
     mutation downloadInvoice($projectId: String!) {
-      generateInvoice(projectId: $projectId) {
+      downloadInvoice(projectId: $projectId) {
         message
         data
       }
