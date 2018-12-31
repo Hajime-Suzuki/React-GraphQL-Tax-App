@@ -1,112 +1,40 @@
-# Tax App
+# React-GraphQL Tax App
+
+_This project is still in progress._
+
+## Motivation
+
+As a freelancer, it is bit annoying to keep track on all expenses, incomes, who paid or not, and making invoices so forth. An Excel file would be a simple solution, but it doesn't look nice...right? I would like to make an simple yet convenient app for my tax declaration.
 
 ---
 
-### Simple tax app with MKRN(Mongo, Koa, React, Node) stack.
+## Features
 
-##### Todos
+Project is the important part of this project, to which you add your incomes and expenses, your client info and your invoice info (such as invoice number or issue date).
 
-- move from REST to GraphQL
-- move from javascript to typescript
-- move redux to state management by Apollo client
+- project overview: You can see all projects you have, and overviews of invoice date, how much you get paid and invoice status (invoice sent, payment received).
+
+- project details: You can see and edit details of projects.
+
+- generating invoice: You can generate an PDF file of your project.
 
 ---
 
-Redux structure is based on the "[Redux Ducks](https://github.com/erikras/ducks-modular-redux)" style.
+## Technologies
 
-#### Motivation
+#### Front End:
 
-As a freelancer, it is annoying to keep track on expense, income, who paid or not, and so forth. An Excel file is a simple solution, but it doesn't look nice...right? I would like to make a nice and simple app for my tax declaration.
+~~React + Redux + ImmutableJS.~~  
+Now, React (with Typescript) + GraphQL + Apollo Client is used.
 
-#### Libraries
+#### Back end:
 
-To make Redux more readable and concise, I used some helpful libraries.
+NodeJS (with Typescript) + GraphQL + Apollo server + MongoDB + Koa.
 
-- [Normalizr](https://github.com/paularmstrong/normalizr)<br/>
-  APIs sometimes return nested objects, which asks you extra steps to copy them with the spread oerator, `Array.concat`, or `Object.assign`. With Normalizr, your data look like a relational database.
-  &nbsp;
-  A tipical nested data
+#### For Generating PDF:
 
-  ```javascript
-  {
-    "id": "123",
-    "author": {
-      "id": "1",
-      "name": "Paul"
-    },
-    "title": "My awesome blog post",
-    "comments": [
-      {
-        "id": "324",
-        "commenter": {
-          "id": "2",
-          "name": "Nicole"
-        }
-      }
-    ]
-  }
-  ```
+I use [Pug](https://github.com/pugjs/pug) as template engine and render it on [Puppeteer](https://github.com/GoogleChrome/puppeteer) (headless Chrome browser) and print the PDF file.
 
-  This turns into like this:
+#### For Typescript:
 
-  ```javascript
-  {
-    result: "123",
-    entities: {
-      "articles": {
-        "123": {
-          id: "123",
-          author: "1",
-          title: "My awesome blog post",
-          comments: [ "324" ]
-        }
-      },
-      "users": {
-        "1": { "id": "1", "name": "Paul" },
-        "2": { "id": "2", "name": "Nicole" }
-      },
-      "comments": {
-        "324": { id: "324", "commenter": "2" }
-      }
-    }
-  }
-  ```
-
-  Although this already looks much more organized, `articles, users, comments` are still objects. To make this even better, I use Immutable-js
-  <br/>
-
-- [Immutable-js](https://github.com/facebook/immutable-js)
-
-  <br/>
-  Immutable returns a new copy of object. For instance `Immutable.List().push()` returns a copy of List, and doesn't mutate the original List. This is very useful when dealing with nested objects.
-  &nbsp;
-
-  With Immutable, your reduer would look like:
-
-  ```javascript
-  return state.mergeIn(['first', 'second', action.someId], {
-    forth: action.someValue
-  })
-  ```
-
-  Instead of
-
-  ```javascript
-  return {
-    ...state,
-    first: {
-      ...state.first,
-      second: {
-        ...state.first.second,
-        [action.someId]: {
-          ...state.first.second[action.someId],
-          fourth: action.someValue
-        }
-      }
-    }
-  }
-  ```
-
-  On top of that, it has a nice memoization feature, with which you don't copy whole nested object. Please check the officia docs.
-
-  &nbsp;
+Since both GraphQL and TS are typed, I feel it's redundant to write GQL schema, and write TS types. So, this awesome [Graphql Code Generator](https://github.com/dotansimha/graphql-code-generator) takes care of generating type definition files! For client side, it generate React-Apollo components as well!
