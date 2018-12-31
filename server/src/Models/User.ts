@@ -11,7 +11,7 @@ interface IUserMethods {
   comparePassword: (password: string) => Promise<boolean>
 }
 
-export type IUserDocument = IUser & Document & IUserMethods
+export type IUserDocument = IUser & Document & IUserMethods & {password: string}
 
 interface IUserModel extends Model<IUserDocument> {
   findByToken: (token: string) => IUserDocument
