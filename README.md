@@ -31,11 +31,11 @@ Now, React (with Typescript) + GraphQL + Apollo Client are used.
 
 NodeJS (with Typescript) + GraphQL + Apollo server + MongoDB + Koa.
 
-#### For Generating PDF:
+#### Generating PDF:
 
 I use [Pug](https://github.com/pugjs/pug) as template engine and render it on [Puppeteer](https://github.com/GoogleChrome/puppeteer) (headless Chrome browser) and print the PDF file.
 
-#### For Typescript and GraphQL:
+#### Typescript and GraphQL:
 
 Since both GraphQL and TS are typed, I feel it's redundant to write GQL schema, and write TS types. So, this awesome [Graphql Code Generator](https://github.com/dotansimha/graphql-code-generator) takes care of generating type definition files! For client side, it generate React-Apollo components as well!  
 With this, I feel back-end and front-end are always in sync, since this tool generates typescript types for both side. This is so awesome!
