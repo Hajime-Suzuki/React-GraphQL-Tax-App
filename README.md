@@ -25,7 +25,7 @@ Project is the important part of this project, to which you add your incomes and
 #### Front End:
 
 ~~React + Redux + ImmutableJS.~~  
-Now, React (with Typescript) + GraphQL + Apollo Client is used.
+Now, React (with Typescript) + GraphQL + Apollo Client are used.
 
 #### Back end:
 
@@ -35,6 +35,7 @@ NodeJS (with Typescript) + GraphQL + Apollo server + MongoDB + Koa.
 
 I use [Pug](https://github.com/pugjs/pug) as template engine and render it on [Puppeteer](https://github.com/GoogleChrome/puppeteer) (headless Chrome browser) and print the PDF file.
 
-#### For Typescript:
+#### For Typescript and GraphQL:
 
-Since both GraphQL and TS are typed, I feel it's redundant to write GQL schema, and write TS types. So, this awesome [Graphql Code Generator](https://github.com/dotansimha/graphql-code-generator) takes care of generating type definition files! For client side, it generate React-Apollo components as well!
+Since both GraphQL and TS are typed, I feel it's redundant to write GQL schema, and write TS types. So, this awesome [Graphql Code Generator](https://github.com/dotansimha/graphql-code-generator) takes care of generating type definition files! For client side, it generate React-Apollo components as well!  
+With this, I feel back-end and front-end are always in sync, since this tool generates typescript types for both side. This is so awesome!
