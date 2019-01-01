@@ -18,6 +18,18 @@ const BASIC_INFO_FRAGMENTS = gql`
   }
 `
 
+const CLIENT_FRAGMENTS = gql`
+  fragment ClientFragment on Client {
+    firstName
+    lastName
+    email
+    phone
+    streetAddress
+    postalCode
+    city
+  }
+`
+
 const GET_PROJECT_OVERVIEW = gql`
   query getProjectOverview($userId: String!) {
     getProjectsByUserId(userId: $userId) {
@@ -37,10 +49,7 @@ const GET_SINGLE_PROJECT = gql`
       invoiceNumber
       ...BasicInfoFragments
       client {
-        firstName
-        lastName
-        email
-        phone
+        ...ClientFragment
       }
       incomes {
         name
@@ -54,6 +63,7 @@ const GET_SINGLE_PROJECT = gql`
   }
   ${PRICE_FRAGMENTS}
   ${BASIC_INFO_FRAGMENTS}
+  ${CLIENT_FRAGMENTS}
 `
 
 const UPDATE_STATUS = gql`
@@ -78,10 +88,7 @@ const ADD_PROJECT = gql`
         invoiceNumber
         ...BasicInfoFragments
         client {
-          firstName
-          lastName
-          email
-          phone
+          ...ClientFragment
         }
         incomes {
           name
@@ -96,6 +103,7 @@ const ADD_PROJECT = gql`
   }
   ${PRICE_FRAGMENTS}
   ${BASIC_INFO_FRAGMENTS}
+  ${CLIENT_FRAGMENTS}
 `
 
 const UPDATE_INCOMES_EXPENSES = gql`
@@ -128,15 +136,13 @@ const UPDATE_BASIC_INFO = gql`
         invoiceNumber
         ...BasicInfoFragments
         client {
-          firstName
-          lastName
-          email
-          phone
+          ...ClientFragment
         }
       }
     }
   }
   ${BASIC_INFO_FRAGMENTS}
+  ${CLIENT_FRAGMENTS}
 `
 
 const DELETE_PROJECT = gql`
@@ -144,14 +150,7 @@ const DELETE_PROJECT = gql`
     deleteProject(projectId: $projectId) {
       message
       project {
-        invoiceNumber
-        ...BasicInfoFragments
-        client {
-          firstName
-          lastName
-          email
-          phone
-        }
+        id
       }
     }
   }

@@ -15,6 +15,7 @@ const USER_FRAGMENTS = gql`
       postalCode
       city
     }
+    phone
     btw
     kvk
     iban

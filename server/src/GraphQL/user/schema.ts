@@ -12,6 +12,7 @@ export const userSchema = gql`
     btw: String
     kvk: String
     iban: String
+    phone: String
     streetAddress: String
     postalCode: String
     city: String
@@ -23,6 +24,7 @@ export const userSchema = gql`
     firstName: String
     lastName: String
     email: String
+    phone: String
     password: String
     btw: String
     kvk: String

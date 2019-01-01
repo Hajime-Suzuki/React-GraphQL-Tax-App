@@ -4,6 +4,7 @@ import { Document, Model, model, Schema } from 'mongoose'
 import * as validator from 'validator'
 import { IUser } from '../GraphQL/@types/types'
 import { secret } from '../jwt/jwt'
+import { SchemaDef, Omit } from '../helpers/types'
 
 interface IUserMethods {
   generateToken: () => string
@@ -11,13 +12,17 @@ interface IUserMethods {
   comparePassword: (password: string) => Promise<boolean>
 }
 
-export type IUserDocument = IUser & Document & IUserMethods & {password: string}
+export type IUserDocument = IUser &
+  Document &
+  IUserMethods & { password: string }
 
 interface IUserModel extends Model<IUserDocument> {
   findByToken: (token: string) => IUserDocument
 }
 
-const userSchema = new Schema({
+const schemaDef: SchemaDef<
+  Omit<IUser, 'id'> & { password: any; phone: any }
+> = {
   firstName: {
     type: String,
     required: true,
@@ -87,7 +92,8 @@ const userSchema = new Schema({
     type: [Schema.Types.ObjectId],
     ref: 'Client'
   }
-})
+}
+const userSchema = new Schema(schemaDef)
 
 userSchema.set('toJSON', {
   virtuals: true

@@ -5,6 +5,8 @@ export interface UpdateUserInput {
 
   email?: string | null;
 
+  phone?: string | null;
+
   password?: string | null;
 
   btw?: string | null;
@@ -114,6 +116,8 @@ export interface User {
   kvk?: string | null;
 
   iban?: string | null;
+
+  phone?: string | null;
 
   streetAddress?: string | null;
 

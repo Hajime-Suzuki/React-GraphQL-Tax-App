@@ -2,6 +2,9 @@ import * as puppeteer from 'puppeteer'
 import { Project } from '../Models/Project'
 import { User } from '../Models/User'
 import { Calculations } from '../helpers/calculation'
+import { Client } from '../Models/Client'
+import { IProject } from '../GraphQL/@types/types'
+import { format } from 'date-fns'
 
 export const getInvoicePDF = async (projectId: string, token: string) => {
   const browser = await puppeteer.launch()
@@ -43,14 +46,15 @@ export const getAllDataForInvoice = async (
     ...userInfo
   } = user.toObject()
 
-  const { client, incomes, ...invoiceInfo } = project.toObject()
+  const { client, incomes, ...invoiceInfo }: IProject = project.toObject()
+  invoiceInfo.invoiceDate = format(invoiceInfo.invoiceDate, 'dd-MM-YYYY')
 
   return {
     userInfo,
     invoiceInfo,
     clientInfo: project.client || {},
     incomes,
-    totalPrices: Calculations.getGrandTotal(incomes)
+    totalPrices: incomes ? Calculations.getGrandTotal(incomes) : 0
   }
 }
 

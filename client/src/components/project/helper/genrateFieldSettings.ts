@@ -10,8 +10,9 @@ const clientFields = [
   { name: 'client.lastName', label: 'Last Name' },
   { name: 'client.email', label: 'Email' },
   { name: 'client.phone', label: 'Phone' },
-  { name: 'client.address', label: 'Address' },
-  { name: 'client.postalCode', label: 'Postal Code' }
+  { name: 'client.streetAddress', label: 'Address' },
+  { name: 'client.postalCode', label: 'Postal Code' },
+  { name: 'client.city', label: 'City' }
 ]
 
 const generateArrayFields = (type: 'incomes' | 'expenses', index: number) => [

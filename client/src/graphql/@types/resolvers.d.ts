@@ -5,6 +5,8 @@ export interface UpdateUserInput {
 
   email?: string | null;
 
+  phone?: string | null;
+
   password?: string | null;
 
   btw?: string | null;
@@ -118,6 +120,8 @@ export interface User {
   kvk?: string | null;
 
   iban?: string | null;
+
+  phone?: string | null;
 
   streetAddress?: string | null;
 
@@ -445,6 +449,8 @@ export namespace UserResolvers {
 
     iban?: IbanResolver<string | null, TypeParent, Context>;
 
+    phone?: PhoneResolver<string | null, TypeParent, Context>;
+
     streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
 
     postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
@@ -502,6 +508,11 @@ export namespace UserResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type IbanResolver<
+    R = string | null,
+    Parent = User,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type PhoneResolver<
     R = string | null,
     Parent = User,
     Context = {}

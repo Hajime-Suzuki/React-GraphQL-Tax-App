@@ -1,6 +1,7 @@
 import { Document, model, Model, Schema } from 'mongoose'
 import * as validator from 'validator'
 import { IClient } from '../GraphQL/@types/types'
+import { SchemaDef, Omit } from '../helpers/types'
 
 type IClientDocument = IClient & Document
 
@@ -8,7 +9,7 @@ interface IClientModel extends Model<IClientDocument> {
   findOneOrCreate: (condition: any, data: any) => IClientDocument
 }
 
-const clientSchema = new Schema({
+const schemaDefinition: SchemaDef<Omit<IClient, 'id'>> = {
   firstName: {
     type: String
     // required: true,
@@ -39,13 +40,18 @@ const clientSchema = new Schema({
   phone: {
     type: String
   },
+  streetAddress: {
+    type: String
+  },
   postalCode: {
     type: String
   },
-  address: {
+  city: {
     type: String
   }
-})
+}
+
+const clientSchema = new Schema(schemaDefinition)
 
 clientSchema.set('toJSON', {
   virtuals: true

@@ -10,7 +10,7 @@
     "@types/koa-static": "^4.0.0",
     "apollo-server-koa": "^2.0.0-rc.12",
     "bcrypt": "^3.0.0",
-    "date-fns": "^1.29.0",
+    "date-fns": "2.0.0-alpha.21",
     "dotenv": "^6.0.0",
     "graphql": "^14.0.2",
     "graphql-codegen-typescript-resolvers": "^0.14.5",

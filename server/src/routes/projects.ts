@@ -67,7 +67,7 @@ router.post('/populate', async ctx => {
       )
       const invoiceDate = faker.date.between(
         format(date, 'YYYY-MM-DD'),
-        format(addDays(date, 15))
+        format(addDays(date, 15), 'YYYY-MM-DD')
       )
 
       const invoiceStatus = ['none', 'invoice', 'paid'][faker.random.number(2)]

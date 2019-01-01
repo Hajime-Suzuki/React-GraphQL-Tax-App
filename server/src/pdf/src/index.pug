@@ -58,7 +58,7 @@ html
           .group
             p.invoice-number Factuur #{invoiceInfo.invoiceNumber}
           .group
-            p.name #{clientInfo.name || ''}
+            p.name #{clientInfo.firstName || ''} #{clientInfo.lastName || ''}
             p.address #{clientInfo.streetAddress || ''}, #{clientInfo.postalCode} #{clientInfo.city || ''}
 
         .basic-info

@@ -5,6 +5,8 @@ export interface UpdateUserInput {
 
   email?: string | null;
 
+  phone?: string | null;
+
   password?: string | null;
 
   btw?: string | null;
@@ -123,17 +125,7 @@ export namespace GetSingleProject {
     expenses: Expenses[] | null;
   } & BasicInfoFragments.Fragment;
 
-  export type Client = {
-    __typename?: "Client";
-
-    firstName: string | null;
-
-    lastName: string | null;
-
-    email: string | null;
-
-    phone: string | null;
-  };
+  export type Client = ClientFragment.Fragment;
 
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
@@ -212,17 +204,7 @@ export namespace AddProject {
     expenses: Expenses[] | null;
   } & BasicInfoFragments.Fragment;
 
-  export type Client = {
-    __typename?: "Client";
-
-    firstName: string | null;
-
-    lastName: string | null;
-
-    email: string | null;
-
-    phone: string | null;
-  };
+  export type Client = ClientFragment.Fragment;
 
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
@@ -312,17 +294,7 @@ export namespace UpdateBasicInfo {
     client: Client | null;
   } & BasicInfoFragments.Fragment;
 
-  export type Client = {
-    __typename?: "Client";
-
-    firstName: string | null;
-
-    lastName: string | null;
-
-    email: string | null;
-
-    phone: string | null;
-  };
+  export type Client = ClientFragment.Fragment;
 }
 
 export namespace DeleteProject {
@@ -347,21 +319,7 @@ export namespace DeleteProject {
   export type Project = {
     __typename?: "Project";
 
-    invoiceNumber: string;
-
-    client: Client | null;
-  } & BasicInfoFragments.Fragment;
-
-  export type Client = {
-    __typename?: "Client";
-
-    firstName: string | null;
-
-    lastName: string | null;
-
-    email: string | null;
-
-    phone: string | null;
+    id: string;
   };
 }
 
@@ -413,6 +371,26 @@ export namespace BasicInfoFragments {
   };
 }
 
+export namespace ClientFragment {
+  export type Fragment = {
+    __typename?: "Client";
+
+    firstName: string | null;
+
+    lastName: string | null;
+
+    email: string | null;
+
+    phone: string | null;
+
+    streetAddress: string | null;
+
+    postalCode: string | null;
+
+    city: string | null;
+  };
+}
+
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 
@@ -440,6 +418,20 @@ export namespace BasicInfoFragments {
       projectDate
       invoiceDate
       status
+    }
+  `;
+}
+
+export namespace ClientFragment {
+  export const FragmentDoc = gql`
+    fragment ClientFragment on Client {
+      firstName
+      lastName
+      email
+      phone
+      streetAddress
+      postalCode
+      city
     }
   `;
 }
@@ -501,10 +493,7 @@ export namespace GetSingleProject {
         invoiceNumber
         ...BasicInfoFragments
         client {
-          firstName
-          lastName
-          email
-          phone
+          ...ClientFragment
         }
         incomes {
           name
@@ -518,6 +507,7 @@ export namespace GetSingleProject {
     }
 
     ${BasicInfoFragments.FragmentDoc}
+    ${ClientFragment.FragmentDoc}
     ${PriceFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
@@ -608,10 +598,7 @@ export namespace AddProject {
           invoiceNumber
           ...BasicInfoFragments
           client {
-            firstName
-            lastName
-            email
-            phone
+            ...ClientFragment
           }
           incomes {
             name
@@ -626,6 +613,7 @@ export namespace AddProject {
     }
 
     ${BasicInfoFragments.FragmentDoc}
+    ${ClientFragment.FragmentDoc}
     ${PriceFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
@@ -729,16 +717,14 @@ export namespace UpdateBasicInfo {
           invoiceNumber
           ...BasicInfoFragments
           client {
-            firstName
-            lastName
-            email
-            phone
+            ...ClientFragment
           }
         }
       }
     }
 
     ${BasicInfoFragments.FragmentDoc}
+    ${ClientFragment.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
@@ -779,19 +765,10 @@ export namespace DeleteProject {
       deleteProject(projectId: $projectId) {
         message
         project {
-          invoiceNumber
-          ...BasicInfoFragments
-          client {
-            firstName
-            lastName
-            email
-            phone
-          }
+          id
         }
       }
     }
-
-    ${BasicInfoFragments.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>

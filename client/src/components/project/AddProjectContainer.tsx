@@ -18,7 +18,8 @@ export const addProjectInitialValues = {
     email: '',
     phone: '',
     postalCode: '',
-    address: ''
+    streetAddress: '',
+    city: ''
   }
 }
 

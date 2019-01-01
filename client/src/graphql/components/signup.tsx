@@ -5,6 +5,8 @@ export interface UpdateUserInput {
 
   email?: string | null;
 
+  phone?: string | null;
+
   password?: string | null;
 
   btw?: string | null;

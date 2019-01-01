@@ -5,6 +5,8 @@ export interface UpdateUserInput {
 
   email?: string | null;
 
+  phone?: string | null;
+
   password?: string | null;
 
   btw?: string | null;
@@ -128,6 +130,8 @@ export namespace UserFragments {
 
     clients: Clients[] | null;
 
+    phone: string | null;
+
     btw: string | null;
 
     kvk: string | null;
@@ -187,6 +191,7 @@ export namespace UserFragments {
         postalCode
         city
       }
+      phone
       btw
       kvk
       iban

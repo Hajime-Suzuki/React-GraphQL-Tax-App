@@ -1,9 +1,8 @@
 import { Document, model, Model, Schema } from 'mongoose'
-import { IProject } from '../GraphQL/@types/types'
+import { IProject, IExpenseAndIncome } from '../GraphQL/@types/types'
+import { SchemaDef, Omit } from '../helpers/types'
 
-type ProjectDocument = IProject & Document
-
-const expenseSchema: Schema = new Schema({
+const expenseSchemaDef: SchemaDef<IExpenseAndIncome> = {
   name: {
     type: String
   },
@@ -17,9 +16,10 @@ const expenseSchema: Schema = new Schema({
   taxRate: {
     type: Number
   }
-})
+}
+const expenseSchema = new Schema(expenseSchemaDef)
 
-const projectSchema: Schema = new Schema({
+const schemaDef: SchemaDef<Omit<IProject, 'id'> & { createdAt: any }> = {
   invoiceNumber: {
     type: String,
     required: true
@@ -62,12 +62,14 @@ const projectSchema: Schema = new Schema({
     type: Date,
     default: () => new Date()
   }
-})
+}
+const projectSchema = new Schema(schemaDef)
 
 projectSchema.set('toJSON', {
   virtuals: true
 })
 
+type ProjectDocument = IProject & Document
 export const Project: Model<ProjectDocument> = model<ProjectDocument>(
   'Project',
   projectSchema
