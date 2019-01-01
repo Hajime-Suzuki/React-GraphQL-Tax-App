@@ -19,7 +19,7 @@ export const userSchema = gql`
     updatedAt: Date
   }
 
-  type EditUserInput {
+  input UpdateUserInput {
     firstName: String
     lastName: String
     email: String
@@ -33,7 +33,7 @@ export const userSchema = gql`
   }
 
   type Query {
-    getUser(id: String!): User
+    getUser(id: String!): User!
   }
 
   type Mutation {
@@ -44,11 +44,16 @@ export const userSchema = gql`
       password: String!
     ): RegisterResponse!
     loginUser(email: String!, password: String!): RegisterResponse!
+    updateUser(data: UpdateUserInput!): updateUserResponse!
   }
 
   type RegisterResponse {
     success: Boolean!
     message: String
     token: String!
+  }
+  type updateUserResponse {
+    message: String
+    user: User!
   }
 `
