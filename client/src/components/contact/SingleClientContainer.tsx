@@ -1,20 +1,21 @@
 import * as React from 'react'
-import { GetClientsList } from 'src/graphql/components/clients'
-import { PrivateRoutesChildProps } from 'src/routes/types'
+import { RouteComponentProps } from 'react-router'
+import { SingleClient } from 'src/graphql/components/clients'
 import { LoadingIcon } from '../UI/LoadingIcon'
-import ClientsList from './ClientsList'
 
-type Props = GetClientsList.Props<PrivateRoutesChildProps>
+type Props = SingleClient.Props<RouteComponentProps<{ clientId: string }>>
 class SingleClientContainer extends React.Component<Props> {
   render() {
     const { data } = this.props
     if (!data) return null
-    const { loading, error, getClientsByUser: clients } = data
+    const { loading, error, getSingleClient: client } = data
     if (error) return error.message
     if (loading) return <LoadingIcon />
-    if (!clients) return 'You don\'t have a client yet'
-    return 'Client'
+    if (!client) return 'No client found'
+    return client.firstName
   }
 }
 
-export default GetClientsList.HOC({})(SingleClientContainer)
+export default SingleClient.HOC<Props>({
+  options: ({ match }) => ({ variables: { id: match.params.clientId } })
+})(SingleClientContainer)

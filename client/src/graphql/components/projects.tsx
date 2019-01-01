@@ -97,9 +97,9 @@ export namespace GetProjectOverview {
     __typename?: "Project";
 
     incomes: Incomes[] | null;
-  } & BasicInfoFragments.Fragment;
+  } & BasicInfoFragment.Fragment;
 
-  export type Incomes = PriceFragments.Fragment;
+  export type Incomes = PriceFragment.Fragment;
 }
 
 export namespace GetSingleProject {
@@ -123,21 +123,29 @@ export namespace GetSingleProject {
     incomes: Incomes[] | null;
 
     expenses: Expenses[] | null;
-  } & BasicInfoFragments.Fragment;
+  } & BasicInfoFragment.Fragment;
 
-  export type Client = ClientFragment.Fragment;
+  export type Client = {
+    __typename?: "Client";
+
+    streetAddress: string | null;
+
+    postalCode: string | null;
+
+    city: string | null;
+  } & ClientFragment.Fragment;
 
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-  } & PriceFragments.Fragment;
+  } & PriceFragment.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-  } & PriceFragments.Fragment;
+  } & PriceFragment.Fragment;
 }
 
 export namespace UpdateStatus {
@@ -202,21 +210,29 @@ export namespace AddProject {
     incomes: Incomes[] | null;
 
     expenses: Expenses[] | null;
-  } & BasicInfoFragments.Fragment;
+  } & BasicInfoFragment.Fragment;
 
-  export type Client = ClientFragment.Fragment;
+  export type Client = {
+    __typename?: "Client";
+
+    streetAddress: string | null;
+
+    postalCode: string | null;
+
+    city: string | null;
+  } & ClientFragment.Fragment;
 
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-  } & PriceFragments.Fragment;
+  } & PriceFragment.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-  } & PriceFragments.Fragment;
+  } & PriceFragment.Fragment;
 }
 
 export namespace UpdateIncomesAndExpenses {
@@ -255,13 +271,13 @@ export namespace UpdateIncomesAndExpenses {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-  } & PriceFragments.Fragment;
+  } & PriceFragment.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
     name: string | null;
-  } & PriceFragments.Fragment;
+  } & PriceFragment.Fragment;
 }
 
 export namespace UpdateBasicInfo {
@@ -292,9 +308,17 @@ export namespace UpdateBasicInfo {
     invoiceNumber: string;
 
     client: Client | null;
-  } & BasicInfoFragments.Fragment;
+  } & BasicInfoFragment.Fragment;
 
-  export type Client = ClientFragment.Fragment;
+  export type Client = {
+    __typename?: "Client";
+
+    streetAddress: string | null;
+
+    postalCode: string | null;
+
+    city: string | null;
+  } & ClientFragment.Fragment;
 }
 
 export namespace DeleteProject {
@@ -343,7 +367,23 @@ export namespace DownloadInvoice {
   };
 }
 
-export namespace PriceFragments {
+export namespace ClientFragment {
+  export type Fragment = {
+    __typename?: "Client";
+
+    id: string;
+
+    firstName: string | null;
+
+    lastName: string | null;
+
+    email: string | null;
+
+    phone: string | null;
+  };
+}
+
+export namespace PriceFragment {
   export type Fragment = {
     __typename?: "ExpenseAndIncome";
 
@@ -355,7 +395,7 @@ export namespace PriceFragments {
   };
 }
 
-export namespace BasicInfoFragments {
+export namespace BasicInfoFragment {
   export type Fragment = {
     __typename?: "Project";
 
@@ -371,26 +411,6 @@ export namespace BasicInfoFragments {
   };
 }
 
-export namespace ClientFragment {
-  export type Fragment = {
-    __typename?: "Client";
-
-    firstName: string | null;
-
-    lastName: string | null;
-
-    email: string | null;
-
-    phone: string | null;
-
-    streetAddress: string | null;
-
-    postalCode: string | null;
-
-    city: string | null;
-  };
-}
-
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 
@@ -400,9 +420,21 @@ import gql from "graphql-tag";
 // Fragments
 // ====================================================
 
-export namespace PriceFragments {
+export namespace ClientFragment {
   export const FragmentDoc = gql`
-    fragment PriceFragments on ExpenseAndIncome {
+    fragment ClientFragment on Client {
+      id
+      firstName
+      lastName
+      email
+      phone
+    }
+  `;
+}
+
+export namespace PriceFragment {
+  export const FragmentDoc = gql`
+    fragment PriceFragment on ExpenseAndIncome {
       price
       quantity
       taxRate
@@ -410,28 +442,14 @@ export namespace PriceFragments {
   `;
 }
 
-export namespace BasicInfoFragments {
+export namespace BasicInfoFragment {
   export const FragmentDoc = gql`
-    fragment BasicInfoFragments on Project {
+    fragment BasicInfoFragment on Project {
       id
       name
       projectDate
       invoiceDate
       status
-    }
-  `;
-}
-
-export namespace ClientFragment {
-  export const FragmentDoc = gql`
-    fragment ClientFragment on Client {
-      firstName
-      lastName
-      email
-      phone
-      streetAddress
-      postalCode
-      city
     }
   `;
 }
@@ -444,15 +462,15 @@ export namespace GetProjectOverview {
   export const Document = gql`
     query getProjectOverview($userId: String!) {
       getProjectsByUserId(userId: $userId) {
-        ...BasicInfoFragments
+        ...BasicInfoFragment
         incomes {
-          ...PriceFragments
+          ...PriceFragment
         }
       }
     }
 
-    ${BasicInfoFragments.FragmentDoc}
-    ${PriceFragments.FragmentDoc}
+    ${BasicInfoFragment.FragmentDoc}
+    ${PriceFragment.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.QueryProps<Query, Variables>>
@@ -491,24 +509,27 @@ export namespace GetSingleProject {
     query getSingleProject($id: String!) {
       getSingleProject(projectId: $id) {
         invoiceNumber
-        ...BasicInfoFragments
+        ...BasicInfoFragment
         client {
           ...ClientFragment
+          streetAddress
+          postalCode
+          city
         }
         incomes {
           name
-          ...PriceFragments
+          ...PriceFragment
         }
         expenses {
           name
-          ...PriceFragments
+          ...PriceFragment
         }
       }
     }
 
-    ${BasicInfoFragments.FragmentDoc}
+    ${BasicInfoFragment.FragmentDoc}
     ${ClientFragment.FragmentDoc}
-    ${PriceFragments.FragmentDoc}
+    ${PriceFragment.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.QueryProps<Query, Variables>>
@@ -596,25 +617,28 @@ export namespace AddProject {
         message
         project {
           invoiceNumber
-          ...BasicInfoFragments
+          ...BasicInfoFragment
           client {
             ...ClientFragment
+            streetAddress
+            postalCode
+            city
           }
           incomes {
             name
-            ...PriceFragments
+            ...PriceFragment
           }
           expenses {
             name
-            ...PriceFragments
+            ...PriceFragment
           }
         }
       }
     }
 
-    ${BasicInfoFragments.FragmentDoc}
+    ${BasicInfoFragment.FragmentDoc}
     ${ClientFragment.FragmentDoc}
-    ${PriceFragments.FragmentDoc}
+    ${PriceFragment.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
@@ -662,17 +686,17 @@ export namespace UpdateIncomesAndExpenses {
           id
           incomes {
             name
-            ...PriceFragments
+            ...PriceFragment
           }
           expenses {
             name
-            ...PriceFragments
+            ...PriceFragment
           }
         }
       }
     }
 
-    ${PriceFragments.FragmentDoc}
+    ${PriceFragment.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
@@ -715,15 +739,18 @@ export namespace UpdateBasicInfo {
         message
         project {
           invoiceNumber
-          ...BasicInfoFragments
+          ...BasicInfoFragment
           client {
             ...ClientFragment
+            streetAddress
+            postalCode
+            city
           }
         }
       }
     }
 
-    ${BasicInfoFragments.FragmentDoc}
+    ${BasicInfoFragment.FragmentDoc}
     ${ClientFragment.FragmentDoc}
   `;
   export class Component extends React.Component<

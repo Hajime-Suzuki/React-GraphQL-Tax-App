@@ -6,6 +6,10 @@ export const getClientsByUserId = async (userId: string) => {
   return Client.find({ user: userId })
 }
 
+export const getSingleClient = async (clientId: string) => {
+  return Client.findById(clientId)
+}
+
 export const updateOrCreateClient = async (
   {
     projectId: conditionPId,

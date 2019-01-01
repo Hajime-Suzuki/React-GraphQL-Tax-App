@@ -94,6 +94,8 @@ export interface Query {
   getSingleProject?: Project | null;
 
   getClientsByUser?: Client[] | null;
+
+  getSingleClient?: Client | null;
 }
 
 export interface User {
@@ -258,6 +260,9 @@ export interface GetProjectsByUserIdQueryArgs {
 }
 export interface GetSingleProjectQueryArgs {
   projectId: string;
+}
+export interface GetSingleClientQueryArgs {
+  clientId: string;
 }
 export interface RegisterUserMutationArgs {
   firstName: string;

@@ -1,69 +1,43 @@
 import gql from 'graphql-tag'
-
-const PRICE_FRAGMENTS = gql`
-  fragment PriceFragments on ExpenseAndIncome {
-    price
-    quantity
-    taxRate
-  }
-`
-
-const BASIC_INFO_FRAGMENTS = gql`
-  fragment BasicInfoFragments on Project {
-    id
-    name
-    projectDate
-    invoiceDate
-    status
-  }
-`
-
-const CLIENT_FRAGMENTS = gql`
-  fragment ClientFragment on Client {
-    firstName
-    lastName
-    email
-    phone
-    streetAddress
-    postalCode
-    city
-  }
-`
+import { Fragments } from '../fragments/fragments'
 
 const GET_PROJECT_OVERVIEW = gql`
   query getProjectOverview($userId: String!) {
     getProjectsByUserId(userId: $userId) {
-      ...BasicInfoFragments
+      ...BasicInfoFragment
       incomes {
-        ...PriceFragments
+        ...PriceFragment
       }
     }
   }
-  ${PRICE_FRAGMENTS}
-  ${BASIC_INFO_FRAGMENTS}
+  ${Fragments.PRICE_FRAGMENT}
+  ${Fragments.BASIC_INFO_FRAGMENT}
 `
 
 const GET_SINGLE_PROJECT = gql`
   query getSingleProject($id: String!) {
     getSingleProject(projectId: $id) {
       invoiceNumber
-      ...BasicInfoFragments
+      ...BasicInfoFragment
       client {
         ...ClientFragment
+        streetAddress
+        postalCode
+        city
       }
       incomes {
         name
-        ...PriceFragments
+        ...PriceFragment
       }
       expenses {
         name
-        ...PriceFragments
+        ...PriceFragment
       }
     }
   }
-  ${PRICE_FRAGMENTS}
-  ${BASIC_INFO_FRAGMENTS}
-  ${CLIENT_FRAGMENTS}
+  ${Fragments.PRICE_FRAGMENT}
+  ${Fragments.BASIC_INFO_FRAGMENT}
+  ${Fragments.CLIENT_FRAGMENT}
 `
 
 const UPDATE_STATUS = gql`
@@ -86,24 +60,27 @@ const ADD_PROJECT = gql`
       message
       project {
         invoiceNumber
-        ...BasicInfoFragments
+        ...BasicInfoFragment
         client {
           ...ClientFragment
+          streetAddress
+          postalCode
+          city
         }
         incomes {
           name
-          ...PriceFragments
+          ...PriceFragment
         }
         expenses {
           name
-          ...PriceFragments
+          ...PriceFragment
         }
       }
     }
   }
-  ${PRICE_FRAGMENTS}
-  ${BASIC_INFO_FRAGMENTS}
-  ${CLIENT_FRAGMENTS}
+  ${Fragments.PRICE_FRAGMENT}
+  ${Fragments.BASIC_INFO_FRAGMENT}
+  ${Fragments.CLIENT_FRAGMENT}
 `
 
 const UPDATE_INCOMES_EXPENSES = gql`
@@ -115,16 +92,16 @@ const UPDATE_INCOMES_EXPENSES = gql`
         id
         incomes {
           name
-          ...PriceFragments
+          ...PriceFragment
         }
         expenses {
           name
-          ...PriceFragments
+          ...PriceFragment
         }
       }
     }
   }
-  ${PRICE_FRAGMENTS}
+  ${Fragments.PRICE_FRAGMENT}
 `
 
 const UPDATE_BASIC_INFO = gql`
@@ -134,15 +111,18 @@ const UPDATE_BASIC_INFO = gql`
       message
       project {
         invoiceNumber
-        ...BasicInfoFragments
+        ...BasicInfoFragment
         client {
           ...ClientFragment
+          streetAddress
+          postalCode
+          city
         }
       }
     }
   }
-  ${BASIC_INFO_FRAGMENTS}
-  ${CLIENT_FRAGMENTS}
+  ${Fragments.BASIC_INFO_FRAGMENT}
+  ${Fragments.CLIENT_FRAGMENT}
 `
 
 const DELETE_PROJECT = gql`
@@ -154,7 +134,7 @@ const DELETE_PROJECT = gql`
       }
     }
   }
-  ${BASIC_INFO_FRAGMENTS}
+  ${Fragments.BASIC_INFO_FRAGMENT}
 `
 
 const GENERATE_INVOICE = gql`
@@ -175,9 +155,4 @@ export const projectQueries = {
   UPDATE_BASIC_INFO,
   DELETE_PROJECT,
   GENERATE_INVOICE
-}
-
-export const projectFragments = {
-  PRICE_FRAGMENTS,
-  BASIC_INFO_FRAGMENTS
 }

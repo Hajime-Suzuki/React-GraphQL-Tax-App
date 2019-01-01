@@ -95,6 +95,8 @@ export interface Query {
 
   getClientsByUser?: Client[] | null;
 
+  getSingleClient?: Client | null;
+
   token: string;
 
   userId?: string | null;
@@ -263,6 +265,9 @@ export interface GetProjectsByUserIdQueryArgs {
 export interface GetSingleProjectQueryArgs {
   projectId: string;
 }
+export interface GetSingleClientQueryArgs {
+  clientId: string;
+}
 export interface RegisterUserMutationArgs {
   firstName: string;
 
@@ -370,6 +375,12 @@ export namespace QueryResolvers {
       Context
     >;
 
+    getSingleClient?: GetSingleClientResolver<
+      Client | null,
+      TypeParent,
+      Context
+    >;
+
     token?: TokenResolver<string, TypeParent, Context>;
 
     userId?: UserIdResolver<string | null, TypeParent, Context>;
@@ -408,6 +419,15 @@ export namespace QueryResolvers {
     Parent = {},
     Context = {}
   > = Resolver<R, Parent, Context>;
+  export type GetSingleClientResolver<
+    R = Client | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetSingleClientArgs>;
+  export interface GetSingleClientArgs {
+    clientId: string;
+  }
+
   export type TokenResolver<R = string, Parent = {}, Context = {}> = Resolver<
     R,
     Parent,

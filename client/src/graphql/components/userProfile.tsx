@@ -166,6 +166,50 @@ export namespace UserFragments {
   };
 }
 
+export namespace ClientFragment {
+  export type Fragment = {
+    __typename?: "Client";
+
+    id: string;
+
+    firstName: string | null;
+
+    lastName: string | null;
+
+    email: string | null;
+
+    phone: string | null;
+  };
+}
+
+export namespace PriceFragment {
+  export type Fragment = {
+    __typename?: "ExpenseAndIncome";
+
+    price: string | null;
+
+    quantity: number | null;
+
+    taxRate: number | null;
+  };
+}
+
+export namespace BasicInfoFragment {
+  export type Fragment = {
+    __typename?: "Project";
+
+    id: string;
+
+    name: string;
+
+    projectDate: Date | null;
+
+    invoiceDate: Date | null;
+
+    status: InvoiceStatus;
+  };
+}
+
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 
@@ -198,6 +242,40 @@ export namespace UserFragments {
       streetAddress
       postalCode
       city
+    }
+  `;
+}
+
+export namespace ClientFragment {
+  export const FragmentDoc = gql`
+    fragment ClientFragment on Client {
+      id
+      firstName
+      lastName
+      email
+      phone
+    }
+  `;
+}
+
+export namespace PriceFragment {
+  export const FragmentDoc = gql`
+    fragment PriceFragment on ExpenseAndIncome {
+      price
+      quantity
+      taxRate
+    }
+  `;
+}
+
+export namespace BasicInfoFragment {
+  export const FragmentDoc = gql`
+    fragment BasicInfoFragment on Project {
+      id
+      name
+      projectDate
+      invoiceDate
+      status
     }
   `;
 }
