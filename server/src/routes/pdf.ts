@@ -7,7 +7,6 @@ const router = new Router({ prefix: '/invoice' })
 router.get('/render', authMiddleware, async ctx => {
   const userId = (ctx as any).req.user.id
   const data = await PDF.getAllDataForInvoice(ctx.query.projectId, userId)
-  console.log(data)
   const config = {
     publicPath: Constants.BASE_URL,
     ...data

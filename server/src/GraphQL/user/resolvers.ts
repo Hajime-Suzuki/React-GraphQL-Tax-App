@@ -2,10 +2,7 @@ import { AuthenticationError } from 'apollo-server-koa'
 import { ICtx } from '../../server'
 import { MutationResolvers, QueryResolvers } from '../@types/types.d'
 import { getUserById, loginUser, registerUser, updateUser } from './methods'
-
-const checkAuth = (userId: string) => {
-  if (!userId) throw new AuthenticationError('You are not authorized')
-}
+import { checkAuth } from '../../helpers/auth'
 
 export const userResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>

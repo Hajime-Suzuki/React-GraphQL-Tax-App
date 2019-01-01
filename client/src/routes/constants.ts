@@ -6,8 +6,10 @@ const routes = {
   projects: '/projects',
   singleProject: (id?: string) => (id ? `/projects/${id}` : '/projects/:id'),
   addProject: '/projects/new',
-  editUserProfile: (userId?: string) =>
-    userId ? `/${userId}/edit` : '/:userId/edit'
+  editUserProfile: '/user/edit',
+  clientsList: '/clients',
+  singleClient: (clientId?: string) =>
+    clientId ? `/clients/${clientId}` : '/clients/:clientId'
 }
 
 export { routes }

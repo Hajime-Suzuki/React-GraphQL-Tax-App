@@ -24,6 +24,6 @@ export const clientSchema = gql`
   }
 
   type Query {
-    getClientsByUser(userId: String!): [Client!]
+    getClientsByUser: [Client!]
   }
 `

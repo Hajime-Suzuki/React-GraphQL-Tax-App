@@ -10,6 +10,8 @@ import { Styles } from '../styles/sharedStyles'
 import { routes } from './constants'
 import PrivateRoutes from './PrivateRoutes'
 import EditUserProfileContainer from 'src/components/userProfile/EditUserProfileContainer'
+import ClientsListContainer from 'src/components/contact/ClientsListContainer'
+import SingleClientContainer from 'src/components/contact/SingleClientContainer'
 
 class Routes extends React.Component {
   render() {
@@ -40,9 +42,19 @@ class Routes extends React.Component {
               component={SingleProjectContainer}
             />
             <PrivateRoutes
-              path={routes.editUserProfile()}
+              path={routes.editUserProfile}
               exact
               component={EditUserProfileContainer}
+            />
+            <PrivateRoutes
+              path={routes.clientsList}
+              exact
+              component={ClientsListContainer}
+            />
+            <PrivateRoutes
+              path={routes.singleClient()}
+              exact
+              component={SingleClientContainer}
             />
             <Route
               path={routes.login}

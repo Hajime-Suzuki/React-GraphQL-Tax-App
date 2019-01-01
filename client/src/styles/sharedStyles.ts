@@ -25,11 +25,9 @@ const StyledLink: any = styled(Link)`
 `
 
 const MainWrapper = styled.div`
-  ${flexContainerProps}
   width: 90%;
+  max-width: 1200px;
   margin: auto;
-  .item {
-  }
 `
 
 const flexContainer: any = styled.div`

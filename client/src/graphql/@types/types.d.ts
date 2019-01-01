@@ -259,9 +259,6 @@ export interface GetProjectsByUserIdQueryArgs {
 export interface GetSingleProjectQueryArgs {
   projectId: string;
 }
-export interface GetClientsByUserQueryArgs {
-  userId: string;
-}
 export interface RegisterUserMutationArgs {
   firstName: string;
 

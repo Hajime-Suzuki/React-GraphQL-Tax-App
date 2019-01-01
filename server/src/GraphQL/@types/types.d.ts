@@ -259,9 +259,6 @@ export interface GetProjectsByUserIdQueryArgs {
 export interface GetSingleProjectQueryArgs {
   projectId: string;
 }
-export interface GetClientsByUserQueryArgs {
-  userId: string;
-}
 export interface RegisterUserMutationArgs {
   firstName: string;
 
@@ -402,10 +399,7 @@ export namespace QueryResolvers {
     R = IClient[] | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, GetClientsByUserArgs>;
-  export interface GetClientsByUserArgs {
-    userId: string;
-  }
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace UserResolvers {

@@ -93,11 +93,13 @@ const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
           </Link>
         )}
         {user && (
-          <Link
-            to={routes.editUserProfile(user.id)}
-            className={classes.menuItem}
-          >
+          <Link to={routes.editUserProfile} className={classes.menuItem}>
             <Button>Edit Profile</Button>
+          </Link>
+        )}
+        {user && (
+          <Link to={routes.clientsList} className={classes.menuItem}>
+            <Button>Contacts</Button>
           </Link>
         )}
         {user && (
