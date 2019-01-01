@@ -1,14 +1,33 @@
-import Button from '@material-ui/core/Button'
-import { Form, Formik, FormikProps } from 'formik'
+import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
-import { GetUserProfile } from 'src/graphql/components/userProfile'
+import { MutationFn } from 'react-apollo'
+import { GetUserProfile, UpdateUser } from 'src/graphql/components/userProfile'
+import { Omit } from 'src/libs/types'
 import { PrivateRoutesChildProps } from 'src/routes/types'
-import { renderFields } from '../project/formComponents/renderFields/renderFields'
 import { LoadingIcon } from '../UI/LoadingIcon'
+import EditUserProfile from './EditUserPorfile'
 
 type Props = GetUserProfile.Props<PrivateRoutesChildProps>
 
+export type EditUserInfoFormValues = Omit<
+  GetUserProfile.GetUser,
+  '__typename' | 'clients' | 'id'
+>
+
 class EditUserProfileContainer extends React.Component<Props> {
+  handleSubmit = (
+    mutate: MutationFn<UpdateUser.Mutation, UpdateUser.Variables>
+  ) => async (
+    values: EditUserInfoFormValues,
+    { resetForm }: FormikActions<EditUserInfoFormValues>
+  ) => {
+    const res = await mutate({ variables: { data: values } })
+    const user = res && res.data && res.data.updateUser.user
+    if (user) {
+      const { __typename, id, clients, ...userInfo } = user
+      resetForm(userInfo)
+    }
+  }
   render() {
     const { data } = this.props
     if (!data) return null
@@ -16,42 +35,31 @@ class EditUserProfileContainer extends React.Component<Props> {
     if (error) return <p>{error.message}</p>
     if (loading) return <LoadingIcon />
     if (!getUser) return 'user not found'
-    const { clients, ...user } = getUser
-    const { id: _, __typename: __, ...userInfo } = user
+    const { __typename: _, id: __, clients, ...userInfo } = getUser
     return (
-      <Formik
-        initialValues={userInfo}
-        validateOnChange={false}
-        validateOnBlur={false}
-        onSubmit={(values: typeof userInfo) => console.log(values)}
-        render={(props: FormikProps<typeof userInfo>) => {
+      <UpdateUser.Component>
+        {(updateUser, mutationResult) => {
           return (
-            <Form>
-              {generateSettings(userInfo).map((setting, i) => {
+            <Formik
+              initialValues={userInfo}
+              validateOnChange={false}
+              validateOnBlur={false}
+              onSubmit={this.handleSubmit(updateUser)}
+              render={(props: FormikProps<EditUserInfoFormValues>) => {
                 return (
-                  <React.Fragment key={i}>
-                    {renderFields(setting)}
-                  </React.Fragment>
+                  <EditUserProfile
+                    userInfo={userInfo}
+                    {...props}
+                    {...mutationResult}
+                  />
                 )
-              })}
-              <Button type="submit" variant="contained" color="primary">
-                Submit
-              </Button>
-            </Form>
+              }}
+            />
           )
         }}
-      />
+      </UpdateUser.Component>
     )
   }
-}
-
-const generateSettings = (userInfo: Partial<GetUserProfile.GetUser>) => {
-  return Object.keys(userInfo)
-    .filter(key => key !== '__typename' && key !== 'id')
-    .map(key => {
-      // if (key !== 'clients')
-      return { name: key, label: key.charAt(0).toUpperCase() + key.slice(1) }
-    })
 }
 
 export default GetUserProfile.HOC<Props>({

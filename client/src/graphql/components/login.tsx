@@ -1,3 +1,25 @@
+export interface UpdateUserInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  password?: string | null;
+
+  btw?: string | null;
+
+  kvk?: string | null;
+
+  iban?: string | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
+}
+
 export interface ProjectInput {
   invoiceNumber?: string | null;
 
@@ -85,7 +107,7 @@ export namespace GetUser {
   export type Query = {
     __typename?: "Query";
 
-    getUser: GetUser | null;
+    getUser: GetUser;
   };
 
   export type GetUser = {

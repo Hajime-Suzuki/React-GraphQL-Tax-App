@@ -1,3 +1,25 @@
+export interface UpdateUserInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  password?: string | null;
+
+  btw?: string | null;
+
+  kvk?: string | null;
+
+  iban?: string | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
+}
+
 export interface ProjectInput {
   invoiceNumber?: string | null;
 
@@ -58,6 +80,28 @@ export type Blob = any;
 // Documents
 // ====================================================
 
+export namespace UpdateUser {
+  export type Variables = {
+    data: UpdateUserInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateUser: UpdateUser;
+  };
+
+  export type UpdateUser = {
+    __typename?: "updateUserResponse";
+
+    message: string | null;
+
+    user: User;
+  };
+
+  export type User = UserFragments.Fragment;
+}
+
 export namespace GetUserProfile {
   export type Variables = {
     id: string;
@@ -66,7 +110,7 @@ export namespace GetUserProfile {
   export type Query = {
     __typename?: "Query";
 
-    getUser: GetUser | null;
+    getUser: GetUser;
   };
 
   export type GetUser = UserFragments.Fragment;
@@ -157,6 +201,52 @@ export namespace UserFragments {
 // Components
 // ====================================================
 
+export namespace UpdateUser {
+  export const Document = gql`
+    mutation updateUser($data: UpdateUserInput!) {
+      updateUser(data: $data) {
+        message
+        user {
+          ...UserFragments
+        }
+      }
+    }
+
+    ${UserFragments.FragmentDoc}
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
 export namespace GetUserProfile {
   export const Document = gql`
     query getUserProfile($id: String!) {

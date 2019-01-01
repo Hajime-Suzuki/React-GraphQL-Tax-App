@@ -1,3 +1,25 @@
+export interface UpdateUserInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  password?: string | null;
+
+  btw?: string | null;
+
+  kvk?: string | null;
+
+  iban?: string | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
+}
+
 export interface ProjectInput {
   invoiceNumber?: string | null;
 
@@ -63,7 +85,7 @@ export type Blob = any;
 // ====================================================
 
 export interface Query {
-  getUser?: User | null;
+  getUser: User;
 
   getProjectsByUserId: Project[];
 
@@ -185,6 +207,8 @@ export interface Mutation {
 
   loginUser: RegisterResponse;
 
+  updateUser: UpdateUserResponse;
+
   updateProject: MutationProjectResponse;
 
   addProject?: MutationProjectResponse | null;
@@ -202,6 +226,12 @@ export interface RegisterResponse {
   token: string;
 }
 
+export interface UpdateUserResponse {
+  message?: string | null;
+
+  user: User;
+}
+
 export interface MutationProjectResponse {
   success: boolean;
 
@@ -214,28 +244,6 @@ export interface GenerateInvoiceResponse {
   message?: string | null;
 
   data?: Blob | null;
-}
-
-export interface EditUserInput {
-  firstName?: string | null;
-
-  lastName?: string | null;
-
-  email?: string | null;
-
-  password?: string | null;
-
-  btw?: string | null;
-
-  kvk?: string | null;
-
-  iban?: string | null;
-
-  streetAddress?: string | null;
-
-  postalCode?: string | null;
-
-  city?: string | null;
 }
 
 // ====================================================
@@ -267,6 +275,9 @@ export interface LoginUserMutationArgs {
   email: string;
 
   password: string;
+}
+export interface UpdateUserMutationArgs {
+  data: UpdateUserInput;
 }
 export interface UpdateProjectMutationArgs {
   projectId: string;
@@ -338,7 +349,7 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
 export namespace QueryResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
-    getUser?: GetUserResolver<User | null, TypeParent, Context>;
+    getUser?: GetUserResolver<User, TypeParent, Context>;
 
     getProjectsByUserId?: GetProjectsByUserIdResolver<
       Project[],
@@ -363,11 +374,12 @@ export namespace QueryResolvers {
     userId?: UserIdResolver<string | null, TypeParent, Context>;
   }
 
-  export type GetUserResolver<
-    R = User | null,
-    Parent = {},
-    Context = {}
-  > = Resolver<R, Parent, Context, GetUserArgs>;
+  export type GetUserResolver<R = User, Parent = {}, Context = {}> = Resolver<
+    R,
+    Parent,
+    Context,
+    GetUserArgs
+  >;
   export interface GetUserArgs {
     id: string;
   }
@@ -771,6 +783,8 @@ export namespace MutationResolvers {
 
     loginUser?: LoginUserResolver<RegisterResponse, TypeParent, Context>;
 
+    updateUser?: UpdateUserResolver<UpdateUserResponse, TypeParent, Context>;
+
     updateProject?: UpdateProjectResolver<
       MutationProjectResponse,
       TypeParent,
@@ -820,6 +834,15 @@ export namespace MutationResolvers {
     email: string;
 
     password: string;
+  }
+
+  export type UpdateUserResolver<
+    R = UpdateUserResponse,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, UpdateUserArgs>;
+  export interface UpdateUserArgs {
+    data: UpdateUserInput;
   }
 
   export type UpdateProjectResolver<
@@ -887,6 +910,25 @@ export namespace RegisterResponseResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
+export namespace UpdateUserResponseResolvers {
+  export interface Resolvers<Context = {}, TypeParent = UpdateUserResponse> {
+    message?: MessageResolver<string | null, TypeParent, Context>;
+
+    user?: UserResolver<User, TypeParent, Context>;
+  }
+
+  export type MessageResolver<
+    R = string | null,
+    Parent = UpdateUserResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type UserResolver<
+    R = User,
+    Parent = UpdateUserResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
 export namespace MutationProjectResponseResolvers {
   export interface Resolvers<
     Context = {},
@@ -934,81 +976,6 @@ export namespace GenerateInvoiceResponseResolvers {
   export type DataResolver<
     R = Blob | null,
     Parent = GenerateInvoiceResponse,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace EditUserInputResolvers {
-  export interface Resolvers<Context = {}, TypeParent = EditUserInput> {
-    firstName?: FirstNameResolver<string | null, TypeParent, Context>;
-
-    lastName?: LastNameResolver<string | null, TypeParent, Context>;
-
-    email?: EmailResolver<string | null, TypeParent, Context>;
-
-    password?: PasswordResolver<string | null, TypeParent, Context>;
-
-    btw?: BtwResolver<string | null, TypeParent, Context>;
-
-    kvk?: KvkResolver<string | null, TypeParent, Context>;
-
-    iban?: IbanResolver<string | null, TypeParent, Context>;
-
-    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
-
-    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
-
-    city?: CityResolver<string | null, TypeParent, Context>;
-  }
-
-  export type FirstNameResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type LastNameResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type EmailResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type PasswordResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type BtwResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type KvkResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type IbanResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type StreetAddressResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type PostalCodeResolver<
-    R = string | null,
-    Parent = EditUserInput,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type CityResolver<
-    R = string | null,
-    Parent = EditUserInput,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }

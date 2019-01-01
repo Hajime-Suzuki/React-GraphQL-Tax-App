@@ -1,3 +1,25 @@
+export interface UpdateUserInput {
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  password?: string | null;
+
+  btw?: string | null;
+
+  kvk?: string | null;
+
+  iban?: string | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
+}
+
 export interface ProjectInput {
   invoiceNumber?: string | null;
 
@@ -63,7 +85,7 @@ export type Blob = any;
 // ====================================================
 
 export interface Query {
-  getUser?: User | null;
+  getUser: User;
 
   getProjectsByUserId: Project[];
 
@@ -181,6 +203,8 @@ export interface Mutation {
 
   loginUser: RegisterResponse;
 
+  updateUser: UpdateUserResponse;
+
   updateProject: MutationProjectResponse;
 
   addProject?: MutationProjectResponse | null;
@@ -198,6 +222,12 @@ export interface RegisterResponse {
   token: string;
 }
 
+export interface UpdateUserResponse {
+  message?: string | null;
+
+  user: User;
+}
+
 export interface MutationProjectResponse {
   success: boolean;
 
@@ -210,28 +240,6 @@ export interface GenerateInvoiceResponse {
   message?: string | null;
 
   data?: Blob | null;
-}
-
-export interface EditUserInput {
-  firstName?: string | null;
-
-  lastName?: string | null;
-
-  email?: string | null;
-
-  password?: string | null;
-
-  btw?: string | null;
-
-  kvk?: string | null;
-
-  iban?: string | null;
-
-  streetAddress?: string | null;
-
-  postalCode?: string | null;
-
-  city?: string | null;
 }
 
 // ====================================================
@@ -263,6 +271,9 @@ export interface LoginUserMutationArgs {
   email: string;
 
   password: string;
+}
+export interface UpdateUserMutationArgs {
+  data: UpdateUserInput;
 }
 export interface UpdateProjectMutationArgs {
   projectId: string;

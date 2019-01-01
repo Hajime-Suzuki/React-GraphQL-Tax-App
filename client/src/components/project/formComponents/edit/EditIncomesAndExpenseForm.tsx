@@ -9,8 +9,8 @@ import { IRouterComponentProps } from 'src/routes/types'
 import styled from 'styled-components'
 import { SingleProjectChildProps } from '../../SingleProjectContainer'
 import { IncomesAndExpenseFields } from '../IncomesAndExpenseFields'
-import { StyledForm } from '../../AddProjectForm'
 import EditFormModal from '../modal/EditFormModal'
+import { Styles } from 'src/styles/sharedStyles'
 
 interface Props {
   incomes?: ExpenseAndIncomeInput[]
@@ -19,7 +19,7 @@ interface Props {
   handleCloseModal: SingleProjectChildProps['handleCloseModal']
 }
 
-const CustomStyledForm: any = styled(StyledForm)`
+const CustomStyledForm: any = styled(Styles.Form)`
   .form-section {
     margin-bottom: 0;
     padding-bottom: 0;

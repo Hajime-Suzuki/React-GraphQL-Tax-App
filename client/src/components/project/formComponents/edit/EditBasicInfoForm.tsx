@@ -13,13 +13,13 @@ import {
 import { IRouterComponentProps } from 'src/routes/types'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
-import { StyledForm } from '../../AddProjectForm'
 import { addProjectValidationSchema } from '../../helper/addProjectValidationSchema'
 import { GenerateFieldSettings } from '../../helper/genrateFieldSettings'
 import { SingleProjectChildProps } from '../../SingleProjectContainer'
 import EditFormModal from '../modal/EditFormModal'
 import { renderDatePicker } from '../renderFields/renderDatePicker'
 import { renderFields } from '../renderFields/renderFields'
+import { Styles } from 'src/styles/sharedStyles'
 
 interface Props {
   selectedModal: SingleProjectChildProps['selectedModal']
@@ -28,7 +28,7 @@ interface Props {
   client?: ProjectInput['client']
 }
 
-const CustomStyledForm: any = styled(StyledForm)`
+const CustomStyledForm: any = styled(Styles.Form)`
   .form-section {
     margin-bottom: 0;
     padding-bottom: 0;

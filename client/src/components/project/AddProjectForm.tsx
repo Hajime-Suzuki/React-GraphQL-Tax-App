@@ -1,14 +1,13 @@
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { Form, FormikProps } from 'formik'
+import { FormikProps } from 'formik'
 import * as React from 'react'
+import { ProjectInput } from 'src/graphql/components/projects'
 import { Styles } from 'src/styles/sharedStyles'
-import styled from 'styled-components'
 import { IncomesAndExpenseFields } from './formComponents/IncomesAndExpenseFields'
+import { renderDatePicker } from './formComponents/renderFields/renderDatePicker'
 import { renderFields } from './formComponents/renderFields/renderFields'
 import { GenerateFieldSettings } from './helper/genrateFieldSettings'
-import { ProjectInput } from 'src/graphql/components/projects'
-import { renderDatePicker } from './formComponents/renderFields/renderDatePicker'
 
 interface OwnProps {
   mutationError?: string
@@ -34,7 +33,7 @@ class AddProjectForm extends React.Component<
     const { incomes, expenses } = values
     const isTouched = !!Object.keys(touched).length
     return (
-      <StyledForm>
+      <Styles.Form>
         <div className="form-section">
           <Typography variant="h5" className="title">
             Basic Info
@@ -118,40 +117,9 @@ class AddProjectForm extends React.Component<
             Submit
           </Button>
         </div>
-      </StyledForm>
+      </Styles.Form>
     )
   }
 }
-
-export const StyledForm = styled(Form)`
-  ${Styles.flexContainerProps}
-  .form-section {
-    ${Styles.flexContainerProps}
-    width: 90%;
-    max-width: 1000px;
-    margin-bottom: 4em;
-    .title {
-      width: 100%;
-      text-align: center;
-    }
-    .field-item {
-      width: 188px;
-      margin: 1em;
-      &.select {
-        display: flex;
-        flex-direction: column;
-      }
-    }
-    .add-icon {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  .message-section {
-    text-align: center;
-    margin-bottom: 2em;
-    width: 100%;
-  }
-`
 
 export default AddProjectForm

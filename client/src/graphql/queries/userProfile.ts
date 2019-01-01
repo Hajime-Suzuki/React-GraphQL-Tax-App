@@ -23,11 +23,17 @@ const USER_FRAGMENTS = gql`
     city
   }
 `
-// const EDIT_USER_PROFILE = gql`
-//   mutation editUserProfile($id: String!, $data: EditUserInput!){
-
-//   }
-// `
+const UPDATE_USER_PROFILE = gql`
+  mutation updateUser($data: UpdateUserInput!) {
+    updateUser(data: $data) {
+      message
+      user {
+        ...UserFragments
+      }
+    }
+  }
+  ${USER_FRAGMENTS}
+`
 
 const GET_USER_PROFILE = gql`
   query getUserProfile($id: String!) {
@@ -40,6 +46,6 @@ const GET_USER_PROFILE = gql`
 
 export const userProfile = {
   USER_FRAGMENTS,
-  // EDIT_USER_PROFILE,
-  GET_USER_PRIFILE: GET_USER_PROFILE
+  GET_USER_PROFILE,
+  UPDATE_USER_PROFILE
 }
