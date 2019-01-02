@@ -1,7 +1,7 @@
 //- - 
 //-   var userInfo = {
 //-     name: 'Hajime Suzuki',
-//-     email: 'test@test.com',
+//-     email: 'teashtahstahstahtsst@test.com',
 //-     phone: '0612345678',
 //-     btw: 'NL123408910238',
 //-     kvk: 12341234,
@@ -14,7 +14,7 @@
 //- - 
 //-   var invoiceInfo = {
 //-     name: 'Invoice Title',
-//-     invoiceNumber: '20185843',
+//-     invoiceNumber: '20185843ashtashtashta',
 //-     invoiceDate: '2018-12-22',
 //-   }
 
@@ -28,20 +28,24 @@
 
 //- - 
 //-   var incomes = [
-//-     {name: 'test', price:'12.01', quantity: 5, taxRate: 21},
-//-     {name: 'some', price:'10550.01', quantity: 2, taxRate: 21},
-//-     {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
-//-     {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
-//-     {name: 'another', price:'116.01', quantity: 1, taxRate: 21},
+//-     {name: 'testasht ashta sht asht ', price:'€12.01', quantity: 5, taxRate: 21},
+//-     {name: 'some  ahst ahashasht ahtaahsr  ahst a ahst aasht ash tash asht ash tasht ', price:'€1055000.01', quantity: 2, taxRate: 21},
+//-     {name: 'another', price:'€116.01', quantity: 1, taxRate: 21},
+//-     {name: 'another', price:'€116.01', quantity: 1, taxRate: 21},
+//-     {name: 'another', price:'€116.01', quantity: 1, taxRate: 21},
 //-   ]
+
+//- -
+//-   var totalPrices = {}
 
 html 
   head
     link(href="https://fonts.googleapis.com/css?family=Share+Tech" rel="stylesheet")
     link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
-    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css")
+    //- link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css")
     style
       include ../build/index.css
+      include ./materialize.min.css
   body
     - var bgPath = publicPath || 'http://localhost:4000' 
 
@@ -65,10 +69,10 @@ html
           .group
             //- p.user-name #{userInfo.name}
           .group
-            p.phone 
+            p.phone
               i.material-icons local_phone
               | #{userInfo.phone || ''}
-            p.email 
+            .email 
               i.material-icons email
               | #{userInfo.email}
             p.address 
@@ -103,10 +107,10 @@ html
             tbody.total-table-body
               tr.total-section
                 td.label Subtotaal             
-                td.price #{totalPrices.subtotal}
+                td.price #{totalPrices.subtotal || ''}
               tr.total-section
                 td.label BTW
-                td.price #{totalPrices.taxTotal}
+                td.price #{totalPrices.taxTotal || ''}
               tr.total-section
                 td.label Totaal            
-                td.price #{totalPrices.grandTotal}
+                td.price #{totalPrices.grandTotal || ''}

@@ -1,16 +1,13 @@
-import * as dotenv from 'dotenv'
 import * as Koa from 'koa'
 import * as bodyParser from 'koa-bodyparser'
 import * as cors from 'koa-cors'
 import * as Pug from 'koa-pug'
 import * as Router from 'koa-router'
+import * as serve from 'koa-static'
 import passport from './passport/passport'
 import pdfRoutes from './routes/pdf'
 import projectRoutes from './routes/projects'
 import server from './server'
-import * as serve from 'koa-static'
-
-dotenv.config()
 
 const app = new Koa()
 const router = new Router()

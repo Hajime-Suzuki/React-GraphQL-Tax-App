@@ -45,6 +45,12 @@ $font_color: rgb(83, 83, 83);
 }
 
 .basic-info {
+  $line_break_margin: 27px;
+  %with_line_break {
+    margin-left: $line_break_margin;
+    text-indent: - $line_break_margin;
+    overflow-wrap: break-word;
+  }
   width: 30%;
   .group {
     margin: 1em 0;
@@ -55,11 +61,21 @@ $font_color: rgb(83, 83, 83);
       margin: 0
     }
   }
+  .email {
+    @extend %with_line_break;
+  }
+  .address {
+    @extend %with_line_break;
+  }
+  .invoice-number {
+    @extend %with_line_break;
+  }
   .user-name {
     font-size: 120%;
     font-weight: bold;
   }
   i {
+    display: inline;
     vertical-align: middle;
     color: lighten($font_color, 15%);
     font-size: 1.3em;
@@ -94,6 +110,10 @@ $font_color: rgb(83, 83, 83);
   .narrow {
     width: $tableWidth;
     text-align: center;
+  }
+  .narrow.price {
+    text-align: right;
+    padding-right: 23px;
   }
   .total-table-body {
     display: flex;

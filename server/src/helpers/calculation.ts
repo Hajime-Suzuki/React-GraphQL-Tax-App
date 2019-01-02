@@ -4,10 +4,10 @@ type TaxRate = number | null
 
 const format = (value?: string | number | null) => {
   if (!value) return '-'
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('nl-NL', {
     style: 'currency',
     currency: 'EUR'
-  }).format(Number(value))
+  }).format(+value)
 }
 
 const getGrandTotal = (
@@ -30,7 +30,6 @@ const getGrandTotal = (
       grandTotal: 0
     }
   )
-
   Object.keys(total).forEach(key => {
     (total as any)[key] = format((total as any)[key])
   })
@@ -38,5 +37,6 @@ const getGrandTotal = (
 }
 
 export const Calculations = {
+  format,
   getGrandTotal
 }
