@@ -1,13 +1,12 @@
+import * as currencyFormatter from 'currency-formatter'
+
 type Price = string | null
 type Quantity = number | null
 type TaxRate = number | null
 
 const format = (value?: string | number | null) => {
   if (!value) return '-'
-  return new Intl.NumberFormat('nl-NL', {
-    style: 'currency',
-    currency: 'EUR'
-  }).format(+value)
+  return currencyFormatter.format(+value, { code: 'EUR', locale: 'nl-NL' })
 }
 
 const getGrandTotal = (

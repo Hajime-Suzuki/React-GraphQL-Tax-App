@@ -1,10 +1,9 @@
+import { format } from 'date-fns'
 import * as puppeteer from 'puppeteer'
+import { IProject } from '../GraphQL/@types/types'
+import { Calculations } from '../helpers/calculation'
 import { Project } from '../Models/Project'
 import { User } from '../Models/User'
-import { Calculations } from '../helpers/calculation'
-import { Client } from '../Models/Client'
-import { IProject } from '../GraphQL/@types/types'
-import { format } from 'date-fns'
 
 export const getInvoicePDF = async (projectId: string, token: string) => {
   const browser = await puppeteer.launch()
