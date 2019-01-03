@@ -7,6 +7,9 @@ import Avatar from '@material-ui/core/Avatar'
 import { theme } from 'src/styles/theme'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
+import IconButton from '@material-ui/core/IconButton'
+import Icon from '@material-ui/core/Icon'
+import { EditIcon } from '../UI/EditIcon'
 
 interface OwnProps {
   client: SC.GetSingleClient
@@ -16,6 +19,9 @@ const Container: any = styled(Grid)`
   .card {
     padding: 2em;
     text-align: center;
+  }
+  .edit-button-wrapper {
+    text-align: right;
   }
   .avatar {
     background-color: ${theme.palette.secondary.main};
@@ -43,6 +49,9 @@ const SingleClient: React.SFC<OwnProps> = props => {
     <Container container justify="center">
       <Grid item xs={11} md={5}>
         <Paper className="card">
+          <div className="edit-button-wrapper">
+            <EditIcon onClick={() => console.log('test')} />
+          </div>
           <Avatar className="avatar">
             {firstName && firstName.slice(0, 1).toUpperCase()}
             {lastName && lastName.slice(0, 1).toUpperCase()}

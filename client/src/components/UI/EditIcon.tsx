@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 interface Props {
   onClick: () => any
-  style: React.CSSProperties
+  style?: React.CSSProperties
 }
 const CustomIconButton: any = styled(IconButton)`
   color: ${COLOR.gray.regular};
