@@ -218,6 +218,8 @@ export interface Mutation {
   deleteProject?: MutationProjectResponse | null;
 
   downloadInvoice?: GenerateInvoiceResponse | null;
+
+  updateClient?: ClientMutationResponse | null;
 }
 
 export interface RegisterResponse {
@@ -246,6 +248,12 @@ export interface GenerateInvoiceResponse {
   message?: string | null;
 
   data?: Blob | null;
+}
+
+export interface ClientMutationResponse {
+  message?: string | null;
+
+  client: Client;
 }
 
 // ====================================================
@@ -294,4 +302,9 @@ export interface DeleteProjectMutationArgs {
 }
 export interface DownloadInvoiceMutationArgs {
   projectId: string;
+}
+export interface UpdateClientMutationArgs {
+  clientId: string;
+
+  data: ClientInput;
 }

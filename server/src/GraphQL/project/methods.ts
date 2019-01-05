@@ -30,10 +30,7 @@ export const updateProject = async (
   if (clientInput) {
     const client = await updateOrCreateClient(
       { projectId },
-      {
-        ...clientInput,
-        projectId
-      }
+      { ...clientInput, projectId }
     )
     ; (data as any).client = client.id
   }

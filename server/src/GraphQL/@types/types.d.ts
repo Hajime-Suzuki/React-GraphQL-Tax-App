@@ -218,6 +218,8 @@ export interface IMutation {
   deleteProject?: IMutationProjectResponse | null;
 
   downloadInvoice?: IGenerateInvoiceResponse | null;
+
+  updateClient?: IClientMutationResponse | null;
 }
 
 export interface IRegisterResponse {
@@ -246,6 +248,12 @@ export interface IGenerateInvoiceResponse {
   message?: string | null;
 
   data?: Blob | null;
+}
+
+export interface IClientMutationResponse {
+  message?: string | null;
+
+  client: IClient;
 }
 
 // ====================================================
@@ -294,6 +302,11 @@ export interface DeleteProjectMutationArgs {
 }
 export interface DownloadInvoiceMutationArgs {
   projectId: string;
+}
+export interface UpdateClientMutationArgs {
+  clientId: string;
+
+  data: IClientInput;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -817,6 +830,12 @@ export namespace MutationResolvers {
       TypeParent,
       Context
     >;
+
+    updateClient?: UpdateClientResolver<
+      IClientMutationResponse | null,
+      TypeParent,
+      Context
+    >;
   }
 
   export type RegisterUserResolver<
@@ -890,6 +909,17 @@ export namespace MutationResolvers {
   > = Resolver<R, Parent, Context, DownloadInvoiceArgs>;
   export interface DownloadInvoiceArgs {
     projectId: string;
+  }
+
+  export type UpdateClientResolver<
+    R = IClientMutationResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, UpdateClientArgs>;
+  export interface UpdateClientArgs {
+    clientId: string;
+
+    data: IClientInput;
   }
 }
 
@@ -985,6 +1015,28 @@ export namespace GenerateInvoiceResponseResolvers {
   export type DataResolver<
     R = Blob | null,
     Parent = IGenerateInvoiceResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace ClientMutationResponseResolvers {
+  export interface Resolvers<
+    Context = {},
+    TypeParent = IClientMutationResponse
+  > {
+    message?: MessageResolver<string | null, TypeParent, Context>;
+
+    client?: ClientResolver<IClient, TypeParent, Context>;
+  }
+
+  export type MessageResolver<
+    R = string | null,
+    Parent = IClientMutationResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ClientResolver<
+    R = IClient,
+    Parent = IClientMutationResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }

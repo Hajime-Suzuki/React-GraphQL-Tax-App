@@ -22,9 +22,15 @@ export const clientSchema = gql`
     postalCode: String
     city: String
   }
-
+  type ClientMutationResponse {
+    message: String
+    client: Client!
+  }
   type Query {
     getClientsByUser: [Client!]
     getSingleClient(clientId: String!): Client
+  }
+  type Mutation {
+    updateClient(clientId: String!, data: ClientInput!): ClientMutationResponse
   }
 `

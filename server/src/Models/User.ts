@@ -99,6 +99,10 @@ userSchema.set('toJSON', {
   virtuals: true
 })
 
+userSchema.set('toObject', {
+  virtuals: true
+})
+
 userSchema.methods.generateToken = function() {
   return jwt.sign({ id: this.id }, secret, { expiresIn: '10 days' })
 }

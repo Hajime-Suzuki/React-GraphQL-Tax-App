@@ -1,10 +1,7 @@
-import {
-  ApolloServer,
-  makeExecutableSchema,
-  AuthenticationError
-} from 'apollo-server-koa'
+import { ApolloServer, makeExecutableSchema } from 'apollo-server-koa'
 import { Context } from 'koa'
 import { mergeTypes } from 'merge-graphql-schemas'
+import { clientResolvers } from './graphql/client/resolvers'
 import { clientSchema } from './GraphQL/client/schema'
 import { expenseSchema } from './GraphQL/expense/schema'
 import { projectResolvers } from './GraphQL/project/resolvers'
@@ -12,8 +9,7 @@ import { projectSchema } from './GraphQL/project/schema'
 import { sharedTypes } from './GraphQL/shared/sharedTypes'
 import { userResolvers } from './GraphQL/user/resolvers'
 import { userSchema } from './GraphQL/user/schema'
-import { User } from './Models/User'
-import { clientResolvers } from './graphql/client/resolvers'
+import { extractIdAndToken } from './helpers/auth'
 
 export interface ICtx {
   userId: string
@@ -32,19 +28,9 @@ const server = new ApolloServer({
     typeDefs,
     resolvers: [userResolvers, projectResolvers, clientResolvers] as any
   }),
-
   context: async ({ ctx: { headers } }: { ctx: Context }) => {
     if (headers.jwt) {
-      try {
-        const user = await User.findByToken(headers.jwt)
-        user.verifyToken(headers.jwt)
-        return {
-          userId: user.id,
-          token: headers.jwt
-        }
-      } catch (e) {
-        throw new AuthenticationError('You are not authorized')
-      }
+      return extractIdAndToken(headers)
     }
   }
 })

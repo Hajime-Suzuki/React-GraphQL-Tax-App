@@ -1,6 +1,7 @@
 import { removeEmptyProperty } from '../../helpers/transform'
 import { Client } from '../../Models/Client'
-import { IClientInput } from '../@types/types'
+import { IClientInput, UpdateClientMutationArgs } from '../@types/types'
+import { AuthenticationError } from 'apollo-server-koa'
 
 export const getClientsByUserId = async (userId: string) => {
   return Client.find({ user: userId })
@@ -8,6 +9,23 @@ export const getClientsByUserId = async (userId: string) => {
 
 export const getSingleClient = async (clientId: string) => {
   return Client.findById(clientId)
+}
+
+export const updateClient = async ({
+  userId,
+  clientId,
+  data
+}: UpdateClientMutationArgs & { userId: string }) => {
+  const client = await Client.findById(clientId)
+  if (!client) throw new Error('client not found')
+
+  if (client.user && client.user.toString() !== userId) {
+    throw new AuthenticationError('you are not allowed to edit this client')
+  }
+
+  const updated = await Client.findByIdAndUpdate(clientId, data, { new: true })
+  if (!updated) throw new Error('update error')
+  return updated
 }
 
 export const updateOrCreateClient = async (
@@ -33,7 +51,7 @@ export const updateOrCreateClient = async (
     return newClient
   } else {
     const { projectId: _, ...rest } = data
-    const updateClient = await Client.findByIdAndUpdate(
+    const updatedClient = await Client.findByIdAndUpdate(
       client.id,
       {
         ...rest,
@@ -43,6 +61,6 @@ export const updateOrCreateClient = async (
         new: true
       }
     )
-    return updateClient!
+    return updatedClient!
   }
 }
