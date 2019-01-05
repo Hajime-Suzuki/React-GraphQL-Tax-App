@@ -1,4 +1,3 @@
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
@@ -15,7 +14,6 @@ import { renderStatusField } from 'src/libs/forms/renderFields/renderDropdown'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 import { IRouterComponentProps } from 'src/routes/types'
 import { Styles } from 'src/styles/sharedStyles'
-import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
 import { SingleProjectChildProps } from '../..'
 import EditFormModal from '../../../../../libs/forms/EditFormModal'
@@ -110,6 +108,7 @@ class EditBasicInfoFormAndClient extends React.Component<
                             isOpen={selectedModal === 'basic'}
                             handleCloseModal={handleCloseModal}
                             handleConfirm={handleSubmit}
+                            handleDeleteDialogOpen={this.openDeleteDialog}
                             error={
                               updateError &&
                               'Something went wrong. Please try again later.'
@@ -139,7 +138,6 @@ class EditBasicInfoFormAndClient extends React.Component<
                                     )
                                   }
                                 )}
-                                {console.log(values.status)}
                                 {renderStatusField({
                                   value: values.status || '',
                                   name: 'status',
@@ -160,7 +158,6 @@ class EditBasicInfoFormAndClient extends React.Component<
                                   )
                                 )}
                               </div>
-                              <this.OpenDeleteDialogButton />
                             </CustomStyledForm>
                           </EditFormModal>
                         )
@@ -185,24 +182,6 @@ class EditBasicInfoFormAndClient extends React.Component<
           )
         }}
       </UpdateBasicInfo.Component>
-    )
-  }
-
-  OpenDeleteDialogButton = () => {
-    return (
-      <div className="form-section">
-        <Button
-          onClick={this.openDeleteDialog}
-          style={{
-            background: theme.palette.error.main,
-            color: 'white',
-            marginTop: '2em'
-          }}
-          variant="contained"
-        >
-          Delete
-        </Button>
-      </div>
     )
   }
 }

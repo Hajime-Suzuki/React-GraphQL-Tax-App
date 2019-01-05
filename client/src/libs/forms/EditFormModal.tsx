@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import Typography from '@material-ui/core/Typography'
+import { theme } from 'src/styles/theme'
 
 interface Props {
   title?: string
@@ -16,6 +17,7 @@ interface Props {
   loading?: boolean
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | false
   showAction?: boolean
+  handleDeleteDialogOpen?: any
 }
 
 const EditFormModal: React.SFC<Props> = props => {
@@ -28,7 +30,8 @@ const EditFormModal: React.SFC<Props> = props => {
     error,
     loading,
     maxWidth = 'lg',
-    showAction = true
+    showAction = true,
+    handleDeleteDialogOpen
   } = props
 
   return (
@@ -47,10 +50,29 @@ const EditFormModal: React.SFC<Props> = props => {
       </Typography>
       {showAction && (
         <DialogActions className="actions-section">
-          <Button onClick={handleCloseModal} color="primary" type="submit">
+          {handleDeleteDialogOpen && (
+            <div className="form-section">
+              <Button
+                onClick={handleDeleteDialogOpen}
+                style={{
+                  background: theme.palette.error.main,
+                  color: 'white'
+                }}
+                variant="contained"
+              >
+                Delete
+              </Button>
+            </div>
+          )}
+          <Button onClick={handleCloseModal} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleConfirm} color="primary" disabled={loading}>
+          <Button
+            onClick={handleConfirm}
+            color="primary"
+            disabled={loading}
+            variant="contained"
+          >
             Ok
           </Button>
         </DialogActions>
