@@ -145,19 +145,6 @@ class EditBasicInfoFormAndClient extends React.Component<
                                   onChange: handleChange
                                 })}
                               </div>
-
-                              <div className="form-section">
-                                <Typography variant="h6" className="title">
-                                  Client Info
-                                </Typography>
-                                {GenerateFieldSettings.clientFields.map(
-                                  (field, i) => (
-                                    <React.Fragment key={i}>
-                                      {renderFields(field)}
-                                    </React.Fragment>
-                                  )
-                                )}
-                              </div>
                             </CustomStyledForm>
                           </EditFormModal>
                         )

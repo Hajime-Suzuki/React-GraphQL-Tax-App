@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import LoginAndSignupFormContainer from 'src/components/loginAndSignup/LoginAndSignupFormContainer'
-import AddProjectContainer from 'src/components/project/AddProjectContainer'
+import AddProjectContainer from 'src/components/project/addProject'
 import ProjectsListContainer from 'src/components/project/ProjectsListContainer'
 import SingleProjectContainer from 'src/components/project/singleProject'
 import NavBarContainer from 'src/components/UI/NavBar/NavBarContainer'

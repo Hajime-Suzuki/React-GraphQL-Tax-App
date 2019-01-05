@@ -14,6 +14,7 @@ export const clientSchema = gql`
     city: String
   }
   input ClientInput {
+    id: String
     firstName: String
     lastName: String
     email: String

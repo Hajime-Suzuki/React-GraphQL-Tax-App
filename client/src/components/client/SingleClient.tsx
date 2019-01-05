@@ -1,78 +1,25 @@
-import Avatar from '@material-ui/core/Avatar'
-import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
 import { withRouter } from 'react-router'
 import { SingleClient as SC } from 'src/graphql/components/clients'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 import { Styles } from 'src/styles/sharedStyles'
-import { theme } from 'src/styles/theme'
-import styled from 'styled-components'
 import EditFormModal from '../../libs/forms/EditFormModal'
-import { EditIcon } from '../UI/EditIcon'
+import ClientCard from '../shared/ClientCard'
 import { SingleClientChildProps } from './SingleClientContainer'
 
-const Container: any = styled(Grid)`
-  .card {
-    padding: 2em;
-    text-align: center;
-  }
-  .edit-button-wrapper {
-    text-align: right;
-  }
-  .avatar {
-    background-color: ${theme.palette.secondary.main};
-    width: 70;
-    height: 70;
-    margin: auto;
-    margin-bottom: 1em;
-  }
-  .divider {
-    margin: 1em 0;
-  }
-`
 class SingleClient extends React.Component<SingleClientChildProps> {
   render() {
-    const {
-      handleOpenModal,
-      client: {
-        firstName,
-        lastName,
-        email,
-        phone,
-        streetAddress,
-        postalCode,
-        city
-      }
-    } = this.props
+    const { handleOpenModal, client } = this.props
 
     return (
-      <Container container justify="center">
+      <Grid container justify="center">
         <Grid item xs={11} md={5}>
-          <Paper className="card">
-            <div className="edit-button-wrapper">
-              <EditIcon onClick={handleOpenModal} />
-            </div>
-            <Avatar className="avatar">
-              {firstName && firstName.slice(0, 1).toUpperCase()}
-              {lastName && lastName.slice(0, 1).toUpperCase()}
-            </Avatar>
-            <Typography variant="h5">
-              {firstName} {lastName}
-            </Typography>
-            <Divider className="divider" />
-            <Typography variant="subtitle1">{email}</Typography>
-            <Typography variant="subtitle1">{phone}</Typography>
-            <Typography variant="subtitle1">
-              {streetAddress} {postalCode} {city}
-            </Typography>
-          </Paper>
+          <ClientCard client={client} handleOpenModal={handleOpenModal} />
         </Grid>
         <this.EditFormSection />
-      </Container>
+      </Grid>
     )
   }
 

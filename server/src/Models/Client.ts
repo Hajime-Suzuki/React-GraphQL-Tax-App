@@ -62,10 +62,8 @@ clientSchema.statics.findOneAndUpdateOrCreate = async function(
   data: any
 ): Promise<IClient> {
   const existingClient = await this.findOne({ ...condition })
-  console.log({ existingClient })
   if (!existingClient) {
     const newClient = await Client.create(data)
-    console.log({ newClient })
     return newClient
   } else {
     return await existingClient.update(data)

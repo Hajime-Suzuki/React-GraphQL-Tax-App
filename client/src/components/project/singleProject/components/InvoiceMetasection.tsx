@@ -1,12 +1,12 @@
+import Grid from '@material-ui/core/Grid'
+import Icon from '@material-ui/core/Icon'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import { format } from 'date-fns'
+import React from 'react'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
 import { SingleProjectChildProps } from '..'
-import { format } from 'date-fns'
-import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Icon from '@material-ui/core/Icon'
-import IconButton from '@material-ui/core/IconButton'
 
 const phone = theme.breakpoints.down('sm')
 const tablet = theme.breakpoints.up('md')
@@ -41,7 +41,6 @@ const InvoiceMetaSectionWrapper: any = styled(Grid)`
 const InvoiceMetaSection: React.SFC<SingleProjectChildProps> = ({
   project: { name, invoiceNumber, invoiceDate, status },
   handleDownload,
-  handleOpenModal,
   pdfLoading,
   pdfError
 }) => {

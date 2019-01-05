@@ -43,6 +43,8 @@ export interface IProjectInput {
 }
 
 export interface IClientInput {
+  id?: string | null;
+
   firstName?: string | null;
 
   lastName?: string | null;

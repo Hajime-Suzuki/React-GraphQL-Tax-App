@@ -43,6 +43,8 @@ export interface ProjectInput {
 }
 
 export interface ClientInput {
+  id?: string | null;
+
   firstName?: string | null;
 
   lastName?: string | null;
