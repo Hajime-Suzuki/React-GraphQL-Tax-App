@@ -13,13 +13,13 @@ import {
 import { IRouterComponentProps } from 'src/routes/types'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
-import { addProjectValidationSchema } from '../../helper/addProjectValidationSchema'
-import { GenerateFieldSettings } from '../../helper/genrateFieldSettings'
-import { SingleProjectChildProps } from '../../singleProject'
-import EditFormModal from '../modal/EditFormModal'
-import { renderDatePicker } from '../renderFields/renderDatePicker'
-import { renderFields } from '../renderFields/renderFields'
+import { addProjectValidationSchema } from '../../../helper/addProjectValidationSchema'
+import { GenerateFieldSettings } from '../../../helper/genrateFieldSettings'
+import { SingleProjectChildProps } from '../..'
+import EditFormModal from '../../../../../libs/forms/EditFormModal'
 import { Styles } from 'src/styles/sharedStyles'
+import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
+import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 
 interface Props {
   selectedModal: SingleProjectChildProps['selectedModal']

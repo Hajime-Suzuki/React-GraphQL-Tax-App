@@ -1,7 +1,7 @@
-import { SingleProjectChildProps } from '..'
+import { SingleProjectChildProps } from '../..'
 import React from 'react'
-import EditExpenseAndIncomeForm from '../../formComponents/edit/EditIncomesAndExpenseForm'
-import EditBasicInfoFormAndClient from '../../formComponents/edit/EditBasicInfoFormAndClient'
+import EditExpenseAndIncomeForm from './EditIncomesAndExpenseForm'
+import EditBasicInfoFormAndClient from './EditBasicInfoFormAndClient'
 
 export const EditModals: React.SFC<SingleProjectChildProps> = props => {
   const {

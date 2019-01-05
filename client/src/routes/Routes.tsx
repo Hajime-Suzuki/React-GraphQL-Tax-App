@@ -10,8 +10,8 @@ import { Styles } from '../styles/sharedStyles'
 import { routes } from './constants'
 import PrivateRoutes from './PrivateRoutes'
 import EditUserProfileContainer from 'src/components/userProfile/EditUserProfileContainer'
-import ClientsListContainer from 'src/components/contact/ClientsListContainer'
-import SingleClientContainer from 'src/components/contact/SingleClientContainer'
+import ClientsListContainer from 'src/components/client/ClientsListContainer'
+import SingleClientContainer from 'src/components/client/SingleClientContainer'
 
 class Routes extends React.Component {
   render() {

@@ -5,9 +5,9 @@ import * as React from 'react'
 import { ProjectInput } from 'src/graphql/components/projects'
 import { Styles } from 'src/styles/sharedStyles'
 import { IncomesAndExpenseFields } from './formComponents/IncomesAndExpenseFields'
-import { renderDatePicker } from './formComponents/renderFields/renderDatePicker'
-import { renderFields } from './formComponents/renderFields/renderFields'
 import { GenerateFieldSettings } from './helper/genrateFieldSettings'
+import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
+import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 
 interface OwnProps {
   mutationError?: string

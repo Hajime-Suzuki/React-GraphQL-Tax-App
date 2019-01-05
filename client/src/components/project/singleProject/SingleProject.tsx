@@ -4,9 +4,9 @@ import Typography from '@material-ui/core/Typography'
 import * as React from 'react'
 import styled from 'styled-components'
 import { SingleProjectChildProps } from '.'
-import { EditModals } from './components/EditModals'
+import { EditModals } from './components/editModalSection'
 import IncomesAndExpenseSection from './components/IncomesAndExpenseSection'
-import InvoiceMetaSection from './components/InvoiceMetasection'
+import InvoiceMetaSection from './components/InvoiceMetaSection'
 
 const ProjectDetails: any = styled(Grid)`
   width: 100%;

@@ -1,7 +1,6 @@
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
-
-import { SingleProjectChildProps } from '../'
+import { SingleProjectChildProps } from '..'
 import { format } from 'date-fns'
 import React from 'react'
 import Grid from '@material-ui/core/Grid'

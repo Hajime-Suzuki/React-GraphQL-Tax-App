@@ -1,13 +1,12 @@
 import * as React from 'react'
-
 import Button from '@material-ui/core/Button'
-import { renderFields } from 'src/components/project/formComponents/renderFields/renderFields'
 import { GetUserProfile, UpdateUser } from 'src/graphql/components/userProfile'
 import { FormikProps } from 'formik'
 import { EditUserInfoFormValues } from './EditUserProfileContainer'
 import { Styles } from 'src/styles/sharedStyles'
 import { MutationResult } from 'react-apollo'
 import Typography from '@material-ui/core/Typography'
+import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 
 interface OwnProps {
   userInfo: EditUserInfoFormValues

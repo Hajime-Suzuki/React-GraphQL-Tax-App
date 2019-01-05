@@ -3,10 +3,10 @@ import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
 import { FieldArray } from 'formik'
 import * as React from 'react'
-import { StatusField } from 'src/components/project/formComponents/renderFields/renderDropdown'
 import { ProjectInput } from 'src/graphql/components/projects'
 import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
-import { renderFields } from './renderFields/renderFields'
+import { renderFields } from 'src/libs/forms/renderFields/renderFields'
+import { StatusField } from 'src/libs/forms/renderFields/renderDropdown'
 
 interface IncomesAndExpenseFieldsProps {
   type: 'incomes' | 'expenses'
