@@ -7,7 +7,7 @@ import {
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
 import styled from 'styled-components'
-import { SingleProjectChildProps } from '../../SingleProjectContainer'
+import { SingleProjectChildProps } from '../../singleProject'
 import { IncomesAndExpenseFields } from '../IncomesAndExpenseFields'
 import EditFormModal from '../modal/EditFormModal'
 import { Styles } from 'src/styles/sharedStyles'

@@ -4,7 +4,7 @@ import {
   GetSingleProject
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
-import { LoadingIcon } from '../UI/LoadingIcon'
+import { LoadingIcon } from '../../UI/LoadingIcon'
 import SingleProject from './SingleProject'
 import { MutationFn } from 'react-apollo'
 

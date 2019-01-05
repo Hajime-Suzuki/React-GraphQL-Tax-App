@@ -67,7 +67,7 @@ class SingleClient extends React.Component<SingleClientChildProps> {
             <Typography variant="subtitle1">{email}</Typography>
             <Typography variant="subtitle1">{phone}</Typography>
             <Typography variant="subtitle1">
-              {streetAddress}, {postalCode} {city}
+              {streetAddress} {postalCode} {city}
             </Typography>
           </Paper>
         </Grid>
@@ -103,14 +103,17 @@ class SingleClient extends React.Component<SingleClientChildProps> {
               loading={loading || !dirty}
               error={error && error.message}
             >
-              {getFieldSettings().map(field => {
-                return (
-                  <React.Fragment key={field.name}>
-                    {renderFields(field)}
-                  </React.Fragment>
-                )
-              })}
-              <Styles.Form />
+              <Styles.Form>
+                <div className="form-section">
+                  {getFieldSettings().map(field => {
+                    return (
+                      <React.Fragment key={field.name}>
+                        {renderFields(field)}
+                      </React.Fragment>
+                    )
+                  })}
+                </div>
+              </Styles.Form>
             </EditFormModal>
           )
         }}
