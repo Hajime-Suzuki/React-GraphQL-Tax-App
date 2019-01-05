@@ -13,7 +13,7 @@ import {
 import styled from 'styled-components'
 import { routes } from '../../routes/constants'
 import { Styles } from '../../styles/sharedStyles'
-import { EditStatusDropdown } from './formComponents/edit/EditStatusDropDown'
+import { EditStatusDropdown } from './formComponents/EditStatusDropDown'
 import { Calculations } from './helper/calculations'
 
 const StyledPaper: any = styled(Paper)`

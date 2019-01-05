@@ -1,12 +1,11 @@
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
-import InputLabel from '@material-ui/core/InputLabel'
 import { FieldArray } from 'formik'
 import * as React from 'react'
 import { ProjectInput } from 'src/graphql/components/projects'
-import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
+import { renderTaxRateField } from 'src/libs/forms/renderFields/renderDropdown'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
-import { StatusField } from 'src/libs/forms/renderFields/renderDropdown'
+import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
 
 interface IncomesAndExpenseFieldsProps {
   type: 'incomes' | 'expenses'
@@ -36,15 +35,13 @@ export const IncomesAndExpenseFields: React.SFC<
                         </React.Fragment>
                       )
                     )}
-                    <div className="field-item select">
-                      <InputLabel htmlFor="tax-rate">Tax Rate</InputLabel>
-                      <StatusField
-                        value={item.taxRate === null ? '' : item.taxRate}
-                        name={`${type}.${i}.taxRate`}
-                        id="tax-rate"
-                        onChange={handleChange}
-                      />
-                    </div>
+                    {renderTaxRateField({
+                      value: item.taxRate || '',
+                      name: `${type}.${i}.taxRate`,
+                      id: 'tax-rate',
+                      onChange: handleChange
+                    })}
+
                     <div className="add-icon">
                       <IconButton onClick={() => arrayHelpers.remove(i)}>
                         <Icon className="far fa-trash-alt" />

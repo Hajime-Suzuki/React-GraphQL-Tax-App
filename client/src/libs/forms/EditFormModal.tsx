@@ -15,6 +15,7 @@ interface Props {
   error?: string
   loading?: boolean
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | false
+  showAction?: boolean
 }
 
 const EditFormModal: React.SFC<Props> = props => {
@@ -26,7 +27,8 @@ const EditFormModal: React.SFC<Props> = props => {
     title,
     error,
     loading,
-    maxWidth = 'lg'
+    maxWidth = 'lg',
+    showAction = true
   } = props
 
   return (
@@ -43,14 +45,16 @@ const EditFormModal: React.SFC<Props> = props => {
       <Typography style={{ textAlign: 'center' }} color="error">
         {error}
       </Typography>
-      <DialogActions className="actions-section">
-        <Button onClick={handleCloseModal} color="primary" type="submit">
-          Cancel
-        </Button>
-        <Button onClick={handleConfirm} color="primary" disabled={loading}>
-          Ok
-        </Button>
-      </DialogActions>
+      {showAction && (
+        <DialogActions className="actions-section">
+          <Button onClick={handleCloseModal} color="primary" type="submit">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirm} color="primary" disabled={loading}>
+            Ok
+          </Button>
+        </DialogActions>
+      )}
     </DialogWrapper>
   )
 }

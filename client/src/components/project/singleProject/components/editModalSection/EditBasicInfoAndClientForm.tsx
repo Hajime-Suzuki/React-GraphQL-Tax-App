@@ -10,16 +10,17 @@ import {
   ProjectInput,
   UpdateBasicInfo
 } from 'src/graphql/components/projects'
+import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
+import { renderStatusField } from 'src/libs/forms/renderFields/renderDropdown'
+import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 import { IRouterComponentProps } from 'src/routes/types'
+import { Styles } from 'src/styles/sharedStyles'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
-import { addProjectValidationSchema } from '../../../helper/addProjectValidationSchema'
-import { GenerateFieldSettings } from '../../../helper/genrateFieldSettings'
 import { SingleProjectChildProps } from '../..'
 import EditFormModal from '../../../../../libs/forms/EditFormModal'
-import { Styles } from 'src/styles/sharedStyles'
-import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
-import { renderFields } from 'src/libs/forms/renderFields/renderFields'
+import { addProjectValidationSchema } from '../../../helper/addProjectValidationSchema'
+import { GenerateFieldSettings } from '../../../helper/genrateFieldSettings'
 
 interface Props {
   selectedModal: SingleProjectChildProps['selectedModal']
@@ -99,11 +100,13 @@ class EditBasicInfoFormAndClient extends React.Component<
                         handleSubmit,
                         values,
                         errors,
-                        setFieldValue
+                        setFieldValue,
+                        handleChange
                       }: FormikProps<typeof initialValues>) => {
                         return (
                           <EditFormModal
                             title="Edit Info"
+                            maxWidth="md"
                             isOpen={selectedModal === 'basic'}
                             handleCloseModal={handleCloseModal}
                             handleConfirm={handleSubmit}
@@ -136,6 +139,13 @@ class EditBasicInfoFormAndClient extends React.Component<
                                     )
                                   }
                                 )}
+                                {console.log(values.status)}
+                                {renderStatusField({
+                                  value: values.status || '',
+                                  name: 'status',
+                                  id: 'status',
+                                  onChange: handleChange
+                                })}
                               </div>
 
                               <div className="form-section">
@@ -177,6 +187,7 @@ class EditBasicInfoFormAndClient extends React.Component<
       </UpdateBasicInfo.Component>
     )
   }
+
   OpenDeleteDialogButton = () => {
     return (
       <div className="form-section">

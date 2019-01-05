@@ -41,6 +41,7 @@ const InvoiceMetaSectionWrapper: any = styled(Grid)`
 const InvoiceMetaSection: React.SFC<SingleProjectChildProps> = ({
   project: { name, invoiceNumber, invoiceDate, status },
   handleDownload,
+  handleOpenModal,
   pdfLoading,
   pdfError
 }) => {

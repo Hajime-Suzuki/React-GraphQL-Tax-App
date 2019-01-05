@@ -8,10 +8,11 @@ import { LoadingIcon } from '../../UI/LoadingIcon'
 import SingleProject from './SingleProject'
 import { MutationFn } from 'react-apollo'
 
+export type ModalType = 'basic' | 'incomes' | 'expenses' | 'status'
 export interface SingleProjectChildProps {
   project: GetSingleProject.GetSingleProject
   selectedModal: string | undefined
-  handleOpenModal: (type: string) => () => void
+  handleOpenModal: (type: ModalType) => () => void
   handleCloseModal: () => void
   handleDownload: () => void
   pdfLoading: boolean

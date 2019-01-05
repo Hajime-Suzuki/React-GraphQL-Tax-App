@@ -1,11 +1,10 @@
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
 import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
 import { MutationFn, MutationResult } from 'react-apollo'
 import { InvoiceStatus } from 'src/graphql/@types/types'
 import { UpdateStatus } from 'src/graphql/components/projects'
-import { LoadingIcon } from '../../../UI/LoadingIcon'
+import { renderStatusField } from 'src/libs/forms/renderFields/renderDropdown'
+import { LoadingIcon } from '../../UI/LoadingIcon'
 
 interface DropdownStatusProps {
   status: InvoiceStatus
@@ -34,21 +33,22 @@ export const EditStatusDropdown: React.SFC<
         })
       }
       initialValues={{ status: props.status }}
-      render={(formProps: FormikProps<DropdownStatusProps>) => {
+      render={({
+        values,
+        handleChange,
+        handleSubmit
+      }: FormikProps<DropdownStatusProps>) => {
         return (
           <React.Fragment>
-            <Select
-              value={formProps.values.status}
-              name="status"
-              onChange={e => {
-                formProps.handleChange(e)
-                formProps.handleSubmit()
-              }}
-            >
-              <MenuItem value="none">none</MenuItem>
-              <MenuItem value="invoice">invoice</MenuItem>
-              <MenuItem value="paid">paid</MenuItem>
-            </Select>
+            {renderStatusField({
+              value: values.status || '',
+              onChange: e => {
+                handleChange(e)
+                handleSubmit()
+              },
+              name: 'status',
+              showLabel: false
+            })}
           </React.Fragment>
         )
       }}

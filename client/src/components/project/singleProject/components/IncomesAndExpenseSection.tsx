@@ -5,15 +5,23 @@ import { EditIcon } from 'src/components/UI/EditIcon'
 import { SingleProjectChildProps } from '..'
 import { Calculations } from '../../helper/calculations'
 import ExpenseIncomeTable from '../../helper/ExpenseIncomeTable'
-
+import { ModalType } from '../index'
 const IncomesAndExpenseSection: React.SFC<SingleProjectChildProps> = ({
   project,
   handleOpenModal
 }) => {
   const prices = getPriceOverview(project)
   const settings = [
-    { type: 'incomes', title: 'Incomes', totalValues: prices.incomes },
-    { type: 'expenses', title: 'Expenses', totalValues: prices.expenses }
+    {
+      type: 'incomes' as ModalType,
+      title: 'Incomes',
+      totalValues: prices.incomes
+    },
+    {
+      type: 'expenses' as ModalType,
+      title: 'Expenses',
+      totalValues: prices.expenses
+    }
   ]
   return (
     <Grid container item xs={12} spacing={40} justify="space-evenly">
