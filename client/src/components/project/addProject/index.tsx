@@ -1,16 +1,18 @@
 import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
-import { AddProject, ProjectInput } from 'src/graphql/components/projects'
-import AddProjectForm from './AddProjectForm'
-import { addProjectValidationSchema } from '../helper/addProjectValidationSchema'
 import { ProjectActions } from 'src/graphql/actions/projects'
 import { GetClientsList } from 'src/graphql/components/clients'
+import { AddProject, ProjectInput } from 'src/graphql/components/projects'
+import { addProjectValidationSchema } from '../helper/addProjectValidationSchema'
+import AddProjectForm from './AddProjectForm'
+import { getSelectedClient } from './selector'
 
 export interface AddProjectChildProps {
   clients?: GetClientsList.GetClientsByUser[] | null
   mutationError?: string
   loading: boolean
   successMessage?: string | null
+  selectedClient?: GetClientsList.GetClientsByUser
 }
 
 class AddProjectContainer extends React.Component<GetClientsList.Props<{}>> {
@@ -52,6 +54,10 @@ class AddProjectContainer extends React.Component<GetClientsList.Props<{}>> {
                   successMessage={
                     data && data.addProject && data.addProject.message
                   }
+                  selectedClient={getSelectedClient({
+                    clientsList: clients,
+                    clientFormInput: formProps.values.client
+                  })}
                   {...formProps}
                 />
               )}

@@ -3,13 +3,11 @@ import { Client } from '../../Models/Client'
 import { IClientInput, UpdateClientMutationArgs } from '../@types/types'
 import { AuthenticationError } from 'apollo-server-koa'
 
-export const getClientsByUserId = async (userId: string) => {
-  return Client.find({ user: userId })
-}
+export const getClientsByUserId = async (userId: string) =>
+  Client.find({ user: userId })
 
-export const getSingleClient = async (clientId: string) => {
-  return Client.findById(clientId)
-}
+export const getSingleClient = async (clientId: string) =>
+  Client.findById(clientId)
 
 export const updateClient = async ({
   userId,

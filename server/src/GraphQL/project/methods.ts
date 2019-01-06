@@ -1,23 +1,22 @@
-import { ApolloError, AuthenticationError } from 'apollo-server-koa'
+import { ApolloError } from 'apollo-server-koa'
 import { isEmptyObject } from '../../helpers/object'
 import { removeEmptyProperty } from '../../helpers/transform'
 import { Project } from '../../Models/Project'
 import { User } from '../../Models/User'
 import { getInvoicePDF } from '../../pdf/generatePDF'
-import { GetSingleProjectQueryArgs, IProjectInput } from '../@types/types'
+import {
+  GetSingleProjectQueryArgs,
+  IProjectInput,
+  IUser
+} from '../@types/types'
 import { updateOrCreateClient } from '../client/methods'
 
-export const getProjectsByUserId = async (userId: string) => {
-  const projects = await Project.find({ user: userId }).sort({ createdAt: -1 })
-  return projects
-}
+export const getProjectsByUserId = async (userId: string) =>
+  Project.find({ user: userId }).sort({ createdAt: -1 })
 
 export const getSingleProject = async (
   projectId: GetSingleProjectQueryArgs['projectId']
-) => {
-  const project = await Project.findById(projectId).populate('client')
-  return project
-}
+) => Project.findById(projectId).populate('client')
 
 export const updateProject = async (
   projectId: string,
@@ -42,14 +41,10 @@ export const updateProject = async (
 }
 
 export const addProject = async (
-  userId: string,
+  { id: userId }: IUser,
   { client: clientInput, ...data }: IProjectInput
 ) => {
-  if (!userId) throw new AuthenticationError('you are not logged in')
-  const user = await User.findById(userId)
-  if (!user) throw new Error('user is not found')
-
-  const newProject = new Project({ ...data, user: user.id })
+  const newProject = new Project({ ...data, user: userId })
 
   const clientData = removeEmptyProperty<typeof clientInput>(clientInput)
   if (!isEmptyObject(clientData)) {
@@ -64,15 +59,11 @@ export const addProject = async (
   const savedProject = await newProject.save()
 
   await User.findOneAndUpdate(
-    { _id: user.id },
+    { _id: userId },
     { $addToSet: { projects: savedProject } }
   )
 
-  return {
-    success: true,
-    message: 'project has been added',
-    project: savedProject
-  }
+  return savedProject
 }
 
 export const deleteProject = async (projectId: string) =>

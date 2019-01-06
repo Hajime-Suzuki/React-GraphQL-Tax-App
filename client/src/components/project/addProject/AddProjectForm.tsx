@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography'
 import { FormikProps } from 'formik'
 import * as React from 'react'
 import ClientCard from 'src/components/shared/ClientCard'
-import { ClientFragment } from 'src/graphql/components/clients'
 import { ProjectInput } from 'src/graphql/components/projects'
 import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
@@ -18,10 +17,6 @@ import SelectClient from './components/SelectClient'
 
 type Props = FormikProps<ProjectInput> & AddProjectChildProps
 
-interface SelectedClient {
-  selectedClient?: ClientFragment.Fragment | null
-}
-
 class AddProjectForm extends React.Component<Props> {
   unselectClient = () => {
     this.props.setFieldValue('client.id', null)
@@ -33,13 +28,8 @@ class AddProjectForm extends React.Component<Props> {
       values,
       errors: validationErrors,
       loading,
-      clients,
       setFieldValue
     } = this.props
-
-    const selectedClient =
-      clients &&
-      clients.find(client => !!values.client && client.id === values.client.id)
 
     return (
       <CustomForm>
@@ -65,7 +55,7 @@ class AddProjectForm extends React.Component<Props> {
             )
           })}
         </div>
-        <this.ClientSection selectedClient={selectedClient} />
+        <this.ClientSection />
         <this.IncomesAndExpensesSection />
         <this.MessageSection />
         <div className="form-section">
@@ -82,8 +72,8 @@ class AddProjectForm extends React.Component<Props> {
     )
   }
 
-  ClientSection = ({ selectedClient }: SelectedClient) => {
-    const { setFieldValue, clients } = this.props
+  ClientSection = () => {
+    const { setFieldValue, clients, selectedClient } = this.props
 
     return (
       <div className="form-section">

@@ -9,11 +9,14 @@ import { projectSchema } from './GraphQL/project/schema'
 import { sharedTypes } from './GraphQL/shared/sharedTypes'
 import { userResolvers } from './GraphQL/user/resolvers'
 import { userSchema } from './GraphQL/user/schema'
-import { extractIdAndToken } from './helpers/auth'
+import { AuthCheck } from './helpers/auth'
+import { IUser } from './GraphQL/@types/types'
+import { User } from './Models/User'
 
 export interface ICtx {
   userId: string
   token: string
+  user: IUser
 }
 
 const typeDefs = mergeTypes(
@@ -30,9 +33,11 @@ const server = new ApolloServer({
   }),
   context: async ({ ctx: { headers } }: { ctx: Context }) => {
     if (headers.jwt) {
-      return extractIdAndToken(headers)
+      return AuthCheck.extractIdAndToken(headers)
     }
   }
 })
+
+User.findOne({ email: 'aihteahn' }).then(res => console.log(res))
 
 export default server

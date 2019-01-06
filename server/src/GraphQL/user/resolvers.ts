@@ -1,17 +1,16 @@
-import { AuthenticationError } from 'apollo-server-koa'
+import { AuthCheck } from '../../helpers/auth'
 import { ICtx } from '../../server'
 import { MutationResolvers, QueryResolvers } from '../@types/types.d'
-import { getUserById, loginUser, registerUser, updateUser } from './methods'
-import { checkAuth } from '../../helpers/auth'
+import { loginUser, registerUser, updateUser } from './methods'
 
 export const userResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>
   Mutation: MutationResolvers.Resolvers<ICtx>
 } = {
   Query: {
-    async getUser(_, { id }, { userId }) {
-      checkAuth(userId)
-      return getUserById(id)
+    async getUser(_, __, { user }) {
+      AuthCheck.userExist(user)
+      return user
     }
   },
   Mutation: {
@@ -30,9 +29,9 @@ export const userResolvers: {
         token
       }
     },
-    updateUser: async (_, { data }, { userId }) => {
-      checkAuth(userId)
-      const updatedUser = await updateUser(userId, data)
+    updateUser: async (_, { data }, { user }) => {
+      AuthCheck.userExist(user)
+      const updatedUser = await updateUser(user.id, data)
       return {
         message: 'user info has successfully been updated',
         user: updatedUser
