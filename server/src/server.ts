@@ -1,6 +1,7 @@
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-koa'
 import { Context } from 'koa'
 import { mergeTypes } from 'merge-graphql-schemas'
+import { IUser } from './GraphQL/@types/types'
 import { clientResolvers } from './graphql/client/resolvers'
 import { clientSchema } from './GraphQL/client/schema'
 import { expenseSchema } from './GraphQL/expense/schema'
@@ -10,8 +11,6 @@ import { sharedTypes } from './GraphQL/shared/sharedTypes'
 import { userResolvers } from './GraphQL/user/resolvers'
 import { userSchema } from './GraphQL/user/schema'
 import { AuthCheck } from './helpers/auth'
-import { IUser } from './GraphQL/@types/types'
-import { User } from './Models/User'
 
 export interface ICtx {
   userId: string
@@ -37,7 +36,5 @@ const server = new ApolloServer({
     }
   }
 })
-
-User.findOne({ email: 'aihteahn' }).then(res => console.log(res))
 
 export default server

@@ -69,7 +69,7 @@ projectSchema.set('toJSON', {
   virtuals: true
 })
 
-type ProjectDocument = IProject & Document
+type ProjectDocument = Document & IProject
 export const Project: Model<ProjectDocument> = model<ProjectDocument>(
   'Project',
   projectSchema

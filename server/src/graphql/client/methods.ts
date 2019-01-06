@@ -26,6 +26,11 @@ export const updateClient = async ({
   return updated
 }
 
+export const addClient = async (userId: string, data: IClientInput) => {
+  const client = await Client.create({ ...data, user: userId })
+  return client
+}
+
 export const updateOrCreateClient = async (
   {
     projectId: conditionPId,
