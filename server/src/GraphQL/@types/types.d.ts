@@ -222,6 +222,8 @@ export interface IMutation {
   downloadInvoice?: IGenerateInvoiceResponse | null;
 
   updateClient?: IClientMutationResponse | null;
+
+  deleteClient?: IClientMutationResponse | null;
 }
 
 export interface IRegisterResponse {
@@ -309,6 +311,9 @@ export interface UpdateClientMutationArgs {
   clientId: string;
 
   data: IClientInput;
+}
+export interface DeleteClientMutationArgs {
+  clientId: string;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -838,6 +843,12 @@ export namespace MutationResolvers {
       TypeParent,
       Context
     >;
+
+    deleteClient?: DeleteClientResolver<
+      IClientMutationResponse | null,
+      TypeParent,
+      Context
+    >;
   }
 
   export type RegisterUserResolver<
@@ -922,6 +933,15 @@ export namespace MutationResolvers {
     clientId: string;
 
     data: IClientInput;
+  }
+
+  export type DeleteClientResolver<
+    R = IClientMutationResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, DeleteClientArgs>;
+  export interface DeleteClientArgs {
+    clientId: string;
   }
 }
 

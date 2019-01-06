@@ -33,5 +33,6 @@ export const clientSchema = gql`
   }
   type Mutation {
     updateClient(clientId: String!, data: ClientInput!): ClientMutationResponse
+    deleteClient(clientId: String!): ClientMutationResponse
   }
 `

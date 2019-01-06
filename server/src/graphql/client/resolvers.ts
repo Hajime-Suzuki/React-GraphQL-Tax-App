@@ -1,7 +1,12 @@
 import { AuthCheck } from '../../helpers/auth'
 import { ICtx } from '../../server'
 import { MutationResolvers, QueryResolvers } from '../@types/types'
-import { getClientsByUserId, getSingleClient, updateClient } from './methods'
+import {
+  getClientsByUserId,
+  getSingleClient,
+  updateClient,
+  deleteClient
+} from './methods'
 
 export const clientResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>
@@ -30,6 +35,10 @@ export const clientResolvers: {
         message: 'Client has successfully been updated',
         client: updatedClient
       }
+    },
+    deleteClient: async (_, { clientId }, { user }) => {
+      AuthCheck.userExist(user)
+      return deleteClient(clientId)
     }
   }
 }

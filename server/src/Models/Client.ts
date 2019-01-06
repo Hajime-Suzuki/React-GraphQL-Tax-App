@@ -57,19 +57,6 @@ clientSchema.set('toJSON', {
   virtuals: true
 })
 
-clientSchema.statics.findOneAndUpdateOrCreate = async function(
-  condition: any,
-  data: any
-): Promise<IClient> {
-  const existingClient = await this.findOne({ ...condition })
-  if (!existingClient) {
-    const newClient = await Client.create(data)
-    return newClient
-  } else {
-    return await existingClient.update(data)
-  }
-}
-
 export const Client = model<IClientDocument, IClientModel>(
   'Client',
   clientSchema

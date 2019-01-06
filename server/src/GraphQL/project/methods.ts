@@ -54,9 +54,9 @@ export const addProject = async (
 
   const savedProject = await newProject.save()
 
-  await User.findByIdAndUpdate(userId, {
-    $addToSet: { projects: newProject.id }
-  })
+  // await User.findByIdAndUpdate(userId, {
+  //   $addToSet: { projects: newProject.id }
+  // })
 
   return savedProject
 }

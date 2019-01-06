@@ -1,7 +1,6 @@
-import { removeEmptyProperty } from '../../helpers/transform'
+import { AuthenticationError } from 'apollo-server-koa'
 import { Client } from '../../Models/Client'
 import { IClientInput, UpdateClientMutationArgs } from '../@types/types'
-import { AuthenticationError } from 'apollo-server-koa'
 
 export const getClientsByUserId = async (userId: string) =>
   Client.find({ user: userId })
@@ -31,39 +30,5 @@ export const addClient = async (userId: string, data: IClientInput) => {
   return client
 }
 
-export const updateOrCreateClient = async (
-  {
-    projectId: conditionPId,
-    userId: conditionUId,
-    ...condition
-  }: IClientInput & { userId?: string; projectId?: string },
-  data: IClientInput & { userId?: string; projectId?: string }
-) => {
-  const client = await Client.findOne({
-    ...removeEmptyProperty(condition),
-    ...(conditionPId && { projects: conditionPId }),
-    ...(conditionUId && { user: conditionUId })
-  })
-
-  if (!client) {
-    const newClient = await Client.create({
-      ...data,
-      projects: data.projectId,
-      user: data.userId
-    })
-    return newClient
-  } else {
-    const { projectId: _, ...rest } = data
-    const updatedClient = await Client.findByIdAndUpdate(
-      client.id,
-      {
-        ...rest,
-        $addToSet: { projects: data.projectId }
-      },
-      {
-        new: true
-      }
-    )
-    return updatedClient!
-  }
-}
+export const deleteClient = async (clientId: string) =>
+  Client.remove({ _id: clientId })
