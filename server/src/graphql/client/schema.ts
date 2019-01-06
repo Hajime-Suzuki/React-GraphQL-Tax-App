@@ -29,9 +29,11 @@ export const clientSchema = gql`
   }
   type Query {
     getClientsByUser: [Client!]
+    getClientByProject(projectId: String!): Client
     getSingleClient(clientId: String!): Client
   }
   type Mutation {
+    addClient(data: ClientInput!): ClientMutationResponse
     updateClient(clientId: String!, data: ClientInput!): ClientMutationResponse
     deleteClient(clientId: String!): ClientMutationResponse
   }

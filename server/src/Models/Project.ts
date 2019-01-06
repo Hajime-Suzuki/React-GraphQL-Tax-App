@@ -50,10 +50,10 @@ const schemaDef: SchemaDef<Omit<IProject, 'id'> & { createdAt: any }> = {
   },
   expenses: [expenseSchema],
   incomes: [expenseSchema],
-  client: {
-    type: Schema.Types.ObjectId,
-    ref: 'Client'
-  },
+  // client: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Client'
+  // },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'

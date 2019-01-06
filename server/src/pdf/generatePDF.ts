@@ -4,6 +4,7 @@ import { IProject } from '../GraphQL/@types/types'
 import { Calculations } from '../helpers/calculation'
 import { Project } from '../Models/Project'
 import { User } from '../Models/User'
+import { Client } from '../Models/Client'
 
 export const getInvoicePDF = async (projectId: string, token: string) => {
   const browser = await puppeteer.launch()
@@ -45,13 +46,15 @@ export const getAllDataForInvoice = async (
     ...userInfo
   } = user.toObject()
 
-  const { client, incomes, ...invoiceInfo }: IProject = project.toObject()
+  const { incomes, ...invoiceInfo }: IProject = project.toObject()
   invoiceInfo.invoiceDate = format(invoiceInfo.invoiceDate, 'dd-MM-YYYY')
+
+  const client = await Client.findOne({ projects: projectId })
 
   return {
     userInfo,
     invoiceInfo,
-    clientInfo: project.client || {},
+    clientInfo: client || {},
     incomes: incomes
       ? incomes.map(income => ({
           ...income,

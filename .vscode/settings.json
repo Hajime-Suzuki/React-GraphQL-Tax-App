@@ -117,6 +117,7 @@
     "**/node_modules/*/**": true
   },
   "cSpell.words": [
-    "Formik"
+    "Formik",
+    "virtuals"
   ]
 }

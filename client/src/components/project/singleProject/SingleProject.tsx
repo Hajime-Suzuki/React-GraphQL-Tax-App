@@ -19,8 +19,8 @@ const ButtonWrapper: any = styled(Grid)`
 `
 
 const SingleProject: React.SFC<SingleProjectChildProps> = props => {
-  const { project, handleOpenModal } = props
-  const { client } = project
+  const { handleOpenModal, client } = props
+
   return (
     <ProjectDetails container justify="center">
       <ButtonWrapper item xs={10} container justify="flex-end">

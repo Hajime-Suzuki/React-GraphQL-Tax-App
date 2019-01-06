@@ -5,8 +5,11 @@ import {
   getClientsByUserId,
   getSingleClient,
   updateClient,
-  deleteClient
+  deleteClient,
+  getClientByProject,
+  findClientOrCreate
 } from './methods'
+import { ApolloError } from 'apollo-server-koa'
 
 export const clientResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>
@@ -21,9 +24,19 @@ export const clientResolvers: {
       AuthCheck.userExist(user)
       const client = await getSingleClient(clientId)
       return client
+    },
+    getClientByProject: async (_, { projectId }, { user }) => {
+      AuthCheck.userExist(user)
+      return getClientByProject(projectId!)
     }
   },
   Mutation: {
+    addClient: async (_, { data }, { user }) => {
+      AuthCheck.userExist(user)
+      const client = await findClientOrCreate(user.id, data)
+      if (!client) throw new ApolloError('client could not be created')
+      return { client }
+    },
     updateClient: async (_, { clientId, data }, { user }) => {
       AuthCheck.userExist(user)
       const updatedClient = await updateClient({
@@ -38,7 +51,11 @@ export const clientResolvers: {
     },
     deleteClient: async (_, { clientId }, { user }) => {
       AuthCheck.userExist(user)
-      return deleteClient(clientId)
+      const deletedClient = await deleteClient(clientId)
+      return {
+        message: 'client has successfully been deleted',
+        client: deletedClient
+      }
     }
   }
 }

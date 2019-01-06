@@ -3,7 +3,7 @@ import { Fragments } from '../fragments/fragments'
 
 const GET_PROJECT_OVERVIEW = gql`
   query getProjectOverview($userId: String!) {
-    getProjectsByUserId(userId: $userId) {
+    projects: getProjectsByUserId(userId: $userId) {
       ...BasicInfoFragment
       incomes {
         ...PriceFragment
@@ -16,15 +16,10 @@ const GET_PROJECT_OVERVIEW = gql`
 
 const GET_SINGLE_PROJECT = gql`
   query getSingleProject($id: String!) {
-    getSingleProject(projectId: $id) {
+    project: getSingleProject(projectId: $id) {
       invoiceNumber
       ...BasicInfoFragment
-      client {
-        ...ClientFragment
-        streetAddress
-        postalCode
-        city
-      }
+
       incomes {
         name
         ...PriceFragment
@@ -34,7 +29,14 @@ const GET_SINGLE_PROJECT = gql`
         ...PriceFragment
       }
     }
+    client: getClientByProject(projectId: $id) {
+      ...ClientFragment
+      streetAddress
+      postalCode
+      city
+    }
   }
+
   ${Fragments.PRICE_FRAGMENT}
   ${Fragments.BASIC_INFO_FRAGMENT}
   ${Fragments.CLIENT_FRAGMENT}
@@ -53,6 +55,12 @@ const UPDATE_STATUS = gql`
   }
 `
 
+// client {
+//           ...ClientFragment
+//   streetAddress
+//   postalCode
+//   city
+// }
 const ADD_PROJECT = gql`
   mutation addProject($data: ProjectInput!) {
     addProject(data: $data) {
@@ -61,12 +69,7 @@ const ADD_PROJECT = gql`
       project {
         invoiceNumber
         ...BasicInfoFragment
-        client {
-          ...ClientFragment
-          streetAddress
-          postalCode
-          city
-        }
+
         incomes {
           name
           ...PriceFragment
@@ -104,6 +107,12 @@ const UPDATE_INCOMES_EXPENSES = gql`
   ${Fragments.PRICE_FRAGMENT}
 `
 
+// client {
+//           ...ClientFragment
+//   streetAddress
+//   postalCode
+//   city
+// }
 const UPDATE_BASIC_INFO = gql`
   mutation updateBasicInfo($projectId: String!, $data: ProjectInput!) {
     updateProject(projectId: $projectId, data: $data) {
@@ -112,12 +121,6 @@ const UPDATE_BASIC_INFO = gql`
       project {
         invoiceNumber
         ...BasicInfoFragment
-        client {
-          ...ClientFragment
-          streetAddress
-          postalCode
-          city
-        }
       }
     }
   }

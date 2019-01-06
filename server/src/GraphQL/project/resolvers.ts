@@ -1,6 +1,7 @@
 import { AuthCheck } from '../../helpers/auth'
 import { ICtx } from '../../server'
 import { MutationResolvers, QueryResolvers } from '../@types/types'
+import { findClientOrCreate, pushProjectId } from '../client/methods'
 import {
   addProject,
   deleteProject,
@@ -27,10 +28,22 @@ export const projectResolvers: {
   Mutation: {
     addProject: async (_, { data }, { user }) => {
       AuthCheck.userExist(user)
+      const clientInput = data.client
+
+      const [project, client] = await Promise.all([
+        addProject(user, data),
+        clientInput && (await findClientOrCreate(user.id, clientInput))
+      ])
+
+      if (client) {
+        await pushProjectId(client.id, project.id)
+      }
+
       return {
         success: true,
         message: 'project has been added',
-        project: await addProject(user, data)
+        project,
+        ...(client && { client })
       }
     },
     updateProject: async (_, { projectId, data }, { user }) => {

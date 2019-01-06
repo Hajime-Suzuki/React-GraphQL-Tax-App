@@ -24,7 +24,6 @@ interface Props {
   selectedModal: SingleProjectChildProps['selectedModal']
   handleCloseModal: SingleProjectChildProps['handleCloseModal']
   basic: ProjectInput & { id: string }
-  client?: ProjectInput['client']
 }
 
 const CustomStyledForm: any = styled(Styles.Form)`
@@ -58,6 +57,7 @@ class EditBasicInfoFormAndClient extends React.Component<
     await deleteProject({
       variables: { projectId: this.props.match.params.id }
     })
+    console.log('deleted')
     ProjectActions.removeProject(this.props.match.params.id)
     this.props.history.replace('/projects')
   }
@@ -75,12 +75,12 @@ class EditBasicInfoFormAndClient extends React.Component<
   }
 
   render() {
-    const { selectedModal, handleCloseModal, basic, client } = this.props
+    const { selectedModal, handleCloseModal, basic } = this.props
     const { id: _, ...basicInfo } = basic
     return (
       <UpdateBasicInfo.Component>
         {(updateProject, { error: updateError, loading }) => {
-          const initialValues = { ...basicInfo, client }
+          const initialValues = { ...basicInfo }
           return (
             <DeleteProject.Component>
               {(

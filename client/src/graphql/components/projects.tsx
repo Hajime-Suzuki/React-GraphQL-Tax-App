@@ -1,84 +1,84 @@
 export interface UpdateUserInput {
-  firstName?: string | null
+  firstName?: string | null;
 
-  lastName?: string | null
+  lastName?: string | null;
 
-  email?: string | null
+  email?: string | null;
 
-  phone?: string | null
+  phone?: string | null;
 
-  password?: string | null
+  password?: string | null;
 
-  btw?: string | null
+  btw?: string | null;
 
-  kvk?: string | null
+  kvk?: string | null;
 
-  iban?: string | null
+  iban?: string | null;
 
-  streetAddress?: string | null
+  streetAddress?: string | null;
 
-  postalCode?: string | null
+  postalCode?: string | null;
 
-  city?: string | null
+  city?: string | null;
 }
 
 export interface ProjectInput {
-  invoiceNumber?: string | null
+  invoiceNumber?: string | null;
 
-  invoiceDate?: string | null
+  invoiceDate?: string | null;
 
-  projectDate?: string | null
+  projectDate?: string | null;
 
-  name?: string | null
+  name?: string | null;
 
-  date?: string | null
+  date?: string | null;
 
-  status?: InvoiceStatus | null
+  status?: InvoiceStatus | null;
 
-  client?: ClientInput | null
+  client?: ClientInput | null;
 
-  expenses?: ExpenseAndIncomeInput[] | null
+  expenses?: ExpenseAndIncomeInput[] | null;
 
-  incomes?: ExpenseAndIncomeInput[] | null
+  incomes?: ExpenseAndIncomeInput[] | null;
 }
 
 export interface ClientInput {
-  id?: string | null
+  id?: string | null;
 
-  firstName?: string | null
+  firstName?: string | null;
 
-  lastName?: string | null
+  lastName?: string | null;
 
-  email?: string | null
+  email?: string | null;
 
-  phone?: string | null
+  phone?: string | null;
 
-  streetAddress?: string | null
+  streetAddress?: string | null;
 
-  postalCode?: string | null
+  postalCode?: string | null;
 
-  city?: string | null
+  city?: string | null;
 }
 
 export interface ExpenseAndIncomeInput {
-  name?: string | null
+  name?: string | null;
 
-  price?: string | null
+  price?: string | null;
 
-  quantity?: number | null
+  quantity?: number | null;
 
-  taxRate?: number | null
+  taxRate?: number | null;
 }
 
 export enum InvoiceStatus {
-  None = 'none',
-  Invoice = 'invoice',
-  Paid = 'paid'
+  None = "none",
+  Invoice = "invoice",
+  Paid = "paid"
 }
 
-export type Date = any
+export type Date = any;
 
-export type Blob = any
+export type Blob = any;
 
 // ====================================================
 // Documents
@@ -86,337 +86,313 @@ export type Blob = any
 
 export namespace GetProjectOverview {
   export type Variables = {
-    userId: string
-  }
+    userId: string;
+  };
 
   export type Query = {
-    __typename?: 'Query'
+    __typename?: "Query";
 
-    getProjectsByUserId: GetProjectsByUserId[]
-  }
+    projects: Projects[];
+  };
 
-  export type GetProjectsByUserId = {
-    __typename?: 'Project'
+  export type Projects = {
+    __typename?: "Project";
 
-    incomes: Incomes[] | null
-  } & BasicInfoFragment.Fragment
+    incomes: Incomes[] | null;
+  } & BasicInfoFragment.Fragment;
 
-  export type Incomes = PriceFragment.Fragment
+  export type Incomes = PriceFragment.Fragment;
 }
 
 export namespace GetSingleProject {
   export type Variables = {
-    id: string
-  }
+    id: string;
+  };
 
   export type Query = {
-    __typename?: 'Query'
+    __typename?: "Query";
 
-    getSingleProject: GetSingleProject | null
-  }
+    project: Project | null;
 
-  export type GetSingleProject = {
-    __typename?: 'Project'
+    client: Client | null;
+  };
 
-    invoiceNumber: string
+  export type Project = {
+    __typename?: "Project";
 
-    client: Client | null
+    invoiceNumber: string;
 
-    incomes: Incomes[] | null
+    incomes: Incomes[] | null;
 
-    expenses: Expenses[] | null
-  } & BasicInfoFragment.Fragment
-
-  export type Client = {
-    __typename?: 'Client'
-
-    streetAddress: string | null
-
-    postalCode: string | null
-
-    city: string | null
-  } & ClientFragment.Fragment
+    expenses: Expenses[] | null;
+  } & BasicInfoFragment.Fragment;
 
   export type Incomes = {
-    __typename?: 'ExpenseAndIncome'
+    __typename?: "ExpenseAndIncome";
 
-    name: string | null
-  } & PriceFragment.Fragment
+    name: string | null;
+  } & PriceFragment.Fragment;
 
   export type Expenses = {
-    __typename?: 'ExpenseAndIncome'
+    __typename?: "ExpenseAndIncome";
 
-    name: string | null
-  } & PriceFragment.Fragment
+    name: string | null;
+  } & PriceFragment.Fragment;
+
+  export type Client = {
+    __typename?: "Client";
+
+    streetAddress: string | null;
+
+    postalCode: string | null;
+
+    city: string | null;
+  } & ClientFragment.Fragment;
 }
 
 export namespace UpdateStatus {
   export type Variables = {
-    projectId: string
-    data: ProjectInput
-  }
+    projectId: string;
+    data: ProjectInput;
+  };
 
   export type Mutation = {
-    __typename?: 'Mutation'
+    __typename?: "Mutation";
 
-    updateProject: UpdateProject
-  }
+    updateProject: UpdateProject;
+  };
 
   export type UpdateProject = {
-    __typename?: 'MutationProjectResponse'
+    __typename?: "MutationProjectResponse";
 
-    success: boolean
+    success: boolean;
 
-    message: string | null
+    message: string | null;
 
-    project: Project | null
-  }
+    project: Project | null;
+  };
 
   export type Project = {
-    __typename?: 'Project'
+    __typename?: "Project";
 
-    id: string
+    id: string;
 
-    status: InvoiceStatus
-  }
+    status: InvoiceStatus;
+  };
 }
 
 export namespace AddProject {
   export type Variables = {
-    data: ProjectInput
-  }
+    data: ProjectInput;
+  };
 
   export type Mutation = {
-    __typename?: 'Mutation'
+    __typename?: "Mutation";
 
-    addProject: AddProject | null
-  }
+    addProject: AddProject | null;
+  };
 
   export type AddProject = {
-    __typename?: 'MutationProjectResponse'
+    __typename?: "MutationProjectResponse";
 
-    success: boolean
+    success: boolean;
 
-    message: string | null
+    message: string | null;
 
-    project: Project | null
-  }
+    project: Project | null;
+  };
 
   export type Project = {
-    __typename?: 'Project'
+    __typename?: "Project";
 
-    invoiceNumber: string
+    invoiceNumber: string;
 
-    client: Client | null
+    incomes: Incomes[] | null;
 
-    incomes: Incomes[] | null
-
-    expenses: Expenses[] | null
-  } & BasicInfoFragment.Fragment
-
-  export type Client = {
-    __typename?: 'Client'
-
-    streetAddress: string | null
-
-    postalCode: string | null
-
-    city: string | null
-  } & ClientFragment.Fragment
+    expenses: Expenses[] | null;
+  } & BasicInfoFragment.Fragment;
 
   export type Incomes = {
-    __typename?: 'ExpenseAndIncome'
+    __typename?: "ExpenseAndIncome";
 
-    name: string | null
-  } & PriceFragment.Fragment
+    name: string | null;
+  } & PriceFragment.Fragment;
 
   export type Expenses = {
-    __typename?: 'ExpenseAndIncome'
+    __typename?: "ExpenseAndIncome";
 
-    name: string | null
-  } & PriceFragment.Fragment
+    name: string | null;
+  } & PriceFragment.Fragment;
 }
 
 export namespace UpdateIncomesAndExpenses {
   export type Variables = {
-    projectId: string
-    data: ProjectInput
-  }
+    projectId: string;
+    data: ProjectInput;
+  };
 
   export type Mutation = {
-    __typename?: 'Mutation'
+    __typename?: "Mutation";
 
-    updateProject: UpdateProject
-  }
+    updateProject: UpdateProject;
+  };
 
   export type UpdateProject = {
-    __typename?: 'MutationProjectResponse'
+    __typename?: "MutationProjectResponse";
 
-    success: boolean
+    success: boolean;
 
-    message: string | null
+    message: string | null;
 
-    project: Project | null
-  }
+    project: Project | null;
+  };
 
   export type Project = {
-    __typename?: 'Project'
+    __typename?: "Project";
 
-    id: string
+    id: string;
 
-    incomes: Incomes[] | null
+    incomes: Incomes[] | null;
 
-    expenses: Expenses[] | null
-  }
+    expenses: Expenses[] | null;
+  };
 
   export type Incomes = {
-    __typename?: 'ExpenseAndIncome'
+    __typename?: "ExpenseAndIncome";
 
-    name: string | null
-  } & PriceFragment.Fragment
+    name: string | null;
+  } & PriceFragment.Fragment;
 
   export type Expenses = {
-    __typename?: 'ExpenseAndIncome'
+    __typename?: "ExpenseAndIncome";
 
-    name: string | null
-  } & PriceFragment.Fragment
+    name: string | null;
+  } & PriceFragment.Fragment;
 }
 
 export namespace UpdateBasicInfo {
   export type Variables = {
-    projectId: string
-    data: ProjectInput
-  }
+    projectId: string;
+    data: ProjectInput;
+  };
 
   export type Mutation = {
-    __typename?: 'Mutation'
+    __typename?: "Mutation";
 
-    updateProject: UpdateProject
-  }
+    updateProject: UpdateProject;
+  };
 
   export type UpdateProject = {
-    __typename?: 'MutationProjectResponse'
+    __typename?: "MutationProjectResponse";
 
-    success: boolean
+    success: boolean;
 
-    message: string | null
+    message: string | null;
 
-    project: Project | null
-  }
+    project: Project | null;
+  };
 
   export type Project = {
-    __typename?: 'Project'
+    __typename?: "Project";
 
-    invoiceNumber: string
-
-    client: Client | null
-  } & BasicInfoFragment.Fragment
-
-  export type Client = {
-    __typename?: 'Client'
-
-    streetAddress: string | null
-
-    postalCode: string | null
-
-    city: string | null
-  } & ClientFragment.Fragment
+    invoiceNumber: string;
+  } & BasicInfoFragment.Fragment;
 }
 
 export namespace DeleteProject {
   export type Variables = {
-    projectId: string
-  }
+    projectId: string;
+  };
 
   export type Mutation = {
-    __typename?: 'Mutation'
+    __typename?: "Mutation";
 
-    deleteProject: DeleteProject | null
-  }
+    deleteProject: DeleteProject | null;
+  };
 
   export type DeleteProject = {
-    __typename?: 'MutationProjectResponse'
+    __typename?: "MutationProjectResponse";
 
-    message: string | null
+    message: string | null;
 
-    project: Project | null
-  }
+    project: Project | null;
+  };
 
   export type Project = {
-    __typename?: 'Project'
+    __typename?: "Project";
 
-    id: string
-  }
+    id: string;
+  };
 }
 
 export namespace DownloadInvoice {
   export type Variables = {
-    projectId: string
-  }
+    projectId: string;
+  };
 
   export type Mutation = {
-    __typename?: 'Mutation'
+    __typename?: "Mutation";
 
-    downloadInvoice: DownloadInvoice | null
-  }
+    downloadInvoice: DownloadInvoice | null;
+  };
 
   export type DownloadInvoice = {
-    __typename?: 'GenerateInvoiceResponse'
+    __typename?: "GenerateInvoiceResponse";
 
-    message: string | null
+    message: string | null;
 
-    data: Blob | null
-  }
+    data: Blob | null;
+  };
 }
 
 export namespace ClientFragment {
   export type Fragment = {
-    __typename?: 'Client'
+    __typename?: "Client";
 
-    id: string
+    id: string;
 
-    firstName: string | null
+    firstName: string | null;
 
-    lastName: string | null
+    lastName: string | null;
 
-    email: string | null
+    email: string | null;
 
-    phone: string | null
-  }
+    phone: string | null;
+  };
 }
 
 export namespace PriceFragment {
   export type Fragment = {
-    __typename?: 'ExpenseAndIncome'
+    __typename?: "ExpenseAndIncome";
 
-    price: string | null
+    price: string | null;
 
-    quantity: number | null
+    quantity: number | null;
 
-    taxRate: number | null
-  }
+    taxRate: number | null;
+  };
 }
 
 export namespace BasicInfoFragment {
   export type Fragment = {
-    __typename?: 'Project'
+    __typename?: "Project";
 
-    id: string
+    id: string;
 
-    name: string
+    name: string;
 
-    projectDate: Date | null
+    projectDate: Date | null;
 
-    invoiceDate: Date | null
+    invoiceDate: Date | null;
 
-    status: InvoiceStatus
-  }
+    status: InvoiceStatus;
+  };
 }
 
-import * as ReactApollo from 'react-apollo'
-import * as React from 'react'
+import * as ReactApollo from "react-apollo";
+import * as React from "react";
 
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 // ====================================================
 // Fragments
@@ -431,7 +407,7 @@ export namespace ClientFragment {
       email
       phone
     }
-  `
+  `;
 }
 
 export namespace PriceFragment {
@@ -441,7 +417,7 @@ export namespace PriceFragment {
       quantity
       taxRate
     }
-  `
+  `;
 }
 
 export namespace BasicInfoFragment {
@@ -453,7 +429,7 @@ export namespace BasicInfoFragment {
       invoiceDate
       status
     }
-  `
+  `;
 }
 
 // ====================================================
@@ -463,7 +439,7 @@ export namespace BasicInfoFragment {
 export namespace GetProjectOverview {
   export const Document = gql`
     query getProjectOverview($userId: String!) {
-      getProjectsByUserId(userId: $userId) {
+      projects: getProjectsByUserId(userId: $userId) {
         ...BasicInfoFragment
         incomes {
           ...PriceFragment
@@ -473,7 +449,7 @@ export namespace GetProjectOverview {
 
     ${BasicInfoFragment.FragmentDoc}
     ${PriceFragment.FragmentDoc}
-  `
+  `;
   export class Component extends React.Component<
     Partial<ReactApollo.QueryProps<Query, Variables>>
   > {
@@ -481,15 +457,15 @@ export namespace GetProjectOverview {
       return (
         <ReactApollo.Query<Query, Variables>
           query={Document}
-          {...(this as any)['props'] as any}
+          {...(this as any)["props"] as any}
         />
-      )
+      );
     }
   }
   export type Props<TChildProps = any> = Partial<
     ReactApollo.DataProps<Query, Variables>
   > &
-    TChildProps
+    TChildProps;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
@@ -503,21 +479,15 @@ export namespace GetProjectOverview {
     return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
       Document,
       operationOptions
-    )
+    );
   }
 }
 export namespace GetSingleProject {
   export const Document = gql`
     query getSingleProject($id: String!) {
-      getSingleProject(projectId: $id) {
+      project: getSingleProject(projectId: $id) {
         invoiceNumber
         ...BasicInfoFragment
-        client {
-          ...ClientFragment
-          streetAddress
-          postalCode
-          city
-        }
         incomes {
           name
           ...PriceFragment
@@ -527,12 +497,18 @@ export namespace GetSingleProject {
           ...PriceFragment
         }
       }
+      client: getClientByProject(projectId: $id) {
+        ...ClientFragment
+        streetAddress
+        postalCode
+        city
+      }
     }
 
     ${BasicInfoFragment.FragmentDoc}
-    ${ClientFragment.FragmentDoc}
     ${PriceFragment.FragmentDoc}
-  `
+    ${ClientFragment.FragmentDoc}
+  `;
   export class Component extends React.Component<
     Partial<ReactApollo.QueryProps<Query, Variables>>
   > {
@@ -540,15 +516,15 @@ export namespace GetSingleProject {
       return (
         <ReactApollo.Query<Query, Variables>
           query={Document}
-          {...(this as any)['props'] as any}
+          {...(this as any)["props"] as any}
         />
-      )
+      );
     }
   }
   export type Props<TChildProps = any> = Partial<
     ReactApollo.DataProps<Query, Variables>
   > &
-    TChildProps
+    TChildProps;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
@@ -562,7 +538,7 @@ export namespace GetSingleProject {
     return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
       Document,
       operationOptions
-    )
+    );
   }
 }
 export namespace UpdateStatus {
@@ -577,7 +553,7 @@ export namespace UpdateStatus {
         }
       }
     }
-  `
+  `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
   > {
@@ -585,16 +561,16 @@ export namespace UpdateStatus {
       return (
         <ReactApollo.Mutation<Mutation, Variables>
           mutation={Document}
-          {...(this as any)['props'] as any}
+          {...(this as any)["props"] as any}
         />
-      )
+      );
     }
   }
   export type Props<TChildProps = any> = Partial<
     ReactApollo.MutateProps<Mutation, Variables>
   > &
-    TChildProps
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
@@ -608,7 +584,7 @@ export namespace UpdateStatus {
     return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
       Document,
       operationOptions
-    )
+    );
   }
 }
 export namespace AddProject {
@@ -620,12 +596,6 @@ export namespace AddProject {
         project {
           invoiceNumber
           ...BasicInfoFragment
-          client {
-            ...ClientFragment
-            streetAddress
-            postalCode
-            city
-          }
           incomes {
             name
             ...PriceFragment
@@ -639,9 +609,8 @@ export namespace AddProject {
     }
 
     ${BasicInfoFragment.FragmentDoc}
-    ${ClientFragment.FragmentDoc}
     ${PriceFragment.FragmentDoc}
-  `
+  `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
   > {
@@ -649,16 +618,16 @@ export namespace AddProject {
       return (
         <ReactApollo.Mutation<Mutation, Variables>
           mutation={Document}
-          {...(this as any)['props'] as any}
+          {...(this as any)["props"] as any}
         />
-      )
+      );
     }
   }
   export type Props<TChildProps = any> = Partial<
     ReactApollo.MutateProps<Mutation, Variables>
   > &
-    TChildProps
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
@@ -672,7 +641,7 @@ export namespace AddProject {
     return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
       Document,
       operationOptions
-    )
+    );
   }
 }
 export namespace UpdateIncomesAndExpenses {
@@ -699,7 +668,7 @@ export namespace UpdateIncomesAndExpenses {
     }
 
     ${PriceFragment.FragmentDoc}
-  `
+  `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
   > {
@@ -707,16 +676,16 @@ export namespace UpdateIncomesAndExpenses {
       return (
         <ReactApollo.Mutation<Mutation, Variables>
           mutation={Document}
-          {...(this as any)['props'] as any}
+          {...(this as any)["props"] as any}
         />
-      )
+      );
     }
   }
   export type Props<TChildProps = any> = Partial<
     ReactApollo.MutateProps<Mutation, Variables>
   > &
-    TChildProps
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
@@ -730,7 +699,7 @@ export namespace UpdateIncomesAndExpenses {
     return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
       Document,
       operationOptions
-    )
+    );
   }
 }
 export namespace UpdateBasicInfo {
@@ -742,19 +711,12 @@ export namespace UpdateBasicInfo {
         project {
           invoiceNumber
           ...BasicInfoFragment
-          client {
-            ...ClientFragment
-            streetAddress
-            postalCode
-            city
-          }
         }
       }
     }
 
     ${BasicInfoFragment.FragmentDoc}
-    ${ClientFragment.FragmentDoc}
-  `
+  `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
   > {
@@ -762,16 +724,16 @@ export namespace UpdateBasicInfo {
       return (
         <ReactApollo.Mutation<Mutation, Variables>
           mutation={Document}
-          {...(this as any)['props'] as any}
+          {...(this as any)["props"] as any}
         />
-      )
+      );
     }
   }
   export type Props<TChildProps = any> = Partial<
     ReactApollo.MutateProps<Mutation, Variables>
   > &
-    TChildProps
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
@@ -785,7 +747,7 @@ export namespace UpdateBasicInfo {
     return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
       Document,
       operationOptions
-    )
+    );
   }
 }
 export namespace DeleteProject {
@@ -798,7 +760,7 @@ export namespace DeleteProject {
         }
       }
     }
-  `
+  `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
   > {
@@ -806,16 +768,16 @@ export namespace DeleteProject {
       return (
         <ReactApollo.Mutation<Mutation, Variables>
           mutation={Document}
-          {...(this as any)['props'] as any}
+          {...(this as any)["props"] as any}
         />
-      )
+      );
     }
   }
   export type Props<TChildProps = any> = Partial<
     ReactApollo.MutateProps<Mutation, Variables>
   > &
-    TChildProps
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
@@ -829,7 +791,7 @@ export namespace DeleteProject {
     return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
       Document,
       operationOptions
-    )
+    );
   }
 }
 export namespace DownloadInvoice {
@@ -840,7 +802,7 @@ export namespace DownloadInvoice {
         data
       }
     }
-  `
+  `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>
   > {
@@ -848,16 +810,16 @@ export namespace DownloadInvoice {
       return (
         <ReactApollo.Mutation<Mutation, Variables>
           mutation={Document}
-          {...(this as any)['props'] as any}
+          {...(this as any)["props"] as any}
         />
-      )
+      );
     }
   }
   export type Props<TChildProps = any> = Partial<
     ReactApollo.MutateProps<Mutation, Variables>
   > &
-    TChildProps
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
   export function HOC<TProps, TChildProps = any>(
     operationOptions:
       | ReactApollo.OperationOption<
@@ -871,6 +833,6 @@ export namespace DownloadInvoice {
     return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
       Document,
       operationOptions
-    )
+    );
   }
 }

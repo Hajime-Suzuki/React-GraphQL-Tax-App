@@ -1,6 +1,13 @@
-import { AuthenticationError } from 'apollo-server-koa'
+import { AuthenticationError, ApolloError } from 'apollo-server-koa'
 import { Client } from '../../Models/Client'
-import { IClientInput, UpdateClientMutationArgs } from '../@types/types'
+import {
+  IClientInput,
+  UpdateClientMutationArgs,
+  IClient
+} from '../@types/types'
+import { removeEmptyProperty } from '../../helpers/transform'
+import { isEmptyObject } from '../../helpers/object'
+import { User } from '../../Models/User'
 
 export const getClientsByUserId = async (userId: string) =>
   Client.find({ user: userId })
@@ -8,11 +15,19 @@ export const getClientsByUserId = async (userId: string) =>
 export const getSingleClient = async (clientId: string) =>
   Client.findById(clientId)
 
+export const getClientByProject = async (projectId: string) =>
+  Client.findOne({ projects: projectId })
+
+interface IUpdateClientArgs {
+  clientId: string
+  userId: string
+  data: IClientInput
+}
 export const updateClient = async ({
   userId,
   clientId,
   data
-}: UpdateClientMutationArgs & { userId: string }) => {
+}: IUpdateClientArgs) => {
   const client = await Client.findById(clientId)
   if (!client) throw new Error('client not found')
 
@@ -25,10 +40,43 @@ export const updateClient = async ({
   return updated
 }
 
-export const addClient = async (userId: string, data: IClientInput) => {
-  const client = await Client.create({ ...data, user: userId })
-  return client
+export const findClientOrCreate = async (
+  userId: string,
+  clientInput: IClientInput
+) => {
+  const clientData = removeEmptyProperty<typeof clientInput>(clientInput)
+
+  if (!isEmptyObject(clientData)) return null
+
+  if (clientData!.id) {
+    const clientId = clientData!.id!
+    const client = await Client.findById(clientId)
+    if (!client) throw new ApolloError('client not found')
+    return client
+  } else {
+    return Client.create({ ...clientData, user: userId })
+  }
 }
 
-export const deleteClient = async (clientId: string) =>
-  Client.remove({ _id: clientId })
+export const pushProjectId = async (clientId: string, projectId: string) => {
+  return Client.findByIdAndUpdate(
+    clientId,
+    { $push: { projects: projectId } },
+    { new: true }
+  )
+}
+
+export const popProjectId = async (clientId: string, projectId: string) => {
+  return Client.findByIdAndUpdate(
+    clientId,
+    { $pull: { projects: projectId } },
+    { new: true }
+  )
+}
+
+export const deleteClient = async (clientId: string) => {
+  const client = await Client.findById(clientId)
+  if (!client) throw new ApolloError('client not found')
+  await Client.remove({ _id: clientId })
+  return client
+}

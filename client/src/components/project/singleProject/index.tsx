@@ -10,7 +10,8 @@ import { MutationFn } from 'react-apollo'
 
 export type ModalType = 'basic' | 'incomes' | 'expenses' | 'status'
 export interface SingleProjectChildProps {
-  project: GetSingleProject.GetSingleProject
+  project: GetSingleProject.Project
+  client?: GetSingleProject.Client | null
   selectedModal: string | undefined
   handleOpenModal: (type: ModalType) => () => void
   handleCloseModal: () => void
@@ -48,7 +49,7 @@ class SingleProjectContainer extends React.Component<
     })
     const fileUrl = URL.createObjectURL(file)
 
-    const invoiceNumber = this.props.data!.getSingleProject!.invoiceNumber
+    const invoiceNumber = this.props.data!.project!.invoiceNumber
 
     const a = document.createElement('a')
     a.href = fileUrl
@@ -60,8 +61,7 @@ class SingleProjectContainer extends React.Component<
   render() {
     const { data } = this.props
     if (!data) return null
-
-    const { getSingleProject: project, error, loading } = data
+    const { project, client, error, loading } = data
 
     if (error) return <p>{error.message}</p>
     if (loading) return <LoadingIcon />
@@ -73,6 +73,7 @@ class SingleProjectContainer extends React.Component<
           return (
             <SingleProject
               project={project}
+              client={client}
               selectedModal={this.state.selectedModal}
               handleOpenModal={this.handleOpenModal}
               handleCloseModal={this.handleCloseModal}
