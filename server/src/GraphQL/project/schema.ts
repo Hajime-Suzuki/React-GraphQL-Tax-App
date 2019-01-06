@@ -11,7 +11,7 @@ export const projectSchema = gql`
     city: String
     link: String
     status: INVOICE_STATUS!
-    client: Client
+    # client: Client
     user: String!
     expenses: [ExpenseAndIncome!]
     incomes: [ExpenseAndIncome!]
@@ -35,7 +35,8 @@ export const projectSchema = gql`
   type MutationProjectResponse {
     success: Boolean!
     message: String
-    project: Project
+    project: Project!
+    client: Client
   }
 
   type GenerateInvoiceResponse {

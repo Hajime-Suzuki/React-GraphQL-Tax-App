@@ -11,7 +11,7 @@ import {
   IProjectInput,
   IUser
 } from '../@types/types'
-import { addClient } from '../client/methods'
+import { findClientOrCreate } from '../client/methods'
 
 export const getProjectsByUserId = async (userId: string) =>
   Project.find({ user: userId }).sort({ createdAt: -1 })
@@ -21,13 +21,13 @@ export const getSingleProject = async (
 ) => Project.findById(projectId).populate('client')
 
 export const updateProject = async (projectId: string, data: IProjectInput) => {
-  const project = await Project.findById(projectId).populate('client')
-
+  const project = await Project.findById(projectId)
   if (!project) throw new ApolloError('project not found')
 
   const updatedProject = await Project.findByIdAndUpdate(projectId, data, {
     new: true
-  }).populate('client')
+  })
+  if (!updatedProject) throw new ApolloError('project couldn\'t be updated')
   return updatedProject
 }
 
@@ -36,33 +36,16 @@ export const addProject = async (
   { client: clientInput, ...data }: IProjectInput
 ) => {
   const newProject = new Project({ ...data, user: userId })
-
-  const clientData = removeEmptyProperty<typeof clientInput>(clientInput)
-  if (!isEmptyObject(clientData)) {
-    if (clientData!.id) {
-      const clientId = clientData!.id!
-      const client = await Client.findById(clientId)
-      if (!client) throw new Error(`Client with ID ${clientId} not found`)
-      newProject.client = client
-    } else {
-      const newClient = await addClient(userId, clientData as NonNullable<
-        IClientInput
-      >)
-      newProject.client = newClient
-    }
-  }
-
   const savedProject = await newProject.save()
-
-  // await User.findByIdAndUpdate(userId, {
-  //   $addToSet: { projects: newProject.id }
-  // })
-
   return savedProject
 }
 
-export const deleteProject = async (projectId: string) =>
-  Project.findByIdAndDelete(projectId)
+export const deleteProject = async (projectId: string) => {
+  const project = await Project.findById(projectId)
+  if (!project) throw new ApolloError('project not found')
+  await Project.findByIdAndDelete(projectId)
+  return project
+}
 
 export const generateInvoice = async (projectId: string, token: string) =>
   getInvoicePDF(projectId, token)

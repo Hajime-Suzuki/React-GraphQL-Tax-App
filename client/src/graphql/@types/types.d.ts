@@ -97,6 +97,8 @@ export interface Query {
 
   getClientsByUser?: Client[] | null;
 
+  getClientByProject?: Client | null;
+
   getSingleClient?: Client | null;
 }
 
@@ -153,35 +155,11 @@ export interface Project {
 
   status: InvoiceStatus;
 
-  client?: Client | null;
-
   user: string;
 
   expenses?: ExpenseAndIncome[] | null;
 
   incomes?: ExpenseAndIncome[] | null;
-}
-
-export interface Client {
-  id: string;
-
-  firstName?: string | null;
-
-  lastName?: string | null;
-
-  email?: string | null;
-
-  phone?: string | null;
-
-  user?: string | null;
-
-  projects?: string[] | null;
-
-  streetAddress?: string | null;
-
-  postalCode?: string | null;
-
-  city?: string | null;
 }
 
 export interface ExpenseAndIncome {
@@ -206,6 +184,28 @@ export interface Expense {
   date?: string | null;
 }
 
+export interface Client {
+  id: string;
+
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  phone?: string | null;
+
+  user?: string | null;
+
+  projects?: string[] | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
+}
+
 export interface Mutation {
   registerUser: RegisterResponse;
 
@@ -221,7 +221,11 @@ export interface Mutation {
 
   downloadInvoice?: GenerateInvoiceResponse | null;
 
+  addClient?: ClientMutationResponse | null;
+
   updateClient?: ClientMutationResponse | null;
+
+  deleteClient?: ClientMutationResponse | null;
 }
 
 export interface RegisterResponse {
@@ -271,6 +275,9 @@ export interface GetProjectsByUserIdQueryArgs {
 export interface GetSingleProjectQueryArgs {
   projectId: string;
 }
+export interface GetClientByProjectQueryArgs {
+  projectId: string;
+}
 export interface GetSingleClientQueryArgs {
   clientId: string;
 }
@@ -305,8 +312,14 @@ export interface DeleteProjectMutationArgs {
 export interface DownloadInvoiceMutationArgs {
   projectId: string;
 }
+export interface AddClientMutationArgs {
+  data: ClientInput;
+}
 export interface UpdateClientMutationArgs {
   clientId: string;
 
   data: ClientInput;
+}
+export interface DeleteClientMutationArgs {
+  clientId: string;
 }

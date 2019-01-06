@@ -22,7 +22,7 @@ const StyledPaper: any = styled(Paper)`
   margin: auto;
 `
 interface Props {
-  projects: GetProjectOverview.GetProjectsByUserId[]
+  projects: GetProjectOverview.Projects[]
   sortProjectsByProjectDate: () => void
   sortProjectByInvoiceDate: () => void
 }

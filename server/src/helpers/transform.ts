@@ -1,4 +1,4 @@
-export const removeEmptyProperty = <T>(obj: any): Partial<T> => {
+export const removeEmptyProperty = <Type>(obj: any): Partial<Type> => {
   const newObj: any = {}
   Object.keys(obj).forEach(k => {
     if (obj[k]) newObj[k] = obj[k]

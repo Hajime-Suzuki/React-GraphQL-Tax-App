@@ -97,6 +97,8 @@ export interface Query {
 
   getClientsByUser?: Client[] | null;
 
+  getClientByProject?: Client | null;
+
   getSingleClient?: Client | null;
 
   token: string;
@@ -157,35 +159,11 @@ export interface Project {
 
   status: InvoiceStatus;
 
-  client?: Client | null;
-
   user: string;
 
   expenses?: ExpenseAndIncome[] | null;
 
   incomes?: ExpenseAndIncome[] | null;
-}
-
-export interface Client {
-  id: string;
-
-  firstName?: string | null;
-
-  lastName?: string | null;
-
-  email?: string | null;
-
-  phone?: string | null;
-
-  user?: string | null;
-
-  projects?: string[] | null;
-
-  streetAddress?: string | null;
-
-  postalCode?: string | null;
-
-  city?: string | null;
 }
 
 export interface ExpenseAndIncome {
@@ -210,6 +188,28 @@ export interface Expense {
   date?: string | null;
 }
 
+export interface Client {
+  id: string;
+
+  firstName?: string | null;
+
+  lastName?: string | null;
+
+  email?: string | null;
+
+  phone?: string | null;
+
+  user?: string | null;
+
+  projects?: string[] | null;
+
+  streetAddress?: string | null;
+
+  postalCode?: string | null;
+
+  city?: string | null;
+}
+
 export interface Mutation {
   registerUser: RegisterResponse;
 
@@ -225,7 +225,11 @@ export interface Mutation {
 
   downloadInvoice?: GenerateInvoiceResponse | null;
 
+  addClient?: ClientMutationResponse | null;
+
   updateClient?: ClientMutationResponse | null;
+
+  deleteClient?: ClientMutationResponse | null;
 }
 
 export interface RegisterResponse {
@@ -275,6 +279,9 @@ export interface GetProjectsByUserIdQueryArgs {
 export interface GetSingleProjectQueryArgs {
   projectId: string;
 }
+export interface GetClientByProjectQueryArgs {
+  projectId: string;
+}
 export interface GetSingleClientQueryArgs {
   clientId: string;
 }
@@ -309,10 +316,16 @@ export interface DeleteProjectMutationArgs {
 export interface DownloadInvoiceMutationArgs {
   projectId: string;
 }
+export interface AddClientMutationArgs {
+  data: ClientInput;
+}
 export interface UpdateClientMutationArgs {
   clientId: string;
 
   data: ClientInput;
+}
+export interface DeleteClientMutationArgs {
+  clientId: string;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -390,6 +403,12 @@ export namespace QueryResolvers {
       Context
     >;
 
+    getClientByProject?: GetClientByProjectResolver<
+      Client | null,
+      TypeParent,
+      Context
+    >;
+
     getSingleClient?: GetSingleClientResolver<
       Client | null,
       TypeParent,
@@ -434,6 +453,15 @@ export namespace QueryResolvers {
     Parent = {},
     Context = {}
   > = Resolver<R, Parent, Context>;
+  export type GetClientByProjectResolver<
+    R = Client | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetClientByProjectArgs>;
+  export interface GetClientByProjectArgs {
+    projectId: string;
+  }
+
   export type GetSingleClientResolver<
     R = Client | null,
     Parent = {},
@@ -592,8 +620,6 @@ export namespace ProjectResolvers {
 
     status?: StatusResolver<InvoiceStatus, TypeParent, Context>;
 
-    client?: ClientResolver<Client | null, TypeParent, Context>;
-
     user?: UserResolver<string, TypeParent, Context>;
 
     expenses?: ExpensesResolver<ExpenseAndIncome[] | null, TypeParent, Context>;
@@ -646,11 +672,6 @@ export namespace ProjectResolvers {
     Parent = Project,
     Context = {}
   > = Resolver<R, Parent, Context>;
-  export type ClientResolver<
-    R = Client | null,
-    Parent = Project,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
   export type UserResolver<
     R = string,
     Parent = Project,
@@ -664,6 +685,79 @@ export namespace ProjectResolvers {
   export type IncomesResolver<
     R = ExpenseAndIncome[] | null,
     Parent = Project,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace ExpenseAndIncomeResolvers {
+  export interface Resolvers<Context = {}, TypeParent = ExpenseAndIncome> {
+    name?: NameResolver<string | null, TypeParent, Context>;
+
+    price?: PriceResolver<string | null, TypeParent, Context>;
+
+    quantity?: QuantityResolver<number | null, TypeParent, Context>;
+
+    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
+  }
+
+  export type NameResolver<
+    R = string | null,
+    Parent = ExpenseAndIncome,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type PriceResolver<
+    R = string | null,
+    Parent = ExpenseAndIncome,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type QuantityResolver<
+    R = number | null,
+    Parent = ExpenseAndIncome,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type TaxRateResolver<
+    R = number | null,
+    Parent = ExpenseAndIncome,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace ExpenseResolvers {
+  export interface Resolvers<Context = {}, TypeParent = Expense> {
+    name?: NameResolver<string | null, TypeParent, Context>;
+
+    price?: PriceResolver<string | null, TypeParent, Context>;
+
+    quantity?: QuantityResolver<number | null, TypeParent, Context>;
+
+    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
+
+    date?: DateResolver<string | null, TypeParent, Context>;
+  }
+
+  export type NameResolver<
+    R = string | null,
+    Parent = Expense,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type PriceResolver<
+    R = string | null,
+    Parent = Expense,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type QuantityResolver<
+    R = number | null,
+    Parent = Expense,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type TaxRateResolver<
+    R = number | null,
+    Parent = Expense,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type DateResolver<
+    R = string | null,
+    Parent = Expense,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }
@@ -743,79 +837,6 @@ export namespace ClientResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace ExpenseAndIncomeResolvers {
-  export interface Resolvers<Context = {}, TypeParent = ExpenseAndIncome> {
-    name?: NameResolver<string | null, TypeParent, Context>;
-
-    price?: PriceResolver<string | null, TypeParent, Context>;
-
-    quantity?: QuantityResolver<number | null, TypeParent, Context>;
-
-    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
-  }
-
-  export type NameResolver<
-    R = string | null,
-    Parent = ExpenseAndIncome,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type PriceResolver<
-    R = string | null,
-    Parent = ExpenseAndIncome,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type QuantityResolver<
-    R = number | null,
-    Parent = ExpenseAndIncome,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type TaxRateResolver<
-    R = number | null,
-    Parent = ExpenseAndIncome,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace ExpenseResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Expense> {
-    name?: NameResolver<string | null, TypeParent, Context>;
-
-    price?: PriceResolver<string | null, TypeParent, Context>;
-
-    quantity?: QuantityResolver<number | null, TypeParent, Context>;
-
-    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
-
-    date?: DateResolver<string | null, TypeParent, Context>;
-  }
-
-  export type NameResolver<
-    R = string | null,
-    Parent = Expense,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type PriceResolver<
-    R = string | null,
-    Parent = Expense,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type QuantityResolver<
-    R = number | null,
-    Parent = Expense,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type TaxRateResolver<
-    R = number | null,
-    Parent = Expense,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type DateResolver<
-    R = string | null,
-    Parent = Expense,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-}
-
 export namespace MutationResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
     registerUser?: RegisterUserResolver<RegisterResponse, TypeParent, Context>;
@@ -848,7 +869,19 @@ export namespace MutationResolvers {
       Context
     >;
 
+    addClient?: AddClientResolver<
+      ClientMutationResponse | null,
+      TypeParent,
+      Context
+    >;
+
     updateClient?: UpdateClientResolver<
+      ClientMutationResponse | null,
+      TypeParent,
+      Context
+    >;
+
+    deleteClient?: DeleteClientResolver<
       ClientMutationResponse | null,
       TypeParent,
       Context
@@ -928,6 +961,15 @@ export namespace MutationResolvers {
     projectId: string;
   }
 
+  export type AddClientResolver<
+    R = ClientMutationResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, AddClientArgs>;
+  export interface AddClientArgs {
+    data: ClientInput;
+  }
+
   export type UpdateClientResolver<
     R = ClientMutationResponse | null,
     Parent = {},
@@ -937,6 +979,15 @@ export namespace MutationResolvers {
     clientId: string;
 
     data: ClientInput;
+  }
+
+  export type DeleteClientResolver<
+    R = ClientMutationResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, DeleteClientArgs>;
+  export interface DeleteClientArgs {
+    clientId: string;
   }
 }
 

@@ -27,7 +27,7 @@ class ProjectsListContainer extends React.Component<Props> {
 
           return (
             <ProjectsList
-              projects={data.getProjectsByUserId}
+              projects={data.projects}
               sortProjectsByProjectDate={this.sortProjectsByProjectDate}
               sortProjectByInvoiceDate={this.sortProjectByInvoiceDate}
             />

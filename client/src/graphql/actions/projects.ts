@@ -19,8 +19,7 @@ const getProjectOverview = () => {
   }
   try {
     return {
-      projects: client.readQuery<OverviewType>(queryOption)!
-        .getProjectsByUserId,
+      projects: client.readQuery<OverviewType>(queryOption)!.projects,
       queryOption
     }
   } catch (error) {
@@ -30,12 +29,12 @@ const getProjectOverview = () => {
 
 const writeData = (
   queryOption: DataProxy.Query<{ userId: string }>,
-  data: GetProjectOverview.GetProjectsByUserId[]
+  data: GetProjectOverview.Projects[]
 ) => {
   client.writeQuery<OverviewType>({
     ...queryOption,
     data: {
-      getProjectsByUserId: data
+      projects: data
     }
   })
 }
