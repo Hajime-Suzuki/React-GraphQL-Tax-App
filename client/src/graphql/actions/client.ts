@@ -13,14 +13,11 @@ const attachClientToProject = (clientId: string, projectId: string) => {
     SingleClient.Query,
     SingleClient.Variables
   >({ query: SingleClient.Document, variables: { id: clientId } })
-  console.log(clientId)
 
   client.writeQuery({
     query: GetSingleProject.Document,
     data: { ...data, client: clientData }
   })
-
-  console.log(test)
 }
 
 export const ClientAction = {
