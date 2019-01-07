@@ -35,6 +35,7 @@ export const userSchema = gql`
   }
 
   type Query {
+    status: String
     getUser(id: String!): User!
   }
 

@@ -18,17 +18,23 @@ export interface ICtx {
   user: IUser
 }
 
-const typeDefs = mergeTypes(
+export const typeDefs = mergeTypes(
   [userSchema, projectSchema, expenseSchema, clientSchema, sharedTypes],
   {
     all: true
   }
 )
 
+export const resolvers = [
+  userResolvers,
+  projectResolvers,
+  clientResolvers
+] as any
+
 const server = new ApolloServer({
   schema: makeExecutableSchema({
     typeDefs,
-    resolvers: [userResolvers, projectResolvers, clientResolvers] as any
+    resolvers
   }),
   context: async ({ ctx: { headers } }: { ctx: Context }) => {
     if (headers.jwt) {

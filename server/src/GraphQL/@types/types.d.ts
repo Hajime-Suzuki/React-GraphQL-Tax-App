@@ -89,6 +89,8 @@ export type Blob = any;
 // ====================================================
 
 export interface IQuery {
+  status?: string | null;
+
   getUser: IUser;
 
   getProjectsByUserId: IProject[];
@@ -388,6 +390,8 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
 export namespace QueryResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
+    status?: StatusResolver<string | null, TypeParent, Context>;
+
     getUser?: GetUserResolver<IUser, TypeParent, Context>;
 
     getProjectsByUserId?: GetProjectsByUserIdResolver<
@@ -421,6 +425,11 @@ export namespace QueryResolvers {
     >;
   }
 
+  export type StatusResolver<
+    R = string | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context>;
   export type GetUserResolver<R = IUser, Parent = {}, Context = {}> = Resolver<
     R,
     Parent,

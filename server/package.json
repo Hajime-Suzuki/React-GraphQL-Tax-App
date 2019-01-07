@@ -83,19 +83,5 @@
     "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts",
     "test-e": "cross-env NODE_ENV=test jest ./test/expense.test.ts --watch",
     "pdf": "gulp"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "test/.*.test.ts$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   }
 }
