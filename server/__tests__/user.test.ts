@@ -1,8 +1,5 @@
-import { graphql } from 'graphql'
-import { makeExecutableSchema } from 'graphql-tools'
 import { User } from '../src/Models/User'
-import { resolvers, typeDefs } from '../src/server'
-import { startServer } from './server'
+import { graphqlTestCall, startServer } from './server'
 
 let connection: any
 
@@ -23,16 +20,6 @@ mutation register(
       }
     }
   `
-
-const schema = makeExecutableSchema({ typeDefs, resolvers })
-
-const graphqlTestCall = async (
-  query: any,
-  variables?: any,
-  userId?: number | string
-) => {
-  return graphql(schema, query, undefined, {}, variables)
-}
 
 describe('Resolvers', async () => {
   const user = {
