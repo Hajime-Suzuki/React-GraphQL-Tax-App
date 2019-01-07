@@ -54,7 +54,6 @@ export const clientResolvers: {
       AuthCheck.userExist(user)
       const client = await updateClientProject(clientId, projectId)
       return {
-        message: 'Client has successfully been updated',
         client
       }
     },

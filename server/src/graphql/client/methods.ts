@@ -58,6 +58,7 @@ export const updateClientProject = async (
     await popProjectId(currentClient.id, projectId)
     return null
   }
+
   return currentClient
 }
 
