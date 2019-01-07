@@ -1,17 +1,11 @@
 import { ApolloError } from 'apollo-server-koa'
-import { isEmptyObject } from '../../helpers/object'
-import { removeEmptyProperty } from '../../helpers/transform'
-import { Client } from '../../Models/Client'
 import { Project } from '../../Models/Project'
-import { User } from '../../Models/User'
 import { getInvoicePDF } from '../../pdf/generatePDF'
 import {
   GetSingleProjectQueryArgs,
-  IClientInput,
   IProjectInput,
   IUser
 } from '../@types/types'
-import { findClientOrCreate } from '../client/methods'
 
 export const getProjectsByUserId = async (userId: string) =>
   Project.find({ user: userId }).sort({ createdAt: -1 })

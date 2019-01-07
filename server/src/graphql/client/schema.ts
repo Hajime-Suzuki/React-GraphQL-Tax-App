@@ -25,7 +25,7 @@ export const clientSchema = gql`
   }
   type ClientMutationResponse {
     message: String
-    client: Client!
+    client: Client
   }
   type Query {
     getClientsByUser: [Client!]
@@ -35,6 +35,10 @@ export const clientSchema = gql`
   type Mutation {
     addClient(data: ClientInput!): ClientMutationResponse
     updateClient(clientId: String!, data: ClientInput!): ClientMutationResponse
+    updateClientProject(
+      projectId: String!
+      clientId: String
+    ): ClientMutationResponse
     deleteClient(clientId: String!): ClientMutationResponse
   }
 `

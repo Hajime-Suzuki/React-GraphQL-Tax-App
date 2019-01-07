@@ -1,11 +1,16 @@
 import Typography from '@material-ui/core/Typography'
-import { Formik, FormikProps } from 'formik'
+import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
 import { MutationFn } from 'react-apollo'
 import { withRouter } from 'react-router'
+import SelectClient from 'src/components/project/addProject/components/SelectClient'
+import SelectedClientCard from 'src/components/project/addProject/components/SelectedClientCard'
+import { getSelectedClient } from 'src/components/project/addProject/selector'
 import { ProjectActions } from 'src/graphql/actions/projects'
+import { GetClientsList } from 'src/graphql/components/clients'
 import {
   DeleteProject,
+  GetSingleProject,
   ProjectInput,
   UpdateBasicInfo
 } from 'src/graphql/components/projects'
@@ -17,13 +22,13 @@ import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
 import { SingleProjectChildProps } from '../..'
 import EditFormModal from '../../../../../libs/forms/EditFormModal'
-import { addProjectValidationSchema } from '../../../helper/addProjectValidationSchema'
 import { GenerateFieldSettings } from '../../../helper/genrateFieldSettings'
 
-interface Props {
+interface OwnProps {
   selectedModal: SingleProjectChildProps['selectedModal']
   handleCloseModal: SingleProjectChildProps['handleCloseModal']
   basic: ProjectInput & { id: string }
+  client?: GetSingleProject.Client | null
 }
 
 const CustomStyledForm: any = styled(Styles.Form)`
@@ -35,14 +40,18 @@ const CustomStyledForm: any = styled(Styles.Form)`
     margin-top: 2em;
   }
 `
-
+type Props = OwnProps & IRouterComponentProps
 class EditBasicInfoFormAndClient extends React.Component<
-  Props & IRouterComponentProps
+  GetClientsList.Props<Props>
 > {
   state = {
     confirmDialogOpen: false
   }
-
+  unselectClient = (
+    setFieldValue: FormikActions<ProjectInput>['setFieldValue']
+  ) => () => {
+    setFieldValue('client.id', null)
+  }
   openDeleteDialog = () => {
     this.setState({ confirmDialogOpen: true })
   }
@@ -69,18 +78,31 @@ class EditBasicInfoFormAndClient extends React.Component<
     >
   ) => async (values: ProjectInput) => {
     await updateProject({
-      variables: { data: values, projectId: this.props.match.params.id }
+      variables: {
+        data: values,
+        projectId: this.props.match.params.id,
+        clientId: values.client && values.client.id
+      }
     })
     this.props.handleCloseModal()
   }
 
   render() {
-    const { selectedModal, handleCloseModal, basic } = this.props
+    const { selectedModal, handleCloseModal, basic, client } = this.props
     const { id: _, ...basicInfo } = basic
+    const { data } = this.props
+    const clients = data && data.getClientsByUser
     return (
-      <UpdateBasicInfo.Component>
+      <UpdateBasicInfo.Component
+        refetchQueries={[
+          {
+            query: GetSingleProject.Document,
+            variables: { id: this.props.match.params.id }
+          }
+        ]}
+      >
         {(updateProject, { error: updateError, loading }) => {
-          const initialValues = { ...basicInfo }
+          const initialValues = { ...basicInfo, client }
           return (
             <DeleteProject.Component>
               {(
@@ -92,7 +114,7 @@ class EditBasicInfoFormAndClient extends React.Component<
                     <Formik
                       initialValues={initialValues}
                       validateOnChange={false}
-                      validationSchema={addProjectValidationSchema}
+                      // validationSchema={addProjectValidationSchema}
                       onSubmit={this.updateProject(updateProject)}
                       render={({
                         handleSubmit,
@@ -145,6 +167,22 @@ class EditBasicInfoFormAndClient extends React.Component<
                                   onChange: handleChange
                                 })}
                               </div>
+                              {clients && (
+                                <SelectClient
+                                  clients={clients}
+                                  setFieldValue={setFieldValue}
+                                />
+                              )}
+
+                              <SelectedClientCard
+                                unselectClient={this.unselectClient(
+                                  setFieldValue
+                                )}
+                                selectedClient={getSelectedClient({
+                                  clientsList: clients,
+                                  clientFormInput: values.client
+                                })}
+                              />
                             </CustomStyledForm>
                           </EditFormModal>
                         )
@@ -173,4 +211,6 @@ class EditBasicInfoFormAndClient extends React.Component<
   }
 }
 
-export default withRouter(EditBasicInfoFormAndClient)
+export default withRouter(
+  GetClientsList.HOC<Props>({})(EditBasicInfoFormAndClient)
+)

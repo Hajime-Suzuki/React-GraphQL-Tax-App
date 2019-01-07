@@ -7,7 +7,8 @@ import {
   updateClient,
   deleteClient,
   getClientByProject,
-  findClientOrCreate
+  findClientOrCreate,
+  updateClientProject
 } from './methods'
 import { ApolloError } from 'apollo-server-koa'
 
@@ -47,6 +48,14 @@ export const clientResolvers: {
       return {
         message: 'Client has successfully been updated',
         client: updatedClient
+      }
+    },
+    updateClientProject: async (_, { clientId, projectId }, { user }) => {
+      AuthCheck.userExist(user)
+      const client = await updateClientProject(clientId, projectId)
+      return {
+        message: 'Client has successfully been updated',
+        client
       }
     },
     deleteClient: async (_, { clientId }, { user }) => {

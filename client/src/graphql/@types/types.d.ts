@@ -225,6 +225,8 @@ export interface Mutation {
 
   updateClient?: ClientMutationResponse | null;
 
+  updateClientProject?: ClientMutationResponse | null;
+
   deleteClient?: ClientMutationResponse | null;
 }
 
@@ -247,7 +249,9 @@ export interface MutationProjectResponse {
 
   message?: string | null;
 
-  project?: Project | null;
+  project: Project;
+
+  client?: Client | null;
 }
 
 export interface GenerateInvoiceResponse {
@@ -259,7 +263,7 @@ export interface GenerateInvoiceResponse {
 export interface ClientMutationResponse {
   message?: string | null;
 
-  client: Client;
+  client?: Client | null;
 }
 
 // ====================================================
@@ -319,6 +323,11 @@ export interface UpdateClientMutationArgs {
   clientId: string;
 
   data: ClientInput;
+}
+export interface UpdateClientProjectMutationArgs {
+  projectId: string;
+
+  clientId?: string | null;
 }
 export interface DeleteClientMutationArgs {
   clientId: string;

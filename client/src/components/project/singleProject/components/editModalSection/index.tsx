@@ -6,13 +6,14 @@ import EditExpenseAndIncomeForm from './EditIncomesAndExpenseForm'
 export const EditModals: React.SFC<SingleProjectChildProps> = props => {
   const {
     selectedModal,
-    project: { incomes, expenses, ...basic }
+    project: { incomes, expenses, ...basic },
+    client
   } = props
 
   return (
     <React.Fragment>
       {selectedModal === 'basic' && (
-        <EditBasicInfoFormAndClient basic={basic} {...props} />
+        <EditBasicInfoFormAndClient basic={basic} client={client} {...props} />
       )}
       {selectedModal === 'incomes' && (
         <EditExpenseAndIncomeForm incomes={incomes as any} {...props} />

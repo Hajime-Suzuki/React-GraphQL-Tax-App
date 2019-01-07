@@ -225,6 +225,8 @@ export interface IMutation {
 
   updateClient?: IClientMutationResponse | null;
 
+  updateClientProject?: IClientMutationResponse | null;
+
   deleteClient?: IClientMutationResponse | null;
 }
 
@@ -261,7 +263,7 @@ export interface IGenerateInvoiceResponse {
 export interface IClientMutationResponse {
   message?: string | null;
 
-  client: IClient;
+  client?: IClient | null;
 }
 
 // ====================================================
@@ -321,6 +323,11 @@ export interface UpdateClientMutationArgs {
   clientId: string;
 
   data: IClientInput;
+}
+export interface UpdateClientProjectMutationArgs {
+  projectId: string;
+
+  clientId?: string | null;
 }
 export interface DeleteClientMutationArgs {
   clientId: string;
@@ -868,6 +875,12 @@ export namespace MutationResolvers {
       Context
     >;
 
+    updateClientProject?: UpdateClientProjectResolver<
+      IClientMutationResponse | null,
+      TypeParent,
+      Context
+    >;
+
     deleteClient?: DeleteClientResolver<
       IClientMutationResponse | null,
       TypeParent,
@@ -966,6 +979,17 @@ export namespace MutationResolvers {
     clientId: string;
 
     data: IClientInput;
+  }
+
+  export type UpdateClientProjectResolver<
+    R = IClientMutationResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, UpdateClientProjectArgs>;
+  export interface UpdateClientProjectArgs {
+    projectId: string;
+
+    clientId?: string | null;
   }
 
   export type DeleteClientResolver<
@@ -1088,7 +1112,7 @@ export namespace ClientMutationResponseResolvers {
   > {
     message?: MessageResolver<string | null, TypeParent, Context>;
 
-    client?: ClientResolver<IClient, TypeParent, Context>;
+    client?: ClientResolver<IClient | null, TypeParent, Context>;
   }
 
   export type MessageResolver<
@@ -1097,7 +1121,7 @@ export namespace ClientMutationResponseResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type ClientResolver<
-    R = IClient,
+    R = IClient | null,
     Parent = IClientMutationResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;

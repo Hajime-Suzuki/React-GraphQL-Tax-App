@@ -135,7 +135,7 @@ export namespace UpdateClient {
 
     message: string | null;
 
-    client: Client;
+    client: Client | null;
   };
 
   export type Client = {

@@ -169,7 +169,7 @@ export namespace UpdateStatus {
 
     message: string | null;
 
-    project: Project | null;
+    project: Project;
   };
 
   export type Project = {
@@ -199,7 +199,7 @@ export namespace AddProject {
 
     message: string | null;
 
-    project: Project | null;
+    project: Project;
   };
 
   export type Project = {
@@ -244,7 +244,7 @@ export namespace UpdateIncomesAndExpenses {
 
     message: string | null;
 
-    project: Project | null;
+    project: Project;
   };
 
   export type Project = {
@@ -274,12 +274,15 @@ export namespace UpdateBasicInfo {
   export type Variables = {
     projectId: string;
     data: ProjectInput;
+    clientId?: string | null;
   };
 
   export type Mutation = {
     __typename?: "Mutation";
 
     updateProject: UpdateProject;
+
+    updateClientProject: UpdateClientProject | null;
   };
 
   export type UpdateProject = {
@@ -289,7 +292,7 @@ export namespace UpdateBasicInfo {
 
     message: string | null;
 
-    project: Project | null;
+    project: Project;
   };
 
   export type Project = {
@@ -297,6 +300,22 @@ export namespace UpdateBasicInfo {
 
     invoiceNumber: string;
   } & BasicInfoFragment.Fragment;
+
+  export type UpdateClientProject = {
+    __typename?: "ClientMutationResponse";
+
+    client: Client | null;
+  };
+
+  export type Client = {
+    __typename?: "Client";
+
+    streetAddress: string | null;
+
+    postalCode: string | null;
+
+    city: string | null;
+  } & ClientFragment.Fragment;
 }
 
 export namespace DeleteProject {
@@ -315,7 +334,7 @@ export namespace DeleteProject {
 
     message: string | null;
 
-    project: Project | null;
+    project: Project;
   };
 
   export type Project = {
@@ -704,7 +723,11 @@ export namespace UpdateIncomesAndExpenses {
 }
 export namespace UpdateBasicInfo {
   export const Document = gql`
-    mutation updateBasicInfo($projectId: String!, $data: ProjectInput!) {
+    mutation updateBasicInfo(
+      $projectId: String!
+      $data: ProjectInput!
+      $clientId: String
+    ) {
       updateProject(projectId: $projectId, data: $data) {
         success
         message
@@ -713,9 +736,18 @@ export namespace UpdateBasicInfo {
           ...BasicInfoFragment
         }
       }
+      updateClientProject(clientId: $clientId, projectId: $projectId) {
+        client {
+          ...ClientFragment
+          streetAddress
+          postalCode
+          city
+        }
+      }
     }
 
     ${BasicInfoFragment.FragmentDoc}
+    ${ClientFragment.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>

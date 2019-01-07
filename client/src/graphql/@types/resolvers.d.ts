@@ -229,6 +229,8 @@ export interface Mutation {
 
   updateClient?: ClientMutationResponse | null;
 
+  updateClientProject?: ClientMutationResponse | null;
+
   deleteClient?: ClientMutationResponse | null;
 }
 
@@ -251,7 +253,9 @@ export interface MutationProjectResponse {
 
   message?: string | null;
 
-  project?: Project | null;
+  project: Project;
+
+  client?: Client | null;
 }
 
 export interface GenerateInvoiceResponse {
@@ -263,7 +267,7 @@ export interface GenerateInvoiceResponse {
 export interface ClientMutationResponse {
   message?: string | null;
 
-  client: Client;
+  client?: Client | null;
 }
 
 // ====================================================
@@ -323,6 +327,11 @@ export interface UpdateClientMutationArgs {
   clientId: string;
 
   data: ClientInput;
+}
+export interface UpdateClientProjectMutationArgs {
+  projectId: string;
+
+  clientId?: string | null;
 }
 export interface DeleteClientMutationArgs {
   clientId: string;
@@ -881,6 +890,12 @@ export namespace MutationResolvers {
       Context
     >;
 
+    updateClientProject?: UpdateClientProjectResolver<
+      ClientMutationResponse | null,
+      TypeParent,
+      Context
+    >;
+
     deleteClient?: DeleteClientResolver<
       ClientMutationResponse | null,
       TypeParent,
@@ -981,6 +996,17 @@ export namespace MutationResolvers {
     data: ClientInput;
   }
 
+  export type UpdateClientProjectResolver<
+    R = ClientMutationResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, UpdateClientProjectArgs>;
+  export interface UpdateClientProjectArgs {
+    projectId: string;
+
+    clientId?: string | null;
+  }
+
   export type DeleteClientResolver<
     R = ClientMutationResponse | null,
     Parent = {},
@@ -1045,7 +1071,9 @@ export namespace MutationProjectResponseResolvers {
 
     message?: MessageResolver<string | null, TypeParent, Context>;
 
-    project?: ProjectResolver<Project | null, TypeParent, Context>;
+    project?: ProjectResolver<Project, TypeParent, Context>;
+
+    client?: ClientResolver<Client | null, TypeParent, Context>;
   }
 
   export type SuccessResolver<
@@ -1059,7 +1087,12 @@ export namespace MutationProjectResponseResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type ProjectResolver<
-    R = Project | null,
+    R = Project,
+    Parent = MutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ClientResolver<
+    R = Client | null,
     Parent = MutationProjectResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -1094,7 +1127,7 @@ export namespace ClientMutationResponseResolvers {
   > {
     message?: MessageResolver<string | null, TypeParent, Context>;
 
-    client?: ClientResolver<Client, TypeParent, Context>;
+    client?: ClientResolver<Client | null, TypeParent, Context>;
   }
 
   export type MessageResolver<
@@ -1103,7 +1136,7 @@ export namespace ClientMutationResponseResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type ClientResolver<
-    R = Client,
+    R = Client | null,
     Parent = ClientMutationResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;

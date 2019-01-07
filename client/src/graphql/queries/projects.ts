@@ -107,20 +107,26 @@ const UPDATE_INCOMES_EXPENSES = gql`
   ${Fragments.PRICE_FRAGMENT}
 `
 
-// client {
-//           ...ClientFragment
-//   streetAddress
-//   postalCode
-//   city
-// }
 const UPDATE_BASIC_INFO = gql`
-  mutation updateBasicInfo($projectId: String!, $data: ProjectInput!) {
+  mutation updateBasicInfo(
+    $projectId: String!
+    $data: ProjectInput!
+    $clientId: String
+  ) {
     updateProject(projectId: $projectId, data: $data) {
       success
       message
       project {
         invoiceNumber
         ...BasicInfoFragment
+      }
+    }
+    updateClientProject(clientId: $clientId, projectId: $projectId) {
+      client {
+        ...ClientFragment
+        streetAddress
+        postalCode
+        city
       }
     }
   }

@@ -1,10 +1,7 @@
 import Button from '@material-ui/core/Button'
-import Icon from '@material-ui/core/Icon'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import { FormikProps } from 'formik'
 import * as React from 'react'
-import ClientCard from 'src/components/shared/ClientCard'
 import { ProjectInput } from 'src/graphql/components/projects'
 import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
@@ -14,6 +11,7 @@ import { AddProjectChildProps } from '.'
 import { IncomesAndExpenseFields } from '../formComponents/IncomesAndExpenseFields'
 import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
 import SelectClient from './components/SelectClient'
+import SelectedClientCard from './components/SelectedClientCard'
 
 type Props = FormikProps<ProjectInput> & AddProjectChildProps
 
@@ -80,7 +78,6 @@ class AddProjectForm extends React.Component<Props> {
         <Typography variant="h5" className="title client-title">
           Client Info
         </Typography>
-
         {clients && (
           <SelectClient clients={clients} setFieldValue={setFieldValue} />
         )}
@@ -93,7 +90,6 @@ class AddProjectForm extends React.Component<Props> {
         >
           Add New Client
         </Button>
-
         {!selectedClient && (
           <div style={{ width: '100%' }} className="form-section">
             {GenerateFieldSettings.clientFields.map((field, i) => (
@@ -101,20 +97,10 @@ class AddProjectForm extends React.Component<Props> {
             ))}
           </div>
         )}
-
-        {selectedClient && (
-          <div className="card-wrapper">
-            <div className="card">
-              <ClientCard client={selectedClient} />
-              <IconButton
-                onClick={this.unselectClient}
-                className="remove-button"
-              >
-                <Icon className="fas fa-minus-circle" />
-              </IconButton>
-            </div>
-          </div>
-        )}
+        <SelectedClientCard
+          selectedClient={selectedClient}
+          unselectClient={this.unselectClient}
+        />
       </div>
     )
   }
@@ -186,23 +172,6 @@ class AddProjectForm extends React.Component<Props> {
 const CustomForm = styled(Styles.Form)`
   .client-title {
     margin-bottom: 2em;
-  }
-  .card-wrapper {
-    width: 90%;
-    margin-top: 1em;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-  }
-  .card {
-    width: 100%;
-    max-width: 300px;
-    margin: auto;
-    text-align: center;
-  }
-  .remove-button {
-    margin-top: 5px;
   }
   .button-spacer {
     margin: 0 1em;
