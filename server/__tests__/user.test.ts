@@ -1,5 +1,7 @@
 import { User } from '../src/Models/User'
 import { graphqlTestCall, startServer } from './server'
+import { gql } from 'apollo-server-koa'
+import { print } from 'graphql'
 
 let connection: any
 
@@ -11,15 +13,23 @@ afterAll(async () => {
   await connection.close()
 })
 
-const registerMutation = `
-mutation register(
-        $firstName: String!, $lastName: String!, $email: String!, $password: String!
-      ) {
-      registerUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
-        token
-      }
+const registerMutation = print(gql`
+  mutation register(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
+  ) {
+    registerUser(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+    ) {
+      token
     }
-  `
+  }
+`)
 
 describe('Resolvers', async () => {
   const user = {
