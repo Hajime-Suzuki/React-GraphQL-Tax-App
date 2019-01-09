@@ -44,21 +44,14 @@ type Props = OwnProps & IRouterComponentProps
 class EditBasicInfoFormAndClient extends React.Component<
   GetClientsList.Props<Props>
 > {
-  state = {
-    confirmDialogOpen: false
-  }
+  state = { confirmDialogOpen: false }
   unselectClient = (
     setFieldValue: FormikActions<ProjectInput>['setFieldValue']
-  ) => () => {
-    setFieldValue('client.id', null)
-  }
-  openDeleteDialog = () => {
-    this.setState({ confirmDialogOpen: true })
-  }
+  ) => () => setFieldValue('client.id', null)
 
-  closeDeleteDialog = () => {
-    this.setState({ confirmDialogOpen: false })
-  }
+  openDeleteDialog = () => this.setState({ confirmDialogOpen: true })
+
+  closeDeleteDialog = () => this.setState({ confirmDialogOpen: false })
 
   confirmDelete = (
     deleteProject: MutationFn<DeleteProject.Mutation, DeleteProject.Variables>

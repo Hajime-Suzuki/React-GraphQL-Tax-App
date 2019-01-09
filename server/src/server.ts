@@ -37,6 +37,7 @@ const server = new ApolloServer({
     resolvers
   }),
   context: async ({ ctx: { headers } }: { ctx: Context }) => {
+    console.log(headers)
     if (headers.jwt) {
       return AuthCheck.extractIdAndToken(headers)
     }

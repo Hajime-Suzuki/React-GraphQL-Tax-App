@@ -8,11 +8,8 @@ import { typeDefs, resolvers } from '../src/server'
 
 export const startServer = async () => {
   const server = app.listen(9000, () => {
-    console.log('test!')
     dbConnection
       .then(mg => {
-        console.log('DB')
-
         return mg.connection
       })
       .catch(e => console.log(e))
@@ -23,6 +20,10 @@ export const startServer = async () => {
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
-export const graphqlTestCall = async (query: any, variables?: any) => {
-  return graphql(schema, query, undefined, {}, variables)
+export const graphqlTestCall = async <Type>(
+  query: any,
+  variables?: any,
+  ctx?: any
+) => {
+  return graphql<Type>(schema, query, undefined, ctx, variables)
 }
