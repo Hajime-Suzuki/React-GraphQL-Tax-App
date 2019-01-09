@@ -19,6 +19,10 @@ afterAll(async () => {
   await connection.close()
 })
 
+const createUserAndGetToken = async (userData: any) => {
+  const user = await User.create(userData)
+  return { user, token: user.generateToken() }
+}
 describe('Resolvers', async () => {
   const registerMutation = print(gql`
     mutation register(
@@ -53,14 +57,12 @@ describe('Resolvers', async () => {
     password: '12345678'
   }
 
-  let TOKEN: string
   describe('========== Register ==========', () => {
     test('can register user', async () => {
       const res = await graphqlTestCall<{ registerUser: IRegisterResponse }>(
         registerMutation,
         userData
       )
-      TOKEN = res.data!.registerUser.token
 
       expect(res).toHaveProperty(['data', 'registerUser', 'token'])
     })
@@ -91,7 +93,7 @@ describe('Resolvers', async () => {
         }
       )
       expect(res.data).toBeDefined()
-      expect(res.data!.loginUser.token).not.toBeNull()
+      expect(res.data!.loginUser.token).toBeDefined()
     })
 
     // test('can login', async () => {
@@ -104,7 +106,7 @@ describe('Resolvers', async () => {
     // })
   })
 
-  describe('========== Update User =========', async () => {
+  describe.only('========== Update User =========', async () => {
     const updateMutation = print(gql`
       mutation updateUser($data: UpdateUserInput!) {
         updateUser(data: $data) {
@@ -112,15 +114,19 @@ describe('Resolvers', async () => {
             id
             firstName
             lastName
+            email
           }
         }
       }
     `)
 
     test('can update', async () => {
-      // const u = await User.findByToken(TOKEN)
-
-      const res = await graphqlTestCall<IUpdateUserResponse>(
+      const userData2 = {
+        ...userData,
+        email: '123413241234123413@testiaashiet.com'
+      }
+      const { user } = await createUserAndGetToken(userData2)
+      const res = await graphqlTestCall<{ updateUser: IUpdateUserResponse }>(
         updateMutation,
         {
           data: {
@@ -128,12 +134,13 @@ describe('Resolvers', async () => {
             lastName: '1234'
           }
         },
-        { ctx: { headers: { jwt: TOKEN } } }
+        { user }
       )
-      console.log(res)
-      expect(1).toBe(1)
-      // expect(res.data).toBeDefined()
-      // expect(res.data!.user).toBeDefined()
+
+      expect(res.data).toBeDefined()
+      expect(res.data!.updateUser.user.firstName).toBe('1234')
+      expect(res.data!.updateUser.user.lastName).toBe('1234')
+      expect(res.data!.updateUser.user.email).toBe(userData2.email)
     })
   })
 })
