@@ -8,7 +8,6 @@ export const userResolvers: {
   Mutation: MutationResolvers.Resolvers<ICtx>
 } = {
   Query: {
-    status: () => 'test!',
     async getUser(_, __, { user }) {
       AuthCheck.userExist(user)
       return user

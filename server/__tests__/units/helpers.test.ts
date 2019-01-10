@@ -39,6 +39,7 @@ describe('======= Helpers =======', () => {
         { price: '', quantity: 2, taxRate: 6 },
         { price: '10', quantity: 2, taxRate: 21 }
       ]
+
       const total = getGrandTotal(data)
       expect(total).toEqual({
         subtotal: '€44,00',
