@@ -4,7 +4,7 @@ type Price = string | null
 type Quantity = number | null
 type TaxRate = number | null
 
-const format = (value?: string | number | null) => {
+const formatCurrency = (value?: string | number | null) => {
   if (!value) return '-'
   return currencyFormatter.format(+value, { code: 'EUR', locale: 'nl-NL' })
 }
@@ -30,12 +30,12 @@ const getGrandTotal = (
     }
   )
   Object.keys(total).forEach(key => {
-    (total as any)[key] = format((total as any)[key])
+    (total as any)[key] = formatCurrency((total as any)[key])
   })
   return total
 }
 
 export const Calculations = {
-  format,
+  formatCurrency,
   getGrandTotal
 }

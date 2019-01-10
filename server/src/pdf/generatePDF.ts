@@ -58,7 +58,7 @@ export const getAllDataForInvoice = async (
     incomes: incomes
       ? incomes.map(income => ({
           ...income,
-          price: Calculations.format(income.price)
+          price: Calculations.formatCurrency(income.price)
         }))
       : [],
     totalPrices: incomes ? Calculations.getGrandTotal(incomes) : 0

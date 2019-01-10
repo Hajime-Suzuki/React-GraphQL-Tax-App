@@ -17,6 +17,7 @@ describe('Resolvers', async () => {
   afterAll(async () => {
     await connection.close()
   })
+
   const registerMutation = print(gql`
     mutation register(
       $firstName: String!
