@@ -4,9 +4,10 @@ import {
   IRegisterResponse,
   IUpdateUserResponse
 } from '../src/GraphQL/@types/types'
-import { User } from '../src/Models/User'
+
 import { graphqlTestCall, startServer } from './server'
 import { createUserAndGetToken } from './helpers'
+import { User } from '../src/graphql/user/User'
 let connection: any
 
 describe('Resolvers', async () => {

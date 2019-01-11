@@ -2,7 +2,8 @@ import * as passport from 'koa-passport'
 import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt'
 import { Strategy as localStrategy } from 'passport-local'
 import { secret } from '../jwt/jwt'
-import { User } from '../Models/User'
+import { User } from '../graphql/user/User'
+import { UserInfra } from '../GraphQL/user/infra'
 
 export interface IJwtPayload {
   id: string
@@ -17,7 +18,10 @@ passport.use(
       passwordField: 'password'
     },
     async (email, password, done) => {
-      const user = await User.findOne({ email }).select('+password')
+      const user = await UserInfra.getUserByCondition(
+        { email },
+        { password: true }
+      )
 
       if (!user) {
         return done({ message: 'incorrect username / password' })

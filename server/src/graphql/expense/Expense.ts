@@ -1,5 +1,5 @@
 import { Document, model, Model, Schema } from 'mongoose'
-import { IExpenseAndIncome } from '../GraphQL/@types/types'
+import { IExpenseAndIncome } from '../@types/types'
 
 type ExpenseDocument = IExpenseAndIncome & Document
 

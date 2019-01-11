@@ -1,7 +1,7 @@
-import { Document, model, Model, Schema } from 'mongoose'
+import { Document, model, Model, Schema, models } from 'mongoose'
 import * as validator from 'validator'
-import { IClient } from '../GraphQL/@types/types'
-import { SchemaDef, Omit } from '../helpers/types'
+import { IClient } from '../@types/types'
+import { SchemaDef, Omit } from '../../helpers/types'
 
 type IClientDocument = IClient & Document
 
@@ -57,7 +57,7 @@ clientSchema.set('toJSON', {
   virtuals: true
 })
 
-export const Client = model<IClientDocument, IClientModel>(
-  'Client',
-  clientSchema
-)
+const Client =
+  models.User || model<IClientDocument, IClientModel>('Client', clientSchema)
+
+export { Client }

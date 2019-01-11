@@ -1,10 +1,10 @@
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
-import { Document, Model, model, Schema } from 'mongoose'
+import { Document, Model, model, Schema, models } from 'mongoose'
 import * as validator from 'validator'
-import { IUser } from '../GraphQL/@types/types'
-import { secret } from '../jwt/jwt'
-import { SchemaDef, Omit } from '../helpers/types'
+import { IUser } from '../@types/types'
+import { secret } from '../../jwt/jwt'
+import { SchemaDef, Omit } from '../../helpers/types'
 
 interface IUserMethods {
   generateToken: () => string
@@ -129,6 +129,7 @@ userSchema.pre<IUserDocument>('save', async function() {
   this.password = await bcrypt.hash(this.password, 10)
 })
 
-const User: IUserModel = model<IUserDocument, IUserModel>('User', userSchema)
+const User: IUserModel =
+  (models.User as any) || model<IUserDocument, IUserModel>('User', userSchema)
 
 export { User }

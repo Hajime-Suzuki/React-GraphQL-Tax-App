@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server-koa'
-import { Project } from '../../Models/Project'
+import { Project } from './Project'
 import { getInvoicePDF } from '../../pdf/generatePDF'
 import {
   GetSingleProjectQueryArgs,

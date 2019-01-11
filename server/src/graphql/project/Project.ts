@@ -1,6 +1,6 @@
-import { Document, model, Model, Schema } from 'mongoose'
-import { IProject, IExpenseAndIncome } from '../GraphQL/@types/types'
-import { SchemaDef, Omit } from '../helpers/types'
+import { Document, model, Model, Schema, models } from 'mongoose'
+import { IProject, IExpenseAndIncome } from '../@types/types'
+import { SchemaDef, Omit } from '../../helpers/types'
 
 const expenseSchemaDef: SchemaDef<IExpenseAndIncome> = {
   name: {
@@ -70,7 +70,5 @@ projectSchema.set('toJSON', {
 })
 
 type ProjectDocument = Document & IProject
-export const Project: Model<ProjectDocument> = model<ProjectDocument>(
-  'Project',
-  projectSchema
-)
+export const Project: Model<ProjectDocument> =
+  models.Project || model<ProjectDocument>('Project', projectSchema)

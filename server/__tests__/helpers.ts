@@ -1,4 +1,4 @@
-import { User } from '../src/Models/User'
+import { User } from '../src/graphql/user/User'
 
 export const createUserAndGetToken = async (userData: any) => {
   const user = await User.create(userData)

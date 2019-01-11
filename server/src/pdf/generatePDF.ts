@@ -2,9 +2,11 @@ import { format } from 'date-fns'
 import * as puppeteer from 'puppeteer'
 import { IProject } from '../GraphQL/@types/types'
 import { Calculations } from '../helpers/calculation'
-import { Project } from '../Models/Project'
-import { User } from '../Models/User'
-import { Client } from '../Models/Client'
+import { Project } from '../graphql/project/Project'
+
+import { Client } from '../graphql/client/Client'
+import { User } from '../graphql/user/User'
+import { UserInfra } from '../GraphQL/user/infra'
 
 export const getInvoicePDF = async (projectId: string, token: string) => {
   const browser = await puppeteer.launch()
@@ -32,7 +34,7 @@ export const getAllDataForInvoice = async (
   const project = await Project.findById(projectId).populate('client')
   if (!project) throw new Error('project not found')
 
-  const user = await User.findById(project.user)
+  const user = await UserInfra.getUserById(project.user)
   if (!user) throw new Error('user not found')
 
   if (user.id !== userId!) {

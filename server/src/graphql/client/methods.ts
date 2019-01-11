@@ -1,7 +1,7 @@
 import { ApolloError, AuthenticationError } from 'apollo-server-koa'
 import { isEmptyObject } from '../../helpers/object'
 import { removeEmptyProperty } from '../../helpers/transform'
-import { Client } from '../../Models/Client'
+import { Client } from './Client'
 import { IClientInput } from '../@types/types'
 
 export const getClientsByUserId = async (userId: string) =>

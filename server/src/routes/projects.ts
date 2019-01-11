@@ -1,12 +1,12 @@
 import { addDays, addMonths, format, subMonths } from 'date-fns'
 import * as faker from 'faker'
 import * as Router from 'koa-router'
-import { Client } from '../Models/Client'
-import { Expense } from '../Models/Expense'
-import { Project } from '../Models/Project'
-import { User } from '../Models/User'
+import { Client } from '../graphql/client/Client'
+import { Expense } from '../graphql/expense/Expense'
+import { Project } from '../graphql/project/Project'
 import { authMiddleware, IJwtPayload } from '../passport/passport'
 import { IProject, IExpenseAndIncome } from '../GraphQL/@types/types'
+import { User } from '../graphql/user/User'
 
 const router = new Router({
   prefix: '/projects'

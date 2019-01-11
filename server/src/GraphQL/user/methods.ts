@@ -22,9 +22,11 @@ export const registerUser = async (data: RegisterUserMutationArgs) => {
 
 export const loginUser = async ({ email, password }: LoginUserMutationArgs) => {
   try {
-    const user = await UserInfra.getUserByCondition({ email }).select(
-      '+password'
+    const user = await UserInfra.getUserByCondition(
+      { email },
+      { password: true }
     )
+
     if (!user) throw new Error('email and password does not match ')
     if (!(await user.comparePassword(password))) {
       throw new Error('email and password does not match ')
