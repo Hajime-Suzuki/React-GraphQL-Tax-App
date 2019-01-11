@@ -9,8 +9,8 @@ const LOGIN_MUTATION = gql`
 `
 
 const GET_USER = gql`
-  query getUser($id: String!) {
-    getUser(id: $id) {
+  query GET_USER {
+    getUser {
       id
       firstName
       lastName

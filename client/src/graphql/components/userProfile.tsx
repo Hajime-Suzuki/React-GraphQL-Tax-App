@@ -107,9 +107,7 @@ export namespace UpdateUser {
 }
 
 export namespace GetUserProfile {
-  export type Variables = {
-    id: string;
-  };
+  export type Variables = {};
 
   export type Query = {
     __typename?: "Query";
@@ -334,8 +332,8 @@ export namespace UpdateUser {
 }
 export namespace GetUserProfile {
   export const Document = gql`
-    query getUserProfile($id: String!) {
-      getUser(id: $id) {
+    query getUserProfile {
+      getUser {
         ...UserFragments
       }
     }

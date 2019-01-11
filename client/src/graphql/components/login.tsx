@@ -104,9 +104,7 @@ export namespace Login {
 }
 
 export namespace GetUser {
-  export type Variables = {
-    id: string;
-  };
+  export type Variables = {};
 
   export type Query = {
     __typename?: "Query";
@@ -179,8 +177,8 @@ export namespace Login {
 }
 export namespace GetUser {
   export const Document = gql`
-    query getUser($id: String!) {
-      getUser(id: $id) {
+    query GET_USER {
+      getUser {
         id
         firstName
         lastName

@@ -274,9 +274,6 @@ export interface ClientMutationResponse {
 // Arguments
 // ====================================================
 
-export interface GetUserQueryArgs {
-  id: string;
-}
 export interface GetProjectsByUserIdQueryArgs {
   userId: string;
 }
@@ -432,13 +429,8 @@ export namespace QueryResolvers {
   export type GetUserResolver<R = User, Parent = {}, Context = {}> = Resolver<
     R,
     Parent,
-    Context,
-    GetUserArgs
+    Context
   >;
-  export interface GetUserArgs {
-    id: string;
-  }
-
   export type GetProjectsByUserIdResolver<
     R = Project[],
     Parent = {},

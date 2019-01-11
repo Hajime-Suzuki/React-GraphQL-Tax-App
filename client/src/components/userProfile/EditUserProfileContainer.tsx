@@ -62,6 +62,4 @@ class EditUserProfileContainer extends React.Component<Props> {
   }
 }
 
-export default GetUserProfile.HOC<Props>({
-  options: props => ({ variables: { id: props.userId } })
-})(EditUserProfileContainer)
+export default GetUserProfile.HOC<Props>({})(EditUserProfileContainer)

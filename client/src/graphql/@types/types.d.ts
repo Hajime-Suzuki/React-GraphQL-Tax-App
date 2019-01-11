@@ -270,9 +270,6 @@ export interface ClientMutationResponse {
 // Arguments
 // ====================================================
 
-export interface GetUserQueryArgs {
-  id: string;
-}
 export interface GetProjectsByUserIdQueryArgs {
   userId: string;
 }

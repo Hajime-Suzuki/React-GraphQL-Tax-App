@@ -17,7 +17,7 @@ class NavBarContainer extends React.Component<Props> {
       return <NavBar path={this.props.location.pathname} />
     }
     return (
-      <GetUser.Component variables={{ id: userId }}>
+      <GetUser.Component>
         {({ data }) => {
           return (
             <NavBar

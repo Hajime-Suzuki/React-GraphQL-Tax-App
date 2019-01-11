@@ -37,8 +37,8 @@ const UPDATE_USER_PROFILE = gql`
 `
 
 const GET_USER_PROFILE = gql`
-  query getUserProfile($id: String!) {
-    getUser(id: $id) {
+  query getUserProfile {
+    getUser {
       ...UserFragments
     }
   }
