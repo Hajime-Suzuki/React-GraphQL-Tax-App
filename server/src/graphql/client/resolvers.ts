@@ -7,9 +7,8 @@ import {
   updateClient,
   deleteClient,
   getClientByProject,
-  findClientOrCreate,
   updateClientProject
-} from './methods'
+} from './domain'
 import { ApolloError } from 'apollo-server-koa'
 
 export const clientResolvers: {

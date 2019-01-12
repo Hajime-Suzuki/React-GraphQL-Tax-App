@@ -4,7 +4,7 @@ import { IProject } from '../GraphQL/@types/types'
 import { Calculations } from '../helpers/calculation'
 import { Project } from '../graphql/project/model'
 
-import { Client } from '../graphql/client/Client'
+import { Client } from '../graphql/client/model'
 import { User } from '../graphql/user/model'
 import { UserRepository } from '../graphql/user/repository'
 

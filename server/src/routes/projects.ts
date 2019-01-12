@@ -1,7 +1,7 @@
 import { addDays, addMonths, format, subMonths } from 'date-fns'
 import * as faker from 'faker'
 import * as Router from 'koa-router'
-import { Client } from '../graphql/client/Client'
+import { Client } from '../graphql/client/model'
 import { Expense } from '../graphql/expense/Expense'
 import { Project } from '../graphql/project/model'
 import { authMiddleware, IJwtPayload } from '../passport/passport'

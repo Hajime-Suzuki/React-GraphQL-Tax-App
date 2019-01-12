@@ -5,7 +5,7 @@ import {
   findClientOrCreate,
   pushProjectId,
   updateClientProject
-} from '../client/methods'
+} from '../client/domain'
 import { ProjectDomain } from './domain'
 import { ProjectRepository } from './repository'
 
