@@ -6,21 +6,21 @@ import {
   IProjectInput,
   IUser
 } from '../@types/types'
+import { ProjectRepository } from './repository'
 
 const getProjectsByUserId = async (userId: string) =>
-  Project.find({ user: userId }).sort({ createdAt: -1 })
+  ProjectRepository.getByUserId(userId)
 
 const getSingleProject = async (
   projectId: GetSingleProjectQueryArgs['projectId']
-) => Project.findById(projectId).populate('client')
+) => ProjectRepository.getById(projectId)
 
 const updateProject = async (projectId: string, data: IProjectInput) => {
-  const project = await Project.findById(projectId)
+  const project = await ProjectRepository.getById(projectId)
   if (!project) throw new ApolloError('project not found')
 
-  const updatedProject = await Project.findByIdAndUpdate(projectId, data, {
-    new: true
-  })
+  const updatedProject = await ProjectRepository.update(projectId, data)
+
   if (!updatedProject) throw new ApolloError('project couldn\'t be updated')
   return updatedProject
 }

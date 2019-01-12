@@ -7,19 +7,21 @@ import {
   updateClientProject
 } from '../client/methods'
 import { ProjectDomain } from './domain'
+import { ProjectRepository } from './repository'
 
 export const projectResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>
   Mutation: MutationResolvers.Resolvers<ICtx>
 } = {
   Query: {
-    getProjectsByUserId: (_, __, { user }) => {
+    getProjectsByUserId: async (_, __, { user }) => {
       AuthCheck.userExist(user)
-      return ProjectDomain.getProjectsByUserId(user.id)
+      return ProjectRepository.getByUserId(user.id)
     },
-    getSingleProject: (_, { projectId }, { user }) => {
+
+    getSingleProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
-      return ProjectDomain.getSingleProject(projectId)
+      return ProjectRepository.getById(projectId)
     }
   },
   Mutation: {
@@ -42,6 +44,7 @@ export const projectResolvers: {
         ...(client && { client })
       }
     },
+
     updateProject: async (_, { projectId, data }, { user }) => {
       AuthCheck.userExist(user)
       const project = await ProjectDomain.updateProject(projectId, data)
@@ -58,6 +61,7 @@ export const projectResolvers: {
         client: updatedClient
       }
     },
+
     deleteProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
       const deletedProject = await ProjectDomain.deleteProject(projectId)
@@ -67,6 +71,7 @@ export const projectResolvers: {
         project: deletedProject
       }
     },
+
     downloadInvoice: async (_, { projectId }, { token, user }) => {
       AuthCheck.userExist(user)
       const pdf = await ProjectDomain.generateInvoice(projectId, token)
