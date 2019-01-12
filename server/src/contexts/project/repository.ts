@@ -5,10 +5,10 @@ import {
 } from '../@types/types'
 import { Project } from './model'
 
-const getByUserId = (userId: string) =>
+const findByUserId = (userId: string) =>
   Project.find({ user: userId }).sort({ createdAt: -1 })
 
-const getById = (projectId: GetSingleProjectQueryArgs['projectId']) =>
+const findById = (projectId: GetSingleProjectQueryArgs['projectId']) =>
   Project.findById(projectId).populate('client')
 
 const update = async (projectId: string, data: IProjectInput) => {
@@ -28,8 +28,8 @@ const create = async (
 }
 
 export const ProjectRepository = {
-  getByUserId,
-  getById,
+  findByUserId,
+  findById,
   update,
   create
 }

@@ -11,7 +11,7 @@ export const extractIdAndToken = async (headers: {
   jwt: string
 }) => {
   try {
-    const user = await UserRepository.getByToken(headers.jwt)
+    const user = await UserRepository.findByToken(headers.jwt)
     user.verifyToken(headers.jwt)
     return {
       userId: user.id,

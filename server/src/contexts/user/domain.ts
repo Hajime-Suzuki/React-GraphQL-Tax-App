@@ -16,7 +16,7 @@ const registerUser = async (data: RegisterUserMutationArgs) => {
 
 const loginUser = async ({ email, password }: LoginUserMutationArgs) => {
   try {
-    const user = await UserRepository.getByCondition(
+    const user = await UserRepository.findByCondition(
       { email },
       { password: true }
     )

@@ -4,9 +4,9 @@ import {
   UpdateUserMutationArgs
 } from '../@types/types'
 
-const getById = async (id: string | number) => User.findById(id)
+const findById = async (id: string | number) => User.findById(id)
 
-const getByCondition = async (
+const findByCondition = async (
   condition: {
     [key: string]: any
   },
@@ -16,7 +16,7 @@ const getByCondition = async (
   return User.findOne(condition)
 }
 
-const getByToken = async (token: string) => User.findByToken(token)
+const findByToken = async (token: string) => User.findByToken(token)
 
 const create = async (data: RegisterUserMutationArgs) => User.create(data)
 
@@ -27,9 +27,9 @@ const update = async (
 ) => User.findOneAndUpdate(id, data, option)
 
 export const UserRepository = {
-  getById,
+  findById,
   create,
-  getByToken,
-  getByCondition,
+  findByToken,
+  findByCondition,
   update
 }

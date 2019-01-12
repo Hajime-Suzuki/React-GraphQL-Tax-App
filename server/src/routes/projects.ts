@@ -16,7 +16,7 @@ router.post('/populate', async ctx => {
 
   const email = (ctx as any).request.body.email
 
-  const user = await UserRepository.getByCondition({ email })
+  const user = await UserRepository.findByCondition({ email })
   if (user) await user.remove()
   const newUser = new User({
     firstName: 'test',

@@ -14,12 +14,12 @@ export const projectResolvers: {
   Query: {
     getProjectsByUserId: async (_, __, { user }) => {
       AuthCheck.userExist(user)
-      return ProjectRepository.getByUserId(user.id)
+      return ProjectRepository.findByUserId(user.id)
     },
 
     getSingleProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
-      return ProjectRepository.getById(projectId)
+      return ProjectRepository.findById(projectId)
     }
   },
   Mutation: {

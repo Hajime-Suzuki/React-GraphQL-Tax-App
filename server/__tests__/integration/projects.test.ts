@@ -1,13 +1,13 @@
 import { gql } from 'apollo-server-koa'
 import { print } from 'graphql'
+
+import { graphqlTestCall, startServer } from '../server'
+import { createUserAndGetToken } from './helpers'
+import { User } from '../../src/contexts/user/model'
 import {
   IRegisterResponse,
   IUpdateUserResponse
-} from '../src/GraphQL/@types/types'
-
-import { graphqlTestCall, startServer } from './server'
-import { createUserAndGetToken } from './helpers'
-import { User } from '../src/graphql/user/User'
+} from '../../src/contexts/@types/types'
 
 let connection: any
 
@@ -19,6 +19,7 @@ describe('Resolvers', async () => {
   afterAll(async () => {
     await connection.close()
   })
+
   const registerMutation = print(gql`
     mutation register(
       $firstName: String!

@@ -30,10 +30,10 @@ export const getAllDataForInvoice = async (
   projectId: string,
   userId: string
 ) => {
-  const project = await ProjectRepository.getById(projectId)
+  const project = await ProjectRepository.findById(projectId)
   if (!project) throw new Error('project not found')
 
-  const user = await UserRepository.getById(project.user)
+  const user = await UserRepository.findById(project.user)
   if (!user) throw new Error('user not found')
 
   const client = await ClientRepository.findByProjectId(projectId)

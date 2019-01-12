@@ -7,7 +7,7 @@ import { ProjectRepository } from './repository'
 import { PDFDomain } from '../pdf/domain'
 
 const updateProject = async (projectId: string, data: IProjectInput) => {
-  const project = await ProjectRepository.getById(projectId)
+  const project = await ProjectRepository.findById(projectId)
   if (!project) throw new ApolloError('project not found')
 
   const updatedProject = await ProjectRepository.update(projectId, data)

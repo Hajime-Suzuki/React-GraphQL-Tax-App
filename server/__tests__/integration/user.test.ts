@@ -3,11 +3,11 @@ import { print } from 'graphql'
 import {
   IRegisterResponse,
   IUpdateUserResponse
-} from '../src/GraphQL/@types/types'
-
-import { graphqlTestCall, startServer } from './server'
+} from '../../src/contexts/@types/types'
+import { User } from '../../src/contexts/user/model'
 import { createUserAndGetToken } from './helpers'
-import { User } from '../src/graphql/user/User'
+import { graphqlTestCall, startServer } from '../server'
+
 let connection: any
 
 describe('Resolvers', async () => {
@@ -18,7 +18,6 @@ describe('Resolvers', async () => {
   afterAll(async () => {
     await connection.close()
   })
-
   const registerMutation = print(gql`
     mutation register(
       $firstName: String!

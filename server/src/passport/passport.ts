@@ -17,7 +17,7 @@ passport.use(
       passwordField: 'password'
     },
     async (email, password, done) => {
-      const user = await UserRepository.getByCondition(
+      const user = await UserRepository.findByCondition(
         { email },
         { password: true }
       )
