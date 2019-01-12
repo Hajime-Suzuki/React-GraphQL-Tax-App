@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server-koa'
-import { Project } from './Project'
+import { Project } from './model'
 import { getInvoicePDF } from '../../pdf/generatePDF'
 import {
   GetSingleProjectQueryArgs,
@@ -7,14 +7,14 @@ import {
   IUser
 } from '../@types/types'
 
-export const getProjectsByUserId = async (userId: string) =>
+const getProjectsByUserId = async (userId: string) =>
   Project.find({ user: userId }).sort({ createdAt: -1 })
 
-export const getSingleProject = async (
+const getSingleProject = async (
   projectId: GetSingleProjectQueryArgs['projectId']
 ) => Project.findById(projectId).populate('client')
 
-export const updateProject = async (projectId: string, data: IProjectInput) => {
+const updateProject = async (projectId: string, data: IProjectInput) => {
   const project = await Project.findById(projectId)
   if (!project) throw new ApolloError('project not found')
 
@@ -25,7 +25,7 @@ export const updateProject = async (projectId: string, data: IProjectInput) => {
   return updatedProject
 }
 
-export const addProject = async (
+const addProject = async (
   { id: userId }: IUser,
   { client: clientInput, ...data }: IProjectInput
 ) => {
@@ -34,12 +34,21 @@ export const addProject = async (
   return savedProject
 }
 
-export const deleteProject = async (projectId: string) => {
+const deleteProject = async (projectId: string) => {
   const project = await Project.findById(projectId)
   if (!project) throw new ApolloError('project not found')
   await Project.findByIdAndDelete(projectId)
   return project
 }
 
-export const generateInvoice = async (projectId: string, token: string) =>
+const generateInvoice = async (projectId: string, token: string) =>
   getInvoicePDF(projectId, token)
+
+export const ProjectDomain = {
+  getProjectsByUserId,
+  getSingleProject,
+  updateProject,
+  addProject,
+  deleteProject,
+  generateInvoice
+}

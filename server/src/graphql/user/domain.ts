@@ -3,30 +3,23 @@ import {
   RegisterUserMutationArgs,
   UpdateUserMutationArgs
 } from '../@types/types'
-import { UserInfra } from './infra'
+import { UserRepository } from './repository'
 
-export const getUserById = async (id: string) => {
-  const user = await UserInfra.getUserById(id)
-  if (!user) throw new Error('user not found')
-  return user
-}
-
-export const registerUser = async (data: RegisterUserMutationArgs) => {
+const registerUser = async (data: RegisterUserMutationArgs) => {
   try {
-    const newUser = await UserInfra.addUser(data)
+    const newUser = await UserRepository.create(data)
     return newUser.generateToken()
   } catch (e) {
     throw new Error(e)
   }
 }
 
-export const loginUser = async ({ email, password }: LoginUserMutationArgs) => {
+const loginUser = async ({ email, password }: LoginUserMutationArgs) => {
   try {
-    const user = await UserInfra.getUserByCondition(
+    const user = await UserRepository.getByCondition(
       { email },
       { password: true }
     )
-
     if (!user) throw new Error('email and password does not match ')
     if (!(await user.comparePassword(password))) {
       throw new Error('email and password does not match ')
@@ -37,12 +30,12 @@ export const loginUser = async ({ email, password }: LoginUserMutationArgs) => {
   }
 }
 
-export const updateUser = async (
+const updateUser = async (
   userId: string,
   data: UpdateUserMutationArgs['data']
 ) => {
   try {
-    const updatedUser = await UserInfra.updateUser(userId, data, {
+    const updatedUser = await UserRepository.update(userId, data, {
       new: true
     })
     if (!updatedUser) throw new Error('can not update user')
@@ -50,4 +43,10 @@ export const updateUser = async (
   } catch (e) {
     throw new Error(e)
   }
+}
+
+export const UserDomain = {
+  registerUser,
+  loginUser,
+  updateUser
 }

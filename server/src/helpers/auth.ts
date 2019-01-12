@@ -1,8 +1,8 @@
 import { AuthenticationError } from 'apollo-server-core'
 
 import { IUser } from '../GraphQL/@types/types'
-import { User } from '../graphql/user/User'
-import { UserInfra } from '../GraphQL/user/infra'
+import { User } from '../graphql/user/model'
+import { UserRepository } from '../graphql/user/repository'
 
 export const userExist = (user?: IUser) => {
   if (!user) throw new AuthenticationError('User Not Found')
@@ -13,7 +13,7 @@ export const extractIdAndToken = async (headers: {
   jwt: string
 }) => {
   try {
-    const user = await UserInfra.getUserByToken(headers.jwt)
+    const user = await UserRepository.getByToken(headers.jwt)
     user.verifyToken(headers.jwt)
     return {
       userId: user.id,

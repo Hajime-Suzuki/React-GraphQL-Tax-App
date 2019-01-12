@@ -3,10 +3,10 @@ import * as faker from 'faker'
 import * as Router from 'koa-router'
 import { Client } from '../graphql/client/Client'
 import { Expense } from '../graphql/expense/Expense'
-import { Project } from '../graphql/project/Project'
+import { Project } from '../graphql/project/model'
 import { authMiddleware, IJwtPayload } from '../passport/passport'
 import { IProject, IExpenseAndIncome } from '../GraphQL/@types/types'
-import { User } from '../graphql/user/User'
+import { User } from '../graphql/user/model'
 
 const router = new Router({
   prefix: '/projects'
@@ -108,7 +108,7 @@ router.post('/populate', async ctx => {
   const savedExpenses = await Expense.insertMany(expenses)
 
     // tslint:disable-next-line:align
-  ; (newUser as any).expenses = savedExpenses
+  ;(newUser as any).expenses = savedExpenses
   newUser.projects = savedProjects
   await newUser.save()
   ctx.body = savedProjects

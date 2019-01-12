@@ -6,14 +6,7 @@ import {
   pushProjectId,
   updateClientProject
 } from '../client/methods'
-import {
-  addProject,
-  deleteProject,
-  generateInvoice,
-  getProjectsByUserId,
-  getSingleProject,
-  updateProject
-} from './methods'
+import { ProjectDomain } from './domain'
 
 export const projectResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>
@@ -22,11 +15,11 @@ export const projectResolvers: {
   Query: {
     getProjectsByUserId: (_, __, { user }) => {
       AuthCheck.userExist(user)
-      return getProjectsByUserId(user.id)
+      return ProjectDomain.getProjectsByUserId(user.id)
     },
     getSingleProject: (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
-      return getSingleProject(projectId)
+      return ProjectDomain.getSingleProject(projectId)
     }
   },
   Mutation: {
@@ -34,7 +27,7 @@ export const projectResolvers: {
       AuthCheck.userExist(user)
       const clientInput = data.client
 
-      const project = await addProject(user, data)
+      const project = await ProjectDomain.addProject(user, data)
       const client =
         clientInput && (await findClientOrCreate(user.id, clientInput))
 
@@ -51,7 +44,7 @@ export const projectResolvers: {
     },
     updateProject: async (_, { projectId, data }, { user }) => {
       AuthCheck.userExist(user)
-      const project = await updateProject(projectId, data)
+      const project = await ProjectDomain.updateProject(projectId, data)
 
       let updatedClient: IClient | null = null
       if (data.client) {
@@ -67,7 +60,7 @@ export const projectResolvers: {
     },
     deleteProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
-      const deletedProject = await deleteProject(projectId)
+      const deletedProject = await ProjectDomain.deleteProject(projectId)
       return {
         success: true,
         message: 'project has been added',
@@ -76,7 +69,7 @@ export const projectResolvers: {
     },
     downloadInvoice: async (_, { projectId }, { token, user }) => {
       AuthCheck.userExist(user)
-      const pdf = await generateInvoice(projectId, token)
+      const pdf = await ProjectDomain.generateInvoice(projectId, token)
       return {
         message: 'test',
         data: pdf

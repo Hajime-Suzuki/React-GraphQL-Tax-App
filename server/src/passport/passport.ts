@@ -2,8 +2,8 @@ import * as passport from 'koa-passport'
 import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt'
 import { Strategy as localStrategy } from 'passport-local'
 import { secret } from '../jwt/jwt'
-import { User } from '../graphql/user/User'
-import { UserInfra } from '../GraphQL/user/infra'
+import { User } from '../graphql/user/model'
+import { UserRepository } from '../graphql/user/repository'
 
 export interface IJwtPayload {
   id: string
@@ -18,7 +18,7 @@ passport.use(
       passwordField: 'password'
     },
     async (email, password, done) => {
-      const user = await UserInfra.getUserByCondition(
+      const user = await UserRepository.getByCondition(
         { email },
         { password: true }
       )

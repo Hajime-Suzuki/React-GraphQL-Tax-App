@@ -2,11 +2,11 @@ import {
   RegisterUserMutationArgs,
   UpdateUserMutationArgs
 } from '../@types/types'
-import { User } from './User'
+import { User } from './model'
 
-const getUserById = async (id: string | number) => User.findById(id)
+const getById = async (id: string | number) => User.findById(id)
 
-const getUserByCondition = async (
+const getByCondition = async (
   condition: {
     [key: string]: any
   },
@@ -16,20 +16,20 @@ const getUserByCondition = async (
   return User.findOne(condition)
 }
 
-const getUserByToken = async (token: string) => User.findByToken(token)
+const getByToken = async (token: string) => User.findByToken(token)
 
-const addUser = async (data: RegisterUserMutationArgs) => User.create(data)
+const create = async (data: RegisterUserMutationArgs) => User.create(data)
 
-const updateUser = async (
+const update = async (
   id: string | number,
   data: UpdateUserMutationArgs['data'],
   option: any = { new: true }
 ) => User.findOneAndUpdate(id, data, option)
 
-export const UserInfra = {
-  getUserById,
-  addUser,
-  getUserByToken,
-  getUserByCondition,
-  updateUser
+export const UserRepository = {
+  getById,
+  create,
+  getByToken,
+  getByCondition,
+  update
 }
