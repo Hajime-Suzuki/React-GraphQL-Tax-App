@@ -3,7 +3,7 @@ overwrite: true
 require:
   - ts-node/register
 generates:
-  ./src/GraphQL/@types/types.d.ts:
+  ./src/contexts/@types/types.d.ts:
     plugins:
       - typescript-common
       - typescript-server

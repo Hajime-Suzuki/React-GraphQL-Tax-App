@@ -1,8 +1,6 @@
 import { AuthenticationError } from 'apollo-server-core'
-
-import { IUser } from '../GraphQL/@types/types'
-import { User } from '../graphql/user/model'
-import { UserRepository } from '../graphql/user/repository'
+import { UserRepository } from '../contexts/user/repository'
+import { IUser } from '../contexts/@types/types'
 
 export const userExist = (user?: IUser) => {
   if (!user) throw new AuthenticationError('User Not Found')

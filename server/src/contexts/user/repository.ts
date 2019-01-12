@@ -1,8 +1,8 @@
+import { User } from './model'
 import {
   RegisterUserMutationArgs,
   UpdateUserMutationArgs
 } from '../@types/types'
-import { User } from './model'
 
 const getById = async (id: string | number) => User.findById(id)
 

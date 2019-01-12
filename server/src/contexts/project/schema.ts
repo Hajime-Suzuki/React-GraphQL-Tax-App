@@ -58,4 +58,9 @@ export const projectSchema = gql`
 
   scalar Date
   scalar Blob
+  enum INVOICE_STATUS {
+    none
+    invoice
+    paid
+  }
 `

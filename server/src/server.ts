@@ -1,16 +1,15 @@
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-koa'
 import { Context } from 'koa'
 import { mergeTypes } from 'merge-graphql-schemas'
-import { IUser } from './GraphQL/@types/types'
-import { clientResolvers } from './graphql/client/resolvers'
-import { clientSchema } from './GraphQL/client/schema'
-import { expenseSchema } from './GraphQL/expense/schema'
-import { projectResolvers } from './GraphQL/project/resolvers'
-import { projectSchema } from './GraphQL/project/schema'
-import { sharedTypes } from './GraphQL/shared/sharedTypes'
-import { userResolvers } from './GraphQL/user/resolvers'
-import { userSchema } from './GraphQL/user/schema'
 import { AuthCheck } from './helpers/auth'
+import { IUser } from './contexts/@types/types'
+import { userSchema } from './contexts/user/schema'
+import { projectSchema } from './contexts/project/schema'
+import { expenseSchema } from './contexts/expense/schema'
+import { clientSchema } from './contexts/client/schema'
+import { userResolvers } from './contexts/user/resolvers'
+import { projectResolvers } from './contexts/project/resolvers'
+import { clientResolvers } from './contexts/client/resolvers'
 
 export interface ICtx {
   userId: string
@@ -19,7 +18,7 @@ export interface ICtx {
 }
 
 export const typeDefs = mergeTypes(
-  [userSchema, projectSchema, expenseSchema, clientSchema, sharedTypes],
+  [userSchema, projectSchema, expenseSchema, clientSchema],
   {
     all: true
   }

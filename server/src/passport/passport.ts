@@ -2,8 +2,7 @@ import * as passport from 'koa-passport'
 import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt'
 import { Strategy as localStrategy } from 'passport-local'
 import { secret } from '../jwt/jwt'
-import { User } from '../graphql/user/model'
-import { UserRepository } from '../graphql/user/repository'
+import { UserRepository } from '../contexts/user/repository'
 
 export interface IJwtPayload {
   id: string

@@ -2,9 +2,9 @@ import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Document, Model, model, Schema, models } from 'mongoose'
 import * as validator from 'validator'
-import { IUser } from '../@types/types'
 import { secret } from '../../jwt/jwt'
 import { SchemaDef, Omit } from '../../helpers/types'
+import { IUser } from '../@types/types'
 
 interface IUserMethods {
   generateToken: () => string

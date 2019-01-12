@@ -1,12 +1,10 @@
 import { addDays, addMonths, format, subMonths } from 'date-fns'
 import * as faker from 'faker'
 import * as Router from 'koa-router'
-import { Client } from '../graphql/client/model'
-import { Expense } from '../graphql/expense/Expense'
-import { Project } from '../graphql/project/model'
-import { authMiddleware, IJwtPayload } from '../passport/passport'
-import { IProject, IExpenseAndIncome } from '../GraphQL/@types/types'
-import { User } from '../graphql/user/model'
+import { Project } from '../contexts/project/model'
+import { User } from '../contexts/user/model'
+import { UserRepository } from '../contexts/user/repository'
+import { Expense } from '../contexts/expense/Expense'
 
 const router = new Router({
   prefix: '/projects'
@@ -18,7 +16,7 @@ router.post('/populate', async ctx => {
 
   const email = (ctx as any).request.body.email
 
-  const user = await User.findOne({ email })
+  const user = await UserRepository.getByCondition({ email })
   if (user) await user.remove()
   const newUser = new User({
     firstName: 'test',
@@ -108,7 +106,7 @@ router.post('/populate', async ctx => {
   const savedExpenses = await Expense.insertMany(expenses)
 
     // tslint:disable-next-line:align
-  ;(newUser as any).expenses = savedExpenses
+  ; (newUser as any).expenses = savedExpenses
   newUser.projects = savedProjects
   await newUser.save()
   ctx.body = savedProjects

@@ -1,15 +1,15 @@
 import { Client } from './model'
-import { IClientInput } from '../@types/types'
+import { IClientInput, IClient } from '../@types/types'
 import { removeEmptyProperty } from '../../helpers/transform'
 import { isEmptyObject } from '../../helpers/object'
 import { ApolloError } from 'apollo-server-koa'
 
-const getByUserId = async (userId: string) => Client.find({ user: userId })
+const findByUserId = async (userId: string) => Client.find({ user: userId })
 
-const getByProjectId = async (projectId: string) =>
+const findByProjectId = async (projectId: string) =>
   Client.findOne({ projects: projectId })
 
-const getById = async (clientId: string) => Client.findById(clientId)
+const findById = async (clientId: string) => Client.findById(clientId)
 
 export interface IUpdateClientArgs {
   clientId: string
@@ -51,7 +51,7 @@ const popProjectId = async (
 const findClientOrCreate = async (
   userId: string,
   clientInput: IClientInput
-) => {
+): Promise<IClient | null> => {
   const clientData = removeEmptyProperty<typeof clientInput>(clientInput)
 
   if (isEmptyObject(clientData)) return null
@@ -68,12 +68,12 @@ const findClientOrCreate = async (
 const remove = async (clientId: string) => Client.remove({ _id: clientId })
 
 export const ClientRepository = {
-  getByUserId,
-  getByProjectId,
-  getById,
+  findByUserId,
+  findByProjectId,
+  findById,
+  findClientOrCreate,
   update,
   pushProjectId,
   popProjectId,
-  findClientOrCreate,
   remove
 }

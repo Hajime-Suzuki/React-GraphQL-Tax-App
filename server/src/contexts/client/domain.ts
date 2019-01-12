@@ -1,28 +1,17 @@
 import { ApolloError, AuthenticationError } from 'apollo-server-koa'
-import { isEmptyObject } from '../../helpers/object'
-import { removeEmptyProperty } from '../../helpers/transform'
-import { Client } from './model'
 import { IClientInput } from '../@types/types'
+import { Client } from './model'
 import { ClientRepository, IUpdateClientArgs } from './repository'
 
-export const getClientsByUserId = async (userId: string) =>
-  ClientRepository.getByUserId(userId)
-
-export const getSingleClient = async (clientId: string) =>
-  ClientRepository.getById(clientId)
-
-export const getClientByProject = async (projectId: string) =>
-  ClientRepository.getByProjectId(projectId)
-
-export const addClient = (userId: string, clientInput: IClientInput) =>
+const addClient = (userId: string, clientInput: IClientInput) =>
   ClientRepository.findClientOrCreate(userId, clientInput)
 
-export const updateClient = async ({
+const updateClient = async ({
   userId,
   clientId,
   data
 }: { userId: string } & IUpdateClientArgs) => {
-  const client = await ClientRepository.getById(clientId)
+  const client = await ClientRepository.findById(clientId)
   if (!client) throw new Error('client not found')
 
   if (client.user && client.user.toString() !== userId) {
@@ -35,11 +24,11 @@ export const updateClient = async ({
   return updated
 }
 
-export const updateClientProject = async (
+const updateClientProject = async (
   clientId: string | null | undefined,
   projectId: string
 ) => {
-  const currentClient = await ClientRepository.getByProjectId(projectId)
+  const currentClient = await ClientRepository.findByProjectId(projectId)
 
   if (!currentClient && clientId) {
     return await ClientRepository.pushProjectId(clientId, projectId)
@@ -65,9 +54,16 @@ export const updateClientProject = async (
   return currentClient
 }
 
-export const deleteClient = async (clientId: string) => {
+const deleteClient = async (clientId: string) => {
   const client = await Client.findById(clientId)
   if (!client) throw new ApolloError('client not found')
   await ClientRepository.remove(clientId)
   return client
+}
+
+export const ClientDomain = {
+  addClient,
+  updateClient,
+  updateClientProject,
+  deleteClient
 }

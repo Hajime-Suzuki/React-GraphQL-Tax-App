@@ -1,13 +1,11 @@
 import { AuthCheck } from '../../helpers/auth'
 import { ICtx } from '../../server'
 import { MutationResolvers, QueryResolvers, IClient } from '../@types/types'
-import {
-  findClientOrCreate,
-  pushProjectId,
-  updateClientProject
-} from '../client/domain'
+
 import { ProjectDomain } from './domain'
 import { ProjectRepository } from './repository'
+import { ClientRepository } from '../client/repository'
+import { ClientDomain } from '../client/domain'
 
 export const projectResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>
@@ -27,15 +25,8 @@ export const projectResolvers: {
   Mutation: {
     addProject: async (_, { data }, { user }) => {
       AuthCheck.userExist(user)
-      const clientInput = data.client
 
-      const project = await ProjectDomain.addProject(user, data)
-      const client =
-        clientInput && (await findClientOrCreate(user.id, clientInput))
-
-      if (client) {
-        await pushProjectId(client.id, project.id)
-      }
+      const { project, client } = await ProjectDomain.addProject(user, data)
 
       return {
         success: true,
@@ -51,7 +42,10 @@ export const projectResolvers: {
 
       let updatedClient: IClient | null = null
       if (data.client) {
-        updatedClient = await updateClientProject(data.client.id, project.id)
+        updatedClient = await ClientDomain.updateClientProject(
+          data.client.id,
+          project.id
+        )
       }
 
       return {

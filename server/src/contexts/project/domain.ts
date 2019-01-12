@@ -1,19 +1,10 @@
 import { ApolloError } from 'apollo-server-koa'
+
+import { IProjectInput, IUser } from '../@types/types'
+import { ClientRepository } from '../client/repository'
 import { Project } from './model'
-import { getInvoicePDF } from '../../pdf/generatePDF'
-import {
-  GetSingleProjectQueryArgs,
-  IProjectInput,
-  IUser
-} from '../@types/types'
 import { ProjectRepository } from './repository'
-
-const getProjectsByUserId = async (userId: string) =>
-  ProjectRepository.getByUserId(userId)
-
-const getSingleProject = async (
-  projectId: GetSingleProjectQueryArgs['projectId']
-) => ProjectRepository.getById(projectId)
+import { PDFDomain } from '../pdf/domain'
 
 const updateProject = async (projectId: string, data: IProjectInput) => {
   const project = await ProjectRepository.getById(projectId)
@@ -31,7 +22,16 @@ const addProject = async (
 ) => {
   const newProject = new Project({ ...data, user: userId })
   const savedProject = await newProject.save()
-  return savedProject
+
+  const client =
+    clientInput &&
+    (await ClientRepository.findClientOrCreate(userId, clientInput))
+
+  if (client) {
+    await ClientRepository.pushProjectId(client.id, savedProject.id)
+  }
+
+  return { project: savedProject, client }
 }
 
 const deleteProject = async (projectId: string) => {
@@ -42,11 +42,9 @@ const deleteProject = async (projectId: string) => {
 }
 
 const generateInvoice = async (projectId: string, token: string) =>
-  getInvoicePDF(projectId, token)
+  PDFDomain.getInvoicePDF(projectId, token)
 
 export const ProjectDomain = {
-  getProjectsByUserId,
-  getSingleProject,
   updateProject,
   addProject,
   deleteProject,
