@@ -6,6 +6,8 @@ import { ProjectDomain } from './domain'
 import { ProjectRepository } from './repository'
 import { ClientRepository } from '../client/repository'
 import { ClientDomain } from '../client/domain'
+import { clientResolvers } from '../client/resolvers'
+import { ClientActions } from '../client/actionts'
 
 export const projectResolvers: {
   Query: QueryResolvers.Resolvers<ICtx>
@@ -26,12 +28,21 @@ export const projectResolvers: {
     addProject: async (_, { data }, { user }) => {
       AuthCheck.userExist(user)
 
-      const { project, client } = await ProjectDomain.addProject(user, data)
+      const { client: clientInput, ...userData } = data
+
+      const savedProject = await ProjectDomain.addProject(user, userData)
+
+      const client =
+        clientInput && (await ClientActions.getClientByUser(user.id))
+
+      if (client) {
+        await ClientActions.updateClientProject(client.id, savedProject.id)
+      }
 
       return {
         success: true,
         message: 'project has been added',
-        project,
+        project: savedProject,
         ...(client && { client })
       }
     },
@@ -42,7 +53,7 @@ export const projectResolvers: {
 
       let updatedClient: IClient | null = null
       if (data.client) {
-        updatedClient = await ClientDomain.updateClientProject(
+        updatedClient = await ClientActions.updateClientProject(
           data.client.id,
           project.id
         )

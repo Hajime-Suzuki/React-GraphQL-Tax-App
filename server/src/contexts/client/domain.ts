@@ -24,17 +24,14 @@ const updateClient = async ({
   return updated
 }
 
-const updateClientProject = async (
-  clientId: string | null | undefined,
-  projectId: string
-) => {
+const updateClientProject = async (clientId: string, projectId: string) => {
   const currentClient = await ClientRepository.findByProjectId(projectId)
 
-  if (!currentClient && clientId) {
+  if (!currentClient) {
     return await ClientRepository.pushProjectId(clientId, projectId)
   }
 
-  if (currentClient && clientId) {
+  if (currentClient) {
     const updatedClient = await ClientRepository.pushProjectId(
       clientId,
       projectId
@@ -44,11 +41,6 @@ const updateClientProject = async (
       await ClientRepository.popProjectId(currentClient.id, projectId)
     }
     return updatedClient
-  }
-
-  if (currentClient && !clientId) {
-    await ClientRepository.popProjectId(currentClient.id, projectId)
-    return null
   }
 
   return currentClient

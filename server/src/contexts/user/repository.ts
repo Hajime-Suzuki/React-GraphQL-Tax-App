@@ -12,7 +12,9 @@ const findByCondition = async (
   },
   options?: { password: boolean }
 ) => {
-  if (options && options.password) User.findOne(condition).select('+password')
+  if (options && options.password) {
+    return User.findOne(condition).select('+password')
+  }
   return User.findOne(condition)
 }
 

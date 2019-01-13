@@ -5,6 +5,8 @@ import {
   IUpdateUserResponse
 } from '../src/contexts/@types/types'
 import { graphqlTestCallCreator } from './helper'
+import { UserDomain } from '../src/contexts/user/domain'
+import { UserRepository } from '../src/contexts/user/repository'
 
 describe('Resolvers', async () => {
   const userData = {
@@ -44,6 +46,19 @@ describe('Resolvers', async () => {
       }>(registerMutation, userData)
       expect(res.data).toBeDefined()
       expect(res.data!.registerUser.token).toBeDefined()
+    })
+    test.only('domain', async () => {
+      const spy = jest
+        .spyOn(UserRepository, 'create')
+        .mockImplementation(() => ({ firstName: '1234' }))
+
+      const res = await UserDomain.registerUser({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        password: userData.password
+      })
+      console.log(res)
     })
   })
 

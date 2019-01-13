@@ -6,7 +6,7 @@ import { ApolloError } from 'apollo-server-koa'
 
 const findByUserId = async (userId: string) => Client.find({ user: userId })
 
-const findByProjectId = async (projectId: string) =>
+const findByProjectId = (projectId: string) =>
   Client.findOne({ projects: projectId })
 
 const findById = async (clientId: string) => Client.findById(clientId)

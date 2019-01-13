@@ -23,15 +23,7 @@ const addProject = async (
   const newProject = new Project({ ...data, user: userId })
   const savedProject = await newProject.save()
 
-  const client =
-    clientInput &&
-    (await ClientRepository.findClientOrCreate(userId, clientInput))
-
-  if (client) {
-    await ClientRepository.pushProjectId(client.id, savedProject.id)
-  }
-
-  return { project: savedProject, client }
+  return savedProject
 }
 
 const deleteProject = async (projectId: string) => {

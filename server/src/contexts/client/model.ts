@@ -57,7 +57,7 @@ clientSchema.set('toJSON', {
   virtuals: true
 })
 
-const Client =
-  models.User || model<IClientDocument, IClientModel>('Client', clientSchema)
+const Client: Model<IClientDocument> =
+  models.Client || model<IClientDocument, IClientModel>('Client', clientSchema)
 
 export { Client }
