@@ -46,7 +46,7 @@ export const userSchema = gql`
       password: String!
     ): RegisterResponse!
     loginUser(email: String!, password: String!): RegisterResponse!
-    updateUser(data: UpdateUserInput!): updateUserResponse!
+    updateUser(data: UpdateUserInput!): UpdateUserResponse!
   }
 
   type RegisterResponse {
@@ -54,7 +54,7 @@ export const userSchema = gql`
     message: String
     token: String!
   }
-  type updateUserResponse {
+  type UpdateUserResponse {
     message: String
     user: User!
   }
