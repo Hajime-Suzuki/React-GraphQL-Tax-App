@@ -47,7 +47,7 @@ const updateProject = async (projectId: string, data: IProjectInput) => {
     )
   }
 
-  if (!updatedProject) throw new ApolloError("project couldn't be updated")
+  if (!updatedProject) throw new ApolloError('project couldn\'t be updated')
   return { updatedProject, updatedClient }
 }
 
