@@ -1,21 +1,23 @@
-import { ClientRepository } from '../repository'
 import { IClientInput } from '../../@types/types'
-import { ClientCommands } from './commands'
-import { ApolloError } from 'apollo-server-koa'
+import { ClientRepository } from '../repository'
 
 const getClientsByUser = async (userId: string) => {
   return ClientRepository.findByUserId(userId)
 }
 
-const getSingleClient = async (clientId: string) => {
+const getClientById = async (clientId: string) => {
   return ClientRepository.findById(clientId)
 }
 const getClientByProject = async (projectId: string) => {
   return ClientRepository.findByProjectId(projectId)
 }
 
+const getClientByCondition = async (userId: string, data: IClientInput) => {
+  return ClientRepository.findByCondition(userId, data)
+}
 export const ClientQueries = {
   getClientsByUser,
-  getSingleClient,
-  getClientByProject
+  getClientById,
+  getClientByProject,
+  getClientByCondition
 }

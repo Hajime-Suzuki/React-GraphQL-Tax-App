@@ -17,7 +17,7 @@ export const clientResolvers: {
     },
     getSingleClient: async (_, { clientId }, { user }) => {
       AuthCheck.userExist(user)
-      return ClientQueries.getSingleClient(clientId)
+      return ClientQueries.getClientById(clientId)
     },
     getClientByProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)

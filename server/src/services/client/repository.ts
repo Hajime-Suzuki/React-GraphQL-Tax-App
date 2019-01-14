@@ -48,6 +48,14 @@ const popProjectId = async (
   )
 }
 
+const findByCondition = async (userId: string, clientInput: IClientInput) => {
+  const clientData = removeEmptyProperty<typeof clientInput>(clientInput)
+
+  if (isEmptyObject(clientData)) return Client.findOne({ user: userId })
+
+  return Client.findOne({ user: userId, ...clientData })
+}
+
 const findClientOrCreate = async (
   userId: string,
   clientInput: IClientInput
@@ -72,6 +80,7 @@ export const ClientRepository = {
   findByProjectId,
   findById,
   findClientOrCreate,
+  findByCondition,
   update,
   pushProjectId,
   popProjectId,

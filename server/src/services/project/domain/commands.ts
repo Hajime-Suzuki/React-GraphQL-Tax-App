@@ -1,9 +1,37 @@
 import { ApolloError } from 'apollo-server-koa'
-import { IProjectInput, IUser } from '../../@types/types'
+import { IProjectInput, IUser, IClient } from '../../@types/types'
 import { PDFDomain } from '../../pdf/domain'
 import { Project } from '../model'
 import { ProjectRepository } from '../repository'
 import { ProjectManager } from './manager'
+
+const addProject = async (
+  user: IUser,
+  { client: clientInput, ...data }: IProjectInput
+) => {
+  const savedProject = await ProjectRepository.create(user.id, data)
+
+  if (clientInput) {
+    // TODO: check
+    let clientToReturn: IClient | null
+    const client =
+      clientInput &&
+      (await ProjectManager.getClientByCondition(user.id, clientInput))
+
+    if (client) {
+      clientToReturn = await ProjectManager.updateClientProject(
+        client.id,
+        savedProject.id
+      )
+    } else {
+      clientToReturn = await ProjectManager.addClient(user.id, clientInput)
+    }
+
+    return { savedProject, client: clientToReturn }
+  }
+
+  return { savedProject }
+}
 
 const updateProject = async (projectId: string, data: IProjectInput) => {
   const project = await ProjectRepository.findById(projectId)
@@ -11,28 +39,16 @@ const updateProject = async (projectId: string, data: IProjectInput) => {
 
   const updatedProject = await ProjectRepository.update(projectId, data)
 
-  if (!updatedProject) throw new ApolloError('project couldn\'t be updated')
-  return updatedProject
-}
-
-const addProject = async (
-  user: IUser,
-  { client: clientInput, ...data }: IProjectInput
-) => {
-  if (clientInput) {
-    const savedProject = await ProjectRepository.create(user.id, data)
-
-    // TODO: chnage
-    const client =
-      clientInput && (await ProjectManager.getClientByUser(user.id))
-
-    if (client) {
-      await ProjectManager.updateClientProject(client.id, savedProject.id)
-    }
-
-    return savedProject
+  let updatedClient: IClient | null = null
+  if (data.client && data.client.id) {
+    updatedClient = await ProjectManager.updateClientProject(
+      data.client.id,
+      project.id
+    )
   }
-  return null
+
+  if (!updatedProject) throw new ApolloError("project couldn't be updated")
+  return { updatedProject, updatedClient }
 }
 
 const deleteProject = async (projectId: string) => {

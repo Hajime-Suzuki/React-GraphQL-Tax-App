@@ -30,42 +30,30 @@ export const projectResolvers: {
     addProject: async (_, { data }, { user }) => {
       AuthCheck.userExist(user)
 
-      // const { client: clientInput, ...userData } = data
-
-      // const savedProject = await ProjectCommands.addProject(user, userData)
-
-      // // TODO: chnage
-      // const client =
-      //   clientInput && (await ProjectManager.getClientByUser(user.id))
-
-      // if (client) {
-      //   await ProjectManager.updateClientProject(client.id, savedProject.id)
-      // }
+      const { savedProject, client } = await ProjectCommands.addProject(
+        user,
+        data
+      )
 
       return {
         success: true,
         message: 'project has been added',
-        project: savedProject
-        // ...(client && { client })
+        project: savedProject,
+        ...(client && { client })
       }
     },
 
     updateProject: async (_, { projectId, data }, { user }) => {
       AuthCheck.userExist(user)
-      const project = await ProjectCommands.updateProject(projectId, data)
-
-      let updatedClient: IClient | null = null
-      if (data.client) {
-        updatedClient = await ClientQueries.updateClientProject(
-          data.client.id,
-          project.id
-        )
-      }
+      const {
+        updatedClient,
+        updatedProject
+      } = await ProjectCommands.updateProject(projectId, data)
 
       return {
         success: true,
         message: `Project "${projectId}" has been updated`,
-        project,
+        project: updatedProject,
         client: updatedClient
       }
     },
