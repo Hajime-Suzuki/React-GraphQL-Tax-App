@@ -1,10 +1,10 @@
 import { addDays, addMonths, format, subMonths } from 'date-fns'
 import * as faker from 'faker'
 import * as Router from 'koa-router'
-import { Project } from '../contexts/project/model'
-import { User } from '../contexts/user/model'
-import { UserRepository } from '../contexts/user/repository'
-import { Expense } from '../contexts/expense/Expense'
+import { Project } from '../services/project/model'
+import { Expense } from '../services/expense/Expense'
+import { UserRepository } from '../services/user/repository'
+import { User } from '../services/user/model'
 
 const router = new Router({
   prefix: '/projects'

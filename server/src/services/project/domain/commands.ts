@@ -1,10 +1,9 @@
 import { ApolloError } from 'apollo-server-koa'
-
-import { IProjectInput, IUser } from '../@types/types'
-import { ClientRepository } from '../client/repository'
-import { Project } from './model'
-import { ProjectRepository } from './repository'
-import { PDFDomain } from '../pdf/domain'
+import { IProjectInput, IUser } from '../../@types/types'
+import { PDFDomain } from '../../pdf/domain'
+import { Project } from '../model'
+import { ProjectRepository } from '../repository'
+import { ProjectManager } from './manager'
 
 const updateProject = async (projectId: string, data: IProjectInput) => {
   const project = await ProjectRepository.findById(projectId)
@@ -17,13 +16,23 @@ const updateProject = async (projectId: string, data: IProjectInput) => {
 }
 
 const addProject = async (
-  { id: userId }: IUser,
+  user: IUser,
   { client: clientInput, ...data }: IProjectInput
 ) => {
-  const newProject = new Project({ ...data, user: userId })
-  const savedProject = await newProject.save()
+  if (clientInput) {
+    const savedProject = await ProjectRepository.create(user.id, data)
 
-  return savedProject
+    // TODO: chnage
+    const client =
+      clientInput && (await ProjectManager.getClientByUser(user.id))
+
+    if (client) {
+      await ProjectManager.updateClientProject(client.id, savedProject.id)
+    }
+
+    return savedProject
+  }
+  return null
 }
 
 const deleteProject = async (projectId: string) => {
@@ -36,7 +45,7 @@ const deleteProject = async (projectId: string) => {
 const generateInvoice = async (projectId: string, token: string) =>
   PDFDomain.getInvoicePDF(projectId, token)
 
-export const ProjectDomain = {
+export const ProjectCommands = {
   updateProject,
   addProject,
   deleteProject,

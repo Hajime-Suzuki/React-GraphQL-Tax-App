@@ -1,59 +1,62 @@
 import { AuthCheck } from '../../helpers/auth'
-import { ICtx } from '../../server'
+import { IContext } from '../../server'
 import { MutationResolvers, QueryResolvers, IClient } from '../@types/types'
 
-import { ProjectDomain } from './domain'
+import { ProjectCommands } from './domain/commands'
 import { ProjectRepository } from './repository'
 import { ClientRepository } from '../client/repository'
-import { ClientDomain } from '../client/domain'
+import { ClientCommands } from '../client/domain/commands'
 import { clientResolvers } from '../client/resolvers'
-import { ClientActions } from '../client/actionts'
+import { ClientQueries } from '../client/domain/queries'
+import { ProjectQueries } from './domain/queries'
+import { ProjectManager } from './domain/manager'
 
 export const projectResolvers: {
-  Query: QueryResolvers.Resolvers<ICtx>
-  Mutation: MutationResolvers.Resolvers<ICtx>
+  Query: QueryResolvers.Resolvers<IContext>
+  Mutation: MutationResolvers.Resolvers<IContext>
 } = {
   Query: {
     getProjectsByUserId: async (_, __, { user }) => {
       AuthCheck.userExist(user)
-      return ProjectRepository.findByUserId(user.id)
+      return ProjectQueries.getProjectsByUserId(user.id)
     },
 
     getSingleProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
-      return ProjectRepository.findById(projectId)
+      return ProjectQueries.getSingleProject(projectId)
     }
   },
   Mutation: {
     addProject: async (_, { data }, { user }) => {
       AuthCheck.userExist(user)
 
-      const { client: clientInput, ...userData } = data
+      // const { client: clientInput, ...userData } = data
 
-      const savedProject = await ProjectDomain.addProject(user, userData)
+      // const savedProject = await ProjectCommands.addProject(user, userData)
 
-      const client =
-        clientInput && (await ClientActions.getClientByUser(user.id))
+      // // TODO: chnage
+      // const client =
+      //   clientInput && (await ProjectManager.getClientByUser(user.id))
 
-      if (client) {
-        await ClientActions.updateClientProject(client.id, savedProject.id)
-      }
+      // if (client) {
+      //   await ProjectManager.updateClientProject(client.id, savedProject.id)
+      // }
 
       return {
         success: true,
         message: 'project has been added',
-        project: savedProject,
-        ...(client && { client })
+        project: savedProject
+        // ...(client && { client })
       }
     },
 
     updateProject: async (_, { projectId, data }, { user }) => {
       AuthCheck.userExist(user)
-      const project = await ProjectDomain.updateProject(projectId, data)
+      const project = await ProjectCommands.updateProject(projectId, data)
 
       let updatedClient: IClient | null = null
       if (data.client) {
-        updatedClient = await ClientActions.updateClientProject(
+        updatedClient = await ClientQueries.updateClientProject(
           data.client.id,
           project.id
         )
@@ -69,7 +72,7 @@ export const projectResolvers: {
 
     deleteProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
-      const deletedProject = await ProjectDomain.deleteProject(projectId)
+      const deletedProject = await ProjectCommands.deleteProject(projectId)
       return {
         success: true,
         message: 'project has been added',
@@ -79,7 +82,7 @@ export const projectResolvers: {
 
     downloadInvoice: async (_, { projectId }, { token, user }) => {
       AuthCheck.userExist(user)
-      const pdf = await ProjectDomain.generateInvoice(projectId, token)
+      const pdf = await ProjectCommands.generateInvoice(projectId, token)
       return {
         message: 'test',
         data: pdf

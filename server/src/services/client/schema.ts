@@ -37,7 +37,7 @@ export const clientSchema = gql`
     updateClient(clientId: String!, data: ClientInput!): ClientMutationResponse
     updateClientProject(
       projectId: String!
-      clientId: String
+      clientId: String!
     ): ClientMutationResponse
     deleteClient(clientId: String!): ClientMutationResponse
   }

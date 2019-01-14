@@ -1,7 +1,7 @@
 import { ApolloError, AuthenticationError } from 'apollo-server-koa'
-import { IClientInput } from '../@types/types'
-import { Client } from './model'
-import { ClientRepository, IUpdateClientArgs } from './repository'
+import { ClientRepository, IUpdateClientArgs } from '../repository'
+import { IClientInput } from '../../@types/types'
+import { Client } from '../model'
 
 const addClient = (userId: string, clientInput: IClientInput) =>
   ClientRepository.findClientOrCreate(userId, clientInput)
@@ -47,13 +47,14 @@ const updateClientProject = async (clientId: string, projectId: string) => {
 }
 
 const deleteClient = async (clientId: string) => {
+  if (!clientId) throw new ApolloError('client id must be provided')
   const client = await Client.findById(clientId)
   if (!client) throw new ApolloError('client not found')
   await ClientRepository.remove(clientId)
   return client
 }
 
-export const ClientDomain = {
+export const ClientCommands = {
   addClient,
   updateClient,
   updateClientProject,
