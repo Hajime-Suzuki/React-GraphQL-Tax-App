@@ -1,4 +1,3 @@
-import { AuthCheck } from '../../../helpers/auth'
 import { ProjectRepository } from '../repository'
 
 const getProjectsByUserId = async (userId: string) => {

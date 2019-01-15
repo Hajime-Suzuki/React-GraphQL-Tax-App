@@ -1,15 +1,8 @@
 import { AuthCheck } from '../../helpers/auth'
 import { IContext } from '../../server'
-import { MutationResolvers, QueryResolvers, IClient } from '../@types/types'
-
+import { MutationResolvers, QueryResolvers } from '../@types/types'
 import { ProjectCommands } from './domain/commands'
-import { ProjectRepository } from './repository'
-import { ClientRepository } from '../client/repository'
-import { ClientCommands } from '../client/domain/commands'
-import { clientResolvers } from '../client/resolvers'
-import { ClientQueries } from '../client/domain/queries'
 import { ProjectQueries } from './domain/queries'
-import { ProjectManager } from './domain/manager'
 
 export const projectResolvers: {
   Query: QueryResolvers.Resolvers<IContext>

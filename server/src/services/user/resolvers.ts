@@ -1,7 +1,8 @@
 import { AuthCheck } from '../../helpers/auth'
 import { IContext } from '../../server'
 import { MutationResolvers, QueryResolvers } from '../@types/types.d'
-import { UserDomain } from './domain'
+import { UserQueries } from './domain/queries'
+import { UserCommands } from './domain/commands'
 
 export const userResolvers: {
   Query: QueryResolvers.Resolvers<IContext>
@@ -15,7 +16,7 @@ export const userResolvers: {
   },
   Mutation: {
     registerUser: async (_, data) => {
-      const token = await UserDomain.registerUser(data)
+      const token = await UserCommands.registerUser(data)
 
       return {
         success: true,
@@ -24,7 +25,7 @@ export const userResolvers: {
       }
     },
     loginUser: async (_, data) => {
-      const token = await UserDomain.loginUser(data)
+      const token = await UserQueries.loginUser(data)
       return {
         success: true,
         message: 'login success',
@@ -33,7 +34,7 @@ export const userResolvers: {
     },
     updateUser: async (_, { data }, { user }) => {
       AuthCheck.userExist(user)
-      const updatedUser = await UserDomain.updateUser(user.id, data)
+      const updatedUser = await UserCommands.updateUser(user.id, data)
       return {
         message: 'user info has successfully been updated',
         user: updatedUser

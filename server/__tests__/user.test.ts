@@ -1,12 +1,13 @@
-import { gql, MockList } from 'apollo-server-koa'
+import { gql } from 'apollo-server-koa'
 import { print } from 'graphql'
+
+import { graphqlTestCallCreator } from './helper'
 import {
   IRegisterResponse,
   IUpdateUserResponse
-} from '../src/contexts/@types/types'
-import { graphqlTestCallCreator } from './helper'
-import { UserDomain } from '../src/contexts/user/domain'
-import { UserRepository } from '../src/contexts/user/repository'
+} from '../src/services/@types/types'
+import { UserRepository } from '../src/services/user/repository'
+import { UserCommands } from '../src/services/user/domain/commands'
 
 describe('Resolvers', async () => {
   const userData = {
@@ -52,7 +53,7 @@ describe('Resolvers', async () => {
         .spyOn(UserRepository, 'create')
         .mockImplementation(() => ({ firstName: '1234' }))
 
-      const res = await UserDomain.registerUser({
+      const res = await UserCommands.registerUser({
         firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,

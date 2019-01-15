@@ -17,6 +17,6 @@ const loginUser = async ({ email, password }: LoginUserMutationArgs) => {
   }
 }
 
-export const UserDomain = {
+export const UserQueries = {
   loginUser
 }

@@ -1,11 +1,6 @@
-import {
-  GetSingleProjectQueryArgs,
-  IProjectInput,
-  IUser,
-  IClientInput
-} from '../@types/types'
-import { Project } from './model'
 import { Omit } from '../../helpers/types'
+import { GetSingleProjectQueryArgs, IProjectInput } from '../@types/types'
+import { Project } from './model'
 
 const findByUserId = (userId: string) =>
   Project.find({ user: userId }).sort({ createdAt: -1 })

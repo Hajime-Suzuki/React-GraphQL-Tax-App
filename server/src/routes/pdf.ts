@@ -1,7 +1,7 @@
 import * as Router from 'koa-router'
 import { Constants } from '../constants'
 import { authMiddleware } from '../passport/passport'
-import { PDFDomain } from '../contexts/pdf/domain'
+import { PDFDomain } from '../services/pdf/domain'
 
 const router = new Router({ prefix: '/invoice' })
 
