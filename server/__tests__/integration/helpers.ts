@@ -1,4 +1,4 @@
-import { UserRepository } from '../../src/contexts/user/repository'
+import { UserRepository } from '../../src/services/user/repository'
 
 export const createUserAndGetToken = async (userData: any) => {
   const user = await UserRepository.create(userData)

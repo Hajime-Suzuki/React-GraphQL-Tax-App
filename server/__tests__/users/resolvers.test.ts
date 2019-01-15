@@ -1,15 +1,12 @@
 import { gql } from 'apollo-server-koa'
 import { print } from 'graphql'
-
-import { graphqlTestCallCreator } from './helper'
 import {
   IRegisterResponse,
   IUpdateUserResponse
-} from '../src/services/@types/types'
-import { UserRepository } from '../src/services/user/repository'
-import { UserCommands } from '../src/services/user/domain/commands'
+} from '../../src/services/@types/types'
+import { graphqlTestCallCreator } from '../helper'
 
-describe('Resolvers', async () => {
+describe('--------- Resolvers ---------', async () => {
   const userData = {
     firstName: 'test',
     lastName: 'user',
@@ -17,7 +14,7 @@ describe('Resolvers', async () => {
     password: '12345678'
   }
 
-  describe('========== Register ==========', () => {
+  describe('--------- Register ---------', () => {
     const mocks = {
       RegisterResponse: () => ({ token: 'ashiteonahs' })
     }
@@ -48,22 +45,9 @@ describe('Resolvers', async () => {
       expect(res.data).toBeDefined()
       expect(res.data!.registerUser.token).toBeDefined()
     })
-    test.only('domain', async () => {
-      const spy = jest
-        .spyOn(UserRepository, 'create')
-        .mockImplementation(() => ({ firstName: '1234' }))
-
-      const res = await UserCommands.registerUser({
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        email: userData.email,
-        password: userData.password
-      })
-      console.log(res)
-    })
   })
 
-  describe('========== Login User =========', async () => {
+  describe('--------- Login User ---------', async () => {
     const mocks = {
       RegisterResponse: () => ({ token: 'ashiteonahs' })
     }
@@ -90,7 +74,7 @@ describe('Resolvers', async () => {
     })
   })
 
-  describe('========== Update User =========', async () => {
+  describe('--------- Update User ---------', async () => {
     const updateMutation = print(gql`
       mutation updateUser($data: UpdateUserInput!) {
         updateUser(data: $data) {

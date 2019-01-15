@@ -1,12 +1,12 @@
 import { gql } from 'apollo-server-koa'
 import { print } from 'graphql'
+import { createUserAndGetToken } from './helpers'
+import { graphqlTestCall, startServer } from '../server'
+import { User } from '../../src/services/user/model'
 import {
   IRegisterResponse,
   IUpdateUserResponse
-} from '../../src/contexts/@types/types'
-import { User } from '../../src/contexts/user/model'
-import { createUserAndGetToken } from './helpers'
-import { graphqlTestCall, startServer } from '../server'
+} from '../../src/services/@types/types'
 
 let connection: any
 
