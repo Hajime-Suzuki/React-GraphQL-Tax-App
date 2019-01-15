@@ -6,7 +6,7 @@ import {
 } from '../../src/services/@types/types'
 import { graphqlTestCallCreator } from '../helper'
 
-describe('--------- Resolvers ---------', async () => {
+describe('============== User Resolvers ==============', async () => {
   const userData = {
     firstName: 'test',
     lastName: 'user',

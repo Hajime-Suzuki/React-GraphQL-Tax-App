@@ -2,7 +2,7 @@ import { UserRepository } from '../../src/services/user/repository'
 import { User } from '../../src/services/user/model'
 import { UserCommands } from '../../src/services/user/domain/commands'
 
-describe.only('====== User Commands ======', () => {
+describe('====== User Commands ======', () => {
   const instanceMethods = {
     generateToken: () => 'token',
     comparePassword: () => true
