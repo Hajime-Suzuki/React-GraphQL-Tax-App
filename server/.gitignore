@@ -81,8 +81,6 @@ typings/
 node_modules/
 dist/
 **/*.http
-**/database/connectionString.ts
-**/jwt
 **/_gql_gen/*.js
 **/pdf/build
 **/pdf/generated/*.pdf

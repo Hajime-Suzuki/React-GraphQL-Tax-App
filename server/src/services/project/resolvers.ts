@@ -5,8 +5,8 @@ import { ProjectCommands } from './domain/commands'
 import { ProjectQueries } from './domain/queries'
 
 export const projectResolvers: {
-  Query: QueryResolvers.Resolvers<IContext>
-  Mutation: MutationResolvers.Resolvers<IContext>
+  Query: QueryResolvers.Resolvers<IContext>;
+  Mutation: MutationResolvers.Resolvers<IContext>;
 } = {
   Query: {
     getProjectsByUserId: async (_, __, { user }) => {

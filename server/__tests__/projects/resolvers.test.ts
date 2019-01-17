@@ -1,36 +1,48 @@
 import { gql } from 'apollo-server-koa'
 import { print } from 'graphql'
-import { graphqlTestCallCreator } from '../helper'
 import {
-  IProjectInput,
+  IClientInput,
   IInvoiceStatus,
-  IMutationProjectResponse
+  IMutationProjectResponse,
+  IProjectInput
 } from '../../src/services/@types/types'
+import { User } from '../../src/services/user/model'
+import { graphqlTestCallCreator } from '../helper'
 
-describe.only('================= Project Resolvers =================', async () => {
-  // const userData = {
-  //   firstName: 'test',
-  //   lastName: 'user',
-  //   email: 'test@test.com',
-  //   password: '12345678'
-  // }
+describe('================= Project Resolvers =================', async () => {
+  const user = new User({
+    firstName: '123',
+    lastName: '1234',
+    email: 'a@a.com'
+  })
 
-  describe.only('--------- addProject ---------', () => {
-    // TODO:
+  describe('--------- addProject ---------', () => {
     const projectData: IProjectInput = {
       name: 'test',
-      incomes: [],
-      expenses: [],
-      invoiceDate: 'today',
-      projectDate: 'tomorrow',
-      status: IInvoiceStatus.None
+      incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
+      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
+      invoiceDate: new Date().toDateString(),
+      projectDate: new Date().toDateString(),
+      status: IInvoiceStatus.Invoice
     }
+    const clientData: IClientInput = {
+      firstName: 'first name',
+      lastName: 'last name',
+      email: 'email',
+      city: 'city',
+      postalCode: 'a234',
+      streetAddress: 'street',
+      phone: '1234-1243-1234'
+    }
+
+    const projectReturn = { id: '1235', ...projectData }
+    const clientReturn = { id: '1234', ...clientData }
     const mocks = {
       MutationProjectResponse: () => {
         return {
           success: true,
-          project: projectData,
-          client: null
+          project: projectReturn,
+          client: clientReturn
         }
       }
     }
@@ -40,22 +52,30 @@ describe.only('================= Project Resolvers =================', async () 
     test('can add Project user', async () => {
       const addProjectMutation = print(gql`
         mutation addProject($data: ProjectInput!) {
-          addProject(
-            data: ${projectData}
-          ) {
+          addProject(data: $data) {
             success
-            project
-            client
+            project {
+              id
+              name
+              invoiceDate
+              projectDate
+              status
+            }
+            client {
+              id
+              firstName
+              lastName
+            }
           }
         }
       `)
 
       const res = await gqlTestCall<{
-        addProject: IMutationProjectResponse
-      }>(addProjectMutation, projectData)
+        addProject: IMutationProjectResponse;
+      }>(addProjectMutation, { data: projectData })
+
       expect(res.data).toBeDefined()
       expect(res.data!.addProject.success).toBe(true)
-      expect(res.data!.addProject.project).toHaveProperty('name')
     })
   })
 

@@ -3,7 +3,7 @@ overwrite: true
 require:
   - ts-node/register
 generates:
-  ./src/contexts/@types/types.d.ts:
+  ./src/services/@types/types.ts:
     plugins:
       - typescript-common
       - typescript-server

@@ -6,7 +6,7 @@ import {
 } from '../../src/services/@types/types'
 import { graphqlTestCallCreator } from '../helper'
 
-describe('============== User Resolvers ==============', async () => {
+describe('============== User Resolvers ==============', () => {
   const userData = {
     firstName: 'test',
     lastName: 'user',
@@ -14,7 +14,7 @@ describe('============== User Resolvers ==============', async () => {
     password: '12345678'
   }
 
-  describe('--------- Register ---------', () => {
+  describe.only('--------- Register ---------', () => {
     const mocks = {
       RegisterResponse: () => ({ token: 'ashiteonahs' })
     }
@@ -40,14 +40,14 @@ describe('============== User Resolvers ==============', async () => {
       `)
 
       const res = await gqlTestCall<{
-        registerUser: IRegisterResponse
+        registerUser: IRegisterResponse;
       }>(registerMutation, userData)
       expect(res.data).toBeDefined()
       expect(res.data!.registerUser.token).toBeDefined()
     })
   })
 
-  describe('--------- Login User ---------', async () => {
+  describe('--------- Login User ---------', () => {
     const mocks = {
       RegisterResponse: () => ({ token: 'ashiteonahs' })
     }
@@ -74,7 +74,7 @@ describe('============== User Resolvers ==============', async () => {
     })
   })
 
-  describe('--------- Update User ---------', async () => {
+  describe('--------- Update User ---------', () => {
     const updateMutation = print(gql`
       mutation updateUser($data: UpdateUserInput!) {
         updateUser(data: $data) {

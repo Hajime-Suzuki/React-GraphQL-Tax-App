@@ -81,7 +81,5 @@ typings/
 node_modules/
 dist/
 **/*.http
-**/database/connectionString.ts
-**/jwt
 
 .netlify
