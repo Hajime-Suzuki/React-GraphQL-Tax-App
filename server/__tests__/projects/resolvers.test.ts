@@ -49,7 +49,7 @@ describe('================= Project Resolvers =================', async () => {
 
     const gqlTestCall = graphqlTestCallCreator(mocks)
 
-    test('can add Project user', async () => {
+    test('can add project', async () => {
       const addProjectMutation = print(gql`
         mutation addProject($data: ProjectInput!) {
           addProject(data: $data) {
@@ -79,69 +79,51 @@ describe('================= Project Resolvers =================', async () => {
     })
   })
 
-  // describe('--------- Login User ---------', async () => {
-  //   const mocks = {
-  //     RegisterResponse: () => ({ token: 'ashiteonahs' })
-  //   }
-  //   const gqlTestCall = graphqlTestCallCreator(mocks)
+  describe('--------- updateProject ---------', () => {
+    const projectData: IProjectInput = {
+      name: 'test',
+      incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
+      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
+      invoiceDate: new Date().toDateString(),
+      projectDate: new Date().toDateString(),
+      status: IInvoiceStatus.Invoice
+    }
 
-  //   const loginMutation = print(gql`
-  //     mutation loginUser($email: String!, $password: String!) {
-  //       loginUser(email: $email, password: $password) {
-  //         token
-  //       }
-  //     }
-  //   `)
+    const projectReturn = { id: '1235', ...projectData }
+    const mocks = {
+      MutationProjectResponse: () => {
+        return {
+          success: true,
+          project: projectReturn
+        }
+      }
+    }
 
-  //   test('can login', async () => {
-  //     const res = await gqlTestCall<{ loginUser: IRegisterResponse }>(
-  //       loginMutation,
-  //       {
-  //         email: userData.email,
-  //         password: userData.password
-  //       }
-  //     )
-  //     expect(res.data).toBeDefined()
-  //     expect(res.data!.loginUser.token).toBeDefined()
-  //   })
-  // })
+    const gqlTestCall = graphqlTestCallCreator(mocks)
 
-  // describe('--------- Update User ---------', async () => {
-  //   const updateMutation = print(gql`
-  //     mutation updateUser($data: UpdateUserInput!) {
-  //       updateUser(data: $data) {
-  //         user {
-  //           id
-  //           firstName
-  //           lastName
-  //           email
-  //         }
-  //       }
-  //     }
-  //   `)
+    test('can update project', async () => {
+      const updateProjectMutation = print(gql`
+        mutation updateProject($projectId: String!, $data: ProjectInput!) {
+          updateProject(projectId: $projectId, data: $data) {
+            success
+            project {
+              id
+              name
+              invoiceDate
+              projectDate
+              status
+            }
+          }
+        }
+      `)
 
-  //   test('can update user', async () => {
-  //     const updatedUserData = {
-  //       firstName: '1234',
-  //       lastName: '1234'
-  //     }
-
-  //     const mocks = {
-  //       UpdateUserResponse: () => ({
-  //         user: () => ({ ...userData, ...updatedUserData })
-  //       })
-  //     }
-  //     const gqlTestCall = graphqlTestCallCreator(mocks)
-
-  //     const res = await gqlTestCall<{ updateUser: IUpdateUserResponse }>(
-  //       updateMutation,
-  //       { data: updatedUserData }
-  //     )
-
-  //     expect(res.data).toBeDefined()
-  //     expect(res.data!.updateUser.user.firstName).toBe('1234')
-  //     expect(res.data!.updateUser.user.lastName).toBe('1234')
-  //     expect(res.data!.updateUser.user.email).toBe('test@test.com')
-  //   })
-  // })
+      const res = await gqlTestCall<{
+        updateProject: IMutationProjectResponse;
+      }>(updateProjectMutation, { projectId: '12', data: projectData })
+      console.log(res)
+      expect(res.data).toBeDefined()
+      expect(res.data!.updateProject.success).toBe(true)
+      expect(res.data!.updateProject.project).toBeDefined()
+    })
+  })
 })
