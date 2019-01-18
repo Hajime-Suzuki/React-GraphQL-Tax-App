@@ -12,7 +12,6 @@ const addProject = async (
   const savedProject = await ProjectRepository.create(user.id, data)
 
   if (clientInput) {
-    // TODO: check
     let clientToReturn: IClient | null
     const client =
       clientInput &&
