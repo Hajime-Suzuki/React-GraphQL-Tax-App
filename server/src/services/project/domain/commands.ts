@@ -13,9 +13,11 @@ const addProject = async (
 
   if (clientInput) {
     let clientToReturn: IClient | null
-    const client =
-      clientInput &&
-      (await ProjectManager.getClientByCondition(user.id, clientInput))
+
+    const client = await ProjectManager.getClientByCondition(
+      user.id,
+      clientInput
+    )
 
     if (client) {
       clientToReturn = await ProjectManager.updateClientProject(
