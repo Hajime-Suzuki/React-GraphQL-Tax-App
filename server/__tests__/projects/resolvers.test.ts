@@ -4,7 +4,8 @@ import {
   IClientInput,
   IInvoiceStatus,
   IMutationProjectResponse,
-  IProjectInput
+  IProjectInput,
+  IProject
 } from '../../src/services/@types/types'
 import { User } from '../../src/services/user/model'
 import { graphqlTestCallCreator } from '../helper'
@@ -120,10 +121,59 @@ describe('================= Project Resolvers =================', async () => {
       const res = await gqlTestCall<{
         updateProject: IMutationProjectResponse;
       }>(updateProjectMutation, { projectId: '12', data: projectData })
-      console.log(res)
       expect(res.data).toBeDefined()
       expect(res.data!.updateProject.success).toBe(true)
       expect(res.data!.updateProject.project).toBeDefined()
     })
+  })
+
+  describe('--------- updateProject ---------', async () => {
+    const deletedProject: IProject = {
+      id: '1234',
+      name: 'test',
+      invoiceNumber: '1234',
+      user: '1234',
+      incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
+      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
+      invoiceDate: new Date().toDateString(),
+      projectDate: new Date().toDateString(),
+      status: IInvoiceStatus.Invoice
+    }
+
+    const deleteProjectMutation = print(gql`
+      mutation deleteProject($projectId: String!) {
+        deleteProject(projectId: $projectId) {
+          success
+          project {
+            id
+            name
+            invoiceDate
+            projectDate
+            status
+          }
+        }
+      }
+    `)
+
+    const mocks = {
+      MutationProjectResponse: () => {
+        return {
+          success: true,
+          project: deletedProject
+        }
+      }
+    }
+
+    const gqlTestCall = graphqlTestCallCreator(mocks)
+    const res = await gqlTestCall<{ deleteProject: IMutationProjectResponse }>(
+      deleteProjectMutation,
+      {
+        projectId: deletedProject.id
+      }
+    )
+    expect(res.data).toBeDefined()
+    expect(res.data!.deleteProject.project).toBeDefined()
+    expect(res.data!.deleteProject.success).toBe(true)
+    expect(res.data!.deleteProject.project).toMatchObject(deletedProject)
   })
 })
