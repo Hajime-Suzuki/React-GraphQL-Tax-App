@@ -13,20 +13,22 @@ import { userResolvers } from './services/user/resolvers'
 import { projectResolvers } from './services/project/resolvers'
 import { clientResolvers } from './services/client/resolvers'
 import { AuthCheck } from './helpers/auth'
+import { invoiceSchema } from './services/invoice/schema'
+import { invoiceResolvers } from './services/invoice/resolvers'
 
 export interface IContext {
   userId: string
   token: string
   user: IUser
   dataSources: {
-    userRepository: typeof UserRepository
-    projectRepository: typeof ProjectRepository
-    clientRepository: typeof ClientRepository
+    userRepository: typeof UserRepository;
+    projectRepository: typeof ProjectRepository;
+    clientRepository: typeof ClientRepository;
   }
 }
 
 export const typeDefs = mergeTypes(
-  [userSchema, projectSchema, expenseSchema, clientSchema],
+  [userSchema, projectSchema, expenseSchema, clientSchema, invoiceSchema],
   {
     all: true
   }
@@ -35,7 +37,8 @@ export const typeDefs = mergeTypes(
 export const resolvers = [
   userResolvers,
   projectResolvers,
-  clientResolvers
+  clientResolvers,
+  invoiceResolvers
 ] as any
 
 const server = new ApolloServer({

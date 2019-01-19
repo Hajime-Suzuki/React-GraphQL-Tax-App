@@ -324,7 +324,7 @@ export interface UpdateClientMutationArgs {
 export interface UpdateClientProjectMutationArgs {
   projectId: string;
 
-  clientId?: string | null;
+  clientId: string;
 }
 export interface DeleteClientMutationArgs {
   clientId: string;

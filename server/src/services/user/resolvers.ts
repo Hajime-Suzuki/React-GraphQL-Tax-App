@@ -1,12 +1,12 @@
 import { AuthCheck } from '../../helpers/auth'
 import { IContext } from '../../server'
-import { MutationResolvers, QueryResolvers } from '../@types/types.d'
+import { MutationResolvers, QueryResolvers } from '../@types/types'
 import { UserQueries } from './domain/queries'
 import { UserCommands } from './domain/commands'
 
 export const userResolvers: {
-  Query: QueryResolvers.Resolvers<IContext>
-  Mutation: MutationResolvers.Resolvers<IContext>
+  Query: QueryResolvers.Resolvers<IContext>;
+  Mutation: MutationResolvers.Resolvers<IContext>;
 } = {
   Query: {
     getUser: async (_, __, { user }) => {

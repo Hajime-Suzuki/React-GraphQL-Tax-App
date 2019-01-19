@@ -328,7 +328,7 @@ export interface UpdateClientMutationArgs {
 export interface UpdateClientProjectMutationArgs {
   projectId: string;
 
-  clientId?: string | null;
+  clientId: string;
 }
 export interface DeleteClientMutationArgs {
   clientId: string;
@@ -996,7 +996,7 @@ export namespace MutationResolvers {
   export interface UpdateClientProjectArgs {
     projectId: string;
 
-    clientId?: string | null;
+    clientId: string;
   }
 
   export type DeleteClientResolver<

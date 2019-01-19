@@ -82,5 +82,3 @@ node_modules/
 dist/
 **/*.http
 **/_gql_gen/*.js
-**/pdf/build
-**/pdf/generated/*.pdf

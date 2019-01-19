@@ -59,15 +59,6 @@ export const projectResolvers: {
         message: 'project has been added',
         project: deletedProject
       }
-    },
-
-    downloadInvoice: async (_, { projectId }, { token, user }) => {
-      AuthCheck.userExist(user)
-      const pdf = await ProjectCommands.generateInvoice(projectId, token)
-      return {
-        message: 'test',
-        data: pdf
-      }
     }
   }
 }

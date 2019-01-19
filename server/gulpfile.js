@@ -6,8 +6,8 @@ sass.compiler = require('node-sass')
 const pug = require('gulp-pug')
 const browserSync = require('browser-sync').create()
 
-const src = './src/pdf/src'
-const build = './src/pdf/build'
+const src = './src/services/invoice/src'
+const build = './src/services/invoice/build'
 
 const initBrowserSync = () =>
   browserSync.init({
@@ -35,6 +35,9 @@ gulp.task('default', () => {
       gulp.series(compileSass, compilePug)
     )
     .on('change', browserSync.reload)
-  // gulp.watch(`${src}/*.pug`, compilePug)
   gulp.watch(`${build}/*.html`).on('change', browserSync.reload)
+})
+
+gulp.task('compile', async () => {
+  await compileSass()
 })

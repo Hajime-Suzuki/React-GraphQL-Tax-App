@@ -1,6 +1,5 @@
 import { ApolloError } from 'apollo-server-koa'
-import { IProjectInput, IUser, IClient } from '../../@types/types'
-import { PDFDomain } from '../../pdf/domain'
+import { IClient, IProjectInput, IUser } from '../../@types/types'
 import { Project } from '../model'
 import { ProjectRepository } from '../repository'
 import { ProjectManager } from './manager'
@@ -59,12 +58,8 @@ const deleteProject = async (projectId: string) => {
   return project
 }
 
-const generateInvoice = async (projectId: string, token: string) =>
-  PDFDomain.getInvoicePDF(projectId, token)
-
 export const ProjectCommands = {
   updateProject,
   addProject,
-  deleteProject,
-  generateInvoice
+  deleteProject
 }

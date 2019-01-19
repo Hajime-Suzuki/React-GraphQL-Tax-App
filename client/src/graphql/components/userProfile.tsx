@@ -96,7 +96,7 @@ export namespace UpdateUser {
   };
 
   export type UpdateUser = {
-    __typename?: "updateUserResponse";
+    __typename?: "UpdateUserResponse";
 
     message: string | null;
 

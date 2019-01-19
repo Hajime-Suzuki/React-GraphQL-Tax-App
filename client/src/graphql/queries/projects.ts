@@ -111,7 +111,7 @@ const UPDATE_BASIC_INFO = gql`
   mutation updateBasicInfo(
     $projectId: String!
     $data: ProjectInput!
-    $clientId: String
+    $clientId: String!
   ) {
     updateProject(projectId: $projectId, data: $data) {
       success

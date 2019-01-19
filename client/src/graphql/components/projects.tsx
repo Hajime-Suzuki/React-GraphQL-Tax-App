@@ -274,7 +274,7 @@ export namespace UpdateBasicInfo {
   export type Variables = {
     projectId: string;
     data: ProjectInput;
-    clientId?: string | null;
+    clientId: string;
   };
 
   export type Mutation = {
@@ -726,7 +726,7 @@ export namespace UpdateBasicInfo {
     mutation updateBasicInfo(
       $projectId: String!
       $data: ProjectInput!
-      $clientId: String
+      $clientId: String!
     ) {
       updateProject(projectId: $projectId, data: $data) {
         success
