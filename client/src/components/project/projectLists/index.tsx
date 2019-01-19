@@ -8,13 +8,14 @@ import {
 import { LoadingIcon } from '../../UI/LoadingIcon'
 import ProjectsList from './ProjectsList'
 
+type Props = PrivateRoutesChildProps & IRouterComponentProps
+
 export interface ProjectListChildProps {
   projects: GetProjectOverview.Projects[]
   sortProjectsByProjectDate: () => void
   sortProjectByInvoiceDate: () => void
 }
 
-type Props = PrivateRoutesChildProps & IRouterComponentProps
 class ProjectsListContainer extends React.Component<Props> {
   sortProjectsByProjectDate = () =>
     ProjectActions.sortProjectsByProjectDate('-1')

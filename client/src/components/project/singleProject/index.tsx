@@ -9,6 +9,7 @@ import SingleProject from './SingleProject'
 import { MutationFn } from 'react-apollo'
 
 export type ModalType = 'basic' | 'incomes' | 'expenses' | 'status'
+
 export interface SingleProjectChildProps {
   project: GetSingleProject.Project
   client?: GetSingleProject.Client | null
@@ -25,7 +26,7 @@ type Props = GetSingleProject.Props<IRouterComponentProps>
 class SingleProjectContainer extends React.Component<
   Props,
   {
-    selectedModal: string | undefined
+    selectedModal: string | undefined;
   }
 > {
   state = { selectedModal: undefined }

@@ -1,25 +1,15 @@
 import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
-import { MutationFn, MutationResult } from 'react-apollo'
-import { InvoiceStatus } from 'src/graphql/@types/types'
-import { UpdateStatus } from 'src/graphql/components/projects'
 import { renderStatusField } from 'src/libs/forms/renderFields/renderDropdown'
 import { LoadingIcon } from '../../UI/LoadingIcon'
+import { EditStatusChildProps } from './EditStatusContainer'
 
 interface DropdownStatusProps {
-  status: InvoiceStatus
-}
-interface OwnProps {
-  projectId: string
-}
-
-interface StatusDropDownProps {
-  onSubmit: MutationFn<UpdateStatus.Mutation, UpdateStatus.Variables>
-  data?: MutationResult<UpdateStatus.Mutation>
+  status: EditStatusChildProps['status']
 }
 
 export const EditStatusDropdown: React.SFC<
-  DropdownStatusProps & OwnProps & StatusDropDownProps
+  DropdownStatusProps & EditStatusChildProps
 > = props => {
   if (props.data && props.data.loading) return <LoadingIcon size={25} />
 

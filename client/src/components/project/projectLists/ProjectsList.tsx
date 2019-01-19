@@ -15,15 +15,20 @@ import { routes } from '../../../routes/constants'
 import { Styles } from '../../../styles/sharedStyles'
 import { EditStatusDropdown } from './EditStatusDropDown'
 import { Calculations } from '../helper/calculations'
-import { ProjectListChildProps } from '.'
+import EditStatusContainer from './EditStatusContainer'
 
 const StyledPaper: any = styled(Paper)`
   overflow: "auto";
   width: ${(100 / 12) * 11}%;
   margin: auto;
 `
+interface Props {
+  projects: GetProjectOverview.Projects[]
+  sortProjectsByProjectDate: () => void
+  sortProjectByInvoiceDate: () => void
+}
 
-const ProjectsList: React.SFC<ProjectListChildProps> = props => {
+const ProjectsList: React.SFC<Props> = props => {
   const {
     projects,
     sortProjectsByProjectDate,
@@ -67,16 +72,7 @@ const ProjectsList: React.SFC<ProjectListChildProps> = props => {
                   {Calculations.getGrandTotal(p.incomes || [])}
                 </TableCell>
                 <TableCell>
-                  <UpdateStatus.Component>
-                    {(update, data) => (
-                      <EditStatusDropdown
-                        status={p.status}
-                        projectId={p.id}
-                        onSubmit={update}
-                        data={data}
-                      />
-                    )}
-                  </UpdateStatus.Component>
+                  <EditStatusContainer status={p.status} projectId={p.id} />
                 </TableCell>
               </TableRow>
             )
