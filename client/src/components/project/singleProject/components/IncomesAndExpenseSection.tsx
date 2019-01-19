@@ -4,7 +4,7 @@ import React from 'react'
 import { EditIcon } from 'src/components/UI/EditIcon'
 import { SingleProjectChildProps } from '..'
 import { Calculations } from '../../helper/calculations'
-import ExpenseIncomeTable from '../../helper/ExpenseIncomeTable'
+import ExpenseIncomeTable from './ExpenseIncomeTable'
 import { ModalType } from '../index'
 const IncomesAndExpenseSection: React.SFC<SingleProjectChildProps> = ({
   project,

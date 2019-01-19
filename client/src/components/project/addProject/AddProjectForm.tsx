@@ -1,8 +1,6 @@
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { FormikProps } from 'formik'
 import * as React from 'react'
-import { ProjectInput } from 'src/graphql/components/projects'
 import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 import { Styles } from 'src/styles/sharedStyles'
@@ -13,46 +11,17 @@ import { GenerateFieldSettings } from '../helper/genrateFieldSettings'
 import SelectClient from './components/SelectClient'
 import SelectedClientCard from './components/SelectedClientCard'
 
-type Props = FormikProps<ProjectInput> & AddProjectChildProps
-
-class AddProjectForm extends React.Component<Props> {
+class AddProjectForm extends React.Component<AddProjectChildProps> {
   unselectClient = () => {
     this.props.setFieldValue('client.id', null)
   }
 
   render() {
-    const {
-      isSubmitting,
-      values,
-      errors: validationErrors,
-      loading,
-      setFieldValue
-    } = this.props
+    const { isSubmitting, loading } = this.props
 
     return (
       <CustomForm>
-        <div className="form-section">
-          <Typography variant="h5" className="title">
-            Basic Info
-          </Typography>
-          {GenerateFieldSettings.generalFields.map((field, i) => {
-            if (field.type === 'date') {
-              return (
-                <React.Fragment key={i}>
-                  {renderDatePicker({
-                    field,
-                    values,
-                    setFieldValue,
-                    error: validationErrors[field.name]
-                  })}
-                </React.Fragment>
-              )
-            }
-            return (
-              <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
-            )
-          })}
-        </div>
+        <this.BasicInfoSection />
         <this.ClientSection />
         <this.IncomesAndExpensesSection />
         <this.MessageSection />
@@ -67,6 +36,33 @@ class AddProjectForm extends React.Component<Props> {
           </Button>
         </div>
       </CustomForm>
+    )
+  }
+
+  BasicInfoSection = () => {
+    const { values, errors: validationErrors, setFieldValue } = this.props
+
+    return (
+      <div className="form-section">
+        <Typography variant="h5" className="title">
+          Basic Info
+        </Typography>
+        {GenerateFieldSettings.generalFields.map((field, i) => {
+          if (field.type === 'date') {
+            return (
+              <React.Fragment key={i}>
+                {renderDatePicker({
+                  field,
+                  values,
+                  setFieldValue,
+                  error: validationErrors[field.name]
+                })}
+              </React.Fragment>
+            )
+          }
+          return <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
+        })}
+      </div>
     )
   }
 

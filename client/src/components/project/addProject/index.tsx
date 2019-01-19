@@ -7,18 +7,19 @@ import { addProjectValidationSchema } from '../helper/addProjectValidationSchema
 import AddProjectForm from './AddProjectForm'
 import { getSelectedClient } from './selector'
 
-export interface AddProjectChildProps {
-  clients?: GetClientsList.GetClientsByUser[] | null
-  mutationError?: string
-  loading: boolean
-  successMessage?: string | null
-  selectedClient?: GetClientsList.GetClientsByUser
-}
+export type AddProjectChildProps = {
+  clients?: GetClientsList.GetClientsByUser[] | null;
+  mutationError?: string;
+  loading: boolean;
+  successMessage?: string | null;
+  selectedClient?: GetClientsList.GetClientsByUser;
+} & FormikProps<ProjectInput>
 
 class AddProjectContainer extends React.Component<GetClientsList.Props<{}>> {
   render = () => {
     const { data } = this.props
     if (!data) return null
+
     const { getClientsByUser: clients } = data
 
     return (
@@ -26,6 +27,7 @@ class AddProjectContainer extends React.Component<GetClientsList.Props<{}>> {
         onCompleted={data => {
           ProjectActions.addNewProjectToList(data)
           ProjectActions.sortProjectsByProjectDate('-1')
+          // TODO: update client list
         }}
       >
         {(addProject, { data, error: mutationError, loading }) => {

@@ -1,9 +1,7 @@
 import { AuthCheck } from '../../helpers/auth'
-
-import { ProjectCommands } from '../project/domain/commands'
-import { InvoiceCommands } from './commands'
-import { MutationResolvers } from '../@types/types'
 import { IContext } from '../../server'
+import { MutationResolvers } from '../@types/types'
+import { InvoiceCommands } from './commands'
 
 export const invoiceResolvers: {
   Mutation: MutationResolvers.Resolvers<IContext>;

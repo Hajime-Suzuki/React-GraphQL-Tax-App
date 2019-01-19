@@ -11,23 +11,19 @@ import {
   UpdateStatus
 } from 'src/graphql/components/projects'
 import styled from 'styled-components'
-import { routes } from '../../routes/constants'
-import { Styles } from '../../styles/sharedStyles'
-import { EditStatusDropdown } from './formComponents/EditStatusDropDown'
-import { Calculations } from './helper/calculations'
+import { routes } from '../../../routes/constants'
+import { Styles } from '../../../styles/sharedStyles'
+import { EditStatusDropdown } from './EditStatusDropDown'
+import { Calculations } from '../helper/calculations'
+import { ProjectListChildProps } from '.'
 
 const StyledPaper: any = styled(Paper)`
-  overflow: 'auto';
+  overflow: "auto";
   width: ${(100 / 12) * 11}%;
   margin: auto;
 `
-interface Props {
-  projects: GetProjectOverview.Projects[]
-  sortProjectsByProjectDate: () => void
-  sortProjectByInvoiceDate: () => void
-}
 
-const ProjectsList: React.SFC<Props> = props => {
+const ProjectsList: React.SFC<ProjectListChildProps> = props => {
   const {
     projects,
     sortProjectsByProjectDate,

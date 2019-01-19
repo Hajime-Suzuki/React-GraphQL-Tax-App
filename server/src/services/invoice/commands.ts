@@ -1,12 +1,6 @@
-import { format } from 'date-fns'
-import * as puppeteer from 'puppeteer'
-import { ProjectRepository } from '../project/repository'
-import { UserRepository } from '../user/repository'
-import { ClientRepository } from '../client/repository'
-import { IProject } from '../@types/types'
-import { Calculations } from '../../helpers/calculation'
-import { Constants } from '../../constants'
 import * as fs from 'fs'
+import * as puppeteer from 'puppeteer'
+import { Constants } from '../../constants'
 
 export const getInvoicePDF = async (projectId: string, token: string) => {
   const browser = await puppeteer.launch()

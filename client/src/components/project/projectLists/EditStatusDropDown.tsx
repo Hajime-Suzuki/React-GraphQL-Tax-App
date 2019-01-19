@@ -12,6 +12,7 @@ interface DropdownStatusProps {
 interface OwnProps {
   projectId: string
 }
+
 interface StatusDropDownProps {
   onSubmit: MutationFn<UpdateStatus.Mutation, UpdateStatus.Variables>
   data?: MutationResult<UpdateStatus.Mutation>

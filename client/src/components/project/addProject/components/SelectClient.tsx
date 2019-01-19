@@ -1,17 +1,15 @@
-import * as React from 'react'
 import Button from '@material-ui/core/Button'
-import { AddProjectChildProps } from '..'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import { FormikActions } from 'formik'
-import { AddProjectInput } from 'src/graphql/@types/clientTypes'
+import * as React from 'react'
+import { AddProjectChildProps } from '..'
 
 interface Props {
   clients: NonNullable<AddProjectChildProps['clients']>
-  setFieldValue: FormikActions<AddProjectInput>['setFieldValue']
+  setFieldValue: AddProjectChildProps['setFieldValue']
 }
 
 class SelectClient extends React.Component<Props> {
