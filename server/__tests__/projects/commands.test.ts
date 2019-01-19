@@ -1,6 +1,11 @@
 import { ProjectRepository } from '../../src/services/project/repository'
 import { ProjectCommands } from '../../src/services/project/domain/commands'
-import { IProjectInput, IClientInput } from '../../src/services/@types/types'
+import {
+  IProjectInput,
+  IClientInput,
+  IProject,
+  IClient
+} from '../../src/services/@types/types'
 import { ProjectManager } from '../../src/services/project/domain/manager'
 
 const user = {
@@ -9,11 +14,31 @@ const user = {
   lastName: 'user',
   email: 'test@test.com'
 }
-const client = {
-  id: '8765',
+
+const projectInput: IProjectInput = {
+  name: 'test',
+  invoiceNumber: '1234',
+  incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
+  expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
+  invoiceDate: new Date().toDateString(),
+  projectDate: new Date().toDateString()
+}
+
+const clientInput: IClientInput = {
   firstName: 'asht',
   lastName: 'qdrw',
   email: 'qdrw@puashtn.com'
+}
+
+const project: IProject = {
+  id: '5555',
+  user: user.id,
+  ...(projectInput as any)
+}
+
+const client: IClient = {
+  id: '6666',
+  ...(clientInput as any)
 }
 
 describe('=========== Project Commands =========', () => {
@@ -21,25 +46,10 @@ describe('=========== Project Commands =========', () => {
     jest.restoreAllMocks()
   })
   describe('-------- add project -------', () => {
-    const projectInput: IProjectInput = {
-      name: 'test',
-      invoiceNumber: '1234',
-      incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
-      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
-      invoiceDate: new Date().toDateString(),
-      projectDate: new Date().toDateString()
-    }
-
-    const clientInput: IClientInput = {
-      firstName: 'asht',
-      lastName: 'qdrw',
-      email: 'qdrw@puashtn.com'
-    }
-
     test('can add project without client', async () => {
       const createProject = jest
         .spyOn(ProjectRepository, 'create')
-        .mockResolvedValue({ ...projectInput, id: '9999' })
+        .mockResolvedValue(project)
 
       const updateClient = jest.spyOn(ProjectManager, 'updateClientProject')
       const addClient = jest.spyOn(ProjectManager, 'addClient')
@@ -59,7 +69,7 @@ describe('=========== Project Commands =========', () => {
     test('can add project with a new client', async () => {
       const createProject = jest
         .spyOn(ProjectRepository, 'create')
-        .mockResolvedValue({ ...projectInput, id: '9999' })
+        .mockResolvedValue(project)
 
       const getClientByCondition = jest
         .spyOn(ProjectManager, 'getClientByCondition')
@@ -72,7 +82,7 @@ describe('=========== Project Commands =========', () => {
 
       const addClient = jest
         .spyOn(ProjectManager, 'addClient')
-        .mockResolvedValue({ ...client, id: client.id })
+        .mockResolvedValue(client)
 
       const {
         savedProject,
@@ -94,10 +104,9 @@ describe('=========== Project Commands =========', () => {
     })
 
     test('can add project with an existing client', async () => {
-      const savedProjectId = '9999'
       const createProject = jest
         .spyOn(ProjectRepository, 'create')
-        .mockResolvedValue({ ...projectInput, id: savedProjectId })
+        .mockResolvedValue(project)
 
       const getClientByCondition = jest
         .spyOn(ProjectManager, 'getClientByCondition')
@@ -119,13 +128,10 @@ describe('=========== Project Commands =========', () => {
 
       expect(createProject).toHaveBeenCalledWith(user.id, projectInput)
       expect(getClientByCondition).toHaveBeenCalledWith(user.id, clientInput)
-      expect(updateClientProject).toHaveBeenCalledWith(
-        client.id,
-        savedProjectId
-      )
+      expect(updateClientProject).toHaveBeenCalledWith(client.id, project.id)
       expect(addClient).not.toHaveBeenCalled()
 
-      expect(savedProject.id).toBe(savedProjectId)
+      expect(savedProject.id).toBe(project.id)
       expect(savedProject).toMatchObject(projectInput)
       expect(savedClient).toHaveProperty('id')
       expect(savedClient).toMatchObject(client)

@@ -25,25 +25,34 @@ const updateClient = async ({
 }
 
 const updateClientProject = async (clientId: string, projectId: string) => {
-  const currentClient = await ClientRepository.findByProjectId(projectId)
+  const existingClientInProject = await ClientRepository.findByProjectId(
+    projectId
+  )
 
-  if (!currentClient) {
-    return await ClientRepository.pushProjectId(clientId, projectId)
+  if (!existingClientInProject) {
+    const updatedClient = await ClientRepository.pushProjectId(
+      clientId,
+      projectId
+    )
+    return updatedClient
   }
 
-  if (currentClient) {
+  if (!!existingClientInProject) {
     const updatedClient = await ClientRepository.pushProjectId(
       clientId,
       projectId
     )
 
-    if (updatedClient && currentClient.id !== updatedClient.id) {
-      await ClientRepository.popProjectId(currentClient.id, projectId)
+    if (updatedClient && existingClientInProject.id !== updatedClient.id) {
+      await ClientRepository.popProjectId(
+        existingClientInProject.id,
+        projectId
+      )
     }
     return updatedClient
   }
 
-  return currentClient
+  return null
 }
 
 const deleteClient = async (clientId: string) => {
