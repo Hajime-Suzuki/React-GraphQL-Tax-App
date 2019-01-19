@@ -1,7 +1,7 @@
 import React from 'react'
 import { SingleProjectChildProps } from '../..'
-import EditBasicInfoFormAndClient from './EditBasicInfoAndClientForm'
-import EditExpenseAndIncomeFormContainer from './IncomesAndExpeses/EditIncomesAndExpenseFormContainer'
+import EditBasicInfoFormContainer from './basicInfo/EditBasicInfoFormContainer'
+import EditExpenseAndIncomeFormContainer from './incomesAndExpeses/EditIncomesAndExpenseFormContainer'
 
 export const EditModals: React.SFC<SingleProjectChildProps> = props => {
   const {
@@ -13,7 +13,7 @@ export const EditModals: React.SFC<SingleProjectChildProps> = props => {
   return (
     <React.Fragment>
       {selectedModal === 'basic' && (
-        <EditBasicInfoFormAndClient basic={basic} client={client} {...props} />
+        <EditBasicInfoFormContainer basic={basic} {...props} />
       )}
       {selectedModal === 'incomes' && (
         <EditExpenseAndIncomeFormContainer
