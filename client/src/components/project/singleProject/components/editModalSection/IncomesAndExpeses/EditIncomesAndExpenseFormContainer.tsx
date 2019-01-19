@@ -12,7 +12,7 @@ import EditExpenseAndIncomeForm from './EditIncomesAndExpenseForm'
 
 export type EditExpenseAndIncomesChildProps = {
   type: 'incomes' | 'expenses';
-  selectedModal: Props['selectedModal'];
+  selectedModal?: Props['selectedModal'];
   values: FormValues;
   error?: ApolloError;
   loading: boolean;
@@ -22,7 +22,7 @@ export type EditExpenseAndIncomesChildProps = {
 interface Props {
   incomes?: ExpenseAndIncomeInput[]
   expenses?: ExpenseAndIncomeInput[]
-  selectedModal: SingleProjectChildProps['selectedModal']
+  selectedModal?: SingleProjectChildProps['selectedModal']
   handleCloseModal: SingleProjectChildProps['handleCloseModal']
 }
 

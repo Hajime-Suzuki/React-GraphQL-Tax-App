@@ -70,13 +70,13 @@ class EditBasicInfoFormAndClient extends React.Component<
       UpdateBasicInfo.Variables
     >
   ) => async (values: ProjectInput) => {
-    await updateProject({
-      variables: {
-        data: values,
-        projectId: this.props.match.params.id,
-        clientId: values.client && values.client.id
-      }
-    })
+    // await updateProject({
+    //   variables: {
+    //     data: values,
+    //     projectId: this.props.match.params.id,
+    //     clientId: values.client && values.client.id
+    //   }
+    // })
     this.props.handleCloseModal()
   }
 

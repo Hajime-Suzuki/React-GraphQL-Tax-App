@@ -2,6 +2,7 @@ import React from 'react'
 import { SingleProjectChildProps } from '../..'
 import EditBasicInfoFormContainer from './basicInfo/EditBasicInfoFormContainer'
 import EditExpenseAndIncomeFormContainer from './incomesAndExpeses/EditIncomesAndExpenseFormContainer'
+import { Typography } from '@material-ui/core'
 
 export const EditModals: React.SFC<SingleProjectChildProps> = props => {
   const {
@@ -15,6 +16,7 @@ export const EditModals: React.SFC<SingleProjectChildProps> = props => {
       {selectedModal === 'basic' && (
         <EditBasicInfoFormContainer basic={basic} {...props} />
       )}
+      {selectedModal === 'client' && <Typography>client</Typography>}
       {selectedModal === 'incomes' && (
         <EditExpenseAndIncomeFormContainer
           incomes={incomes as any}

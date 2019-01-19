@@ -7,6 +7,7 @@ import { SingleProjectChildProps } from '.'
 import { EditModals } from './components/editModalSection'
 import IncomesAndExpenseSection from './components/IncomesAndExpenseSection'
 import InvoiceMetaSection from './components/InvoiceMetaSection'
+import { EditIcon } from 'src/components/UI/EditIcon'
 
 const ProjectDetails: any = styled(Grid)`
   width: 100%;
@@ -44,6 +45,10 @@ const SingleProject: React.SFC<SingleProjectChildProps> = props => {
               </Typography>
               <Typography>{client.email}</Typography>
               <Typography>{client.phone}</Typography>
+              <EditIcon
+                onClick={handleOpenModal('client')}
+                style={{ marginLeft: '10px' }}
+              />
             </React.Fragment>
           </Grid>
         </React.Fragment>

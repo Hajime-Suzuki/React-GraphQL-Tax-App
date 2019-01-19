@@ -14,20 +14,19 @@ import { IRouterComponentProps } from 'src/routes/types'
 import { SingleProjectChildProps } from '../../..'
 import DeleteProjectModal from './DeleteProjectModal'
 import EditBasicInfoForm from './EditBasicInfoForm'
+import { ApolloError } from 'apollo-client'
 
 type BasicInfo = Omit<ProjectInput, 'client'>
 interface OwnProps {
-  selectedModal: SingleProjectChildProps['selectedModal']
+  selectedModal?: SingleProjectChildProps['selectedModal']
   handleCloseModal: SingleProjectChildProps['handleCloseModal']
   basic: BasicInfo & { id: string }
 }
 
 export type EditBasicInfoChildProps = {
-  updateError: any;
+  updateError?: ApolloError;
   loading: boolean;
-  values: any;
-  setFieldValue: any;
-  errors: any;
+  values: ProjectInput;
   openDeleteDialog: any;
 } & Pick<OwnProps, 'selectedModal' | 'handleCloseModal'> &
   BasicInfo &
@@ -101,7 +100,7 @@ class EditBasicInfoFormContainer extends React.Component<
                 validateOnChange={false}
                 // validationSchema={addProjectValidationSchema}
                 onSubmit={this.updateProject(updateProject)}
-                render={(formProps: FormikProps<typeof basicInfo>) => {
+                render={(formProps: FormikProps<BasicInfo>) => {
                   return (
                     <React.Fragment>
                       <EditBasicInfoForm

@@ -8,12 +8,12 @@ import { LoadingIcon } from '../../UI/LoadingIcon'
 import SingleProject from './SingleProject'
 import { MutationFn } from 'react-apollo'
 
-export type ModalType = 'basic' | 'incomes' | 'expenses' | 'status'
+export type ModalType = 'basic' | 'incomes' | 'expenses' | 'client'
 
 export interface SingleProjectChildProps {
   project: GetSingleProject.Project
   client?: GetSingleProject.Client | null
-  selectedModal: string | undefined
+  selectedModal?: ModalType
   handleOpenModal: (type: ModalType) => () => void
   handleCloseModal: () => void
   handleDownload: () => void
@@ -26,12 +26,12 @@ type Props = GetSingleProject.Props<IRouterComponentProps>
 class SingleProjectContainer extends React.Component<
   Props,
   {
-    selectedModal: string | undefined;
+    selectedModal: SingleProjectChildProps['selectedModal'];
   }
 > {
   state = { selectedModal: undefined }
 
-  handleOpenModal = (type: string) => () =>
+  handleOpenModal = (type: ModalType) => () =>
     this.setState({ selectedModal: type })
 
   handleCloseModal = () => this.setState({ selectedModal: undefined })
