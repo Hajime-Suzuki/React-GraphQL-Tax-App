@@ -5,12 +5,13 @@ import { RouteComponentProps } from 'react-router'
 import { ClientInput } from 'src/graphql/@types/types'
 import {
   SingleClient as SingleC,
-  UpdateClient
+  UpdateClient,
+  DeleteClient,
+  GetClientsList
 } from 'src/graphql/components/clients'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import SingleClient from './SingleClient'
-
-type UpdateClient = MutationFn<UpdateClient.Mutation, UpdateClient.Variables>
+import { RoutesNames } from 'src/routes/constants'
 
 type Client = SingleC.GetSingleClient
 
@@ -19,15 +20,22 @@ type Props = SingleC.Props<RouteComponentProps<{ clientId: string }>>
 export type SingleClientChildProps = {
   client: Client;
   isModalOpen: boolean;
-  mutationResultProps: MutationResult<UpdateClient.Mutation>;
+  isDeleteModalOpen: boolean;
+  editMutationResult: MutationResult<UpdateClient.Mutation>;
+  deleteMutationResult: MutationResult<DeleteClient.Mutation>;
   handleCloseModal: () => void;
   handleOpenModal: () => void;
+
+  handleOpenDelete: () => void;
+  handleCloseDelete: () => void;
+  handleDelete: () => void;
 } & RouteComponentProps<{ clientId: string }> &
   FormikProps<Client>
 
 class SingleClientContainer extends React.Component<Props> {
   state = {
-    isModalOpen: false
+    isModalOpen: false,
+    isDeleteModalOpen: false
   }
 
   handleCloseModal = () => {
@@ -38,7 +46,9 @@ class SingleClientContainer extends React.Component<Props> {
     this.setState({ isModalOpen: true })
   }
 
-  handleSubmit = (update: UpdateClient) => async (
+  handleSubmit = (
+    update: MutationFn<UpdateClient.Mutation, UpdateClient.Variables>
+  ) => async (
     values: ClientInput & { id: string },
     { resetForm }: FormikActions<Client>
   ) => {
@@ -53,6 +63,19 @@ class SingleClientContainer extends React.Component<Props> {
     }
   }
 
+  handleOpenDelete = () => this.setState({ isDeleteModalOpen: true })
+
+  handleCloseDelete = () => this.setState({ isDeleteModalOpen: false })
+
+  handleDelete = (
+    deleteClient: MutationFn<DeleteClient.Mutation, DeleteClient.Variables>
+  ) => async () => {
+    await deleteClient({
+      variables: { clientId: this.props.match.params.clientId }
+    })
+    this.props.history.replace(RoutesNames.clientsList)
+  }
+
   render() {
     const { data } = this.props
     if (!data) return null
@@ -63,28 +86,35 @@ class SingleClientContainer extends React.Component<Props> {
 
     return (
       <UpdateClient.Component>
-        {(update, mutationResultProps) => {
-          return (
-            <Formik
-              onSubmit={this.handleSubmit(update)}
-              validateOnChange={false}
-              initialValues={client}
-              render={(formProps: FormikProps<Client>) => {
-                return (
+        {(edit, editMutationResult) => (
+          <DeleteClient.Component
+            refetchQueries={[{ query: GetClientsList.Document }]}
+          >
+            {(deleteClient, deleteMutationResult) => (
+              <Formik
+                onSubmit={this.handleSubmit(edit)}
+                validateOnChange={false}
+                initialValues={client}
+                render={(formProps: FormikProps<Client>) => (
                   <SingleClient
                     client={client}
-                    mutationResultProps={mutationResultProps}
+                    editMutationResult={editMutationResult}
                     handleCloseModal={this.handleCloseModal}
                     handleOpenModal={this.handleOpenModal}
                     handleSubmit={this.handleSubmit}
                     isModalOpen={this.state.isModalOpen}
+                    handleOpenDelete={this.handleOpenDelete}
+                    handleCloseDelete={this.handleCloseDelete}
+                    handleDelete={this.handleDelete(deleteClient)}
+                    isDeleteModalOpen={this.state.isDeleteModalOpen}
+                    deleteMutationResult={deleteMutationResult}
                     {...formProps}
                   />
-                )
-              }}
-            />
-          )
-        }}
+                )}
+              />
+            )}
+          </DeleteClient.Component>
+        )}
       </UpdateClient.Component>
     )
   }

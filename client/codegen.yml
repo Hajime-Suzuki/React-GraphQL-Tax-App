@@ -1,12 +1,12 @@
 overwrite: true
 generates:
-  ./src/graphql/@types/types.ts:
+  ./src/graphql/@types/types.d.ts:
     schema: http://localhost:4000/graphql
     plugins:
       - typescript-common
       - typescript-server
 
-  ./src/graphql/@types/resolvers.ts:
+  ./src/graphql/@types/resolvers.d.ts:
     schema:
       - http://localhost:4000/graphql
       - ./_gql-gen/typeDefs.js

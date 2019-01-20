@@ -1,11 +1,12 @@
-import Grid from '@material-ui/core/Grid'
-import * as React from 'react'
-import { withRouter } from 'react-router'
-import { renderFields } from 'src/libs/forms/renderFields/renderFields'
-import { Styles } from 'src/styles/sharedStyles'
-import EditFormModal from '../../libs/forms/EditFormModal'
-import ClientCard from '../shared/ClientCard'
-import { SingleClientChildProps } from './SingleClientContainer'
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
+import { withRouter } from 'react-router';
+import { renderFields } from 'src/libs/forms/renderFields/renderFields';
+import { Styles } from 'src/styles/sharedStyles';
+import EditFormModal from '../../libs/forms/EditFormModal';
+import ClientCard from '../shared/ClientCard';
+import { SingleClientChildProps } from './SingleClientContainer';
 
 class SingleClient extends React.Component<SingleClientChildProps> {
   render() {
@@ -15,8 +16,9 @@ class SingleClient extends React.Component<SingleClientChildProps> {
       handleSubmit,
       isModalOpen,
       handleCloseModal,
-      mutationResultProps: { loading, error },
-      dirty
+      editMutationResult: { loading: addLoading, error: addError },
+      dirty,
+      handleOpenDelete
     } = this.props
     return (
       <Grid container justify="center">
@@ -29,8 +31,9 @@ class SingleClient extends React.Component<SingleClientChildProps> {
           handleCloseModal={handleCloseModal}
           title="Edit Client Info"
           handleConfirm={handleSubmit}
-          loading={loading || !dirty}
-          error={error && error.message}
+          loading={addLoading || !dirty}
+          error={addError && addError.message}
+          handleDeleteDialogOpen={handleOpenDelete}
         >
           <Styles.Form>
             <div className="form-section">
@@ -44,7 +47,32 @@ class SingleClient extends React.Component<SingleClientChildProps> {
             </div>
           </Styles.Form>
         </EditFormModal>
+        <this.ConfirmDelete />
       </Grid>
+    )
+  }
+
+  ConfirmDelete = () => {
+    const {
+      handleCloseDelete,
+      handleDelete,
+      isDeleteModalOpen,
+      deleteMutationResult: { loading, error }
+    } = this.props
+
+    return (
+      <EditFormModal
+        handleCloseModal={handleCloseDelete}
+        handleConfirm={handleDelete}
+        isOpen={isDeleteModalOpen}
+        error={error && error.message}
+        loading={loading}
+        maxWidth="xs"
+      >
+        <Typography variant="h6" style={{ textAlign: 'center' }}>
+          Delete this client?
+        </Typography>
+      </EditFormModal>
     )
   }
 }

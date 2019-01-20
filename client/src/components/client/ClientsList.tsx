@@ -1,4 +1,3 @@
-import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,7 +8,6 @@ import * as React from 'react'
 import { RoutesNames } from 'src/routes/constants'
 import { Styles } from 'src/styles/sharedStyles'
 import { ClientsListChildProps } from './ClientsListContainer'
-import AddClientFormModal from './AddClientForm'
 
 const ClientsList: React.FunctionComponent<ClientsListChildProps> = props => {
   const { clients } = props
