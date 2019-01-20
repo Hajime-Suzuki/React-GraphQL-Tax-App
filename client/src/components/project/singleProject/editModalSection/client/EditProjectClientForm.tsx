@@ -25,7 +25,7 @@ class EditProjectClientForm extends React.Component<
         isModalOpen={selectedModal === 'client'}
         selectClient={update}
       >
-        <div>
+        <div style={{ margin: '1em 0px', textAlign: 'center' }}>
           <Typography>{error && error.message}</Typography>
           <Button
             onClick={handleCloseModal}

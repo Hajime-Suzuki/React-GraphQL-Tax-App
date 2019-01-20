@@ -73,6 +73,9 @@ const ADD_PROJECT = gql`
           ...PriceFragment
         }
       }
+      client {
+        ...ClientFragment
+      }
     }
   }
   ${Fragments.PRICE_FRAGMENT}

@@ -24,7 +24,11 @@ const addProject = async (
         savedProject.id
       )
     } else {
-      clientToReturn = await ProjectManager.addClient(user.id, clientInput)
+      clientToReturn = await ProjectManager.addClient(
+        user.id,
+        clientInput,
+        savedProject.id
+      )
     }
 
     return { savedProject, client: clientToReturn }

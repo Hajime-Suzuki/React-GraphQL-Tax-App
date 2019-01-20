@@ -46,33 +46,31 @@ class EditExpenseAndIncomeFormContainer extends React.Component<
 
     return (
       <UpdateIncomesAndExpenses.Component>
-        {(updateProject, { error, loading }) => {
-          return (
-            <Formik
-              initialValues={{ incomes, expenses }}
-              validateOnChange={false}
-              onSubmit={async (values: FormValues) => {
-                const res = await updateProject({
-                  variables: { data: values, projectId: id }
-                })
-                console.log(res)
-                handleCloseModal()
-              }}
-              render={(formProps: FormikProps<FormValues>) => {
-                return (
-                  <EditExpenseAndIncomeForm
-                    type={!!incomes ? 'incomes' : 'expenses'}
-                    selectedModal={selectedModal}
-                    error={error}
-                    loading={loading}
-                    handleCloseModal={handleCloseModal}
-                    {...formProps}
-                  />
-                )
-              }}
-            />
-          )
-        }}
+        {(updateProject, { error, loading }) => (
+          <Formik
+            initialValues={{ incomes, expenses }}
+            validateOnChange={false}
+            onSubmit={async (values: FormValues) => {
+              const res = await updateProject({
+                variables: { data: values, projectId: id }
+              })
+              console.log(res)
+              handleCloseModal()
+            }}
+            render={(formProps: FormikProps<FormValues>) => {
+              return (
+                <EditExpenseAndIncomeForm
+                  type={!!incomes ? 'incomes' : 'expenses'}
+                  selectedModal={selectedModal}
+                  error={error}
+                  loading={loading}
+                  handleCloseModal={handleCloseModal}
+                  {...formProps}
+                />
+              )
+            }}
+          />
+        )}
       </UpdateIncomesAndExpenses.Component>
     )
   }

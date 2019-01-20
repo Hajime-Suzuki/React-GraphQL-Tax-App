@@ -95,7 +95,11 @@ describe('=========== Project Commands =========', () => {
       expect(createProject).toHaveBeenCalledWith(user.id, projectInput)
       expect(getClientByCondition).toHaveBeenCalledWith(user.id, clientInput)
       expect(updateClientProject).not.toHaveBeenCalled()
-      expect(addClient).toHaveBeenCalledWith(user.id, clientInput)
+      expect(addClient).toHaveBeenCalledWith(
+        user.id,
+        clientInput,
+        savedProject.id
+      )
 
       expect(savedProject).toHaveProperty('id')
       expect(savedProject).toMatchObject(projectInput)

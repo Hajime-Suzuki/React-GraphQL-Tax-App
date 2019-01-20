@@ -14,7 +14,7 @@ describe('======= Client Commands =======', () => {
   afterEach(() => {
     jest.restoreAllMocks()
   })
-  describe.only('----- updateClientProject -----', () => {
+  describe('----- updateClientProject -----', () => {
     test('add project id to client', async () => {
       const clientId = '1'
       const projectId = '2'

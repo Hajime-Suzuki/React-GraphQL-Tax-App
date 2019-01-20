@@ -14,7 +14,7 @@ describe('============== User Resolvers ==============', () => {
     password: '12345678'
   }
 
-  describe.only('--------- Register ---------', () => {
+  describe('--------- Register ---------', () => {
     const mocks = {
       RegisterResponse: () => ({ token: 'ashiteonahs' })
     }
