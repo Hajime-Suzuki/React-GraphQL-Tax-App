@@ -55,6 +55,15 @@ const updateClientProject = async (clientId: string, projectId: string) => {
   return null
 }
 
+const removeClientFromProject = async (clientId: string, projectId: string) => {
+  // TODO: test
+  const updatedClient = await ClientRepository.popProjectId(
+    clientId,
+    projectId
+  )
+  return updatedClient
+}
+
 const deleteClient = async (clientId: string) => {
   if (!clientId) throw new ApolloError('client id must be provided')
   const client = await Client.findById(clientId)
@@ -67,5 +76,6 @@ export const ClientCommands = {
   addClient,
   updateClient,
   updateClientProject,
+  removeClientFromProject,
   deleteClient
 }

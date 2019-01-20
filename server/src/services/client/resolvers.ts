@@ -55,6 +55,16 @@ export const clientResolvers: {
         client
       }
     },
+    removeClientFromProject: async (_, { clientId, projectId }, { user }) => {
+      AuthCheck.userExist(user)
+      const client = await ClientCommands.removeClientFromProject(
+        clientId,
+        projectId
+      )
+      return {
+        client
+      }
+    },
     deleteClient: async (_, { clientId }, { user }) => {
       AuthCheck.userExist(user)
       const deletedClient = await ClientCommands.deleteClient(clientId)

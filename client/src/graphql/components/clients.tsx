@@ -222,6 +222,27 @@ export namespace DeleteClient {
   };
 }
 
+export namespace RemoveClientFromProject {
+  export type Variables = {
+    clientId: string;
+    projectId: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    removeClientFromProject: RemoveClientFromProject | null;
+  };
+
+  export type RemoveClientFromProject = {
+    __typename?: "ClientMutationResponse";
+
+    client: Client | null;
+  };
+
+  export type Client = ClientFragment.Fragment;
+}
+
 export namespace ClientFragment {
   export type Fragment = {
     __typename?: "Client";
@@ -551,6 +572,51 @@ export namespace DeleteClient {
         }
       }
     }
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace RemoveClientFromProject {
+  export const Document = gql`
+    mutation removeClientFromProject($clientId: String!, $projectId: String!) {
+      removeClientFromProject(clientId: $clientId, projectId: $projectId) {
+        client {
+          ...ClientFragment
+        }
+      }
+    }
+
+    ${ClientFragment.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>

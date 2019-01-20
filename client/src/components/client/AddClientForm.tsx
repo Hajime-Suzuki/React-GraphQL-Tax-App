@@ -16,9 +16,15 @@ const AddClientForm: React.FunctionComponent<
           <React.Fragment key={i}>{renderFields(field)}</React.Fragment>
         ))}
       </div>
-      <Button onClick={handleSubmit as any} variant="contained" color="primary">
-        Submit
-      </Button>
+      <div style={{ width: '100%', textAlign: 'center' }}>
+        <Button
+          onClick={handleSubmit as any}
+          variant="contained"
+          color="primary"
+        >
+          Submit
+        </Button>
+      </div>
     </Styles.Form>
   )
 }

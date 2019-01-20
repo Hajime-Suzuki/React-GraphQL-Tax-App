@@ -1,4 +1,4 @@
-import Dialog from '@material-ui/core/Dialog'
+import Dialog, { DialogProps } from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -11,6 +11,7 @@ export interface SelectClientModalProps {
   handleCloseModal: () => void
   selectClient: (id: string) => () => void
   clients: GetClientsList.GetClientsByUser[]
+  maxWidth?: DialogProps['maxWidth']
   children?: JSX.Element
 }
 

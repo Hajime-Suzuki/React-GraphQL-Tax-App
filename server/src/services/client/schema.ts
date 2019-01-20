@@ -40,6 +40,12 @@ export const clientSchema = gql`
       projectId: String!
       clientId: String!
     ): ClientMutationResponse
+
+    removeClientFromProject(
+      projectId: String!
+      clientId: String!
+    ): ClientMutationResponse
+
     deleteClient(clientId: String!): ClientMutationResponse
   }
 `

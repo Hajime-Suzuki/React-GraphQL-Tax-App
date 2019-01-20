@@ -11,27 +11,42 @@ class EditProjectClientForm extends React.Component<
     const {
       selectedModal,
       handleCloseModal,
-      error,
-      loading,
+      updateClientProjectMutation: {
+        error: updateError,
+        loading: updateLoading
+      },
+      removeFromProjectMutation: { error: removeError, loading: removeLoading },
       update,
-      client,
+      removeFromProject,
       clientsList
     } = this.props
-    if (!client || !clientsList) return null
+
+    if (!clientsList || !clientsList.length) return null
+
     return (
       <SelectClientModal
         clients={clientsList}
+        maxWidth="sm"
         handleCloseModal={handleCloseModal}
         isModalOpen={selectedModal === 'client'}
         selectClient={update}
       >
         <div style={{ margin: '1em 0px', textAlign: 'center' }}>
-          <Typography>{error && error.message}</Typography>
+          <Typography>{updateError && updateError.message}</Typography>
+          <Typography>{removeError && removeError.message}</Typography>
+          <Button
+            onClick={removeFromProject}
+            color="primary"
+            variant="outlined"
+            disabled={removeLoading}
+          >
+            Remove
+          </Button>
           <Button
             onClick={handleCloseModal}
             color="primary"
             variant="contained"
-            disabled={loading}
+            disabled={updateLoading}
           >
             Cancel
           </Button>

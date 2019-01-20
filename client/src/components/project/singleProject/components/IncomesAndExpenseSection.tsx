@@ -6,10 +6,10 @@ import { SingleProjectChildProps } from '..'
 import { Calculations } from '../../helper/calculations'
 import ExpenseIncomeTable from './ExpenseIncomeTable'
 import { ModalType } from '../index'
-const IncomesAndExpenseSection: React.FunctionComponent<SingleProjectChildProps> = ({
-  project,
-  handleOpenModal
-}) => {
+
+const IncomesAndExpenseSection: React.FunctionComponent<
+  SingleProjectChildProps
+> = ({ project, handleOpenModal }) => {
   const prices = getPriceOverview(project)
   const settings = [
     {

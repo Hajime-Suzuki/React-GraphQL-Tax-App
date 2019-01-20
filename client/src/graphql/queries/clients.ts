@@ -71,11 +71,22 @@ const DELETE_CLIENT = gql`
   }
 `
 
+const REMOVE_CLIENT_FROM_PROJECT = gql`
+  mutation removeClientFromProject($clientId: String!, $projectId: String!) {
+    removeClientFromProject(clientId: $clientId, projectId: $projectId) {
+      client {
+        ...ClientFragment
+      }
+    }
+  }
+`
+
 export const ClientQueries = {
   ADD_CLIENT,
   GET_CLIENTS_BY_USER,
   GET_SINGLE_CLIENT,
   EDIT_CLIENT,
   UPDATE_CLIENT_PROJECT,
-  DELETE_CLIENT
+  DELETE_CLIENT,
+  REMOVE_CLIENT_FROM_PROJECT
 }

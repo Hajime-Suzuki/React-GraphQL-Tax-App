@@ -225,6 +225,8 @@ export interface IMutation {
 
   updateClientProject?: IClientMutationResponse | null;
 
+  removeClientFromProject?: IClientMutationResponse | null;
+
   deleteClient?: IClientMutationResponse | null;
 
   downloadInvoice?: IGenerateInvoiceResponse | null;
@@ -319,6 +321,11 @@ export interface UpdateClientMutationArgs {
   data: IClientInput;
 }
 export interface UpdateClientProjectMutationArgs {
+  projectId: string;
+
+  clientId: string;
+}
+export interface RemoveClientFromProjectMutationArgs {
   projectId: string;
 
   clientId: string;
@@ -867,6 +874,12 @@ export namespace MutationResolvers {
       Context
     >;
 
+    removeClientFromProject?: RemoveClientFromProjectResolver<
+      IClientMutationResponse | null,
+      TypeParent,
+      Context
+    >;
+
     deleteClient?: DeleteClientResolver<
       IClientMutationResponse | null,
       TypeParent,
@@ -970,6 +983,17 @@ export namespace MutationResolvers {
     Context = {}
   > = Resolver<R, Parent, Context, UpdateClientProjectArgs>;
   export interface UpdateClientProjectArgs {
+    projectId: string;
+
+    clientId: string;
+  }
+
+  export type RemoveClientFromProjectResolver<
+    R = IClientMutationResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, RemoveClientFromProjectArgs>;
+  export interface RemoveClientFromProjectArgs {
     projectId: string;
 
     clientId: string;
