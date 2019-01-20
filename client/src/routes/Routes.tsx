@@ -7,7 +7,7 @@ import SingleProjectContainer from 'src/components/project/singleProject'
 import NavBarContainer from 'src/components/UI/NavBar/NavBarContainer'
 import TopPage from '../components/topPage/TopPage'
 import { Styles } from '../styles/sharedStyles'
-import { routes } from './constants'
+import { RoutesNames } from './constants'
 import PrivateRoutes from './PrivateRoutes'
 import EditUserProfileContainer from 'src/components/userProfile/EditUserProfileContainer'
 import ClientsListContainer from 'src/components/client/ClientsListContainer'
@@ -18,57 +18,57 @@ class Routes extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Route path={routes.top} component={NavBarContainer} />
+        <Route path={RoutesNames.top} component={NavBarContainer} />
         <Styles.AppWrapper>
           <Switch>
             <Route path="/" exact component={TopPage} />
             <PrivateRoutes
-              path={routes.dashboard}
+              path={RoutesNames.dashboard}
               exact
               component={() => <h1>Dashboard</h1>}
             />
             <PrivateRoutes
-              path={routes.projects}
+              path={RoutesNames.projects}
               exact
               component={ProjectsListContainer}
             />
             <PrivateRoutes
-              path={routes.addProject}
+              path={RoutesNames.addProject}
               exact
               component={AddProjectContainer}
             />
             <PrivateRoutes
-              path={routes.singleProject()}
+              path={RoutesNames.singleProject()}
               exact
               component={SingleProjectContainer}
             />
             <PrivateRoutes
-              path={routes.editUserProfile}
+              path={RoutesNames.editUserProfile}
               exact
               component={EditUserProfileContainer}
             />
             <PrivateRoutes
-              path={routes.clientsList}
+              path={RoutesNames.clientsList}
               exact
               component={ClientsListContainer}
             />
             <PrivateRoutes
-              path={routes.addClient}
+              path={RoutesNames.addClient}
               exact
               component={AddClientFormContainer}
             />
             <PrivateRoutes
-              path={routes.singleClient()}
+              path={RoutesNames.singleClient()}
               exact
               component={SingleClientContainer}
             />
             <Route
-              path={routes.login}
+              path={RoutesNames.login}
               exact
               component={LoginAndSignupFormContainer}
             />
             <Route
-              path={routes.signup}
+              path={RoutesNames.signup}
               exact
               component={LoginAndSignupFormContainer}
             />

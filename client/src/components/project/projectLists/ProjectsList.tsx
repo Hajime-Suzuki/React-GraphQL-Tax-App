@@ -6,14 +6,10 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { format } from 'date-fns'
 import React from 'react'
-import {
-  GetProjectOverview,
-  UpdateStatus
-} from 'src/graphql/components/projects'
+import { GetProjectOverview } from 'src/graphql/components/projects'
 import styled from 'styled-components'
-import { routes } from '../../../routes/constants'
+import { RoutesNames } from '../../../routes/constants'
 import { Styles } from '../../../styles/sharedStyles'
-import { EditStatusDropdown } from './EditStatusDropDown'
 import { Calculations } from '../helper/calculations'
 import EditStatusContainer from './EditStatusContainer'
 
@@ -56,7 +52,7 @@ const ProjectsList: React.FunctionComponent<Props> = props => {
               <TableRow key={p.id} hover className="table-item">
                 <TableCell>
                   <Styles.StyledLink
-                    to={routes.singleProject(p.id)}
+                    to={RoutesNames.singleProject(p.id)}
                     weight="bold"
                   >
                     {p.name}

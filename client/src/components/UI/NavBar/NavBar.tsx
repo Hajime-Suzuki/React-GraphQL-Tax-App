@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { routes } from '../../../routes/constants'
+import { RoutesNames } from '../../../routes/constants'
 import { GetUser } from 'src/graphql/components/login'
 
 const StyledAppBar: any = styled(AppBar)`
@@ -60,13 +60,13 @@ const NavBar: React.FunctionComponent<
           Tax!
         </Typography>
         {!user && (
-          <Link to={routes.login} className={classes.menuItem}>
+          <Link to={RoutesNames.login} className={classes.menuItem}>
             <Button>Login</Button>
           </Link>
         )}
 
         {!user && (
-          <Link to={routes.signup} className={classes.menuItem}>
+          <Link to={RoutesNames.signup} className={classes.menuItem}>
             <Button>Signup</Button>
           </Link>
         )}
@@ -77,36 +77,36 @@ const NavBar: React.FunctionComponent<
           </Typography>
         )}
 
-        {user && path.startsWith(routes.projects) && (
-          <Link to={routes.addProject} className={classes.menuItem}>
+        {user && path.startsWith(RoutesNames.projects) && (
+          <Link to={RoutesNames.addProject} className={classes.menuItem}>
             <Button>Add</Button>
           </Link>
         )}
 
         {user && (
-          <Link to={routes.projects} className={classes.menuItem}>
+          <Link to={RoutesNames.projects} className={classes.menuItem}>
             <Button>Projects</Button>
           </Link>
         )}
 
         {user && (
-          <Link to={routes.dashboard} className={classes.menuItem}>
+          <Link to={RoutesNames.dashboard} className={classes.menuItem}>
             <Button>DashBoard</Button>
           </Link>
         )}
         {user && (
-          <Link to={routes.editUserProfile} className={classes.menuItem}>
+          <Link to={RoutesNames.editUserProfile} className={classes.menuItem}>
             <Button>Edit Profile</Button>
           </Link>
         )}
 
-        {user && path.startsWith(routes.clientsList) && (
-          <Link to={routes.addClient} className={classes.menuItem}>
+        {user && path.startsWith(RoutesNames.clientsList) && (
+          <Link to={RoutesNames.addClient} className={classes.menuItem}>
             <Button>Add</Button>
           </Link>
         )}
         {user && (
-          <Link to={routes.clientsList} className={classes.menuItem}>
+          <Link to={RoutesNames.clientsList} className={classes.menuItem}>
             <Button>Clients</Button>
           </Link>
         )}

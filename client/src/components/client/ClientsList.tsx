@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import * as React from 'react'
-import { routes } from 'src/routes/constants'
+import { RoutesNames } from 'src/routes/constants'
 import { Styles } from 'src/styles/sharedStyles'
 import { ClientsListChildProps } from './ClientsListContainer'
 import AddClientFormModal from './AddClientForm'
@@ -30,7 +30,7 @@ const ClientsList: React.FunctionComponent<ClientsListChildProps> = props => {
                 <TableRow hover key={client.id}>
                   <TableCell>
                     <Styles.StyledLink
-                      to={routes.singleClient(client.id)}
+                      to={RoutesNames.singleClient(client.id)}
                       weight="bold"
                     >
                       {client.firstName} {client.lastName}

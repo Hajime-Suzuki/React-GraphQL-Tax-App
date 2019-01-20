@@ -1,25 +1,35 @@
 import { client } from '../client'
-import { GetSingleProject } from '../components/projects'
-import { SingleClient } from '../components/clients'
-const attachClientToProject = (clientId: string, projectId: string) => {
-  const data = client.readQuery<
-    GetSingleProject.Query,
-    GetSingleProject.Variables
-  >({
-    query: GetSingleProject.Document,
-    variables: { id: projectId }
-  })
-  const clientData = client.readQuery<
-    SingleClient.Query,
-    SingleClient.Variables
-  >({ query: SingleClient.Document, variables: { id: clientId } })
+import { ClientFragment, GetClientsList } from '../components/clients'
 
-  client.writeQuery({
-    query: GetSingleProject.Document,
-    data: { ...data, client: clientData }
+const readClientsList = () => {
+  try {
+    const { getClientsByUser } = client.readQuery<
+      GetClientsList.Query,
+      GetClientsList.Variables
+    >({
+      query: GetClientsList.Document
+    })!
+
+    return getClientsByUser || []
+  } catch {
+    return []
+  }
+}
+
+const writeData = (data: GetClientsList.Query) => {
+  client.writeQuery<GetClientsList.Query>({
+    query: GetClientsList.Document,
+    data
   })
 }
 
+////////////////////////////
+
+const addClient = (clientData: ClientFragment.Fragment) => {
+  const clientsList = readClientsList()
+  writeData({ getClientsByUser: [...clientsList, clientData] })
+}
+
 export const ClientAction = {
-  attachClientToProject
+  addClient
 }

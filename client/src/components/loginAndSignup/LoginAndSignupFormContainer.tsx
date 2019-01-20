@@ -6,7 +6,7 @@ import { GetToken } from 'src/graphql/components/client/login'
 import { Login } from 'src/graphql/components/login'
 import { SignUp } from 'src/graphql/components/signup'
 import { IRouterComponentProps } from 'src/routes/types'
-import { routes } from '../../routes/constants'
+import { RoutesNames } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 
@@ -17,8 +17,12 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
     const path = this.props.location.pathname
     const { data: localData } = this.props
 
-    if (localData!.userId) return <Redirect to={routes.dashboard} />
-    return path === routes.login ? <this.LoginForm /> : <this.SignUpForm />
+    if (localData!.userId) return <Redirect to={RoutesNames.dashboard} />
+    return path === RoutesNames.login ? (
+      <this.LoginForm />
+    ) : (
+      <this.SignUpForm />
+    )
   }
 
   handleComplete = (token: string) => {

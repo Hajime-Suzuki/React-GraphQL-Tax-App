@@ -1,4 +1,4 @@
-const routes = {
+const RoutesNames = {
   top: '/',
   signup: '/signup',
   login: '/login',
@@ -14,4 +14,4 @@ const routes = {
   addClient: '/clients/new'
 }
 
-export { routes }
+export { RoutesNames }

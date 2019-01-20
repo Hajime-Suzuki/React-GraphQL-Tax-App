@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Redirect, Route, RouteProps } from 'react-router-dom'
-import { routes } from './constants'
+import { RoutesNames } from './constants'
 import { GetToken } from 'src/graphql/components/client/login'
 import { PrivateRoutesChildProps } from './types'
 
@@ -12,7 +12,7 @@ class PrivateRoutes extends React.Component<
     const userId = data!.userId
 
     if (!userId) {
-      return <Redirect to={routes.login} />
+      return <Redirect to={RoutesNames.login} />
     }
 
     const Component = component as any
