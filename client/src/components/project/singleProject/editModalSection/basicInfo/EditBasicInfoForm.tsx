@@ -1,13 +1,12 @@
-import Typography from '@material-ui/core/Typography'
 import * as React from 'react'
 import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
 import { renderStatusField } from 'src/libs/forms/renderFields/renderDropdown'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
-import EditFormModal from '../../../../../../libs/forms/EditFormModal'
-import { GenerateFieldSettings } from '../../../../helper/genrateFieldSettings'
 import { EditBasicInfoChildProps } from './EditBasicInfoFormContainer'
+import EditFormModal from 'src/libs/forms/EditFormModal'
+import { GenerateFieldSettings } from 'src/components/project/helper/genrateFieldSettings'
 
 const CustomStyledForm: any = styled(Styles.Form)`
   .form-section {

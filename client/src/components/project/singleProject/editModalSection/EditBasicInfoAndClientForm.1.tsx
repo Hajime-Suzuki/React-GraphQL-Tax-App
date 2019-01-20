@@ -20,9 +20,9 @@ import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 import { IRouterComponentProps } from 'src/routes/types'
 import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
-import { SingleProjectChildProps } from '../..'
-import EditFormModal from '../../../../../libs/forms/EditFormModal'
-import { GenerateFieldSettings } from '../../../helper/genrateFieldSettings'
+import { SingleProjectChildProps } from '..'
+import EditFormModal from 'src/libs/forms/EditFormModal'
+import { GenerateFieldSettings } from '../../helper/genrateFieldSettings'
 
 interface OwnProps {
   selectedModal: SingleProjectChildProps['selectedModal']

@@ -7,8 +7,8 @@ import {
   UpdateIncomesAndExpenses
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
-import { SingleProjectChildProps } from '../../..'
 import EditExpenseAndIncomeForm from './EditIncomesAndExpenseForm'
+import { SingleProjectChildProps } from '../..'
 
 export type EditExpenseAndIncomesChildProps = {
   type: 'incomes' | 'expenses';
@@ -52,9 +52,10 @@ class EditExpenseAndIncomeFormContainer extends React.Component<
               initialValues={{ incomes, expenses }}
               validateOnChange={false}
               onSubmit={async (values: FormValues) => {
-                await updateProject({
+                const res = await updateProject({
                   variables: { data: values, projectId: id }
                 })
+                console.log(res)
                 handleCloseModal()
               }}
               render={(formProps: FormikProps<FormValues>) => {

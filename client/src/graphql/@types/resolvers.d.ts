@@ -223,8 +223,6 @@ export interface Mutation {
 
   deleteProject?: MutationProjectResponse | null;
 
-  downloadInvoice?: GenerateInvoiceResponse | null;
-
   addClient?: ClientMutationResponse | null;
 
   updateClient?: ClientMutationResponse | null;
@@ -232,6 +230,8 @@ export interface Mutation {
   updateClientProject?: ClientMutationResponse | null;
 
   deleteClient?: ClientMutationResponse | null;
+
+  downloadInvoice?: GenerateInvoiceResponse | null;
 }
 
 export interface RegisterResponse {
@@ -258,16 +258,16 @@ export interface MutationProjectResponse {
   client?: Client | null;
 }
 
-export interface GenerateInvoiceResponse {
-  message?: string | null;
-
-  data?: Blob | null;
-}
-
 export interface ClientMutationResponse {
   message?: string | null;
 
   client?: Client | null;
+}
+
+export interface GenerateInvoiceResponse {
+  message?: string | null;
+
+  data?: Blob | null;
 }
 
 // ====================================================
@@ -314,9 +314,6 @@ export interface AddProjectMutationArgs {
 export interface DeleteProjectMutationArgs {
   projectId: string;
 }
-export interface DownloadInvoiceMutationArgs {
-  projectId: string;
-}
 export interface AddClientMutationArgs {
   data: ClientInput;
 }
@@ -332,6 +329,9 @@ export interface UpdateClientProjectMutationArgs {
 }
 export interface DeleteClientMutationArgs {
   clientId: string;
+}
+export interface DownloadInvoiceMutationArgs {
+  projectId: string;
 }
 
 import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
@@ -864,12 +864,6 @@ export namespace MutationResolvers {
       Context
     >;
 
-    downloadInvoice?: DownloadInvoiceResolver<
-      GenerateInvoiceResponse | null,
-      TypeParent,
-      Context
-    >;
-
     addClient?: AddClientResolver<
       ClientMutationResponse | null,
       TypeParent,
@@ -890,6 +884,12 @@ export namespace MutationResolvers {
 
     deleteClient?: DeleteClientResolver<
       ClientMutationResponse | null,
+      TypeParent,
+      Context
+    >;
+
+    downloadInvoice?: DownloadInvoiceResolver<
+      GenerateInvoiceResponse | null,
       TypeParent,
       Context
     >;
@@ -959,15 +959,6 @@ export namespace MutationResolvers {
     projectId: string;
   }
 
-  export type DownloadInvoiceResolver<
-    R = GenerateInvoiceResponse | null,
-    Parent = {},
-    Context = {}
-  > = Resolver<R, Parent, Context, DownloadInvoiceArgs>;
-  export interface DownloadInvoiceArgs {
-    projectId: string;
-  }
-
   export type AddClientResolver<
     R = ClientMutationResponse | null,
     Parent = {},
@@ -1006,6 +997,15 @@ export namespace MutationResolvers {
   > = Resolver<R, Parent, Context, DeleteClientArgs>;
   export interface DeleteClientArgs {
     clientId: string;
+  }
+
+  export type DownloadInvoiceResolver<
+    R = GenerateInvoiceResponse | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, DownloadInvoiceArgs>;
+  export interface DownloadInvoiceArgs {
+    projectId: string;
   }
 }
 
@@ -1090,28 +1090,6 @@ export namespace MutationProjectResponseResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace GenerateInvoiceResponseResolvers {
-  export interface Resolvers<
-    Context = {},
-    TypeParent = GenerateInvoiceResponse
-  > {
-    message?: MessageResolver<string | null, TypeParent, Context>;
-
-    data?: DataResolver<Blob | null, TypeParent, Context>;
-  }
-
-  export type MessageResolver<
-    R = string | null,
-    Parent = GenerateInvoiceResponse,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-  export type DataResolver<
-    R = Blob | null,
-    Parent = GenerateInvoiceResponse,
-    Context = {}
-  > = Resolver<R, Parent, Context>;
-}
-
 export namespace ClientMutationResponseResolvers {
   export interface Resolvers<
     Context = {},
@@ -1130,6 +1108,28 @@ export namespace ClientMutationResponseResolvers {
   export type ClientResolver<
     R = Client | null,
     Parent = ClientMutationResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace GenerateInvoiceResponseResolvers {
+  export interface Resolvers<
+    Context = {},
+    TypeParent = GenerateInvoiceResponse
+  > {
+    message?: MessageResolver<string | null, TypeParent, Context>;
+
+    data?: DataResolver<Blob | null, TypeParent, Context>;
+  }
+
+  export type MessageResolver<
+    R = string | null,
+    Parent = GenerateInvoiceResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type DataResolver<
+    R = Blob | null,
+    Parent = GenerateInvoiceResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }

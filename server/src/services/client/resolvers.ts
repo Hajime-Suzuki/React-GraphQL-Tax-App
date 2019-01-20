@@ -7,8 +7,8 @@ import { ClientRepository } from './repository'
 import { ClientQueries } from './domain/queries'
 
 export const clientResolvers: {
-  Query: QueryResolvers.Resolvers<IContext>
-  Mutation: MutationResolvers.Resolvers<IContext>
+  Query: QueryResolvers.Resolvers<IContext>;
+  Mutation: MutationResolvers.Resolvers<IContext>;
 } = {
   Query: {
     getClientsByUser: async (_, __, { user }) => {
@@ -48,7 +48,7 @@ export const clientResolvers: {
       AuthCheck.userExist(user)
       // TODO:
       const client = await ClientCommands.updateClientProject(
-        clientId!,
+        clientId,
         projectId
       )
       return {

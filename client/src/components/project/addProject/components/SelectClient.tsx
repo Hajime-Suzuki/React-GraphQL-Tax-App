@@ -1,11 +1,7 @@
 import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import * as React from 'react'
 import { AddProjectChildProps } from '..'
+import { SelectClientModal } from './SelectClientModal'
 
 interface Props {
   clients: NonNullable<AddProjectChildProps['clients']>
@@ -38,25 +34,12 @@ class SelectClient extends React.Component<Props> {
         >
           Select Client
         </Button>
-        <Dialog open={this.state.isModalOpen} onClose={this.handleCloseModal}>
-          <DialogTitle>Clients List</DialogTitle>
-          <List>
-            {clients.map(client => {
-              return (
-                <ListItem
-                  button
-                  key={client.id}
-                  onClick={this.selectClient(client.id)}
-                >
-                  <ListItemText
-                    primary={`${client.firstName} ${client.lastName}`}
-                    secondary={client.email}
-                  />
-                </ListItem>
-              )
-            })}
-          </List>
-        </Dialog>
+        <SelectClientModal
+          clients={clients}
+          isModalOpen={this.state.isModalOpen}
+          handleCloseModal={this.handleCloseModal}
+          selectClient={this.selectClient}
+        />
       </React.Fragment>
     )
   }

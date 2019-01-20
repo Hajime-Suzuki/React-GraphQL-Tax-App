@@ -36,8 +36,22 @@ const EDIT_CLIENT = gql`
   ${Fragments.CLIENT_FRAGMENT}
 `
 
+const UPDATE_CLIENT_PROJECT = gql`
+  mutation updateClientProject($clientId: String!, $projectId: String!) {
+    updateClientProject(clientId: $clientId, projectId: $projectId) {
+      client {
+        ...ClientFragment
+        streetAddress
+        postalCode
+        city
+      }
+    }
+  }
+`
+
 export const ClientQueries = {
   GET_CLIENTS_BY_USER,
   GET_SINGLE_CLIENT,
-  EDIT_CLIENT
+  EDIT_CLIENT,
+  UPDATE_CLIENT_PROJECT
 }

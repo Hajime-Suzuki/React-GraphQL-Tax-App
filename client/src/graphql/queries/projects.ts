@@ -55,12 +55,6 @@ const UPDATE_STATUS = gql`
   }
 `
 
-// client {
-//           ...ClientFragment
-//   streetAddress
-//   postalCode
-//   city
-// }
 const ADD_PROJECT = gql`
   mutation addProject($data: ProjectInput!) {
     addProject(data: $data) {
@@ -108,11 +102,7 @@ const UPDATE_INCOMES_EXPENSES = gql`
 `
 
 const UPDATE_BASIC_INFO = gql`
-  mutation updateBasicInfo(
-    $projectId: String!
-    $data: ProjectInput!
-    $clientId: String!
-  ) {
+  mutation updateBasicInfo($projectId: String!, $data: ProjectInput!) {
     updateProject(projectId: $projectId, data: $data) {
       success
       message
@@ -121,17 +111,8 @@ const UPDATE_BASIC_INFO = gql`
         ...BasicInfoFragment
       }
     }
-    updateClientProject(clientId: $clientId, projectId: $projectId) {
-      client {
-        ...ClientFragment
-        streetAddress
-        postalCode
-        city
-      }
-    }
   }
   ${Fragments.BASIC_INFO_FRAGMENT}
-  ${Fragments.CLIENT_FRAGMENT}
 `
 
 const DELETE_PROJECT = gql`

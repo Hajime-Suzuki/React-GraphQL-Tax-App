@@ -149,6 +149,35 @@ export namespace UpdateClient {
   } & ClientFragment.Fragment;
 }
 
+export namespace UpdateClientProject {
+  export type Variables = {
+    clientId: string;
+    projectId: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateClientProject: UpdateClientProject | null;
+  };
+
+  export type UpdateClientProject = {
+    __typename?: "ClientMutationResponse";
+
+    client: Client | null;
+  };
+
+  export type Client = {
+    __typename?: "Client";
+
+    streetAddress: string | null;
+
+    postalCode: string | null;
+
+    city: string | null;
+  } & ClientFragment.Fragment;
+}
+
 export namespace ClientFragment {
   export type Fragment = {
     __typename?: "Client";
@@ -332,6 +361,54 @@ export namespace UpdateClient {
     mutation updateClient($clientId: String!, $data: ClientInput!) {
       updateClient(clientId: $clientId, data: $data) {
         message
+        client {
+          ...ClientFragment
+          streetAddress
+          postalCode
+          city
+        }
+      }
+    }
+
+    ${ClientFragment.FragmentDoc}
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace UpdateClientProject {
+  export const Document = gql`
+    mutation updateClientProject($clientId: String!, $projectId: String!) {
+      updateClientProject(clientId: $clientId, projectId: $projectId) {
         client {
           ...ClientFragment
           streetAddress

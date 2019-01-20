@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
-import EditFormModal from '../../../../../../libs/forms/EditFormModal'
-import { IncomesAndExpenseFields } from '../../../../formComponents/IncomesAndExpenseFields'
+
 import { EditExpenseAndIncomesChildProps } from './EditIncomesAndExpenseFormContainer'
+import EditFormModal from 'src/libs/forms/EditFormModal'
+import { IncomesAndExpenseFields } from 'src/components/project/formComponents/IncomesAndExpenseFields'
 
 const CustomStyledForm: any = styled(Styles.Form)`
   .form-section {

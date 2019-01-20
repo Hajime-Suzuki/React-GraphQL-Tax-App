@@ -11,10 +11,11 @@ import {
   UpdateBasicInfo
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
-import { SingleProjectChildProps } from '../../..'
+
 import DeleteProjectModal from './DeleteProjectModal'
 import EditBasicInfoForm from './EditBasicInfoForm'
 import { ApolloError } from 'apollo-client'
+import { SingleProjectChildProps } from '../..';
 
 type BasicInfo = Omit<ProjectInput, 'client'>
 interface OwnProps {

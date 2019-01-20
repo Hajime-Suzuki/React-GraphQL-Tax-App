@@ -1,8 +1,8 @@
 import React from 'react'
-import { SingleProjectChildProps } from '../..'
 import EditBasicInfoFormContainer from './basicInfo/EditBasicInfoFormContainer'
 import EditExpenseAndIncomeFormContainer from './incomesAndExpeses/EditIncomesAndExpenseFormContainer'
-import { Typography } from '@material-ui/core'
+import EditProjectClientFormContainer from './client/EditProjectClientFormContainer'
+import { SingleProjectChildProps } from '..'
 
 export const EditModals: React.SFC<SingleProjectChildProps> = props => {
   const {
@@ -11,24 +11,30 @@ export const EditModals: React.SFC<SingleProjectChildProps> = props => {
     client
   } = props
 
-  return (
-    <React.Fragment>
-      {selectedModal === 'basic' && (
-        <EditBasicInfoFormContainer basic={basic} {...props} />
-      )}
-      {selectedModal === 'client' && <Typography>client</Typography>}
-      {selectedModal === 'incomes' && (
+  switch (selectedModal) {
+    case 'basic': {
+      return <EditBasicInfoFormContainer basic={basic} {...props} />
+    }
+    case 'client': {
+      return <EditProjectClientFormContainer client={client} {...props} />
+    }
+    case 'incomes': {
+      return (
         <EditExpenseAndIncomeFormContainer
           incomes={incomes as any}
           {...props}
         />
-      )}
-      {selectedModal === 'expenses' && (
+      )
+    }
+    case 'expenses': {
+      return (
         <EditExpenseAndIncomeFormContainer
           expenses={expenses as any}
           {...props}
         />
-      )}
-    </React.Fragment>
-  )
+      )
+    }
+    default:
+      return null
+  }
 }
