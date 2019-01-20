@@ -38,7 +38,7 @@ const InvoiceMetaSectionWrapper: any = styled(Grid)`
   }
 `
 
-const InvoiceMetaSection: React.SFC<SingleProjectChildProps> = ({
+const InvoiceMetaSection: React.FunctionComponent<SingleProjectChildProps> = ({
   project: { name, invoiceNumber, invoiceDate, status },
   handleDownload,
   pdfLoading,

@@ -14,7 +14,7 @@ const CustomIconButton: any = styled(IconButton)`
     font-size: 20px;
   }
 `
-export const EditIcon: React.SFC<Props> = props => {
+export const EditIcon: React.FunctionComponent<Props> = props => {
   return (
     <CustomIconButton onClick={props.onClick} {...props}>
       <Icon className="fas fa-pen icon" />

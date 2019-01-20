@@ -12,7 +12,7 @@ interface Props {
   client: Partial<SingleClient.GetSingleClient & ClientFragment.Fragment>
   handleOpenModal?: () => void
 }
-const ClientCard: React.SFC<Props> = ({ client, handleOpenModal }) => {
+const ClientCard: React.FunctionComponent<Props> = ({ client, handleOpenModal }) => {
   const {
     firstName,
     lastName,

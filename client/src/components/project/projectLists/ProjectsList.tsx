@@ -28,7 +28,7 @@ interface Props {
   sortProjectByInvoiceDate: () => void
 }
 
-const ProjectsList: React.SFC<Props> = props => {
+const ProjectsList: React.FunctionComponent<Props> = props => {
   const {
     projects,
     sortProjectsByProjectDate,

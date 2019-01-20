@@ -27,7 +27,7 @@ interface Props {
   selectedClient?: ClientFragment.Fragment
   unselectClient: () => void
 }
-const SelectedClientCard: React.SFC<Props> = ({
+const SelectedClientCard: React.FunctionComponent<Props> = ({
   selectedClient,
   unselectClient
 }) => {

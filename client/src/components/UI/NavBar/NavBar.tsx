@@ -43,7 +43,9 @@ interface Props {
   path: string
 }
 
-const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
+const NavBar: React.FunctionComponent<
+  Props & WithStyles<typeof styles>
+> = props => {
   const { classes, user, path, logout } = props
   return (
     <StyledAppBar position="static">
@@ -95,6 +97,12 @@ const NavBar: React.SFC<Props & WithStyles<typeof styles>> = props => {
         {user && (
           <Link to={routes.editUserProfile} className={classes.menuItem}>
             <Button>Edit Profile</Button>
+          </Link>
+        )}
+
+        {user && path.startsWith(routes.clientsList) && (
+          <Link to={routes.addClient} className={classes.menuItem}>
+            <Button>Add</Button>
           </Link>
         )}
         {user && (

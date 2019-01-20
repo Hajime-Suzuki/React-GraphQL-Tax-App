@@ -16,7 +16,7 @@ type Props = OwnProps &
   FormikProps<EditUserInfoFormValues> &
   MutationResult<UpdateUser.Mutation>
 
-const EditUserProfile: React.SFC<Props> = props => {
+const EditUserProfile: React.FunctionComponent<Props> = props => {
   const {
     userInfo,
     dirty,

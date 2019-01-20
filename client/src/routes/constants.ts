@@ -9,7 +9,9 @@ const routes = {
   editUserProfile: '/user/edit',
   clientsList: '/clients',
   singleClient: (clientId?: string) =>
-    clientId ? `/clients/${clientId}` : '/clients/:clientId'
+    clientId ? `/clients/${clientId}` : '/clients/:clientId',
+
+  addClient: '/clients/new'
 }
 
 export { routes }

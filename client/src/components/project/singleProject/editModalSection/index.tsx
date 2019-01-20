@@ -4,7 +4,9 @@ import EditExpenseAndIncomeFormContainer from './incomesAndExpeses/EditIncomesAn
 import EditProjectClientFormContainer from './client/EditProjectClientFormContainer'
 import { SingleProjectChildProps } from '..'
 
-export const EditModals: React.SFC<SingleProjectChildProps> = props => {
+export const EditModals: React.FunctionComponent<
+  SingleProjectChildProps
+> = props => {
   const {
     selectedModal,
     project: { incomes, expenses, ...basic },

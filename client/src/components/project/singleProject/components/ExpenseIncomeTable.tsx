@@ -19,7 +19,7 @@ interface Props {
   type: 'expenses' | 'incomes'
 }
 
-const ExpenseIncomeTable: React.SFC<Props> = props => {
+const ExpenseIncomeTable: React.FunctionComponent<Props> = props => {
   const { items, totalValues, type } = props
   const isIncome = type === 'incomes'
   return (

@@ -118,6 +118,26 @@ export namespace SingleClient {
   } & ClientFragment.Fragment;
 }
 
+export namespace AddClient {
+  export type Variables = {
+    data: ClientInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    addClient: AddClient | null;
+  };
+
+  export type AddClient = {
+    __typename?: "ClientMutationResponse";
+
+    client: Client | null;
+  };
+
+  export type Client = ClientFragment.Fragment;
+}
+
 export namespace UpdateClient {
   export type Variables = {
     clientId: string;
@@ -351,6 +371,51 @@ export namespace SingleClient {
       | undefined
   ) {
     return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
+      Document,
+      operationOptions
+    );
+  }
+}
+export namespace AddClient {
+  export const Document = gql`
+    mutation addClient($data: ClientInput!) {
+      addClient(data: $data) {
+        client {
+          ...ClientFragment
+        }
+      }
+    }
+
+    ${ClientFragment.FragmentDoc}
+  `;
+  export class Component extends React.Component<
+    Partial<ReactApollo.MutationProps<Mutation, Variables>>
+  > {
+    render() {
+      return (
+        <ReactApollo.Mutation<Mutation, Variables>
+          mutation={Document}
+          {...(this as any)["props"] as any}
+        />
+      );
+    }
+  }
+  export type Props<TChildProps = any> = Partial<
+    ReactApollo.MutateProps<Mutation, Variables>
+  > &
+    TChildProps;
+  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
+  export function HOC<TProps, TChildProps = any>(
+    operationOptions:
+      | ReactApollo.OperationOption<
+          TProps,
+          Mutation,
+          Variables,
+          Props<TChildProps>
+        >
+      | undefined
+  ) {
+    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
       Document,
       operationOptions
     );

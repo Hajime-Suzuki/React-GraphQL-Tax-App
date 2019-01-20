@@ -1,17 +1,17 @@
-import { Paper, TableRow } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 import * as React from 'react'
-import { GetClientsList } from 'src/graphql/components/clients'
 import { routes } from 'src/routes/constants'
 import { Styles } from 'src/styles/sharedStyles'
+import { ClientsListChildProps } from './ClientsListContainer'
+import AddClientFormModal from './AddClientForm'
 
-interface OwnProps {
-  clients: GetClientsList.GetClientsByUser[]
-}
-const ClientsList: React.SFC<OwnProps> = props => {
+const ClientsList: React.FunctionComponent<ClientsListChildProps> = props => {
   const { clients } = props
   return (
     <Styles.MainWrapper>

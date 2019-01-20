@@ -200,6 +200,8 @@ export namespace AddProject {
     message: string | null;
 
     project: Project;
+
+    client: Client | null;
   };
 
   export type Project = {
@@ -223,6 +225,8 @@ export namespace AddProject {
 
     name: string | null;
   } & PriceFragment.Fragment;
+
+  export type Client = ClientFragment.Fragment;
 }
 
 export namespace UpdateIncomesAndExpenses {
@@ -605,11 +609,15 @@ export namespace AddProject {
             ...PriceFragment
           }
         }
+        client {
+          ...ClientFragment
+        }
       }
     }
 
     ${BasicInfoFragment.FragmentDoc}
     ${PriceFragment.FragmentDoc}
+    ${ClientFragment.FragmentDoc}
   `;
   export class Component extends React.Component<
     Partial<ReactApollo.MutationProps<Mutation, Variables>>

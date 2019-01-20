@@ -21,6 +21,18 @@ const GET_SINGLE_CLIENT = gql`
   }
   ${Fragments.CLIENT_FRAGMENT}
 `
+
+const ADD_CLIENT = gql`
+  mutation addClient($data: ClientInput!) {
+    addClient(data: $data) {
+      client {
+        ...ClientFragment
+      }
+    }
+  }
+  ${Fragments.CLIENT_FRAGMENT}
+`
+
 const EDIT_CLIENT = gql`
   mutation updateClient($clientId: String!, $data: ClientInput!) {
     updateClient(clientId: $clientId, data: $data) {
@@ -50,6 +62,7 @@ const UPDATE_CLIENT_PROJECT = gql`
 `
 
 export const ClientQueries = {
+  ADD_CLIENT,
   GET_CLIENTS_BY_USER,
   GET_SINGLE_CLIENT,
   EDIT_CLIENT,

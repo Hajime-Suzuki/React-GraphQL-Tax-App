@@ -12,6 +12,6 @@ const LoadingIconComponent: any = styled(Icon)`
     color: ${theme.palette.secondary.main};
   }
 `
-export const LoadingIcon: React.SFC<Props> = ({ size }) => {
+export const LoadingIcon: React.FunctionComponent<Props> = ({ size }) => {
   return <LoadingIconComponent className="fa fa-spinner fa-spin" size={size} />
 }

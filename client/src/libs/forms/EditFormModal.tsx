@@ -20,7 +20,7 @@ interface Props {
   handleDeleteDialogOpen?: any
 }
 
-const EditFormModal: React.SFC<Props> = props => {
+const EditFormModal: React.FunctionComponent<Props> = props => {
   const {
     handleCloseModal,
     handleConfirm,

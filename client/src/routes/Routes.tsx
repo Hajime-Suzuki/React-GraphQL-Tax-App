@@ -12,6 +12,7 @@ import PrivateRoutes from './PrivateRoutes'
 import EditUserProfileContainer from 'src/components/userProfile/EditUserProfileContainer'
 import ClientsListContainer from 'src/components/client/ClientsListContainer'
 import SingleClientContainer from 'src/components/client/SingleClientContainer'
+import AddClientFormContainer from 'src/components/client/AddClientFormContainer'
 
 class Routes extends React.Component {
   render() {
@@ -50,6 +51,11 @@ class Routes extends React.Component {
               path={routes.clientsList}
               exact
               component={ClientsListContainer}
+            />
+            <PrivateRoutes
+              path={routes.addClient}
+              exact
+              component={AddClientFormContainer}
             />
             <PrivateRoutes
               path={routes.singleClient()}

@@ -5,7 +5,14 @@ import { LoadingIcon } from '../UI/LoadingIcon'
 import ClientsList from './ClientsList'
 
 type Props = GetClientsList.Props<PrivateRoutesChildProps>
+
+export interface ClientsListChildProps {
+  clients: GetClientsList.GetClientsByUser[]
+}
+
 class ClientsListContainer extends React.Component<Props> {
+  state = { isAddModalOpen: false }
+
   render() {
     const { data } = this.props
     if (!data) return null

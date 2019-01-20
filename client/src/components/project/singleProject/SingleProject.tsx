@@ -19,7 +19,9 @@ const ButtonWrapper: any = styled(Grid)`
   }
 `
 
-const SingleProject: React.SFC<SingleProjectChildProps> = props => {
+const SingleProject: React.FunctionComponent<
+  SingleProjectChildProps
+> = props => {
   const { handleOpenModal, client } = props
 
   return (

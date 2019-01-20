@@ -8,7 +8,7 @@ interface DropdownStatusProps {
   status: EditStatusChildProps['status']
 }
 
-export const EditStatusDropdown: React.SFC<
+export const EditStatusDropdown: React.FunctionComponent<
   DropdownStatusProps & EditStatusChildProps
 > = props => {
   if (props.data && props.data.loading) return <LoadingIcon size={25} />

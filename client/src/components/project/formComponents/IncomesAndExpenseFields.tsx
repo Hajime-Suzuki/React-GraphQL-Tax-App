@@ -12,7 +12,7 @@ interface IncomesAndExpenseFieldsProps {
   handleChange: (e: React.ChangeEvent<any>) => void
   values: Partial<ProjectInput>
 }
-export const IncomesAndExpenseFields: React.SFC<
+export const IncomesAndExpenseFields: React.FunctionComponent<
   IncomesAndExpenseFieldsProps
 > = props => {
   const { handleChange, values, type } = props
