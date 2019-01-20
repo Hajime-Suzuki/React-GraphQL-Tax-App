@@ -1,7 +1,8 @@
-import { FormikActions } from 'formik'
+import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
 import { MutationFn, MutationResult } from 'react-apollo'
 import { RouteComponentProps } from 'react-router'
+import { ClientInput } from 'src/graphql/@types/types'
 import {
   SingleClient as SingleC,
   UpdateClient
@@ -9,22 +10,20 @@ import {
 import { LoadingIcon } from '../UI/LoadingIcon'
 import SingleClient from './SingleClient'
 
+type UpdateClient = MutationFn<UpdateClient.Mutation, UpdateClient.Variables>
+
+type Client = SingleC.GetSingleClient
+
 type Props = SingleC.Props<RouteComponentProps<{ clientId: string }>>
 
 export type SingleClientChildProps = {
-  client: SingleC.GetSingleClient
-  isModalOpen: boolean
-  updateClient: MutationFn<UpdateClient.Mutation, UpdateClient.Variables>
-  mutationResultProps: MutationResult<UpdateClient.Mutation>
-  handleCloseModal: () => void
-  handleOpenModal: () => void
-  handleSubmit: (
-    update: SingleClientChildProps['updateClient']
-  ) => (
-    values: SingleC.GetSingleClient,
-    actions: FormikActions<SingleC.GetSingleClient>
-  ) => void
-} & RouteComponentProps<{ clientId: string }>
+  client: Client;
+  isModalOpen: boolean;
+  mutationResultProps: MutationResult<UpdateClient.Mutation>;
+  handleCloseModal: () => void;
+  handleOpenModal: () => void;
+} & RouteComponentProps<{ clientId: string }> &
+  FormikProps<Client>
 
 class SingleClientContainer extends React.Component<Props> {
   state = {
@@ -39,12 +38,12 @@ class SingleClientContainer extends React.Component<Props> {
     this.setState({ isModalOpen: true })
   }
 
-  handleSubmit: SingleClientChildProps['handleSubmit'] = update => async (
-    { id, ...values },
-    { resetForm }
+  handleSubmit = (update: UpdateClient) => async (
+    values: ClientInput & { id: string },
+    { resetForm }: FormikActions<Client>
   ) => {
     const res = await update({
-      variables: { clientId: id, data: values }
+      variables: { clientId: values.id, data: values }
     })
     const client = res && res.data!.updateClient!.client
 
@@ -66,14 +65,23 @@ class SingleClientContainer extends React.Component<Props> {
       <UpdateClient.Component>
         {(update, mutationResultProps) => {
           return (
-            <SingleClient
-              client={client}
-              updateClient={update}
-              mutationResultProps={mutationResultProps}
-              handleCloseModal={this.handleCloseModal}
-              handleOpenModal={this.handleOpenModal}
-              handleSubmit={this.handleSubmit}
-              isModalOpen={this.state.isModalOpen}
+            <Formik
+              onSubmit={this.handleSubmit(update)}
+              validateOnChange={false}
+              initialValues={client}
+              render={(formProps: FormikProps<Client>) => {
+                return (
+                  <SingleClient
+                    client={client}
+                    mutationResultProps={mutationResultProps}
+                    handleCloseModal={this.handleCloseModal}
+                    handleOpenModal={this.handleOpenModal}
+                    handleSubmit={this.handleSubmit}
+                    isModalOpen={this.state.isModalOpen}
+                    {...formProps}
+                  />
+                )
+              }}
             />
           )
         }}

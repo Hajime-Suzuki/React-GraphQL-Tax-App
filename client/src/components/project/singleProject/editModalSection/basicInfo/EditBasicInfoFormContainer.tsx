@@ -15,7 +15,7 @@ import { IRouterComponentProps } from 'src/routes/types'
 import DeleteProjectModal from './DeleteProjectModal'
 import EditBasicInfoForm from './EditBasicInfoForm'
 import { ApolloError } from 'apollo-client'
-import { SingleProjectChildProps } from '../..';
+import { SingleProjectChildProps } from '../..'
 
 type BasicInfo = Omit<ProjectInput, 'client'>
 interface OwnProps {
@@ -70,13 +70,12 @@ class EditBasicInfoFormContainer extends React.Component<
     >
   ) => async (values: ProjectInput) => {
     console.log(values)
-    // await updateProject({
-    //   variables: {
-    //     data: values,
-    //     projectId: this.props.match.params.id,
-    //     clientId: values.client && values.client.id
-    //   }
-    // })
+    await updateProject({
+      variables: {
+        data: values,
+        projectId: this.props.match.params.id
+      }
+    })
     this.props.handleCloseModal()
   }
 
