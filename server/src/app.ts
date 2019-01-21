@@ -5,9 +5,9 @@ import * as Pug from 'koa-pug'
 import * as Router from 'koa-router'
 import * as serve from 'koa-static'
 import passport from './passport/passport'
-import pdfRoutes from './routes/pdf'
-import projectRoutes from './routes/projects'
 import server from './server'
+import pdfRoutes from './services/invoice/routes'
+import projectRoutes from './seeds/projects'
 
 const app = new Koa()
 const router = new Router()
