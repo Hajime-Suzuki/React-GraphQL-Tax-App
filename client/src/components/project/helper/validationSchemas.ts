@@ -3,7 +3,7 @@ import * as yup from 'yup'
 const requiredMessage = 'This is required'
 const positiveMessage = 'This should be positive value'
 const numberMessage = 'This should be number'
-const emailMessage = 'This should be valid email'
+export const emailMessage = 'This should be valid email'
 
 const incomesExpensesBase = {
   name: yup.string().required(requiredMessage),
@@ -34,11 +34,11 @@ const clientShape = yup.object().shape({
 
 const basicInfoShape = {
   invoiceNumber: yup.string().required(requiredMessage),
-  invoiceDate: yup.string().nullable(),
+  invoiceDate: yup.string().nullable(true),
   name: yup.string().required(requiredMessage),
   projectDate: yup
     .string()
-    .nullable()
+    .nullable(true)
     .required(requiredMessage),
   incomes: incomesExpensesShape,
   expenses: incomesExpensesShape
@@ -46,7 +46,7 @@ const basicInfoShape = {
 
 const addProjectValidationSchema = yup.object().shape({
   ...basicInfoShape,
-  client: clientShape.nullable()
+  client: clientShape.nullable(true)
 })
 
 const editBasicInfoValidationSchema = yup.object().shape({
@@ -59,7 +59,8 @@ const editIncomesSchema = yup.object().shape({
 const editExpensesSchema = yup.object().shape({
   expenses: incomesExpensesShape
 })
-export const ValidationSchemas = {
+
+export const projectValidationSchemas = {
   addProjectValidationSchema,
   editBasicInfoValidationSchema,
   editIncomesSchema,

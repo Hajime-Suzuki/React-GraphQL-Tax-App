@@ -2,7 +2,7 @@ import { ApolloError } from 'apollo-client'
 import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { ValidationSchemas } from 'src/components/project/helper/validationSchemas'
+import { projectValidationSchemas } from 'src/components/project/helper/validationSchemas'
 import {
   ExpenseAndIncomeInput,
   UpdateIncomesAndExpenses
@@ -10,7 +10,7 @@ import {
 import { IRouterComponentProps } from 'src/routes/types'
 import { SingleProjectChildProps } from '../..'
 import EditExpenseAndIncomeForm from './EditIncomesAndExpenseForm'
-const { editIncomesSchema, editExpensesSchema } = ValidationSchemas
+const { editIncomesSchema, editExpensesSchema } = projectValidationSchemas
 
 export type EditExpenseAndIncomesChildProps = {
   type: 'incomes' | 'expenses';

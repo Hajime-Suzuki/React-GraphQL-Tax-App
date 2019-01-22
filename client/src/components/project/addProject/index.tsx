@@ -3,7 +3,7 @@ import * as React from 'react'
 import { ProjectActions } from 'src/graphql/actions/projects'
 import { GetClientsList } from 'src/graphql/components/clients'
 import { AddProject, ProjectInput } from 'src/graphql/components/projects'
-import { ValidationSchemas } from '../helper/validationSchemas'
+import { projectValidationSchemas } from '../helper/validationSchemas'
 import AddProjectForm from './AddProjectForm'
 import { getSelectedClient } from './selector'
 
@@ -27,7 +27,6 @@ class AddProjectContainer extends React.Component<GetClientsList.Props<{}>> {
         onCompleted={data => {
           ProjectActions.addNewProjectToList(data)
           ProjectActions.sortProjectsByProjectDate('-1')
-          // TODO: update client list
         }}
       >
         {(addProject, { data, error: mutationError, loading }) => {
@@ -47,7 +46,9 @@ class AddProjectContainer extends React.Component<GetClientsList.Props<{}>> {
               validateOnChange={false}
               validateOnBlur={false}
               initialValues={addProjectInitialValues}
-              validationSchema={ValidationSchemas.addProjectValidationSchema}
+              validationSchema={
+                projectValidationSchemas.addProjectValidationSchema
+              }
               render={(formProps: FormikProps<ProjectInput>) => (
                 <AddProjectForm
                   clients={clients}

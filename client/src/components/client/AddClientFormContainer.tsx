@@ -3,10 +3,11 @@ import * as React from 'react'
 import { MutationFn, MutationResult } from 'react-apollo'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { ClientAction } from 'src/graphql/actions/client'
-import { AddClient } from 'src/graphql/components/clients'
+import { AddClient, GetClientsList } from 'src/graphql/components/clients'
 import { ClientInput } from 'src/graphql/components/login'
 import { RoutesNames } from 'src/routes/constants'
 import AddClientForm from './AddClientForm'
+import { clientValidationSchemas } from './helpers/validation'
 
 type AddClient = MutationFn<AddClient.Mutation, AddClient.Variables>
 
@@ -27,12 +28,15 @@ class AddClientFormContainer extends React.PureComponent<RouteComponentProps> {
   }
   render() {
     return (
-      <AddClient.Component>
+      <AddClient.Component
+        refetchQueries={[{ query: GetClientsList.Document }]}
+      >
         {(mutation, mutationProps) => (
           <Formik
             initialValues={{ client: {} }}
             onSubmit={this.addClient(mutation)}
             validateOnChange={false}
+            validationSchema={clientValidationSchemas.addClientSchema}
             render={(formikProps: FormikProps<SubmitValue>) => (
               <AddClientForm mutationProps={mutationProps} {...formikProps} />
             )}
