@@ -1,12 +1,12 @@
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import * as React from 'react';
-import { withRouter } from 'react-router';
-import { renderFields } from 'src/libs/forms/renderFields/renderFields';
-import { Styles } from 'src/styles/sharedStyles';
-import EditFormModal from '../../libs/forms/EditFormModal';
-import ClientCard from '../shared/ClientCard';
-import { SingleClientChildProps } from './SingleClientContainer';
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import * as React from 'react'
+import { withRouter } from 'react-router'
+import { renderFields } from 'src/libs/forms/renderFields/renderFields'
+import { Styles } from 'src/styles/sharedStyles'
+import EditFormModal from '../../libs/forms/EditFormModal'
+import ClientCard from '../shared/ClientCard'
+import { SingleClientChildProps } from './SingleClientContainer'
 
 class SingleClient extends React.Component<SingleClientChildProps> {
   render() {

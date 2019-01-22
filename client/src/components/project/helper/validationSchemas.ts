@@ -5,7 +5,7 @@ const positiveMessage = 'This should be positive value'
 const numberMessage = 'This should be number'
 const emailMessage = 'This should be valid email'
 
-const incomesExpensesSchema = {
+const incomesExpensesBase = {
   name: yup.string().required(requiredMessage),
   price: yup
     .number()
@@ -19,9 +19,9 @@ const incomesExpensesSchema = {
     .typeError(numberMessage),
   taxRate: yup.mixed().oneOf([0, 6, 21])
 }
-
-const incomesShape = yup.object().shape(incomesExpensesSchema)
-const expenseShape = yup.object().shape(incomesExpensesSchema)
+const incomesExpensesShape = yup
+  .array()
+  .of(yup.object().shape(incomesExpensesBase))
 
 const clientShape = yup.object().shape({
   firstName: yup.string(),
@@ -32,7 +32,7 @@ const clientShape = yup.object().shape({
   postalCode: yup.string()
 })
 
-export const addProjectValidationSchema = yup.object().shape({
+const basicInfoShape = {
   invoiceNumber: yup.string().required(requiredMessage),
   invoiceDate: yup.string().nullable(),
   name: yup.string().required(requiredMessage),
@@ -40,7 +40,28 @@ export const addProjectValidationSchema = yup.object().shape({
     .string()
     .nullable()
     .required(requiredMessage),
-  incomes: yup.array().of(incomesShape),
-  expenses: yup.array().of(expenseShape),
+  incomes: incomesExpensesShape,
+  expenses: incomesExpensesShape
+}
+
+const addProjectValidationSchema = yup.object().shape({
+  ...basicInfoShape,
   client: clientShape.nullable()
 })
+
+const editBasicInfoValidationSchema = yup.object().shape({
+  ...basicInfoShape
+})
+
+const editIncomesSchema = yup.object().shape({
+  incomes: incomesExpensesShape
+})
+const editExpensesSchema = yup.object().shape({
+  expenses: incomesExpensesShape
+})
+export const ValidationSchemas = {
+  addProjectValidationSchema,
+  editBasicInfoValidationSchema,
+  editIncomesSchema,
+  editExpensesSchema
+}

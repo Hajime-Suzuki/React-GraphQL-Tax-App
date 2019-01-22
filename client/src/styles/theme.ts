@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 
 export const theme = createMuiTheme({
   typography: {
-    fontFamily: ['Share Tech Mono', 'Cuprum'].join(',')
+    fontFamily: ['Share Tech', 'Cuprum'].join(',')
   },
   palette: {
     primary: {

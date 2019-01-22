@@ -4,9 +4,9 @@ import * as React from 'react'
 import styled from 'styled-components'
 import { SingleProjectChildProps } from '.'
 import IncomesAndExpenseSection from './components/IncomesAndExpenseSection'
-import InvoiceMetaSection from './components/InvoiceMetaSection'
 import { EditModals } from './editModalSection'
 import ClientSection from './components/ClientSection'
+import InvoiceMetaSection from './components/InvoiceMetasection'
 
 const ProjectDetails: any = styled(Grid)`
   width: 100%;

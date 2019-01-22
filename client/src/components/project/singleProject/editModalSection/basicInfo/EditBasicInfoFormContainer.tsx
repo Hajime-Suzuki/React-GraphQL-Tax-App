@@ -1,7 +1,9 @@
+import { ApolloError } from 'apollo-client'
 import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
 import { MutationFn } from 'react-apollo'
 import { Omit, withRouter } from 'react-router'
+import { ValidationSchemas } from 'src/components/project/helper/validationSchemas'
 import { ProjectActions } from 'src/graphql/actions/projects'
 import { GetClientsList } from 'src/graphql/components/clients'
 import {
@@ -11,11 +13,9 @@ import {
   UpdateBasicInfo
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
-
+import { SingleProjectChildProps } from '../..'
 import DeleteProjectModal from './DeleteProjectModal'
 import EditBasicInfoForm from './EditBasicInfoForm'
-import { ApolloError } from 'apollo-client'
-import { SingleProjectChildProps } from '../..'
 
 type BasicInfo = Omit<ProjectInput, 'client'>
 interface OwnProps {
@@ -98,7 +98,9 @@ class EditBasicInfoFormContainer extends React.Component<
               <Formik
                 initialValues={basicInfo}
                 validateOnChange={false}
-                // validationSchema={addProjectValidationSchema}
+                validationSchema={
+                  ValidationSchemas.editBasicInfoValidationSchema
+                }
                 onSubmit={this.updateProject(updateProject)}
                 render={(formProps: FormikProps<BasicInfo>) => {
                   return (

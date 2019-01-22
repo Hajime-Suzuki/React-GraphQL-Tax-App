@@ -2,13 +2,15 @@ import { ApolloError } from 'apollo-client'
 import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
 import { withRouter } from 'react-router'
+import { ValidationSchemas } from 'src/components/project/helper/validationSchemas'
 import {
   ExpenseAndIncomeInput,
   UpdateIncomesAndExpenses
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
-import EditExpenseAndIncomeForm from './EditIncomesAndExpenseForm'
 import { SingleProjectChildProps } from '../..'
+import EditExpenseAndIncomeForm from './EditIncomesAndExpenseForm'
+const { editIncomesSchema, editExpensesSchema } = ValidationSchemas
 
 export type EditExpenseAndIncomesChildProps = {
   type: 'incomes' | 'expenses';
@@ -43,13 +45,16 @@ class EditExpenseAndIncomeFormContainer extends React.Component<
     } = this.props
 
     if (!incomes && !expenses) return null
-
     return (
       <UpdateIncomesAndExpenses.Component>
         {(updateProject, { error, loading }) => (
           <Formik
             initialValues={{ incomes, expenses }}
             validateOnChange={false}
+            validationOnBlur={true}
+            validationSchema={
+              !!incomes ? editIncomesSchema : editExpensesSchema
+            }
             onSubmit={async (values: FormValues) => {
               const res = await updateProject({
                 variables: { data: values, projectId: id }
