@@ -45,6 +45,7 @@ const NavBar: React.FunctionComponent<
 > = props => {
   const {
     loading,
+    navigateTo,
     openSideBar,
     menuAnchor,
     openMenu,
@@ -86,16 +87,18 @@ const NavBar: React.FunctionComponent<
                   <Button>Login</Button>
                 </Link>
               )}
-              {user && path.startsWith(RoutesNames.clientsList) && (
-                <Link to={RoutesNames.addClient} className={classes.menuItem}>
-                  <Button>Add</Button>
-                </Link>
-              )}
+
               {user && path.startsWith(RoutesNames.projects) && (
-                <Link to={RoutesNames.addProject} className={classes.menuItem}>
-                  <Button>Add</Button>
-                </Link>
+                <IconButton onClick={navigateTo(RoutesNames.addProject)}>
+                  <Icon className="fas fa-plus" />
+                </IconButton>
               )}
+              {user && path.startsWith(RoutesNames.clientsList) && (
+                <IconButton onClick={navigateTo(RoutesNames.addClient)}>
+                  <Icon className="fas fa-plus" />
+                </IconButton>
+              )}
+
               <Button onClick={openMenu}>More</Button>
               <Menu
                 id="simple-menu"
