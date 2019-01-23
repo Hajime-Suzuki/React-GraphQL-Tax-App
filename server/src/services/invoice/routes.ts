@@ -15,7 +15,7 @@ routes.get('/render', authMiddleware, async ctx => {
     publicPath: Constants.BASE_URL,
     ...data
   }
-  ctx.render('../services/invoice/src/index.pug', config)
+  ctx.render('./src/index.pug', config)
 })
 
 export default routes

@@ -17,11 +17,11 @@ app.use(bodyParser())
 app.use(passport.initialize())
 
 const pug = new Pug({
-  viewPath: `${__dirname}/pdf`
+  viewPath: `${__dirname}/services/invoice`
 })
 pug.use(app)
 
-app.use(serve(`${__dirname}/pdf`))
+app.use(serve(`${__dirname}/services/invoice`))
 
 app.use(async (ctx, next) => {
   try {

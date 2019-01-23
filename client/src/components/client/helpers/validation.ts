@@ -12,6 +12,16 @@ const addClientSchema = yup.object().shape({
   })
 })
 
+const editClientSchema = yup.object().shape({
+  firstName: yup.string().required(),
+  lastName: yup.string(),
+  email: yup.string().email(emailMessage),
+  phone: yup.string(),
+  address: yup.string(),
+  postalCode: yup.string()
+})
+
 export const clientValidationSchemas = {
-  addClientSchema
+  addClientSchema,
+  editClientSchema
 }

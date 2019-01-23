@@ -9,6 +9,7 @@ export const renderFormikTextField = (
 ) => {
   const errorMessage = getIn(errors, field.name)
   const isTouched = getIn(touched, field.name)
+
   if (field.value === null || field.value === undefined) field.value = ''
 
   return (

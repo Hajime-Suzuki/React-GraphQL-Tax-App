@@ -1,5 +1,5 @@
 @import './reset';
-@import url('https://fonts.googleapis.com/css?family=Share+Tech');
+
 html {
   -webkit-print-color-adjust: exact;
 }
@@ -18,7 +18,7 @@ $font_color: rgb(83, 83, 83);
 
 .wrapper {
   position: relative;
-  width: 210mm; // border: 1px solid gray;
+  width: 210mm;
   box-sizing: border-box;
   padding: $main_space_unit;
   padding-bottom: 0;

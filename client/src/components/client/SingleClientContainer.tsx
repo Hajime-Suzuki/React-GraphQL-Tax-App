@@ -12,6 +12,7 @@ import {
 import { LoadingIcon } from '../UI/LoadingIcon'
 import SingleClient from './SingleClient'
 import { RoutesNames } from 'src/routes/constants'
+import { clientValidationSchemas } from './helpers/validation'
 
 type Client = SingleC.GetSingleClient
 
@@ -83,7 +84,6 @@ class SingleClientContainer extends React.Component<Props> {
     if (error) return error.message
     if (loading) return <LoadingIcon />
     if (!client) return 'No client found'
-
     return (
       <UpdateClient.Component>
         {(edit, editMutationResult) => (
@@ -94,8 +94,9 @@ class SingleClientContainer extends React.Component<Props> {
               <Formik
                 onSubmit={this.handleSubmit(edit)}
                 validateOnChange={false}
-                initialValues={client}
-                render={(formProps: FormikProps<Client>) => (
+                validationSchema={clientValidationSchemas.addClientSchema}
+                initialValues={{ client }}
+                render={(formProps: FormikProps<SingleC.GetSingleClient>) => (
                   <SingleClient
                     client={client}
                     editMutationResult={editMutationResult}
