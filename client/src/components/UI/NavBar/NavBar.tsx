@@ -2,14 +2,16 @@ import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { RoutesNames } from '../../../routes/constants'
-import { GetUser } from 'src/graphql/components/login'
+import { NavBarChildProp } from './NavBarContainer'
+import SideBar from './SideBar'
 
 const StyledAppBar: any = styled(AppBar)`
   && {
@@ -31,89 +33,80 @@ const styles = theme =>
   createStyles({
     menuItem: {
       display: 'none',
+
       [theme.breakpoints.up('sm')]: {
-        display: 'block'
+        display: 'inline-block'
       }
     }
   })
 
-interface Props {
-  user?: GetUser.GetUser | null
-  logout?: () => void
-  path: string
-}
-
 const NavBar: React.FunctionComponent<
-  Props & WithStyles<typeof styles>
+  NavBarChildProp & WithStyles<typeof styles>
 > = props => {
-  const { classes, user, path, logout } = props
+  const {
+    loading,
+    openSideBar,
+    menuAnchor,
+    openMenu,
+    closeMenu,
+    path,
+    user,
+    logout,
+    classes
+  } = props
   return (
     <StyledAppBar position="static">
       <Toolbar disableGutters>
-        <IconButton>
-          <Icon className="fas fa-bars" />
-        </IconButton>
-        <Typography
-          className={['logo', classes.menuItem].join(' ')}
-          variant="headline"
-        >
-          Tax!
-        </Typography>
-        {!user && (
-          <Link to={RoutesNames.login} className={classes.menuItem}>
-            <Button>Login</Button>
-          </Link>
-        )}
+        {!loading && (
+          <React.Fragment>
+            <SideBar {...props} />
+            <IconButton onClick={openSideBar}>
+              <Icon className="fas fa-bars" />
+            </IconButton>
+            {!user && (
+              <Link to={RoutesNames.login} className={classes.menuItem}>
+                <Button>Login</Button>
+              </Link>
+            )}
 
-        {!user && (
-          <Link to={RoutesNames.signup} className={classes.menuItem}>
-            <Button>Signup</Button>
-          </Link>
-        )}
-
-        {user && (
-          <Typography>
-            {user.firstName} {user.lastName}
-          </Typography>
-        )}
-
-        {user && path.startsWith(RoutesNames.projects) && (
-          <Link to={RoutesNames.addProject} className={classes.menuItem}>
-            <Button>Add</Button>
-          </Link>
-        )}
-
-        {user && (
-          <Link to={RoutesNames.projects} className={classes.menuItem}>
-            <Button>Projects</Button>
-          </Link>
-        )}
-
-        {user && (
-          <Link to={RoutesNames.dashboard} className={classes.menuItem}>
-            <Button>DashBoard</Button>
-          </Link>
-        )}
-        {user && (
-          <Link to={RoutesNames.editUserProfile} className={classes.menuItem}>
-            <Button>Edit Profile</Button>
-          </Link>
-        )}
-
-        {user && path.startsWith(RoutesNames.clientsList) && (
-          <Link to={RoutesNames.addClient} className={classes.menuItem}>
-            <Button>Add</Button>
-          </Link>
-        )}
-        {user && (
-          <Link to={RoutesNames.clientsList} className={classes.menuItem}>
-            <Button>Clients</Button>
-          </Link>
-        )}
-        {user && (
-          <Button onClick={logout} className={classes.menuItem}>
-            Logout
-          </Button>
+            <div
+              style={{
+                width: '100%',
+                textAlign: 'right',
+                marginRight: '1em'
+              }}
+            >
+              {!user && (
+                <Link to={RoutesNames.signup} className={classes.menuItem}>
+                  <Button>Signup</Button>
+                </Link>
+              )}
+              {!user && (
+                <Link to={RoutesNames.login} className={classes.menuItem}>
+                  <Button>Login</Button>
+                </Link>
+              )}
+              {user && path.startsWith(RoutesNames.clientsList) && (
+                <Link to={RoutesNames.addClient} className={classes.menuItem}>
+                  <Button>Add</Button>
+                </Link>
+              )}
+              {user && path.startsWith(RoutesNames.projects) && (
+                <Link to={RoutesNames.addProject} className={classes.menuItem}>
+                  <Button>Add</Button>
+                </Link>
+              )}
+              <Button onClick={openMenu}>More</Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={menuAnchor}
+                open={!!menuAnchor}
+                onClose={closeMenu}
+              >
+                {user && <MenuItem onClick={logout}>Logout</MenuItem>}
+              </Menu>
+            </div>
+          </React.Fragment>
         )}
       </Toolbar>
     </StyledAppBar>
