@@ -94,8 +94,8 @@ class SingleClientContainer extends React.Component<Props> {
               <Formik
                 onSubmit={this.handleSubmit(edit)}
                 validateOnChange={false}
-                validationSchema={clientValidationSchemas.addClientSchema}
-                initialValues={{ client }}
+                validationSchema={clientValidationSchemas.editClientSchema}
+                initialValues={client}
                 render={(formProps: FormikProps<SingleC.GetSingleClient>) => (
                   <SingleClient
                     client={client}

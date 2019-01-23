@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-const requiredMessage = 'This is required'
+export const requiredMessage = 'This is required'
 const positiveMessage = 'This should be positive value'
 const numberMessage = 'This should be number'
 export const emailMessage = 'This should be valid email'
