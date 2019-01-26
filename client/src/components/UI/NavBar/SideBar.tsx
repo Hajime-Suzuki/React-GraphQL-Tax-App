@@ -19,7 +19,7 @@ const SideBar: React.FunctionComponent<NavBarChildProp> = props => {
       {menuItems.map(menu => {
         return (
           user && (
-            <ListItem button onClick={navigateTo(menu.path)}>
+            <ListItem key={menu.path} button onClick={navigateTo(menu.path)}>
               <ListItemText primary={menu.title} />
             </ListItem>
           )

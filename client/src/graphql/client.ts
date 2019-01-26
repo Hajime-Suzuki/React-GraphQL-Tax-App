@@ -36,7 +36,7 @@ const removeTypenameLink = new ApolloLink((operation, forward) => {
 })
 
 export const defaults = {
-  userId: JWT.userId
+  userId: JWT.getUserId()
 }
 
 const stateLink = withClientState({

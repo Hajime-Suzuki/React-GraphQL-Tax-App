@@ -2,23 +2,22 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as React from 'react'
-import { Login } from 'src/graphql/components/login'
 import { renderFormikTextField } from 'src/libs/forms/renderFields/renderTextField'
 import { StyledGridFormItem } from 'src/styles/forms'
+import { LoginSignupChildProps } from './LoginAndSignupFormContainer'
 
-interface Props {
-  login: Login.MutationFn
-}
-export default class LoginForm extends React.Component<Props> {
-  handleSubmit = ({ email, password }) => {
-    this.props.login({ variables: { email, password } })
-  }
+export default class LoginForm extends React.Component<
+  Required<Pick<LoginSignupChildProps, 'login'>>
+> {
+  // handleSubmit = (values) => {
+  //   this.props.login({ variables: { email, password } })
+  // }
 
   render = () => {
     return (
       <Formik
         initialValues={{ email: '', password: '' }}
-        onSubmit={this.handleSubmit}
+        onSubmit={this.props.login}
       >
         {({ isSubmitting }) => (
           <Form>

@@ -4,6 +4,9 @@ import { GetToken } from 'src/graphql/components/client/login'
 import { GetUser } from 'src/graphql/components/login'
 import { IRouterComponentProps } from 'src/routes/types'
 import NavBar from './NavBar'
+import { RoutesNames } from 'src/routes/constants'
+import { ApolloConsumer } from 'react-apollo'
+import ApolloClient from 'apollo-client'
 
 type Props = GetToken.Props<IRouterComponentProps>
 
@@ -39,18 +42,22 @@ class NavBarContainer extends React.Component<Props> {
     this.closeSideBar()
   }
 
-  handleLogout = async () => LoginActions.logout()
-  render() {
-    const userId = this.props.data!.userId
-    console.log({ userId })
+  handleLogout = async () => {
+    this.closeMenu()
+    await LoginActions.logout()
+    this.props.history.replace(RoutesNames.top)
+  }
 
+  render() {
     return (
       <GetUser.Component>
         {({ data, loading }) => {
+          const user = (data && data.getUser) || undefined
+          console.log({ user }, data && data.getUser)
           return (
             <NavBar
               loading={loading}
-              user={data && data.getUser}
+              user={user}
               path={this.props.location.pathname}
               logout={this.handleLogout}
               isSideBarOpen={this.state.isSideBarOpen}
@@ -68,4 +75,4 @@ class NavBarContainer extends React.Component<Props> {
   }
 }
 
-export default GetToken.HOC({})(NavBarContainer)
+export default NavBarContainer

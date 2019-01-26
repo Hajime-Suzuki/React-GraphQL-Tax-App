@@ -47,9 +47,9 @@ const NavBar: React.FunctionComponent<
     loading,
     navigateTo,
     openSideBar,
+    closeMenu,
     menuAnchor,
     openMenu,
-    closeMenu,
     path,
     user,
     logout,
@@ -58,16 +58,16 @@ const NavBar: React.FunctionComponent<
   return (
     <StyledAppBar position="static">
       <Toolbar disableGutters>
+        {console.log('nav: ', user)}
         {!loading && (
           <React.Fragment>
-            <SideBar {...props} />
-            <IconButton onClick={openSideBar}>
-              <Icon className="fas fa-bars" />
-            </IconButton>
-            {!user && (
-              <Link to={RoutesNames.login} className={classes.menuItem}>
-                <Button>Login</Button>
-              </Link>
+            {user && (
+              <React.Fragment>
+                <SideBar {...props} />
+                <IconButton onClick={openSideBar}>
+                  <Icon className="fas fa-bars" />
+                </IconButton>
+              </React.Fragment>
             )}
 
             <div
@@ -99,15 +99,19 @@ const NavBar: React.FunctionComponent<
                 </IconButton>
               )}
 
-              <Button onClick={openMenu}>More</Button>
-              <Menu
-                id="simple-menu"
-                anchorEl={menuAnchor}
-                open={!!menuAnchor}
-                onClose={closeMenu}
-              >
-                {user && <MenuItem onClick={logout}>Logout</MenuItem>}
-              </Menu>
+              {user && (
+                <React.Fragment>
+                  <Button onClick={openMenu}>More</Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={menuAnchor}
+                    open={!!menuAnchor}
+                    onClose={closeMenu}
+                  >
+                    {user && <MenuItem onClick={logout}>Logout</MenuItem>}
+                  </Menu>
+                </React.Fragment>
+              )}
             </div>
           </React.Fragment>
         )}

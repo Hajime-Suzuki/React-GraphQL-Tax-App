@@ -5,20 +5,20 @@ import * as React from 'react'
 import { SignUp } from 'src/graphql/components/signup'
 import { StyledGridFormItem } from 'src/styles/forms'
 import { renderFormikTextField } from 'src/libs/forms/renderFields/renderTextField'
+import { LoginSignupChildProps } from './LoginAndSignupFormContainer'
 
-interface Props {
-  signup: SignUp.MutationFn
-}
-export default class SignupForm extends React.Component<Props> {
-  handleSubmit = (values: any) => {
-    this.props.signup({ variables: { ...values } })
-  }
+export default class SignupForm extends React.Component<
+  LoginSignupChildProps['signup']
+> {
+  // handleSubmit = (values: any) => {
+  //   this.props.signup({ variables: { ...values } })
+  // }
 
   render = () => {
     return (
       <Formik
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
-        onSubmit={this.handleSubmit}
+        // onSubmit={this.props.login}
       >
         {({ isSubmitting }) => (
           <Form>

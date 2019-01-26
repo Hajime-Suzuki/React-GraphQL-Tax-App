@@ -10,12 +10,13 @@ const storeJwt = token => {
 
 const getJwt = () => localStorage.getItem('jwt')
 
-const token = getJwt()
-const userId: string | null = token ? decodeJwt(token).id : null
-
+const getUserId = (): string | null => {
+  const token = getJwt()
+  return token ? decodeJwt(token).id : null
+}
 export const JWT = {
   storeJwt,
   getJwt,
   decodeJwt,
-  userId
+  getUserId
 }
