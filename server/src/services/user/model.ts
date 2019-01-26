@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 import { Document, Model, model, Schema, models } from 'mongoose'
 import * as validator from 'validator'

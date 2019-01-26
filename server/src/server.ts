@@ -1,20 +1,29 @@
-import { ApolloServer, makeExecutableSchema, Config } from 'apollo-server-koa'
+import { ApolloServer, gql, makeExecutableSchema } from 'apollo-server-koa'
 import { Context } from 'koa'
 import { mergeTypes } from 'merge-graphql-schemas'
-import { IUser } from './services/@types/types'
-import { UserRepository } from './services/user/repository'
-import { ProjectRepository } from './services/project/repository'
-import { ClientRepository } from './services/client/repository'
-import { userSchema } from './services/user/schema'
-import { projectSchema } from './services/project/schema'
-import { expenseSchema } from './services/expense/schema'
-import { clientSchema } from './services/client/schema'
-import { userResolvers } from './services/user/resolvers'
-import { projectResolvers } from './services/project/resolvers'
-import { clientResolvers } from './services/client/resolvers'
 import { AuthCheck } from './helpers/auth'
-import { invoiceSchema } from './services/invoice/schema'
+import { IUser } from './services/@types/types'
+import { ClientRepository } from './services/client/repository'
+import { clientResolvers } from './services/client/resolvers'
+import { clientSchema } from './services/client/schema'
+import { expenseSchema } from './services/expense/schema'
 import { invoiceResolvers } from './services/invoice/resolvers'
+import { invoiceSchema } from './services/invoice/schema'
+import { ProjectRepository } from './services/project/repository'
+import { projectResolvers } from './services/project/resolvers'
+import { projectSchema } from './services/project/schema'
+import { UserRepository } from './services/user/repository'
+import { userResolvers } from './services/user/resolvers'
+import { userSchema } from './services/user/schema'
+
+const health = gql`
+  type Query {
+    health: String
+  }
+`
+const healthRes = {
+  Query: { health: () => 'OK!' }
+}
 
 export interface IContext {
   userId: string
@@ -28,7 +37,14 @@ export interface IContext {
 }
 
 export const typeDefs = mergeTypes(
-  [userSchema, projectSchema, expenseSchema, clientSchema, invoiceSchema],
+  [
+    userSchema,
+    projectSchema,
+    expenseSchema,
+    clientSchema,
+    invoiceSchema,
+    health
+  ],
   {
     all: true
   }
@@ -38,7 +54,8 @@ export const resolvers = [
   userResolvers,
   projectResolvers,
   clientResolvers,
-  invoiceResolvers
+  invoiceResolvers,
+  healthRes
 ] as any
 
 const server = new ApolloServer({

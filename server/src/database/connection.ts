@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv'
 import * as mongoose from 'mongoose'
-
 dotenv.config()
 let dbString = process.env.DB_STRING || 'mongodb://localhost:27017/Tax'
 if (process.env.NODE_ENV === 'test') {

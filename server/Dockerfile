@@ -8,7 +8,7 @@ RUN apk add yarn
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
-RUN yarn build 
+RUN yarn build
 
 #stage2
 FROM node:11.7-alpine
