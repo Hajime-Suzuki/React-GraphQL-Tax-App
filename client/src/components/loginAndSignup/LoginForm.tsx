@@ -5,21 +5,18 @@ import * as React from 'react'
 import { renderFormikTextField } from 'src/libs/forms/renderFields/renderTextField'
 import { StyledGridFormItem } from 'src/styles/forms'
 import { LoginSignupChildProps } from './LoginAndSignupFormContainer'
+import { Omit } from 'src/libs/types'
 
 export default class LoginForm extends React.Component<
-  Required<Pick<LoginSignupChildProps, 'login'>>
+  Required<Omit<LoginSignupChildProps, 'signup'>>
 > {
-  // handleSubmit = (values) => {
-  //   this.props.login({ variables: { email, password } })
-  // }
-
   render = () => {
     return (
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={this.props.login}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form>
             <StyledGridFormItem
               container
@@ -31,6 +28,7 @@ export default class LoginForm extends React.Component<
                 <Field
                   name="email"
                   label="email"
+                  required={true}
                   component={renderFormikTextField}
                 />
                 <ErrorMessage name="email" component="div" />
@@ -40,6 +38,7 @@ export default class LoginForm extends React.Component<
                   type="password"
                   name="password"
                   label="password"
+                  required={true}
                   component={renderFormikTextField}
                 />
                 <ErrorMessage name="password" component="div" />
@@ -49,7 +48,7 @@ export default class LoginForm extends React.Component<
                   variant="contained"
                   color="primary"
                   type="submit"
-                  // disabled={isSubmitting}
+                  disabled={this.props.loading}
                 >
                   submit
                 </Button>

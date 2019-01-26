@@ -1,13 +1,12 @@
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
-import { setContext } from 'apollo-link-context'
 import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
+import { BASE_URL } from 'src/constants'
+import { JWT } from 'src/libs/jwt'
 import { resolvers } from './resolvers'
 import typeDefs from './typeDefs'
-import { JWT } from 'src/libs/jwt'
-import { BASE_URL } from 'src/constants'
 
 const cache = new InMemoryCache()
 

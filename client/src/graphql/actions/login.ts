@@ -8,6 +8,7 @@ export const logout = async () => {
   } catch (e) {
     console.log(e)
   }
+  client.writeData({ data: { userId: null } })
 }
 
 export const onLogin = async (token: string) => {

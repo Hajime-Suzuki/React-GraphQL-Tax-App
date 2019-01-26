@@ -16,6 +16,7 @@ type Props = WithApolloClient<GetToken.Props<IRouterComponentProps>>
 export interface LoginSignupChildProps {
   signup?: (value: SignUp.Variables) => void
   login?: (values: LoginUserMutationArgs) => void
+  loading: boolean
 }
 
 class LoginAndSignupFormContainer extends React.Component<Props> {
@@ -30,10 +31,6 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
       <this.SignUpForm />
     )
   }
-
-  // handleComplete = (token: string) => {
-  //   LoginActions.onLogin(token)
-  // }
 
   handleLogin = (login: MutationFn<Login.Mutation, Login.Variables>) => async ({
     email,
@@ -59,8 +56,10 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
   SignUpForm = () => {
     return (
       <SignUp.Component>
-        {signup => {
-          return <SignupForm signup={this.handleSignup(signup)} />
+        {(signup, { loading }) => {
+          return (
+            <SignupForm signup={this.handleSignup(signup)} loading={loading} />
+          )
         }}
       </SignUp.Component>
     )
@@ -69,11 +68,11 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
   LoginForm = () => {
     return (
       <Login.Component>
-        {(login, { error }) => {
+        {(login, { error, loading }) => {
           return (
             <div style={{ textAlign: 'center' }}>
               {error && <p>{error.message}</p>}
-              <LoginForm login={this.handleLogin(login)} />
+              <LoginForm login={this.handleLogin(login)} loading={loading} />
             </div>
           )
         }}

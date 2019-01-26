@@ -5,9 +5,10 @@ import * as React from 'react'
 import { renderFormikTextField } from 'src/libs/forms/renderFields/renderTextField'
 import { StyledGridFormItem } from 'src/styles/forms'
 import { LoginSignupChildProps } from './LoginAndSignupFormContainer'
+import { Omit } from 'src/libs/types'
 
 export default class SignupForm extends React.Component<
-  Required<Pick<LoginSignupChildProps, 'signup'>>
+  Required<Omit<LoginSignupChildProps, 'login'>>
 > {
   render = () => {
     return (
@@ -15,7 +16,7 @@ export default class SignupForm extends React.Component<
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
         onSubmit={this.props.signup}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form>
             <StyledGridFormItem
               container
@@ -65,7 +66,7 @@ export default class SignupForm extends React.Component<
                   variant="contained"
                   color="primary"
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={this.props.loading}
                 >
                   submit
                 </Button>
