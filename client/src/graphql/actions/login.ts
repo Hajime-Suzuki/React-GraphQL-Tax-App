@@ -1,33 +1,25 @@
-import { client as CLI } from '../client'
 import { JWT } from 'src/libs/jwt'
-import { GetUser } from '../components/login'
+import { client } from '../client'
 
 export const logout = async () => {
-  console.log('logout!')
   localStorage.removeItem('jwt')
   try {
-    await CLI.resetStore()
+    await client.resetStore()
   } catch (e) {
     console.log(e)
   }
-  CLI.writeData({ data: { userId: null } })
-  CLI.writeQuery({ query: GetUser.Document, data: { getUser: null } })
-  console.log('clear')
 }
 
-export const onLogin = (token: string, client: any) => {
-  console.log('login')
-  // JWT.storeJwt(token)
-  console.log('store')
-  CLI.writeData({
-    data: { userId: JWT.decodeJwt(token).id }
-  })
-  console.log('write')
+export const onLogin = async (token: string) => {
+  JWT.storeJwt(token)
   try {
-    CLI.readQuery({ query: GetUser.Document })
+    await client.resetStore()
   } catch (e) {
     console.log(e)
   }
+  client.writeData({
+    data: { userId: JWT.decodeJwt(token).id }
+  })
 }
 
 export const LoginActions = {

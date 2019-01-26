@@ -15,14 +15,17 @@ const httpLink = new HttpLink({
   uri: `${BASE_URL}/graphql`
 })
 
-const authLink = setContext((_, { headers }) => {
+const authLink = new ApolloLink((operation, forward) => {
   const token = JWT.getJwt()
-  return {
+  operation.setContext((context: any) => ({
+    ...context,
     headers: {
-      ...headers,
+      ...context.headers,
       jwt: token || ''
     }
-  }
+  }))
+
+  return forward!(operation)
 })
 
 const removeTypenameLink = new ApolloLink((operation, forward) => {
@@ -48,7 +51,7 @@ const stateLink = withClientState({
 
 export const client = new ApolloClient({
   cache,
-  link: ApolloLink.from([authLink, stateLink, removeTypenameLink, httpLink])
+  link: ApolloLink.from([stateLink, removeTypenameLink, authLink, httpLink])
 })
 
 client.onResetStore(async () => stateLink.writeDefaults())

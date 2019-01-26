@@ -14,7 +14,7 @@ import { LoginUserMutationArgs } from 'src/graphql/@types/resolvers'
 type Props = WithApolloClient<GetToken.Props<IRouterComponentProps>>
 
 export interface LoginSignupChildProps {
-  signup?: () => void
+  signup?: (value: SignUp.Variables) => void
   login?: (values: LoginUserMutationArgs) => void
 }
 
@@ -46,17 +46,21 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
     }
   }
 
-  handleSignup = () => {}
+  handleSignup = (
+    signup: MutationFn<SignUp.Mutation, SignUp.Variables>
+  ) => async (value: SignUp.Variables) => {
+    const res = await signup({ variables: value })
+    const token = res && res.data && res.data.registerUser.token
+    if (token) {
+      LoginActions.onLogin(token)
+    }
+  }
 
   SignUpForm = () => {
     return (
-      <SignUp.Component
-      // onCompleted={({ registerUser }) =>
-      // this.handleComplete(registerUser.token)
-      // }
-      >
+      <SignUp.Component>
         {signup => {
-          return <SignupForm signup={signup} />
+          return <SignupForm signup={this.handleSignup(signup)} />
         }}
       </SignUp.Component>
     )
@@ -64,10 +68,7 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
 
   LoginForm = () => {
     return (
-      <Login.Component
-      // onCompleted={({ loginUser }) => this.handleComplete(loginUser.token)}
-      // refetchQueries={[{ query: GetUser.Document }]}
-      >
+      <Login.Component>
         {(login, { error }) => {
           return (
             <div style={{ textAlign: 'center' }}>
