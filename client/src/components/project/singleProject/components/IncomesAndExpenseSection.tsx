@@ -61,7 +61,8 @@ const getPriceOverview = (project: SingleProjectChildProps['project']) => {
     },
     expenses: {
       tax: expenses ? Calculations.getTaxTotal(expenses) : '-',
-      total: expenses ? Calculations.getSubtotal(expenses) : '-'
+      subtotal: expenses ? Calculations.getSubtotal(expenses) : '-',
+      total: expenses ? Calculations.getGrandTotal(expenses) : '-'
     }
   }
 }

@@ -1,15 +1,22 @@
 import * as React from 'react'
 import { SingleProjectChildProps } from '..'
 import { Calculations } from '../../helper/calculations'
+import { Currency } from 'src/libs/currency'
 
 class TotalAmounts extends React.Component<SingleProjectChildProps> {
   render() {
     const { incomes, expenses } = this.props.project
 
-    const incomesSubtotal = Calculations.getSubtotal(incomes || [])
-    const expensesSubtotal = Calculations.getSubtotal(expenses || [])
+    const incomesSubtotal = Calculations.getGrandTotal(incomes || [], {
+      format: false
+    })
+    const expensesSubtotal = Calculations.getGrandTotal(expenses || [], {
+      format: false
+    })
     return (
-      <div>Total: {Number(incomesSubtotal) - Number(expensesSubtotal)}</div>
+      <div>
+        Gross Total: {Currency.format(+incomesSubtotal - +expensesSubtotal)}
+      </div>
     )
   }
 }
