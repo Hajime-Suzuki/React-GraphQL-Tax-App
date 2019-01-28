@@ -6,6 +6,7 @@ import { AddProject, ProjectInput } from 'src/graphql/components/projects'
 import { projectValidationSchemas } from '../helper/validationSchemas'
 import AddProjectForm from './AddProjectForm'
 import { getSelectedClient } from './selector'
+import { ClientAction } from 'src/graphql/actions/client'
 
 export type AddProjectChildProps = {
   clients?: GetClientsList.GetClientsByUser[] | null;
@@ -25,8 +26,12 @@ class AddProjectContainer extends React.Component<GetClientsList.Props<{}>> {
     return (
       <AddProject.Component
         onCompleted={data => {
+          if (!data.addProject) return null
           ProjectActions.addNewProjectToList(data)
           ProjectActions.sortProjectsByProjectDate('-1')
+
+          const client = data.addProject.client
+          if (client) ClientAction.addClient(client)
         }}
       >
         {(addProject, { data, error: mutationError, loading }) => {

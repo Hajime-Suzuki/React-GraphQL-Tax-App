@@ -2,11 +2,9 @@ import React from 'react'
 import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'
 import { GetUser } from 'src/graphql/components/login'
+import { RoutesNames } from 'src/routes/constants'
 import { IRouterComponentProps } from 'src/routes/types'
 import NavBar from './NavBar'
-import { RoutesNames } from 'src/routes/constants'
-import { ApolloConsumer } from 'react-apollo'
-import ApolloClient from 'apollo-client'
 
 type Props = GetToken.Props<IRouterComponentProps>
 

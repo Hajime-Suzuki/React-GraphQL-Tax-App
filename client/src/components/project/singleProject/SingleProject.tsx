@@ -7,6 +7,7 @@ import IncomesAndExpenseSection from './components/IncomesAndExpenseSection'
 import { EditModals } from './editModalSection'
 import ClientSection from './components/ClientSection'
 import InvoiceMetaSection from './components/InvoiceMetasection'
+import TotalAmounts from './components/TotalAmounts'
 
 const ProjectDetails: any = styled(Grid)`
   width: 100%;
@@ -37,6 +38,7 @@ const SingleProject: React.FunctionComponent<
       <InvoiceMetaSection {...props} />
       <ClientSection {...props} />
       <hr style={{ width: '100%', margin: '2em 0' }} />
+      <TotalAmounts {...props} />
       <IncomesAndExpenseSection {...props} />
       <EditModals {...props} />
     </ProjectDetails>
