@@ -36,7 +36,7 @@ export const IncomesAndExpenseFields: React.FunctionComponent<
                       )
                     )}
                     {renderTaxRateField({
-                      value: item.taxRate || '',
+                      value: item.taxRate || 0,
                       name: `${type}.${i}.taxRate`,
                       id: 'tax-rate',
                       onChange: handleChange

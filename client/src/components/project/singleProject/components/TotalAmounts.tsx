@@ -2,6 +2,7 @@ import * as React from 'react'
 import { SingleProjectChildProps } from '..'
 import { Calculations } from '../../helper/calculations'
 import { Currency } from 'src/libs/currency'
+import Typography from '@material-ui/core/Typography'
 
 class TotalAmounts extends React.Component<SingleProjectChildProps> {
   render() {
@@ -14,9 +15,9 @@ class TotalAmounts extends React.Component<SingleProjectChildProps> {
       format: false
     })
     return (
-      <div>
+      <Typography variant="h6">
         Gross Total: {Currency.format(+incomesSubtotal - +expensesSubtotal)}
-      </div>
+      </Typography>
     )
   }
 }

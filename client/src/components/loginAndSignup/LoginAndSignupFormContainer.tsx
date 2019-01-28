@@ -1,15 +1,15 @@
 import * as React from 'react'
-import { WithApolloClient, MutationFn } from 'react-apollo'
+import { MutationFn, WithApolloClient } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
+import { LoginUserMutationArgs } from 'src/graphql/@types/resolvers'
 import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'
-import { Login, GetUser } from 'src/graphql/components/login'
+import { Login } from 'src/graphql/components/login'
 import { SignUp } from 'src/graphql/components/signup'
 import { IRouterComponentProps } from 'src/routes/types'
 import { RoutesNames } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
-import { LoginUserMutationArgs } from 'src/graphql/@types/resolvers'
 
 type Props = WithApolloClient<GetToken.Props<IRouterComponentProps>>
 

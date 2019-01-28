@@ -16,6 +16,13 @@ const defaultOptions: Options = {
   format: true
 }
 
+// TODO: update schema so that taxRate is not null
+const shouldReturnWithoutCalc = (item: ItemsWithTax) =>
+  !item.price ||
+  !item.quantity ||
+  item.taxRate === undefined ||
+  item.taxRate === null
+
 const getSubtotal = (items: Items[], { format }: Options = defaultOptions) => {
   const total = items.reduce((sum, item) => {
     if (!item.price || !item.quantity) return sum
@@ -29,8 +36,8 @@ const getTaxTotal = (
   { format }: Options = defaultOptions
 ) => {
   const total = items.reduce((sum, item) => {
-    if (!item.price || !item.quantity || !item.taxRate) return sum
-    return (sum += (+item.price * item.quantity * item.taxRate) / 100)
+    if (shouldReturnWithoutCalc(item)) return sum
+    return (sum += (+item.price! * item.quantity! * item.taxRate!) / 100)
   }, 0)
   return format ? Currency.format(total) : String(total)
 }
@@ -40,8 +47,8 @@ const getGrandTotal = (
   { format }: Options = defaultOptions
 ) => {
   const total = items.reduce((sum, item) => {
-    if (!item.price || !item.quantity || !item.taxRate) return sum
-    return (sum += +item.price * item.quantity * (1 + item.taxRate / 100))
+    if (shouldReturnWithoutCalc(item)) return sum
+    return (sum += +item.price! * item.quantity! * (1 + item.taxRate! / 100))
   }, 0)
   return format ? Currency.format(total) : String(total)
 }
