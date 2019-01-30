@@ -22,7 +22,7 @@ Project is the important part of this project, to which you add your incomes and
 
 ## Technologies
 
-#### Front End:
+#### Front end:
 
 ~~React + Redux + ImmutableJS.~~  
 Now, React (with Typescript) + GraphQL + Apollo Client are used.
@@ -39,3 +39,13 @@ I use [Pug](https://github.com/pugjs/pug) as template engine and render it on [P
 
 Since both GraphQL and TS are typed, I feel it's redundant to write GQL schema, and write TS types. So, this awesome [Graphql Code Generator](https://github.com/dotansimha/graphql-code-generator) takes care of generating type definition files! For client side, it generates React-Apollo components as well!  
 With this, I feel back-end and front-end are always in sync, since this tool generates typescript types for both side. This is so awesome!
+
+##### How To Run:
+
+server:
+If you have docker, run `docker-compose up` in the server root directly.
+
+If not, make `.env` file in the root directly and set `DB_STRING='mongodb_string_for_your_db'`. Then run `yarn install` to install all dependencies and run `yarn dev`.
+
+client:
+run `yarn start`
