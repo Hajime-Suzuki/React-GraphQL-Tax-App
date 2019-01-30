@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  server:
+    build: .
+    ports:
+      - 4000:4000
+    depends_on:
+      - mongo
+    environment:
+      DB_STRING: mongodb://mongo:27017/Tax
+
+  mongo:
+    image: mongo:3.6.10-stretch
