@@ -83,3 +83,4 @@ dist/
 **/*.http
 
 .netlify
+.vscode
