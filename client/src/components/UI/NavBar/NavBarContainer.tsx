@@ -51,7 +51,6 @@ class NavBarContainer extends React.Component<Props> {
       <GetUser.Component>
         {({ data, loading }) => {
           const user = (data && data.getUser) || undefined
-          console.log({ user }, data && data.getUser)
           return (
             <NavBar
               loading={loading}

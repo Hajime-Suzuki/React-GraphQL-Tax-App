@@ -58,7 +58,6 @@ const NavBar: React.FunctionComponent<
   return (
     <StyledAppBar position="static">
       <Toolbar disableGutters>
-        {console.log('nav: ', user)}
         {!loading && (
           <React.Fragment>
             {user && (

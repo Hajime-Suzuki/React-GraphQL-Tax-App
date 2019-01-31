@@ -1,34 +1,24 @@
-// import * as React from 'react'
-// import { connect } from 'react-redux'
-// import { getEntities } from '../../redux/modules/entities'
-// import DashBoard from './DashBoard'
-// import { LoadingIcon } from '../UI/LoadingIcon'
-// import Typography from '@material-ui/core/Typography'
+import * as React from 'react'
+import { LoadingIcon } from '../UI/LoadingIcon'
+import Typography from '@material-ui/core/Typography'
+import { GetProjectOverview } from 'src/graphql/components/projects'
+import DashBoard from './DashBoard'
 
-// class DashBoardComponent extends React.Component<any> {
-//   componentDidMount() {
-//     // this.props.getEntities()
-//   }
-//   render() {
-//     const { projects, fetching } = this.props
-//     // console.log(projects)
+type Props = GetProjectOverview.Props<{}>
+class DashBoardContainer extends React.Component<Props> {
+  render() {
+    const { data } = this.props
+    if (!data) return null
+    const { loading, error } = data
+    if (loading) return <LoadingIcon />
+    if (error) return <Typography>{error.message}</Typography>
+    if (!data.projects || (data.projects && !data.projects.length)) {
+      return (
+        <Typography variant="display1">You don't have a project yet</Typography>
+      )
+    }
+    return <DashBoard projects={data.projects} />
+  }
+}
 
-//     if (fetching) return <LoadingIcon />
-//     if (!projects.size)
-//       return (
-//         <Typography variant="display1">You don't have a project yet</Typography>
-//       )
-//     return <DashBoard projects={projects} />
-//   }
-// }
-
-// const mapSateToProps = state => ({
-//   userId: state.user.getId(),
-//   projects: state.entities.projects.getCurrentPeriodProjects(),
-//   fetching: state.entities._status.fetching
-// })
-
-// export default connect(
-//   mapSateToProps,
-//   { getEntities }
-// )(DashBoardComponent)
+export default GetProjectOverview.HOC({})(DashBoardContainer)

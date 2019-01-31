@@ -13,6 +13,7 @@ import EditUserProfileContainer from 'src/components/userProfile/EditUserProfile
 import ClientsListContainer from 'src/components/client/ClientsListContainer'
 import SingleClientContainer from 'src/components/client/SingleClientContainer'
 import AddClientFormContainer from 'src/components/client/AddClientFormContainer'
+import DashBoardContainer from 'src/components/dashBoard/DashBoardComponent'
 
 class Routes extends React.Component {
   render() {
@@ -25,7 +26,7 @@ class Routes extends React.Component {
             <PrivateRoutes
               path={RoutesNames.dashboard}
               exact
-              component={() => <h1>Dashboard</h1>}
+              component={DashBoardContainer}
             />
             <PrivateRoutes
               path={RoutesNames.projects}
