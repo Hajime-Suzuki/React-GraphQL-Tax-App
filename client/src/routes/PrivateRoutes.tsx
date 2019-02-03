@@ -21,16 +21,16 @@ class PrivateRoutes extends React.Component<Props> {
     const { data, component, ...rest } = this.props
     if (!data || data.loading) return null
 
-    const isNetworkErorr = data.error && data.error.networkError
+    const isNetworkError = data.error && data.error.networkError
     const isAuthError =
-      isNetworkErorr &&
-      (isNetworkErorr as any).result.errors
+      isNetworkError &&
+      (isNetworkError as any).result.errors
         .map((e: any) => e.extensions.code)
         .includes('UNAUTHENTICATED')
 
     if (isAuthError) return this.logoutAndRedirect()
 
-    if (isNetworkErorr) {
+    if (isNetworkError) {
       return 'Network Error'
     }
 
