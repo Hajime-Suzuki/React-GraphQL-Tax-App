@@ -21,7 +21,7 @@ describe('================= Project Resolvers =================', async () => {
     const projectData: IProjectInput = {
       name: 'test',
       incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
-      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
+      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 9 }],
       invoiceDate: new Date().toDateString(),
       projectDate: new Date().toDateString(),
       status: IInvoiceStatus.Invoice
@@ -72,7 +72,7 @@ describe('================= Project Resolvers =================', async () => {
       `)
 
       const res = await gqlTestCall<{
-        addProject: IMutationProjectResponse;
+        addProject: IMutationProjectResponse
       }>(addProjectMutation, { data: projectData })
 
       expect(res.data).toBeDefined()
@@ -84,7 +84,7 @@ describe('================= Project Resolvers =================', async () => {
     const projectData: IProjectInput = {
       name: 'test',
       incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
-      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
+      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 9 }],
       invoiceDate: new Date().toDateString(),
       projectDate: new Date().toDateString(),
       status: IInvoiceStatus.Invoice
@@ -119,7 +119,7 @@ describe('================= Project Resolvers =================', async () => {
       `)
 
       const res = await gqlTestCall<{
-        updateProject: IMutationProjectResponse;
+        updateProject: IMutationProjectResponse
       }>(updateProjectMutation, { projectId: '12', data: projectData })
       expect(res.data).toBeDefined()
       expect(res.data!.updateProject.success).toBe(true)
@@ -134,7 +134,7 @@ describe('================= Project Resolvers =================', async () => {
       invoiceNumber: '1234',
       user: '1234',
       incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
-      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
+      expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 9 }],
       invoiceDate: new Date().toDateString(),
       projectDate: new Date().toDateString(),
       status: IInvoiceStatus.Invoice

@@ -5,7 +5,7 @@ export const expenseSchema = gql`
     name: String
     price: String
     quantity: Int
-    taxRate: Int # 0 | 6 | 21
+    taxRate: Int # 0 | 9 | 21
     date: String
   }
   type ExpenseAndIncome {

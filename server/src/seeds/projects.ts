@@ -30,7 +30,7 @@ router.post('/populate', async ctx => {
 
   const futureLimit = addMonths(new Date(), 1)
   const pastLimit = subMonths(new Date(), 6)
-  const taxRates = [0, 6, 21]
+  const taxRates = [0, 9, 21]
 
   const projects = Array(projectAmount)
     .fill('')

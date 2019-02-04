@@ -32,11 +32,11 @@ describe('======= Helpers =======', () => {
 
     describe('Get Grand Total', () => {
       const data = [
-        { price: '12', quantity: 2, taxRate: 6 },
+        { price: '12', quantity: 2, taxRate: 9 },
         { price: '10', quantity: 2, taxRate: 21 }
       ]
       const data2 = [
-        { price: '', quantity: 2, taxRate: 6 },
+        { price: '', quantity: 2, taxRate: 9 },
         { price: '10', quantity: 2, taxRate: 21 }
       ]
 

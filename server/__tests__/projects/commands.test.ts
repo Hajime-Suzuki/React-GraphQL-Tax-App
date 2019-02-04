@@ -19,7 +19,7 @@ const projectInput: IProjectInput = {
   name: 'test',
   invoiceNumber: '1234',
   incomes: [{ name: 'income1', price: '12.22', quantity: 3, taxRate: 21 }],
-  expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 6 }],
+  expenses: [{ name: 'expense1', price: '9.97', quantity: 1, taxRate: 9 }],
   invoiceDate: new Date().toDateString(),
   projectDate: new Date().toDateString()
 }

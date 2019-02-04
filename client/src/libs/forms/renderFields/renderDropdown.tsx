@@ -23,7 +23,7 @@ export const renderTaxRateField = ({
       <InputLabel shrink>Tax Rate</InputLabel>
       <Select value={value} name={name} onChange={onChange} {...rest}>
         <MenuItem value={0}>0%</MenuItem>
-        <MenuItem value={6}>6%</MenuItem>
+        <MenuItem value={9}>9%</MenuItem>
         <MenuItem value={21}>21%</MenuItem>
       </Select>
     </div>

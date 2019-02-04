@@ -17,7 +17,7 @@ const incomesExpensesBase = {
     .positive(positiveMessage)
     .required(requiredMessage)
     .typeError(numberMessage),
-  taxRate: yup.mixed().oneOf([0, 6, 21])
+  taxRate: yup.mixed().oneOf([0, 9, 21])
 }
 const incomesExpensesShape = yup
   .array()

@@ -6,7 +6,7 @@ import {
   PriceFragment
 } from 'src/graphql/components/projects'
 
-type TaxRate = '0' | '6' | '21'
+type TaxRate = '0' | '9' | '21'
 
 const getIncomes = createSelector(
   [(projects: GetProjectOverview.Projects[]) => projects],
@@ -45,7 +45,7 @@ const getCategorizedIncome = createSelector(
       },
       {
         '0': [],
-        '6': [],
+        '9': [],
         '21': []
       } as { [key in TaxRate]: PriceFragment.Fragment[] }
     )
@@ -74,7 +74,7 @@ const getTotalValues = createSelector(
           incomes: '0',
           tax: '0'
         },
-        '6': {
+        '9': {
           incomes: '0',
           tax: '0'
         },

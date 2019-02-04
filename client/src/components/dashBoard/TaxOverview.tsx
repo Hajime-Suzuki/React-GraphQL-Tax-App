@@ -43,9 +43,9 @@ class TaxOverview extends React.PureComponent<DashBoardProps> {
         tax: grandTotalIncomes['21'].tax
       },
       {
-        taxRate: '6%',
-        incomes: grandTotalIncomes['6'].incomes,
-        tax: grandTotalIncomes['6'].tax
+        taxRate: '9%',
+        incomes: grandTotalIncomes['9'].incomes,
+        tax: grandTotalIncomes['9'].tax
       },
       {
         taxRate: '0%',
