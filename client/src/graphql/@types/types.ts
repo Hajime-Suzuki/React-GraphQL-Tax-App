@@ -100,6 +100,8 @@ export interface Query {
   getClientByProject?: Client | null;
 
   getSingleClient?: Client | null;
+
+  health?: string | null;
 }
 
 export interface User {

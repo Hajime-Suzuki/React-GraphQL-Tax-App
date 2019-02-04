@@ -1,5 +1,6 @@
 const format = (value?: string | number | null) => {
-  if (!value) return '-'
+  if (!value === null || !value === undefined) return '-'
+
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'EUR'

@@ -99,9 +99,13 @@ export namespace GetProjectOverview {
     __typename?: "Project";
 
     incomes: Incomes[] | null;
+
+    expenses: Expenses[] | null;
   } & BasicInfoFragment.Fragment;
 
   export type Incomes = PriceFragment.Fragment;
+
+  export type Expenses = PriceFragment.Fragment;
 }
 
 export namespace GetSingleProject {
@@ -446,6 +450,9 @@ export namespace GetProjectOverview {
       projects: getProjectsByUserId(userId: $userId) {
         ...BasicInfoFragment
         incomes {
+          ...PriceFragment
+        }
+        expenses {
           ...PriceFragment
         }
       }

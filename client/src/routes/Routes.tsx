@@ -13,7 +13,7 @@ import EditUserProfileContainer from 'src/components/userProfile/EditUserProfile
 import ClientsListContainer from 'src/components/client/ClientsListContainer'
 import SingleClientContainer from 'src/components/client/SingleClientContainer'
 import AddClientFormContainer from 'src/components/client/AddClientFormContainer'
-import DashBoardContainer from 'src/components/dashBoard/DashBoardComponent'
+import DashBoardContainer from 'src/components/dashBoard/DashBoardContainer'
 
 class Routes extends React.Component {
   render() {

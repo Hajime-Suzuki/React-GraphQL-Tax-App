@@ -8,6 +8,9 @@ const GET_PROJECT_OVERVIEW = gql`
       incomes {
         ...PriceFragment
       }
+      expenses {
+        ...PriceFragment
+      }
     }
   }
   ${Fragments.PRICE_FRAGMENT}

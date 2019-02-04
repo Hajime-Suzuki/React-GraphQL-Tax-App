@@ -101,6 +101,8 @@ export interface Query {
 
   getSingleClient?: Client | null;
 
+  health?: string | null;
+
   token: string;
 
   userId?: string | null;
@@ -428,6 +430,8 @@ export namespace QueryResolvers {
       Context
     >;
 
+    health?: HealthResolver<string | null, TypeParent, Context>;
+
     token?: TokenResolver<string, TypeParent, Context>;
 
     userId?: UserIdResolver<string | null, TypeParent, Context>;
@@ -479,6 +483,11 @@ export namespace QueryResolvers {
     clientId: string;
   }
 
+  export type HealthResolver<
+    R = string | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context>;
   export type TokenResolver<R = string, Parent = {}, Context = {}> = Resolver<
     R,
     Parent,

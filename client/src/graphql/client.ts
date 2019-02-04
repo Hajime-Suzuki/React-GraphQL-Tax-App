@@ -10,7 +10,9 @@ import typeDefs from './typeDefs'
 const SERVER_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://tax-app-hs.herokuapp.com'
-    : 'localhost:4000'
+    : 'http://localhost:4000'
+
+console.log(SERVER_URL)
 
 const cache = new InMemoryCache()
 const httpLink = new HttpLink({

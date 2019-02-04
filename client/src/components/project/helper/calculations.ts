@@ -48,6 +48,7 @@ const getGrandTotal = (
 ) => {
   const total = items.reduce((sum, item) => {
     if (shouldReturnWithoutCalc(item)) return sum
+
     return (sum += +item.price! * item.quantity! * (1 + item.taxRate! / 100))
   }, 0)
   return format ? Currency.format(total) : String(total)
