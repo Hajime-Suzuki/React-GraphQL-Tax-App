@@ -88,12 +88,13 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && yarn addRedirects",
     "test": "node scripts/test.js --env=jsdom",
     "gen:introspection": "apollo schema:download ./schema.json --endpoint=http://localhost:4000/graphql",
     "gen:compile": "tsc ./src/graphql/typeDefs.ts --outDir ./_gql-gen/ --target ES5",
     "gen": "gql-gen",
-    "gen:debug": "gql-gen DEBUG=true"
+    "gen:debug": "gql-gen DEBUG=true",
+    "addRedirects": "echo '/* /index.html 200' > ./build/_redirect"
   },
   "devDependencies": {
     "@types/graphql": "^14.0.3",
