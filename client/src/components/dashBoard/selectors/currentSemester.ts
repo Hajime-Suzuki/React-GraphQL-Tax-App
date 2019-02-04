@@ -32,17 +32,17 @@ const getTotalIncomes = createSelector(
 )
 
 // TODO: Change query to calculate incomes after deduct expenses.
-
 const getTaxTotal = createSelector(
   [getProject],
   projects => {
-    const grandTotalTax = projects.reduce((total, project) => {
-      total += project.expense
-        ? +Calculations.getGrandTotal(project.expenses, { format: false })
-        : 0
-      return total
-    }, 0)
-    return Currency.format(grandTotal)
+    return projects
+    // const grandTotalTax = projects.reduce((total, project) => {
+    //   total += project.expense
+    //     ? +Calculations.getGrandTotal(project.expenses, { format: false })
+    //     : 0
+    //   return total
+    // }, 0)
+    // return Currency.format(grandTotalTax)
   }
 )
 

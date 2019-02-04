@@ -3,15 +3,18 @@ import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
-import { BASE_URL } from 'src/constants'
 import { JWT } from 'src/libs/jwt'
 import { resolvers } from './resolvers'
 import typeDefs from './typeDefs'
 
-const cache = new InMemoryCache()
+const SERVER_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://tax-app-hs.herokuapp.com'
+    : 'localhost:4000'
 
+const cache = new InMemoryCache()
 const httpLink = new HttpLink({
-  uri: `${BASE_URL}/graphql`
+  uri: `${SERVER_URL}/graphql`
 })
 
 const authLink = new ApolloLink((operation, forward) => {
