@@ -8,14 +8,13 @@ import React from 'react'
 const menuItems = [
   { path: RoutesNames.projects, title: 'Projects' },
   { path: RoutesNames.dashboard, title: 'Dashboard' },
-  { path: RoutesNames.clientsList, title: 'Clients' },
-  { path: RoutesNames.editUserProfile, title: 'Profile' }
+  { path: RoutesNames.clientsList, title: 'Clients' }
 ]
 
 const SideBar: React.FunctionComponent<NavBarChildProp> = props => {
   const { user, isSideBarOpen: isOpen, closeSideBar, navigateTo } = props
   return (
-    <Drawer open={isOpen} onClose={closeSideBar}>
+    <Drawer open={isOpen} onClose={closeSideBar} anchor="right">
       {menuItems.map(menu => {
         return (
           user && (

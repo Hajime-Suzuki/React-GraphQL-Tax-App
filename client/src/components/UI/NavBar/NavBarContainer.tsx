@@ -37,6 +37,7 @@ class NavBarContainer extends React.Component<Props> {
 
   navigateTo = (url: string) => () => {
     this.props.history.push(url)
+    this.closeMenu()
     this.closeSideBar()
   }
 

@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography'
 
 class TopPage extends React.Component {
   render() {
-    return <Typography variant="display4">Top Page</Typography>
+    return <Typography variant="h4">React Graphql Tax App</Typography>
   }
 }
 

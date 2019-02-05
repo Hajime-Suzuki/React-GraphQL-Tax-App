@@ -59,16 +59,7 @@ const NavBar: React.FunctionComponent<
     <StyledAppBar position="static">
       <Toolbar disableGutters>
         {!loading && (
-          <React.Fragment>
-            {user && (
-              <React.Fragment>
-                <SideBar {...props} />
-                <IconButton onClick={openSideBar}>
-                  <Icon className="fas fa-bars" />
-                </IconButton>
-              </React.Fragment>
-            )}
-
+          <>
             <div
               style={{
                 width: '100%',
@@ -99,20 +90,38 @@ const NavBar: React.FunctionComponent<
               )}
 
               {user && (
-                <React.Fragment>
-                  <Button onClick={openMenu}>More</Button>
+                <>
+                  <SideBar {...props} />
+                  <IconButton onClick={openSideBar}>
+                    <Icon className="fas fa-bars" />
+                  </IconButton>
+                </>
+              )}
+              {user && (
+                <>
+                  <IconButton onClick={openMenu}>
+                    <Icon className="far fa-user-circle" />
+                  </IconButton>
+
                   <Menu
                     id="simple-menu"
                     anchorEl={menuAnchor}
                     open={!!menuAnchor}
                     onClose={closeMenu}
                   >
+                    {user && (
+                      <MenuItem
+                        onClick={navigateTo(RoutesNames.editUserProfile)}
+                      >
+                        Edit Profile
+                      </MenuItem>
+                    )}
                     {user && <MenuItem onClick={logout}>Logout</MenuItem>}
                   </Menu>
-                </React.Fragment>
+                </>
               )}
             </div>
-          </React.Fragment>
+          </>
         )}
       </Toolbar>
     </StyledAppBar>
