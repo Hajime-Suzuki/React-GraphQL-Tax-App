@@ -7,8 +7,9 @@ import {
 } from 'src/graphql/components/projects'
 
 type TaxRate = '0' | '9' | '21'
+type IncomeOrExpense = PriceFragment.Fragment
 
-const getIncomes = createSelector(
+const getProjects = createSelector(
   [(projects: GetProjectOverview.Projects[]) => projects],
   projects => {
     const now = Date.now()
@@ -20,11 +21,16 @@ const getIncomes = createSelector(
       return isAfter(date, quarterStart) && isBefore(date, quarterEnd)
     })
 
+    return filteredProjects
+  }
+)
+
+const getIncomes = createSelector(
+  [getProjects],
+  projects => {
     const incomes = [].concat(
-      ...(filteredProjects
-        .map(project => project.incomes)
-        .filter(v => !!v) as any)
-    ) as PriceFragment.Fragment[]
+      ...(projects.map(project => project.incomes).filter(v => !!v) as any)
+    ) as IncomeOrExpense[]
     return incomes
   }
 )
@@ -47,13 +53,13 @@ const getCategorizedIncome = createSelector(
         '0': [],
         '9': [],
         '21': []
-      } as { [key in TaxRate]: PriceFragment.Fragment[] }
+      } as Record<TaxRate, IncomeOrExpense[]>
     )
     return filteredIncomes
   }
 )
 
-const getTotalValues = createSelector(
+const getTotalIncomes = createSelector(
   [getCategorizedIncome],
   categorizedIncomes => {
     const categorizedTotal = (Object.keys(
@@ -82,12 +88,29 @@ const getTotalValues = createSelector(
           incomes: '0',
           tax: '0'
         }
-      } as { [key in TaxRate]: { incomes: string; tax: string } }
+      } as Record<TaxRate, { incomes: string; tax: string }>
     )
     return categorizedTotal
   }
 )
 
+const getTotalExpenses = createSelector(
+  getProjects,
+  projects => {
+    const expenses = [].concat(
+      ...(projects.map(p => p.expenses).filter(v => !!v) as any)
+    ) as IncomeOrExpense[]
+
+    const taxTotal = Calculations.getTaxTotal(expenses)
+    const grandTotal = Calculations.getGrandTotal(expenses)
+    return {
+      taxTotal,
+      grandTotal
+    }
+  }
+)
+
 export const currentQuarterProjectSelector = {
-  getTotalValues
+  getTotalIncomes,
+  getTotalExpenses
 }
