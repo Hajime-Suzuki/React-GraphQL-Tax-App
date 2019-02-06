@@ -1,5 +1,5 @@
 const cardPadding = '1em'
-const mainMargin = '5%'
+const mainMargin = '2em'
 export { cardPadding, mainMargin }
 
 export const COLOR = {

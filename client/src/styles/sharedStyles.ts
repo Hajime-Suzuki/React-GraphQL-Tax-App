@@ -12,7 +12,8 @@ const flexContainerProps = `
 `
 
 const AppWrapper = styled.div`
-  margin: ${mainMargin} 0;
+  margin: ${mainMargin} 5%;
+  /* overflow: hidden; */
 `
 
 const StyledLink: any = styled(Link)`

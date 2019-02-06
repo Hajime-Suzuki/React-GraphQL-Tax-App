@@ -32,11 +32,10 @@ const StyledAppBar: any = styled(AppBar)`
 const styles = theme =>
   createStyles({
     menuItem: {
-      display: 'none',
-
-      [theme.breakpoints.up('sm')]: {
-        display: 'inline-block'
-      }
+      // display: 'none',
+      // [theme.breakpoints.up('sm')]: {
+      //   display: 'inline-block'
+      // }
     }
   })
 
