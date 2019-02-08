@@ -70,6 +70,18 @@ export interface IExpenseAndIncomeInput {
   taxRate?: number | null;
 }
 
+export interface IGeneralExpenseInput {
+  name: string;
+
+  price: string;
+
+  quantity: number;
+
+  taxRate: number;
+
+  date: string;
+}
+
 export enum IInvoiceStatus {
   None = "none",
   Invoice = "invoice",
@@ -94,6 +106,8 @@ export interface IQuery {
   getProjectsByUserId: IProject[];
 
   getSingleProject?: IProject | null;
+
+  getGeneralExpenses?: IGeneralExpense[] | null;
 
   getClientsByUser?: IClient[] | null;
 
@@ -223,6 +237,8 @@ export interface IMutation {
 
   deleteProject?: IMutationProjectResponse | null;
 
+  addGeneralExpense: IAddGeneralExpensesResponse;
+
   addClient?: IClientMutationResponse | null;
 
   updateClient?: IClientMutationResponse | null;
@@ -258,6 +274,12 @@ export interface IMutationProjectResponse {
   project: IProject;
 
   client?: IClient | null;
+}
+
+export interface IAddGeneralExpensesResponse {
+  message?: string | null;
+
+  generalExpense?: IGeneralExpense | null;
 }
 
 export interface IClientMutationResponse {
@@ -315,6 +337,9 @@ export interface AddProjectMutationArgs {
 }
 export interface DeleteProjectMutationArgs {
   projectId: string;
+}
+export interface AddGeneralExpenseMutationArgs {
+  data: IGeneralExpenseInput;
 }
 export interface AddClientMutationArgs {
   data: IClientInput;
@@ -410,6 +435,12 @@ export namespace QueryResolvers {
       Context
     >;
 
+    getGeneralExpenses?: GetGeneralExpensesResolver<
+      IGeneralExpense[] | null,
+      TypeParent,
+      Context
+    >;
+
     getClientsByUser?: GetClientsByUserResolver<
       IClient[] | null,
       TypeParent,
@@ -454,6 +485,11 @@ export namespace QueryResolvers {
     projectId: string;
   }
 
+  export type GetGeneralExpensesResolver<
+    R = IGeneralExpense[] | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context>;
   export type GetClientsByUserResolver<
     R = IClient[] | null,
     Parent = {},
@@ -875,6 +911,12 @@ export namespace MutationResolvers {
       Context
     >;
 
+    addGeneralExpense?: AddGeneralExpenseResolver<
+      IAddGeneralExpensesResponse,
+      TypeParent,
+      Context
+    >;
+
     addClient?: AddClientResolver<
       IClientMutationResponse | null,
       TypeParent,
@@ -974,6 +1016,15 @@ export namespace MutationResolvers {
   > = Resolver<R, Parent, Context, DeleteProjectArgs>;
   export interface DeleteProjectArgs {
     projectId: string;
+  }
+
+  export type AddGeneralExpenseResolver<
+    R = IAddGeneralExpensesResponse,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, AddGeneralExpenseArgs>;
+  export interface AddGeneralExpenseArgs {
+    data: IGeneralExpenseInput;
   }
 
   export type AddClientResolver<
@@ -1114,6 +1165,32 @@ export namespace MutationProjectResponseResolvers {
   export type ClientResolver<
     R = IClient | null,
     Parent = IMutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace AddGeneralExpensesResponseResolvers {
+  export interface Resolvers<
+    Context = {},
+    TypeParent = IAddGeneralExpensesResponse
+  > {
+    message?: MessageResolver<string | null, TypeParent, Context>;
+
+    generalExpense?: GeneralExpenseResolver<
+      IGeneralExpense | null,
+      TypeParent,
+      Context
+    >;
+  }
+
+  export type MessageResolver<
+    R = string | null,
+    Parent = IAddGeneralExpensesResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type GeneralExpenseResolver<
+    R = IGeneralExpense | null,
+    Parent = IAddGeneralExpensesResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }

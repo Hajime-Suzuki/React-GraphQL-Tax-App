@@ -14,7 +14,8 @@ import { projectSchema } from './services/project/schema'
 import { UserRepository } from './services/user/repository'
 import { userResolvers } from './services/user/resolvers'
 import { userSchema } from './services/user/schema'
-import { expenseSchema } from './services/generalExpense/schema'
+import { generalExpenseSchema } from './services/generalExpense/schema'
+import { generalExpenseResolvers } from './services/generalExpense/resolvers'
 
 const health = gql`
   type Query {
@@ -40,7 +41,7 @@ export const typeDefs = mergeTypes(
   [
     userSchema,
     projectSchema,
-    expenseSchema,
+    generalExpenseSchema,
     clientSchema,
     invoiceSchema,
     health
@@ -55,6 +56,7 @@ export const resolvers = [
   projectResolvers,
   clientResolvers,
   invoiceResolvers,
+  generalExpenseResolvers,
   healthRes
 ] as any
 
