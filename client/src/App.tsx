@@ -1,9 +1,18 @@
 import * as React from 'react'
 import Routes from './routes/Routes'
+import { GetUser } from './graphql/components/login'
+import { LoadingIcon } from './components/UI/LoadingIcon'
 
 class App extends React.Component {
   public render() {
-    return <Routes />
+    return (
+      <GetUser.Component>
+        {({ loading }) => {
+          if (loading) return <LoadingIcon />
+          return <Routes />
+        }}
+      </GetUser.Component>
+    )
   }
 }
 

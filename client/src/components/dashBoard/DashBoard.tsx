@@ -19,6 +19,7 @@ class DashBoard extends React.Component<DashBoardProps> {
           items={genTaxOverviewsItems({ projects })}
           type="incomes"
         />
+        <div style={{ marginTop: '3em' }} />
         <Typography variant="subheading">Expense</Typography>
         <TaxOverview
           items={genExpenseOverviewItems({ projects })}
@@ -65,4 +66,5 @@ const genExpenseOverviewItems = ({ projects }: GetTableSettingsArgs) => {
     }
   ]
 }
+
 export default DashBoard

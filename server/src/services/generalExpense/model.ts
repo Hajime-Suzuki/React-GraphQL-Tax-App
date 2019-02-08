@@ -1,9 +1,9 @@
 import { Document, model, Model, Schema } from 'mongoose'
-import { IExpenseAndIncome } from '../@types/types'
+import { IGeneralExpense } from '../@types/types'
 
-type ExpenseDocument = IExpenseAndIncome & Document
+type ExpenseDocument = IGeneralExpense & Document
 
-const expenseSchema: Schema = new Schema({
+const generalExpenseSchema = new Schema({
   name: {
     type: String
   },
@@ -18,13 +18,16 @@ const expenseSchema: Schema = new Schema({
   taxRate: {
     type: Number
   },
+  date: {
+    type: Date
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
 })
 
-export const Expense: Model<ExpenseDocument> = model<ExpenseDocument>(
-  'Expense',
-  expenseSchema
+export const GeneralExpense: Model<ExpenseDocument> = model<ExpenseDocument>(
+  'GeneralExpense',
+  generalExpenseSchema
 )

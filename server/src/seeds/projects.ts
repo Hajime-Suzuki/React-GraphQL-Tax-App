@@ -2,9 +2,9 @@ import { addDays, addMonths, format, subMonths } from 'date-fns'
 import * as faker from 'faker'
 import * as Router from 'koa-router'
 import { Project } from '../services/project/model'
-import { Expense } from '../services/expense/Expense'
 import { UserRepository } from '../services/user/repository'
 import { User } from '../services/user/model'
+import { GeneralExpense } from '../services/generalExpense/model'
 
 const router = new Router({
   prefix: '/projects'
@@ -12,7 +12,7 @@ const router = new Router({
 
 router.post('/populate', async ctx => {
   await Project.deleteMany({})
-  await Expense.deleteMany({})
+  await GeneralExpense.deleteMany({})
 
   const email = (ctx as any).request.body.email
 
@@ -89,7 +89,7 @@ router.post('/populate', async ctx => {
   const expenses = Array(nonProjectExpensesAomunt)
     .fill('')
     .map(_ => {
-      return new Expense({
+      return new GeneralExpense({
         name: faker.commerce.productName(),
         price: faker.finance.amount(10, 300, 2),
         quantity: faker.random.number({ min: 1, max: 3 }),
@@ -103,7 +103,7 @@ router.post('/populate', async ctx => {
     })
 
   const savedProjects = await Project.insertMany(projects)
-  const savedExpenses = await Expense.insertMany(expenses)
+  const savedExpenses = await GeneralExpense.insertMany(expenses)
 
     // tslint:disable-next-line:align
   ; (newUser as any).expenses = savedExpenses

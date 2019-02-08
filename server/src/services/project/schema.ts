@@ -49,6 +49,19 @@ export const projectSchema = gql`
     incomes: [ExpenseAndIncomeInput!]
   }
 
+  type ExpenseAndIncome {
+    name: String
+    price: String
+    quantity: Int
+    taxRate: Int
+  }
+  input ExpenseAndIncomeInput {
+    name: String
+    price: String
+    quantity: Int
+    taxRate: Int
+  }
+
   scalar Date
   enum INVOICE_STATUS {
     none

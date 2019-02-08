@@ -7,6 +7,7 @@ import {
 } from 'src/routes/types'
 import { LoadingIcon } from '../../UI/LoadingIcon'
 import ProjectsList from './ProjectsList'
+import Typography from '@material-ui/core/Typography'
 
 type Props = PrivateRoutesChildProps & IRouterComponentProps
 
@@ -31,7 +32,12 @@ class ProjectsListContainer extends React.Component<Props> {
           if (loading) return <LoadingIcon />
           if (error) return <p>{error.message}</p>
           if (!data) return null
-
+          if (!data.projects.length)
+            return (
+              <Typography variant="display1">
+                You don't have a project yet
+              </Typography>
+            )
           return (
             <ProjectsList
               projects={data.projects}

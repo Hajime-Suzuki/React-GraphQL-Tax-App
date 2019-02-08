@@ -6,7 +6,6 @@ import { IUser } from './services/@types/types'
 import { ClientRepository } from './services/client/repository'
 import { clientResolvers } from './services/client/resolvers'
 import { clientSchema } from './services/client/schema'
-import { expenseSchema } from './services/expense/schema'
 import { invoiceResolvers } from './services/invoice/resolvers'
 import { invoiceSchema } from './services/invoice/schema'
 import { ProjectRepository } from './services/project/repository'
@@ -15,6 +14,7 @@ import { projectSchema } from './services/project/schema'
 import { UserRepository } from './services/user/repository'
 import { userResolvers } from './services/user/resolvers'
 import { userSchema } from './services/user/schema'
+import { expenseSchema } from './services/generalExpense/schema'
 
 const health = gql`
   type Query {
@@ -30,9 +30,9 @@ export interface IContext {
   token: string
   user: IUser
   dataSources: {
-    userRepository: typeof UserRepository;
-    projectRepository: typeof ProjectRepository;
-    clientRepository: typeof ClientRepository;
+    userRepository: typeof UserRepository
+    projectRepository: typeof ProjectRepository
+    clientRepository: typeof ClientRepository
   }
 }
 
