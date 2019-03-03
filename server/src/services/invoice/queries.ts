@@ -3,7 +3,7 @@ import { ProjectRepository } from '../project/repository'
 import { UserRepository } from '../user/repository'
 import { ClientRepository } from '../client/repository'
 import { IProject } from '../@types/types'
-import format = require('date-fns/fp/format/index.js')
+import { format } from 'date-fns'
 
 const getAllDataForInvoice = async (projectId: string, userId: string) => {
   const project = await ProjectRepository.findById(projectId)
@@ -27,7 +27,11 @@ const getAllDataForInvoice = async (projectId: string, userId: string) => {
   } = user.toObject()
 
   const { incomes, ...invoiceInfo }: IProject = project.toObject()
-  invoiceInfo.invoiceDate = format(invoiceInfo.invoiceDate, 'dd-MM-YYYY')
+
+  invoiceInfo.invoiceDate = format(
+    new Date(invoiceInfo.invoiceDate),
+    'dd-MM-YYYY'
+  )
 
   return {
     userInfo,
