@@ -1,9 +1,6 @@
 {
-  "extends": [
-    "tslint:recommended",
-    //  "tslint-react",
-    "tslint-config-prettier"
-  ],
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
     "jsx-no-multiline-js": false,
     "jsx-boolean-value": false,
@@ -16,7 +13,7 @@
     "ban-types": false,
     "array-type": false,
     "no-shadowed-variable": false, // temp
-    "no-console": false,
+    "no-console": true,
     "arrow-parens": [true, "ban-single-arg-parens"],
     "trailing-comma": false,
     "curly": false,

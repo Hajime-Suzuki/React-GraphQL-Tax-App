@@ -1,6 +1,7 @@
 import {
   RegisterUserMutationArgs,
-  UpdateUserMutationArgs
+  UpdateUserMutationArgs,
+  IUser
 } from '../../@types/types'
 import { UserRepository } from '../repository'
 
@@ -28,7 +29,16 @@ const updateUser = async (
   }
 }
 
+const changePassword = async (email: IUser['email'], newPassword: string) => {
+  const user = await UserRepository.findByCondition({ email })
+  if (!user) throw new Error('user not found')
+  user.password = newPassword
+  await user.save()
+  return user.generateToken()
+}
+
 export const UserCommands = {
   registerUser,
-  updateUser
+  updateUser,
+  changePassword
 }
