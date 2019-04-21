@@ -1,33 +1,30 @@
-import * as React from 'react'
+import React, { FC, useContext } from 'react'
 import { GetProjectOverview } from 'src/graphql/components/projects'
 import TaxOverview from './TaxOverview'
 import Typography from '@material-ui/core/Typography'
 import { currentQuarterProjectSelector as currentSemester } from './selectors/currentQuarter'
+import { SelectedQuarterContext } from './contexts'
 
 export interface DashBoardProps {
   projects: GetProjectOverview.Projects[]
 }
 
-class DashBoard extends React.Component<DashBoardProps> {
-  render = () => {
-    const { projects } = this.props
-    return (
-      <>
-        <Typography variant="h4">Overview</Typography>
-        <Typography variant="subheading">Incomes and Tax</Typography>
-        <TaxOverview
-          items={genTaxOverviewsItems({ projects })}
-          type="incomes"
-        />
-        <div style={{ marginTop: '3em' }} />
-        <Typography variant="subheading">Expense</Typography>
-        <TaxOverview
-          items={genExpenseOverviewItems({ projects })}
-          type="expenses"
-        />
-      </>
-    )
-  }
+const DashBoard: FC<DashBoardProps> = props => {
+  const { projects } = props
+  const { selectedQuarter } = useContext(SelectedQuarterContext)
+  return (
+    <>
+      <Typography variant="h4">Overview</Typography>
+      <Typography variant="subheading">Incomes and Tax</Typography>
+      <TaxOverview items={genTaxOverviewsItems({ projects })} type="incomes" />
+      <div style={{ marginTop: '3em' }} />
+      <Typography variant="subheading">Expense</Typography>
+      <TaxOverview
+        items={genExpenseOverviewItems({ projects })}
+        type="expenses"
+      />
+    </>
+  )
 }
 
 interface GetTableSettingsArgs {

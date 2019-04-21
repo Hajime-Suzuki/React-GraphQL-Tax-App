@@ -13,8 +13,8 @@ const getProjects = createSelector(
   [(projects: GetProjectOverview.Projects[]) => projects],
   projects => {
     const now = Date.now()
-    const quarterStart = startOfQuarter(now)
-    const quarterEnd = endOfQuarter(now)
+    const quarterStart = startOfQuarter('2019-01-01')
+    const quarterEnd = endOfQuarter('2019-01-01')
 
     const filteredProjects = projects.filter(project => {
       const date = project.invoiceDate
