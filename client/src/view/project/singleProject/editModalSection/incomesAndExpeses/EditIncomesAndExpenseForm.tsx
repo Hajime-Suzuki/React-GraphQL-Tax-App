@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { EditExpenseAndIncomesChildProps } from './EditIncomesAndExpenseFormContainer'
 import EditFormModal from 'src/libs/forms/EditFormModal'
-import { IncomesAndExpenseFields } from 'src/components/project/formComponents/IncomesAndExpenseFields'
+import { IncomesAndExpenseFields } from 'src/view/project/formComponents/IncomesAndExpenseFields'
 
 const CustomStyledForm: any = styled(Styles.Form)`
   .form-section {

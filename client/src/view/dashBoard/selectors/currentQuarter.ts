@@ -1,10 +1,10 @@
 import { endOfQuarter, isAfter, isBefore, startOfQuarter } from 'date-fns'
 import { createSelector } from 'reselect'
-import { Calculations } from 'src/components/project/helper/calculations'
 import {
   GetProjectOverview,
   PriceFragment
 } from 'src/graphql/components/projects'
+import { Calculations } from 'src/view/project/helper/calculations'
 
 type TaxRate = '0' | '9' | '21'
 type IncomeOrExpense = PriceFragment.Fragment

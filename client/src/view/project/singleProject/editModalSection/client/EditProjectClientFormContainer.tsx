@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { MutationFn, MutationResult } from 'react-apollo'
 import { withRouter } from 'react-router'
-import { LoadingIcon } from 'src/components/UI/LoadingIcon'
+import { LoadingIcon } from 'src/view/UI/LoadingIcon'
 import {
   GetClientsList,
   RemoveClientFromProject,

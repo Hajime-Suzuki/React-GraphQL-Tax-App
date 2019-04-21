@@ -2,7 +2,7 @@ import * as yup from 'yup'
 import {
   emailMessage,
   requiredMessage
-} from 'src/components/project/helper/validationSchemas'
+} from 'src/view/project/helper/validationSchemas'
 
 const addClientSchema = yup.object().shape({
   client: yup.object().shape({

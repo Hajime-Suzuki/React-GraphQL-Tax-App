@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import * as React from 'react'
-import { SelectClientModal } from 'src/components/project/addProject/components/SelectClientModal'
+import { SelectClientModal } from 'src/view/project/addProject/components/SelectClientModal'
 import { EditProjectClientChildProps } from './EditProjectClientFormContainer'
 
 class EditProjectClientForm extends React.Component<

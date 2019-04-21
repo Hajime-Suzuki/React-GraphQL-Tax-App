@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ClientFragment } from 'src/graphql/components/clients'
-import ClientCard from 'src/components/shared/ClientCard'
+import ClientCard from 'src/view/shared/ClientCard'
 import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 import styled from 'styled-components'

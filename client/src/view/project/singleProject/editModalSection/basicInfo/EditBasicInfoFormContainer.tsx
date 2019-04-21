@@ -3,7 +3,7 @@ import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
 import { MutationFn } from 'react-apollo'
 import { Omit, withRouter } from 'react-router'
-import { projectValidationSchemas } from 'src/components/project/helper/validationSchemas'
+import { projectValidationSchemas } from 'src/view/project/helper/validationSchemas'
 import { ProjectActions } from 'src/graphql/actions/projects'
 import { GetClientsList } from 'src/graphql/components/clients'
 import {

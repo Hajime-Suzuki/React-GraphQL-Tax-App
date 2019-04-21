@@ -2,7 +2,7 @@ import { ApolloError } from 'apollo-client'
 import { Formik, FormikProps } from 'formik'
 import * as React from 'react'
 import { withRouter } from 'react-router'
-import { projectValidationSchemas } from 'src/components/project/helper/validationSchemas'
+import { projectValidationSchemas } from 'src/view/project/helper/validationSchemas'
 import {
   ExpenseAndIncomeInput,
   UpdateIncomesAndExpenses

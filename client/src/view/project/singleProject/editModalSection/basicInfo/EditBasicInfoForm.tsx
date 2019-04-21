@@ -6,7 +6,7 @@ import { Styles } from 'src/styles/sharedStyles'
 import styled from 'styled-components'
 import { EditBasicInfoChildProps } from './EditBasicInfoFormContainer'
 import EditFormModal from 'src/libs/forms/EditFormModal'
-import { GenerateFieldSettings } from 'src/components/project/helper/genrateFieldSettings'
+import { GenerateFieldSettings } from 'src/view/project/helper/genrateFieldSettings'
 
 const CustomStyledForm: any = styled(Styles.Form)`
   .form-section {

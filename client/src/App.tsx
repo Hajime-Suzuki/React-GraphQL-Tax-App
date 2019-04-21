@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Routes from './routes/Routes'
 import { GetUser } from './graphql/components/login'
-import { LoadingIcon } from './components/UI/LoadingIcon'
+import { LoadingIcon } from './view/UI/LoadingIcon'
 
 class App extends React.Component {
   public render() {

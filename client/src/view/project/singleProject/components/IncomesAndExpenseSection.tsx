@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import React from 'react'
-import { EditIcon } from 'src/components/UI/EditIcon'
+import { EditIcon } from 'src/view/UI/EditIcon'
 import { SingleProjectChildProps } from '..'
 import { Calculations } from '../../helper/calculations'
 import { ModalType } from '../index'
