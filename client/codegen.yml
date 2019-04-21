@@ -41,7 +41,11 @@ generates:
     plugins:
       - typescript-common
       - typescript-client
+      - typescript
+      - typescript-operations
       - typescript-react-apollo
+    config:
+      withHooks: true
 
   ./src/graphql/components/userProfile.tsx:
     schema: http://localhost:4000/graphql

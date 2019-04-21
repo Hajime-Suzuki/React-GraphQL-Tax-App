@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^0.0.2",
+    "@graphql-codegen/typescript-react-apollo": "^1.1.0",
     "@material-ui/core": "^3.6.0",
     "@types/date-fns": "^2.6.0",
     "@types/immutable": "^3.8.7",
@@ -30,10 +31,11 @@
     "formik": "^1.3.2",
     "fs-extra": "3.0.1",
     "graphql": "^14.0.2",
-    "graphql-code-generator": "^0.14.5",
-    "graphql-codegen-typescript-client": "^0.14.5",
-    "graphql-codegen-typescript-common": "^0.14.5",
-    "graphql-codegen-typescript-server": "^0.14.5",
+    "graphql-code-generator": "^0.18.1",
+    "graphql-codegen-typescript-client": "^0.18.1",
+    "graphql-codegen-typescript-common": "^0.18.1",
+    "graphql-codegen-typescript-operations": "^0.19.0-alpha.80bb6e0c",
+    "graphql-codegen-typescript-server": "^0.18.1",
     "graphql-import": "0.7.0",
     "graphql-tag": "^2.10.0",
     "html-webpack-plugin": "2.29.0",
@@ -98,6 +100,8 @@
     "addRedirects": "echo '/* /index.html 200' > ./build/_redirect"
   },
   "devDependencies": {
+    "@graphql-codegen/typescript": "^1.1.0",
+    "@graphql-codegen/typescript-operations": "^1.1.0",
     "@types/graphql": "^14.0.3",
     "@types/jest": "^23.3.10",
     "@types/node": "^10.12.12",

@@ -1,73 +1,87 @@
+export type Maybe<T> = T | null;
+
 export interface UpdateUserInput {
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  password?: string | null;
+  password?: Maybe<string>;
 
-  btw?: string | null;
+  btw?: Maybe<string>;
 
-  kvk?: string | null;
+  kvk?: Maybe<string>;
 
-  iban?: string | null;
+  iban?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface ProjectInput {
-  invoiceNumber?: string | null;
+  invoiceNumber?: Maybe<string>;
 
-  invoiceDate?: string | null;
+  invoiceDate?: Maybe<string>;
 
-  projectDate?: string | null;
+  projectDate?: Maybe<string>;
 
-  name?: string | null;
+  name?: Maybe<string>;
 
-  date?: string | null;
+  date?: Maybe<string>;
 
-  status?: InvoiceStatus | null;
+  status?: Maybe<InvoiceStatus>;
 
-  client?: ClientInput | null;
+  client?: Maybe<ClientInput>;
 
-  expenses?: ExpenseAndIncomeInput[] | null;
+  expenses?: Maybe<ExpenseAndIncomeInput[]>;
 
-  incomes?: ExpenseAndIncomeInput[] | null;
+  incomes?: Maybe<ExpenseAndIncomeInput[]>;
 }
 
 export interface ClientInput {
-  id?: string | null;
+  id?: Maybe<string>;
 
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface ExpenseAndIncomeInput {
-  name?: string | null;
+  name?: Maybe<string>;
 
-  price?: string | null;
+  price?: Maybe<string>;
 
-  quantity?: number | null;
+  quantity?: Maybe<number>;
 
-  taxRate?: number | null;
+  taxRate?: Maybe<number>;
+}
+
+export interface GeneralExpenseInput {
+  name: string;
+
+  price: string;
+
+  quantity: number;
+
+  taxRate: number;
+
+  date: string;
 }
 
 export enum InvoiceStatus {
@@ -98,9 +112,9 @@ export namespace GetProjectOverview {
   export type Projects = {
     __typename?: "Project";
 
-    incomes: Incomes[] | null;
+    incomes: Maybe<Incomes[]>;
 
-    expenses: Expenses[] | null;
+    expenses: Maybe<Expenses[]>;
   } & BasicInfoFragment.Fragment;
 
   export type Incomes = PriceFragment.Fragment;
@@ -116,9 +130,9 @@ export namespace GetSingleProject {
   export type Query = {
     __typename?: "Query";
 
-    project: Project | null;
+    project: Maybe<Project>;
 
-    client: Client | null;
+    client: Maybe<Client>;
   };
 
   export type Project = {
@@ -126,31 +140,31 @@ export namespace GetSingleProject {
 
     invoiceNumber: string;
 
-    incomes: Incomes[] | null;
+    incomes: Maybe<Incomes[]>;
 
-    expenses: Expenses[] | null;
+    expenses: Maybe<Expenses[]>;
   } & BasicInfoFragment.Fragment;
 
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
-    name: string | null;
+    name: Maybe<string>;
   } & PriceFragment.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
-    name: string | null;
+    name: Maybe<string>;
   } & PriceFragment.Fragment;
 
   export type Client = {
     __typename?: "Client";
 
-    streetAddress: string | null;
+    streetAddress: Maybe<string>;
 
-    postalCode: string | null;
+    postalCode: Maybe<string>;
 
-    city: string | null;
+    city: Maybe<string>;
   } & ClientFragment.Fragment;
 }
 
@@ -171,7 +185,7 @@ export namespace UpdateStatus {
 
     success: boolean;
 
-    message: string | null;
+    message: Maybe<string>;
 
     project: Project;
   };
@@ -193,7 +207,7 @@ export namespace AddProject {
   export type Mutation = {
     __typename?: "Mutation";
 
-    addProject: AddProject | null;
+    addProject: Maybe<AddProject>;
   };
 
   export type AddProject = {
@@ -201,11 +215,11 @@ export namespace AddProject {
 
     success: boolean;
 
-    message: string | null;
+    message: Maybe<string>;
 
     project: Project;
 
-    client: Client | null;
+    client: Maybe<Client>;
   };
 
   export type Project = {
@@ -213,21 +227,21 @@ export namespace AddProject {
 
     invoiceNumber: string;
 
-    incomes: Incomes[] | null;
+    incomes: Maybe<Incomes[]>;
 
-    expenses: Expenses[] | null;
+    expenses: Maybe<Expenses[]>;
   } & BasicInfoFragment.Fragment;
 
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
-    name: string | null;
+    name: Maybe<string>;
   } & PriceFragment.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
-    name: string | null;
+    name: Maybe<string>;
   } & PriceFragment.Fragment;
 
   export type Client = ClientFragment.Fragment;
@@ -250,7 +264,7 @@ export namespace UpdateIncomesAndExpenses {
 
     success: boolean;
 
-    message: string | null;
+    message: Maybe<string>;
 
     project: Project;
   };
@@ -260,21 +274,21 @@ export namespace UpdateIncomesAndExpenses {
 
     id: string;
 
-    incomes: Incomes[] | null;
+    incomes: Maybe<Incomes[]>;
 
-    expenses: Expenses[] | null;
+    expenses: Maybe<Expenses[]>;
   };
 
   export type Incomes = {
     __typename?: "ExpenseAndIncome";
 
-    name: string | null;
+    name: Maybe<string>;
   } & PriceFragment.Fragment;
 
   export type Expenses = {
     __typename?: "ExpenseAndIncome";
 
-    name: string | null;
+    name: Maybe<string>;
   } & PriceFragment.Fragment;
 }
 
@@ -295,7 +309,7 @@ export namespace UpdateBasicInfo {
 
     success: boolean;
 
-    message: string | null;
+    message: Maybe<string>;
 
     project: Project;
   };
@@ -315,13 +329,13 @@ export namespace DeleteProject {
   export type Mutation = {
     __typename?: "Mutation";
 
-    deleteProject: DeleteProject | null;
+    deleteProject: Maybe<DeleteProject>;
   };
 
   export type DeleteProject = {
     __typename?: "MutationProjectResponse";
 
-    message: string | null;
+    message: Maybe<string>;
 
     project: Project;
   };
@@ -341,15 +355,15 @@ export namespace DownloadInvoice {
   export type Mutation = {
     __typename?: "Mutation";
 
-    downloadInvoice: DownloadInvoice | null;
+    downloadInvoice: Maybe<DownloadInvoice>;
   };
 
   export type DownloadInvoice = {
     __typename?: "GenerateInvoiceResponse";
 
-    message: string | null;
+    message: Maybe<string>;
 
-    data: Blob | null;
+    data: Maybe<Blob>;
   };
 }
 
@@ -359,13 +373,13 @@ export namespace ClientFragment {
 
     id: string;
 
-    firstName: string | null;
+    firstName: Maybe<string>;
 
-    lastName: string | null;
+    lastName: Maybe<string>;
 
-    email: string | null;
+    email: Maybe<string>;
 
-    phone: string | null;
+    phone: Maybe<string>;
   };
 }
 
@@ -373,11 +387,11 @@ export namespace PriceFragment {
   export type Fragment = {
     __typename?: "ExpenseAndIncome";
 
-    price: string | null;
+    price: Maybe<string>;
 
-    quantity: number | null;
+    quantity: Maybe<number>;
 
-    taxRate: number | null;
+    taxRate: Maybe<number>;
   };
 }
 
@@ -389,14 +403,469 @@ export namespace BasicInfoFragment {
 
     name: string;
 
-    projectDate: Date | null;
+    projectDate: Maybe<Date>;
 
-    invoiceDate: Date | null;
+    invoiceDate: Maybe<Date>;
 
     status: InvoiceStatus;
   };
 }
 
+type Maybe<T> = T | null;
+export type AddGeneralExpensesResponse = {
+  message?: Maybe<string>;
+  generalExpense?: Maybe<GeneralExpense>;
+};
+
+export type Blob = any;
+
+export type Client = {
+  id: string;
+  firstName?: Maybe<string>;
+  lastName?: Maybe<string>;
+  email?: Maybe<string>;
+  phone?: Maybe<string>;
+  user?: Maybe<string>;
+  projects?: Maybe<Array<string>>;
+  streetAddress?: Maybe<string>;
+  postalCode?: Maybe<string>;
+  city?: Maybe<string>;
+};
+
+export type ClientInput = {
+  id: Maybe<string>;
+  firstName: Maybe<string>;
+  lastName: Maybe<string>;
+  email: Maybe<string>;
+  phone: Maybe<string>;
+  streetAddress: Maybe<string>;
+  postalCode: Maybe<string>;
+  city: Maybe<string>;
+};
+
+export type ClientMutationResponse = {
+  message?: Maybe<string>;
+  client?: Maybe<Client>;
+};
+
+export type Date = any;
+
+export type ExpenseAndIncome = {
+  name?: Maybe<string>;
+  price?: Maybe<string>;
+  quantity?: Maybe<number>;
+  taxRate?: Maybe<number>;
+};
+
+export type ExpenseAndIncomeInput = {
+  name: Maybe<string>;
+  price: Maybe<string>;
+  quantity: Maybe<number>;
+  taxRate: Maybe<number>;
+};
+
+export type GeneralExpense = {
+  name: string;
+  price: string;
+  quantity: number;
+  taxRate: number;
+  date: string;
+  user: string;
+};
+
+export type GeneralExpenseInput = {
+  name: string;
+  price: string;
+  quantity: number;
+  taxRate: number;
+  date: string;
+};
+
+export type GenerateInvoiceResponse = {
+  message?: Maybe<string>;
+  data?: Maybe<Blob>;
+};
+
+export enum Invoice_Status {
+  None = "none",
+  Invoice = "invoice",
+  Paid = "paid"
+}
+
+export type Mutation = {
+  registerUser: RegisterResponse;
+  loginUser: RegisterResponse;
+  updateUser: UpdateUserResponse;
+  changePassword: RegisterResponse;
+  updateProject: MutationProjectResponse;
+  addProject?: Maybe<MutationProjectResponse>;
+  deleteProject?: Maybe<MutationProjectResponse>;
+  addGeneralExpense: AddGeneralExpensesResponse;
+  addClient?: Maybe<ClientMutationResponse>;
+  updateClient?: Maybe<ClientMutationResponse>;
+  updateClientProject?: Maybe<ClientMutationResponse>;
+  removeClientFromProject?: Maybe<ClientMutationResponse>;
+  deleteClient?: Maybe<ClientMutationResponse>;
+  downloadInvoice?: Maybe<GenerateInvoiceResponse>;
+};
+
+export type MutationRegisterUserArgs = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+
+export type MutationLoginUserArgs = {
+  email: string;
+  password: string;
+};
+
+export type MutationUpdateUserArgs = {
+  data: UpdateUserInput;
+};
+
+export type MutationChangePasswordArgs = {
+  email: string;
+  password: string;
+};
+
+export type MutationUpdateProjectArgs = {
+  projectId: string;
+  data: ProjectInput;
+};
+
+export type MutationAddProjectArgs = {
+  data: ProjectInput;
+};
+
+export type MutationDeleteProjectArgs = {
+  projectId: string;
+};
+
+export type MutationAddGeneralExpenseArgs = {
+  data: GeneralExpenseInput;
+};
+
+export type MutationAddClientArgs = {
+  data: ClientInput;
+};
+
+export type MutationUpdateClientArgs = {
+  clientId: string;
+  data: ClientInput;
+};
+
+export type MutationUpdateClientProjectArgs = {
+  projectId: string;
+  clientId: string;
+};
+
+export type MutationRemoveClientFromProjectArgs = {
+  projectId: string;
+  clientId: string;
+};
+
+export type MutationDeleteClientArgs = {
+  clientId: string;
+};
+
+export type MutationDownloadInvoiceArgs = {
+  projectId: string;
+};
+
+export type MutationProjectResponse = {
+  success: boolean;
+  message?: Maybe<string>;
+  project: Project;
+  client?: Maybe<Client>;
+};
+
+export type Project = {
+  id: string;
+  invoiceNumber: string;
+  invoiceDate?: Maybe<Date>;
+  name: string;
+  projectDate?: Maybe<Date>;
+  streetAddress?: Maybe<string>;
+  city?: Maybe<string>;
+  link?: Maybe<string>;
+  status: Invoice_Status;
+  user: string;
+  expenses?: Maybe<Array<ExpenseAndIncome>>;
+  incomes?: Maybe<Array<ExpenseAndIncome>>;
+};
+
+export type ProjectInput = {
+  invoiceNumber: Maybe<string>;
+  invoiceDate: Maybe<string>;
+  projectDate: Maybe<string>;
+  name: Maybe<string>;
+  date: Maybe<string>;
+  status: Maybe<Invoice_Status>;
+  client: Maybe<ClientInput>;
+  expenses: Maybe<Array<ExpenseAndIncomeInput>>;
+  incomes: Maybe<Array<ExpenseAndIncomeInput>>;
+};
+
+export type Query = {
+  getUser: User;
+  getProjectsByUserId: Array<Project>;
+  getSingleProject?: Maybe<Project>;
+  getGeneralExpenses?: Maybe<Array<GeneralExpense>>;
+  getClientsByUser?: Maybe<Array<Client>>;
+  getClientByProject?: Maybe<Client>;
+  getSingleClient?: Maybe<Client>;
+  health?: Maybe<string>;
+};
+
+export type QueryGetProjectsByUserIdArgs = {
+  userId: string;
+};
+
+export type QueryGetSingleProjectArgs = {
+  projectId: string;
+};
+
+export type QueryGetClientByProjectArgs = {
+  projectId: string;
+};
+
+export type QueryGetSingleClientArgs = {
+  clientId: string;
+};
+
+export type RegisterResponse = {
+  success: boolean;
+  message?: Maybe<string>;
+  token: string;
+};
+
+export type UpdateUserInput = {
+  firstName: Maybe<string>;
+  lastName: Maybe<string>;
+  email: Maybe<string>;
+  phone: Maybe<string>;
+  password: Maybe<string>;
+  btw: Maybe<string>;
+  kvk: Maybe<string>;
+  iban: Maybe<string>;
+  streetAddress: Maybe<string>;
+  postalCode: Maybe<string>;
+  city: Maybe<string>;
+};
+
+export type UpdateUserResponse = {
+  message?: Maybe<string>;
+  user: User;
+};
+
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  projects?: Maybe<Array<Project>>;
+  expenses?: Maybe<Array<GeneralExpense>>;
+  clients?: Maybe<Array<Client>>;
+  btw?: Maybe<string>;
+  kvk?: Maybe<string>;
+  iban?: Maybe<string>;
+  phone?: Maybe<string>;
+  streetAddress?: Maybe<string>;
+  postalCode?: Maybe<string>;
+  city?: Maybe<string>;
+  createdAt?: Maybe<Date>;
+  updatedAt?: Maybe<Date>;
+};
+export type GetProjectOverviewQueryVariables = {
+  userId: string;
+};
+
+export type GetProjectOverviewQuery = { __typename?: "Query" } & {
+  projects: Array<
+    { __typename?: "Project" } & {
+      incomes: Maybe<
+        Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+      >;
+      expenses: Maybe<
+        Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+      >;
+    } & BasicInfoFragmentFragment
+  >;
+};
+
+export type GetSingleProjectQueryVariables = {
+  id: string;
+};
+
+export type GetSingleProjectQuery = { __typename?: "Query" } & {
+  project: Maybe<
+    { __typename?: "Project" } & Pick<Project, "invoiceNumber"> & {
+        incomes: Maybe<
+          Array<
+            { __typename?: "ExpenseAndIncome" } & Pick<
+              ExpenseAndIncome,
+              "name"
+            > &
+              PriceFragmentFragment
+          >
+        >;
+        expenses: Maybe<
+          Array<
+            { __typename?: "ExpenseAndIncome" } & Pick<
+              ExpenseAndIncome,
+              "name"
+            > &
+              PriceFragmentFragment
+          >
+        >;
+      } & BasicInfoFragmentFragment
+  >;
+  client: Maybe<
+    { __typename?: "Client" } & Pick<
+      Client,
+      "streetAddress" | "postalCode" | "city"
+    > &
+      ClientFragmentFragment
+  >;
+};
+
+export type UpdateStatusMutationVariables = {
+  projectId: string;
+  data: ProjectInput;
+};
+
+export type UpdateStatusMutation = { __typename?: "Mutation" } & {
+  updateProject: { __typename?: "MutationProjectResponse" } & Pick<
+    MutationProjectResponse,
+    "success" | "message"
+  > & { project: { __typename?: "Project" } & Pick<Project, "id" | "status"> };
+};
+
+export type AddProjectMutationVariables = {
+  data: ProjectInput;
+};
+
+export type AddProjectMutation = { __typename?: "Mutation" } & {
+  addProject: Maybe<
+    { __typename?: "MutationProjectResponse" } & Pick<
+      MutationProjectResponse,
+      "success" | "message"
+    > & {
+        project: { __typename?: "Project" } & Pick<Project, "invoiceNumber"> & {
+            incomes: Maybe<
+              Array<
+                { __typename?: "ExpenseAndIncome" } & Pick<
+                  ExpenseAndIncome,
+                  "name"
+                > &
+                  PriceFragmentFragment
+              >
+            >;
+            expenses: Maybe<
+              Array<
+                { __typename?: "ExpenseAndIncome" } & Pick<
+                  ExpenseAndIncome,
+                  "name"
+                > &
+                  PriceFragmentFragment
+              >
+            >;
+          } & BasicInfoFragmentFragment;
+        client: Maybe<{ __typename?: "Client" } & ClientFragmentFragment>;
+      }
+  >;
+};
+
+export type UpdateIncomesAndExpensesMutationVariables = {
+  projectId: string;
+  data: ProjectInput;
+};
+
+export type UpdateIncomesAndExpensesMutation = { __typename?: "Mutation" } & {
+  updateProject: { __typename?: "MutationProjectResponse" } & Pick<
+    MutationProjectResponse,
+    "success" | "message"
+  > & {
+      project: { __typename?: "Project" } & Pick<Project, "id"> & {
+          incomes: Maybe<
+            Array<
+              { __typename?: "ExpenseAndIncome" } & Pick<
+                ExpenseAndIncome,
+                "name"
+              > &
+                PriceFragmentFragment
+            >
+          >;
+          expenses: Maybe<
+            Array<
+              { __typename?: "ExpenseAndIncome" } & Pick<
+                ExpenseAndIncome,
+                "name"
+              > &
+                PriceFragmentFragment
+            >
+          >;
+        };
+    };
+};
+
+export type UpdateBasicInfoMutationVariables = {
+  projectId: string;
+  data: ProjectInput;
+};
+
+export type UpdateBasicInfoMutation = { __typename?: "Mutation" } & {
+  updateProject: { __typename?: "MutationProjectResponse" } & Pick<
+    MutationProjectResponse,
+    "success" | "message"
+  > & {
+      project: { __typename?: "Project" } & Pick<Project, "invoiceNumber"> &
+        BasicInfoFragmentFragment;
+    };
+};
+
+export type DeleteProjectMutationVariables = {
+  projectId: string;
+};
+
+export type DeleteProjectMutation = { __typename?: "Mutation" } & {
+  deleteProject: Maybe<
+    { __typename?: "MutationProjectResponse" } & Pick<
+      MutationProjectResponse,
+      "message"
+    > & { project: { __typename?: "Project" } & Pick<Project, "id"> }
+  >;
+};
+
+export type DownloadInvoiceMutationVariables = {
+  projectId: string;
+};
+
+export type DownloadInvoiceMutation = { __typename?: "Mutation" } & {
+  downloadInvoice: Maybe<
+    { __typename?: "GenerateInvoiceResponse" } & Pick<
+      GenerateInvoiceResponse,
+      "message"
+    > & { data: Maybe<> }
+  >;
+};
+
+export type ClientFragmentFragment = { __typename?: "Client" } & Pick<
+  Client,
+  "id" | "firstName" | "lastName" | "email" | "phone"
+>;
+
+export type PriceFragmentFragment = { __typename?: "ExpenseAndIncome" } & Pick<
+  ExpenseAndIncome,
+  "price" | "quantity" | "taxRate"
+>;
+
+export type BasicInfoFragmentFragment = { __typename?: "Project" } & Pick<
+  Project,
+  "id" | "name" | "status"
+> & { projectDate: Maybe<>; invoiceDate: Maybe<> };
 import * as ReactApollo from "react-apollo";
 import * as React from "react";
 

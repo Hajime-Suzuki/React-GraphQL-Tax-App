@@ -1,73 +1,87 @@
+export type Maybe<T> = T | null;
+
 export interface UpdateUserInput {
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  password?: string | null;
+  password?: Maybe<string>;
 
-  btw?: string | null;
+  btw?: Maybe<string>;
 
-  kvk?: string | null;
+  kvk?: Maybe<string>;
 
-  iban?: string | null;
+  iban?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface ProjectInput {
-  invoiceNumber?: string | null;
+  invoiceNumber?: Maybe<string>;
 
-  invoiceDate?: string | null;
+  invoiceDate?: Maybe<string>;
 
-  projectDate?: string | null;
+  projectDate?: Maybe<string>;
 
-  name?: string | null;
+  name?: Maybe<string>;
 
-  date?: string | null;
+  date?: Maybe<string>;
 
-  status?: InvoiceStatus | null;
+  status?: Maybe<InvoiceStatus>;
 
-  client?: ClientInput | null;
+  client?: Maybe<ClientInput>;
 
-  expenses?: ExpenseAndIncomeInput[] | null;
+  expenses?: Maybe<ExpenseAndIncomeInput[]>;
 
-  incomes?: ExpenseAndIncomeInput[] | null;
+  incomes?: Maybe<ExpenseAndIncomeInput[]>;
 }
 
 export interface ClientInput {
-  id?: string | null;
+  id?: Maybe<string>;
 
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface ExpenseAndIncomeInput {
-  name?: string | null;
+  name?: Maybe<string>;
 
-  price?: string | null;
+  price?: Maybe<string>;
 
-  quantity?: number | null;
+  quantity?: Maybe<number>;
 
-  taxRate?: number | null;
+  taxRate?: Maybe<number>;
+}
+
+export interface GeneralExpenseInput {
+  name: string;
+
+  price: string;
+
+  quantity: number;
+
+  taxRate: number;
+
+  date: string;
 }
 
 export enum InvoiceStatus {
@@ -93,15 +107,17 @@ export interface Query {
 
   getProjectsByUserId: Project[];
 
-  getSingleProject?: Project | null;
+  getSingleProject?: Maybe<Project>;
 
-  getClientsByUser?: Client[] | null;
+  getGeneralExpenses?: Maybe<GeneralExpense[]>;
 
-  getClientByProject?: Client | null;
+  getClientsByUser?: Maybe<Client[]>;
 
-  getSingleClient?: Client | null;
+  getClientByProject?: Maybe<Client>;
 
-  health?: string | null;
+  getSingleClient?: Maybe<Client>;
+
+  health?: Maybe<string>;
 }
 
 export interface User {
@@ -113,29 +129,29 @@ export interface User {
 
   email: string;
 
-  projects?: Project[] | null;
+  projects?: Maybe<Project[]>;
 
-  expenses?: Expense[] | null;
+  expenses?: Maybe<GeneralExpense[]>;
 
-  clients?: Client[] | null;
+  clients?: Maybe<Client[]>;
 
-  btw?: string | null;
+  btw?: Maybe<string>;
 
-  kvk?: string | null;
+  kvk?: Maybe<string>;
 
-  iban?: string | null;
+  iban?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 
-  createdAt?: Date | null;
+  createdAt?: Maybe<Date>;
 
-  updatedAt?: Date | null;
+  updatedAt?: Maybe<Date>;
 }
 
 export interface Project {
@@ -143,69 +159,71 @@ export interface Project {
 
   invoiceNumber: string;
 
-  invoiceDate?: Date | null;
+  invoiceDate?: Maybe<Date>;
 
   name: string;
 
-  projectDate?: Date | null;
+  projectDate?: Maybe<Date>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 
-  link?: string | null;
+  link?: Maybe<string>;
 
   status: InvoiceStatus;
 
   user: string;
 
-  expenses?: ExpenseAndIncome[] | null;
+  expenses?: Maybe<ExpenseAndIncome[]>;
 
-  incomes?: ExpenseAndIncome[] | null;
+  incomes?: Maybe<ExpenseAndIncome[]>;
 }
 
 export interface ExpenseAndIncome {
-  name?: string | null;
+  name?: Maybe<string>;
 
-  price?: string | null;
+  price?: Maybe<string>;
 
-  quantity?: number | null;
+  quantity?: Maybe<number>;
 
-  taxRate?: number | null;
+  taxRate?: Maybe<number>;
 }
 
-export interface Expense {
-  name?: string | null;
+export interface GeneralExpense {
+  name: string;
 
-  price?: string | null;
+  price: string;
 
-  quantity?: number | null;
+  quantity: number;
 
-  taxRate?: number | null;
+  taxRate: number;
 
-  date?: string | null;
+  date: string;
+
+  user: string;
 }
 
 export interface Client {
   id: string;
 
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  user?: string | null;
+  user?: Maybe<string>;
 
-  projects?: string[] | null;
+  projects?: Maybe<string[]>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface Mutation {
@@ -215,35 +233,39 @@ export interface Mutation {
 
   updateUser: UpdateUserResponse;
 
+  changePassword: RegisterResponse;
+
   updateProject: MutationProjectResponse;
 
-  addProject?: MutationProjectResponse | null;
+  addProject?: Maybe<MutationProjectResponse>;
 
-  deleteProject?: MutationProjectResponse | null;
+  deleteProject?: Maybe<MutationProjectResponse>;
 
-  addClient?: ClientMutationResponse | null;
+  addGeneralExpense: AddGeneralExpensesResponse;
 
-  updateClient?: ClientMutationResponse | null;
+  addClient?: Maybe<ClientMutationResponse>;
 
-  updateClientProject?: ClientMutationResponse | null;
+  updateClient?: Maybe<ClientMutationResponse>;
 
-  removeClientFromProject?: ClientMutationResponse | null;
+  updateClientProject?: Maybe<ClientMutationResponse>;
 
-  deleteClient?: ClientMutationResponse | null;
+  removeClientFromProject?: Maybe<ClientMutationResponse>;
 
-  downloadInvoice?: GenerateInvoiceResponse | null;
+  deleteClient?: Maybe<ClientMutationResponse>;
+
+  downloadInvoice?: Maybe<GenerateInvoiceResponse>;
 }
 
 export interface RegisterResponse {
   success: boolean;
 
-  message?: string | null;
+  message?: Maybe<string>;
 
   token: string;
 }
 
 export interface UpdateUserResponse {
-  message?: string | null;
+  message?: Maybe<string>;
 
   user: User;
 }
@@ -251,23 +273,29 @@ export interface UpdateUserResponse {
 export interface MutationProjectResponse {
   success: boolean;
 
-  message?: string | null;
+  message?: Maybe<string>;
 
   project: Project;
 
-  client?: Client | null;
+  client?: Maybe<Client>;
+}
+
+export interface AddGeneralExpensesResponse {
+  message?: Maybe<string>;
+
+  generalExpense?: Maybe<GeneralExpense>;
 }
 
 export interface ClientMutationResponse {
-  message?: string | null;
+  message?: Maybe<string>;
 
-  client?: Client | null;
+  client?: Maybe<Client>;
 }
 
 export interface GenerateInvoiceResponse {
-  message?: string | null;
+  message?: Maybe<string>;
 
-  data?: Blob | null;
+  data?: Maybe<Blob>;
 }
 
 // ====================================================
@@ -303,6 +331,11 @@ export interface LoginUserMutationArgs {
 export interface UpdateUserMutationArgs {
   data: UpdateUserInput;
 }
+export interface ChangePasswordMutationArgs {
+  email: string;
+
+  password: string;
+}
 export interface UpdateProjectMutationArgs {
   projectId: string;
 
@@ -313,6 +346,9 @@ export interface AddProjectMutationArgs {
 }
 export interface DeleteProjectMutationArgs {
   projectId: string;
+}
+export interface AddGeneralExpenseMutationArgs {
+  data: GeneralExpenseInput;
 }
 export interface AddClientMutationArgs {
   data: ClientInput;

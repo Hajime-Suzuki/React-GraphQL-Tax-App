@@ -1,73 +1,87 @@
+export type Maybe<T> = T | null;
+
 export interface UpdateUserInput {
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  password?: string | null;
+  password?: Maybe<string>;
 
-  btw?: string | null;
+  btw?: Maybe<string>;
 
-  kvk?: string | null;
+  kvk?: Maybe<string>;
 
-  iban?: string | null;
+  iban?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface ProjectInput {
-  invoiceNumber?: string | null;
+  invoiceNumber?: Maybe<string>;
 
-  invoiceDate?: string | null;
+  invoiceDate?: Maybe<string>;
 
-  projectDate?: string | null;
+  projectDate?: Maybe<string>;
 
-  name?: string | null;
+  name?: Maybe<string>;
 
-  date?: string | null;
+  date?: Maybe<string>;
 
-  status?: InvoiceStatus | null;
+  status?: Maybe<InvoiceStatus>;
 
-  client?: ClientInput | null;
+  client?: Maybe<ClientInput>;
 
-  expenses?: ExpenseAndIncomeInput[] | null;
+  expenses?: Maybe<ExpenseAndIncomeInput[]>;
 
-  incomes?: ExpenseAndIncomeInput[] | null;
+  incomes?: Maybe<ExpenseAndIncomeInput[]>;
 }
 
 export interface ClientInput {
-  id?: string | null;
+  id?: Maybe<string>;
 
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface ExpenseAndIncomeInput {
-  name?: string | null;
+  name?: Maybe<string>;
 
-  price?: string | null;
+  price?: Maybe<string>;
 
-  quantity?: number | null;
+  quantity?: Maybe<number>;
 
-  taxRate?: number | null;
+  taxRate?: Maybe<number>;
+}
+
+export interface GeneralExpenseInput {
+  name: string;
+
+  price: string;
+
+  quantity: number;
+
+  taxRate: number;
+
+  date: string;
 }
 
 export enum InvoiceStatus {
@@ -98,7 +112,7 @@ export namespace UpdateUser {
   export type UpdateUser = {
     __typename?: "UpdateUserResponse";
 
-    message: string | null;
+    message: Maybe<string>;
 
     user: User;
   };
@@ -128,21 +142,21 @@ export namespace UserFragments {
 
     lastName: string;
 
-    clients: Clients[] | null;
+    clients: Maybe<Clients[]>;
 
-    phone: string | null;
+    phone: Maybe<string>;
 
-    btw: string | null;
+    btw: Maybe<string>;
 
-    kvk: string | null;
+    kvk: Maybe<string>;
 
-    iban: string | null;
+    iban: Maybe<string>;
 
-    streetAddress: string | null;
+    streetAddress: Maybe<string>;
 
-    postalCode: string | null;
+    postalCode: Maybe<string>;
 
-    city: string | null;
+    city: Maybe<string>;
   };
 
   export type Clients = {
@@ -150,19 +164,19 @@ export namespace UserFragments {
 
     id: string;
 
-    firstName: string | null;
+    firstName: Maybe<string>;
 
-    lastName: string | null;
+    lastName: Maybe<string>;
 
-    email: string | null;
+    email: Maybe<string>;
 
-    phone: string | null;
+    phone: Maybe<string>;
 
-    streetAddress: string | null;
+    streetAddress: Maybe<string>;
 
-    postalCode: string | null;
+    postalCode: Maybe<string>;
 
-    city: string | null;
+    city: Maybe<string>;
   };
 }
 
@@ -172,13 +186,13 @@ export namespace ClientFragment {
 
     id: string;
 
-    firstName: string | null;
+    firstName: Maybe<string>;
 
-    lastName: string | null;
+    lastName: Maybe<string>;
 
-    email: string | null;
+    email: Maybe<string>;
 
-    phone: string | null;
+    phone: Maybe<string>;
   };
 }
 
@@ -186,11 +200,11 @@ export namespace PriceFragment {
   export type Fragment = {
     __typename?: "ExpenseAndIncome";
 
-    price: string | null;
+    price: Maybe<string>;
 
-    quantity: number | null;
+    quantity: Maybe<number>;
 
-    taxRate: number | null;
+    taxRate: Maybe<number>;
   };
 }
 
@@ -202,9 +216,9 @@ export namespace BasicInfoFragment {
 
     name: string;
 
-    projectDate: Date | null;
+    projectDate: Maybe<Date>;
 
-    invoiceDate: Date | null;
+    invoiceDate: Maybe<Date>;
 
     status: InvoiceStatus;
   };

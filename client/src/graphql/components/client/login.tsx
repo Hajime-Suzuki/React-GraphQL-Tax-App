@@ -1,3 +1,5 @@
+export type Maybe<T> = T | null;
+
 // ====================================================
 // Documents
 // ====================================================
@@ -8,7 +10,7 @@ export namespace GetToken {
   export type Query = {
     __typename?: "Query";
 
-    userId: string | null;
+    userId: Maybe<string>;
   };
 }
 

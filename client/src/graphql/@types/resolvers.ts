@@ -1,73 +1,87 @@
+export type Maybe<T> = T | null;
+
 export interface UpdateUserInput {
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  password?: string | null;
+  password?: Maybe<string>;
 
-  btw?: string | null;
+  btw?: Maybe<string>;
 
-  kvk?: string | null;
+  kvk?: Maybe<string>;
 
-  iban?: string | null;
+  iban?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface ProjectInput {
-  invoiceNumber?: string | null;
+  invoiceNumber?: Maybe<string>;
 
-  invoiceDate?: string | null;
+  invoiceDate?: Maybe<string>;
 
-  projectDate?: string | null;
+  projectDate?: Maybe<string>;
 
-  name?: string | null;
+  name?: Maybe<string>;
 
-  date?: string | null;
+  date?: Maybe<string>;
 
-  status?: InvoiceStatus | null;
+  status?: Maybe<InvoiceStatus>;
 
-  client?: ClientInput | null;
+  client?: Maybe<ClientInput>;
 
-  expenses?: ExpenseAndIncomeInput[] | null;
+  expenses?: Maybe<ExpenseAndIncomeInput[]>;
 
-  incomes?: ExpenseAndIncomeInput[] | null;
+  incomes?: Maybe<ExpenseAndIncomeInput[]>;
 }
 
 export interface ClientInput {
-  id?: string | null;
+  id?: Maybe<string>;
 
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface ExpenseAndIncomeInput {
-  name?: string | null;
+  name?: Maybe<string>;
 
-  price?: string | null;
+  price?: Maybe<string>;
 
-  quantity?: number | null;
+  quantity?: Maybe<number>;
 
-  taxRate?: number | null;
+  taxRate?: Maybe<number>;
+}
+
+export interface GeneralExpenseInput {
+  name: string;
+
+  price: string;
+
+  quantity: number;
+
+  taxRate: number;
+
+  date: string;
 }
 
 export enum InvoiceStatus {
@@ -93,19 +107,21 @@ export interface Query {
 
   getProjectsByUserId: Project[];
 
-  getSingleProject?: Project | null;
+  getSingleProject?: Maybe<Project>;
 
-  getClientsByUser?: Client[] | null;
+  getGeneralExpenses?: Maybe<GeneralExpense[]>;
 
-  getClientByProject?: Client | null;
+  getClientsByUser?: Maybe<Client[]>;
 
-  getSingleClient?: Client | null;
+  getClientByProject?: Maybe<Client>;
 
-  health?: string | null;
+  getSingleClient?: Maybe<Client>;
+
+  health?: Maybe<string>;
 
   token: string;
 
-  userId?: string | null;
+  userId?: Maybe<string>;
 }
 
 export interface User {
@@ -117,29 +133,29 @@ export interface User {
 
   email: string;
 
-  projects?: Project[] | null;
+  projects?: Maybe<Project[]>;
 
-  expenses?: Expense[] | null;
+  expenses?: Maybe<GeneralExpense[]>;
 
-  clients?: Client[] | null;
+  clients?: Maybe<Client[]>;
 
-  btw?: string | null;
+  btw?: Maybe<string>;
 
-  kvk?: string | null;
+  kvk?: Maybe<string>;
 
-  iban?: string | null;
+  iban?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 
-  createdAt?: Date | null;
+  createdAt?: Maybe<Date>;
 
-  updatedAt?: Date | null;
+  updatedAt?: Maybe<Date>;
 }
 
 export interface Project {
@@ -147,69 +163,71 @@ export interface Project {
 
   invoiceNumber: string;
 
-  invoiceDate?: Date | null;
+  invoiceDate?: Maybe<Date>;
 
   name: string;
 
-  projectDate?: Date | null;
+  projectDate?: Maybe<Date>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 
-  link?: string | null;
+  link?: Maybe<string>;
 
   status: InvoiceStatus;
 
   user: string;
 
-  expenses?: ExpenseAndIncome[] | null;
+  expenses?: Maybe<ExpenseAndIncome[]>;
 
-  incomes?: ExpenseAndIncome[] | null;
+  incomes?: Maybe<ExpenseAndIncome[]>;
 }
 
 export interface ExpenseAndIncome {
-  name?: string | null;
+  name?: Maybe<string>;
 
-  price?: string | null;
+  price?: Maybe<string>;
 
-  quantity?: number | null;
+  quantity?: Maybe<number>;
 
-  taxRate?: number | null;
+  taxRate?: Maybe<number>;
 }
 
-export interface Expense {
-  name?: string | null;
+export interface GeneralExpense {
+  name: string;
 
-  price?: string | null;
+  price: string;
 
-  quantity?: number | null;
+  quantity: number;
 
-  taxRate?: number | null;
+  taxRate: number;
 
-  date?: string | null;
+  date: string;
+
+  user: string;
 }
 
 export interface Client {
   id: string;
 
-  firstName?: string | null;
+  firstName?: Maybe<string>;
 
-  lastName?: string | null;
+  lastName?: Maybe<string>;
 
-  email?: string | null;
+  email?: Maybe<string>;
 
-  phone?: string | null;
+  phone?: Maybe<string>;
 
-  user?: string | null;
+  user?: Maybe<string>;
 
-  projects?: string[] | null;
+  projects?: Maybe<string[]>;
 
-  streetAddress?: string | null;
+  streetAddress?: Maybe<string>;
 
-  postalCode?: string | null;
+  postalCode?: Maybe<string>;
 
-  city?: string | null;
+  city?: Maybe<string>;
 }
 
 export interface Mutation {
@@ -219,35 +237,39 @@ export interface Mutation {
 
   updateUser: UpdateUserResponse;
 
+  changePassword: RegisterResponse;
+
   updateProject: MutationProjectResponse;
 
-  addProject?: MutationProjectResponse | null;
+  addProject?: Maybe<MutationProjectResponse>;
 
-  deleteProject?: MutationProjectResponse | null;
+  deleteProject?: Maybe<MutationProjectResponse>;
 
-  addClient?: ClientMutationResponse | null;
+  addGeneralExpense: AddGeneralExpensesResponse;
 
-  updateClient?: ClientMutationResponse | null;
+  addClient?: Maybe<ClientMutationResponse>;
 
-  updateClientProject?: ClientMutationResponse | null;
+  updateClient?: Maybe<ClientMutationResponse>;
 
-  removeClientFromProject?: ClientMutationResponse | null;
+  updateClientProject?: Maybe<ClientMutationResponse>;
 
-  deleteClient?: ClientMutationResponse | null;
+  removeClientFromProject?: Maybe<ClientMutationResponse>;
 
-  downloadInvoice?: GenerateInvoiceResponse | null;
+  deleteClient?: Maybe<ClientMutationResponse>;
+
+  downloadInvoice?: Maybe<GenerateInvoiceResponse>;
 }
 
 export interface RegisterResponse {
   success: boolean;
 
-  message?: string | null;
+  message?: Maybe<string>;
 
   token: string;
 }
 
 export interface UpdateUserResponse {
-  message?: string | null;
+  message?: Maybe<string>;
 
   user: User;
 }
@@ -255,23 +277,29 @@ export interface UpdateUserResponse {
 export interface MutationProjectResponse {
   success: boolean;
 
-  message?: string | null;
+  message?: Maybe<string>;
 
   project: Project;
 
-  client?: Client | null;
+  client?: Maybe<Client>;
+}
+
+export interface AddGeneralExpensesResponse {
+  message?: Maybe<string>;
+
+  generalExpense?: Maybe<GeneralExpense>;
 }
 
 export interface ClientMutationResponse {
-  message?: string | null;
+  message?: Maybe<string>;
 
-  client?: Client | null;
+  client?: Maybe<Client>;
 }
 
 export interface GenerateInvoiceResponse {
-  message?: string | null;
+  message?: Maybe<string>;
 
-  data?: Blob | null;
+  data?: Maybe<Blob>;
 }
 
 // ====================================================
@@ -307,6 +335,11 @@ export interface LoginUserMutationArgs {
 export interface UpdateUserMutationArgs {
   data: UpdateUserInput;
 }
+export interface ChangePasswordMutationArgs {
+  email: string;
+
+  password: string;
+}
 export interface UpdateProjectMutationArgs {
   projectId: string;
 
@@ -317,6 +350,9 @@ export interface AddProjectMutationArgs {
 }
 export interface DeleteProjectMutationArgs {
   projectId: string;
+}
+export interface AddGeneralExpenseMutationArgs {
+  data: GeneralExpenseInput;
 }
 export interface AddClientMutationArgs {
   data: ClientInput;
@@ -412,6 +448,12 @@ export namespace QueryResolvers {
       Context
     >;
 
+    getGeneralExpenses?: GetGeneralExpensesResolver<
+      GeneralExpense[] | null,
+      TypeParent,
+      Context
+    >;
+
     getClientsByUser?: GetClientsByUserResolver<
       Client[] | null,
       TypeParent,
@@ -460,6 +502,11 @@ export namespace QueryResolvers {
     projectId: string;
   }
 
+  export type GetGeneralExpensesResolver<
+    R = GeneralExpense[] | null,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context>;
   export type GetClientsByUserResolver<
     R = Client[] | null,
     Parent = {},
@@ -512,7 +559,7 @@ export namespace UserResolvers {
 
     projects?: ProjectsResolver<Project[] | null, TypeParent, Context>;
 
-    expenses?: ExpensesResolver<Expense[] | null, TypeParent, Context>;
+    expenses?: ExpensesResolver<GeneralExpense[] | null, TypeParent, Context>;
 
     clients?: ClientsResolver<Client[] | null, TypeParent, Context>;
 
@@ -561,7 +608,7 @@ export namespace UserResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type ExpensesResolver<
-    R = Expense[] | null,
+    R = GeneralExpense[] | null,
     Parent = User,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -739,42 +786,49 @@ export namespace ExpenseAndIncomeResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace ExpenseResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Expense> {
-    name?: NameResolver<string | null, TypeParent, Context>;
+export namespace GeneralExpenseResolvers {
+  export interface Resolvers<Context = {}, TypeParent = GeneralExpense> {
+    name?: NameResolver<string, TypeParent, Context>;
 
-    price?: PriceResolver<string | null, TypeParent, Context>;
+    price?: PriceResolver<string, TypeParent, Context>;
 
-    quantity?: QuantityResolver<number | null, TypeParent, Context>;
+    quantity?: QuantityResolver<number, TypeParent, Context>;
 
-    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
+    taxRate?: TaxRateResolver<number, TypeParent, Context>;
 
-    date?: DateResolver<string | null, TypeParent, Context>;
+    date?: DateResolver<string, TypeParent, Context>;
+
+    user?: UserResolver<string, TypeParent, Context>;
   }
 
   export type NameResolver<
-    R = string | null,
-    Parent = Expense,
+    R = string,
+    Parent = GeneralExpense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type PriceResolver<
-    R = string | null,
-    Parent = Expense,
+    R = string,
+    Parent = GeneralExpense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type QuantityResolver<
-    R = number | null,
-    Parent = Expense,
+    R = number,
+    Parent = GeneralExpense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type TaxRateResolver<
-    R = number | null,
-    Parent = Expense,
+    R = number,
+    Parent = GeneralExpense,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type DateResolver<
-    R = string | null,
-    Parent = Expense,
+    R = string,
+    Parent = GeneralExpense,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type UserResolver<
+    R = string,
+    Parent = GeneralExpense,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }
@@ -862,6 +916,12 @@ export namespace MutationResolvers {
 
     updateUser?: UpdateUserResolver<UpdateUserResponse, TypeParent, Context>;
 
+    changePassword?: ChangePasswordResolver<
+      RegisterResponse,
+      TypeParent,
+      Context
+    >;
+
     updateProject?: UpdateProjectResolver<
       MutationProjectResponse,
       TypeParent,
@@ -876,6 +936,12 @@ export namespace MutationResolvers {
 
     deleteProject?: DeleteProjectResolver<
       MutationProjectResponse | null,
+      TypeParent,
+      Context
+    >;
+
+    addGeneralExpense?: AddGeneralExpenseResolver<
+      AddGeneralExpensesResponse,
       TypeParent,
       Context
     >;
@@ -952,6 +1018,17 @@ export namespace MutationResolvers {
     data: UpdateUserInput;
   }
 
+  export type ChangePasswordResolver<
+    R = RegisterResponse,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, ChangePasswordArgs>;
+  export interface ChangePasswordArgs {
+    email: string;
+
+    password: string;
+  }
+
   export type UpdateProjectResolver<
     R = MutationProjectResponse,
     Parent = {},
@@ -979,6 +1056,15 @@ export namespace MutationResolvers {
   > = Resolver<R, Parent, Context, DeleteProjectArgs>;
   export interface DeleteProjectArgs {
     projectId: string;
+  }
+
+  export type AddGeneralExpenseResolver<
+    R = AddGeneralExpensesResponse,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, AddGeneralExpenseArgs>;
+  export interface AddGeneralExpenseArgs {
+    data: GeneralExpenseInput;
   }
 
   export type AddClientResolver<
@@ -1119,6 +1205,32 @@ export namespace MutationProjectResponseResolvers {
   export type ClientResolver<
     R = Client | null,
     Parent = MutationProjectResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace AddGeneralExpensesResponseResolvers {
+  export interface Resolvers<
+    Context = {},
+    TypeParent = AddGeneralExpensesResponse
+  > {
+    message?: MessageResolver<string | null, TypeParent, Context>;
+
+    generalExpense?: GeneralExpenseResolver<
+      GeneralExpense | null,
+      TypeParent,
+      Context
+    >;
+  }
+
+  export type MessageResolver<
+    R = string | null,
+    Parent = AddGeneralExpensesResponse,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type GeneralExpenseResolver<
+    R = GeneralExpense | null,
+    Parent = AddGeneralExpensesResponse,
     Context = {}
   > = Resolver<R, Parent, Context>;
 }
