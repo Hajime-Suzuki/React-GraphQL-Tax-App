@@ -19,7 +19,10 @@ class Routes extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Route path={RoutesNames.top} component={NavBarContainer} />
+        <Route
+          path={RoutesNames.top}
+          component={props => <NavBarContainer {...props} />} // directly passing component gets typescript type error.
+        />
         <Styles.AppWrapper>
           <Switch>
             <Route path="/" exact component={TopPage} />
@@ -66,12 +69,12 @@ class Routes extends React.Component {
             <Route
               path={RoutesNames.login}
               exact
-              component={LoginAndSignupFormContainer}
+              component={LoginAndSignupFormContainer as any}
             />
             <Route
               path={RoutesNames.signup}
               exact
-              component={LoginAndSignupFormContainer}
+              component={LoginAndSignupFormContainer as any}
             />
           </Switch>
         </Styles.AppWrapper>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, useState } from 'react'
 import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'
 import { GetUser } from 'src/graphql/components/login'
@@ -25,52 +25,53 @@ export interface NavBarChildProp {
   navigateTo: (url: string) => () => void
 }
 
-class NavBarContainer extends React.Component<Props> {
-  state = { isSideBarOpen: false, menuAnchor: null }
+const NavBarContainer: FC<Props> = props => {
+  const [isSideBarOpen, setSideBarOpen] = useState(false)
+  const [menuAnchor, setMenuAnchor] = useState<
+    EventTarget & HTMLElement | null
+  >(null)
 
-  openSideBar = () => this.setState({ isSideBarOpen: true })
-  closeSideBar = () => this.setState({ isSideBarOpen: false })
+  const openSideBar = () => setSideBarOpen(true)
+  const closeSideBar = () => setSideBarOpen(false)
 
-  openMenu = (e: React.MouseEvent<HTMLElement>) =>
-    this.setState({ menuAnchor: e.currentTarget })
-  closeMenu = () => this.setState({ menuAnchor: null })
+  const openMenu = (e: React.MouseEvent<HTMLElement>) =>
+    setMenuAnchor(e.currentTarget)
+  const closeMenu = () => setMenuAnchor(null)
 
-  navigateTo = (url: string) => () => {
-    this.props.history.push(url)
-    this.closeMenu()
-    this.closeSideBar()
+  const navigateTo = (url: string) => () => {
+    props.history.push(url)
+    closeMenu()
+    closeSideBar()
   }
 
-  handleLogout = async () => {
-    this.closeMenu()
+  const handleLogout = async () => {
+    closeMenu()
     await LoginActions.logout()
-    this.props.history.replace(RoutesNames.top)
+    props.history.replace(RoutesNames.top)
   }
 
-  render() {
-    return (
-      <GetUser.Component>
-        {({ data, loading }) => {
-          const user = (data && data.getUser) || undefined
-          return (
-            <NavBar
-              loading={loading}
-              user={user}
-              path={this.props.location.pathname}
-              logout={this.handleLogout}
-              isSideBarOpen={this.state.isSideBarOpen}
-              openSideBar={this.openSideBar}
-              closeSideBar={this.closeSideBar}
-              menuAnchor={this.state.menuAnchor}
-              openMenu={this.openMenu}
-              closeMenu={this.closeMenu}
-              navigateTo={this.navigateTo}
-            />
-          )
-        }}
-      </GetUser.Component>
-    )
-  }
+  return (
+    <GetUser.Component>
+      {({ data, loading }) => {
+        const user = (data && data.getUser) || undefined
+        return (
+          <NavBar
+            loading={loading}
+            user={user}
+            path={props.location.pathname}
+            logout={handleLogout}
+            isSideBarOpen={isSideBarOpen}
+            openSideBar={openSideBar}
+            closeSideBar={closeSideBar}
+            menuAnchor={menuAnchor}
+            openMenu={openMenu}
+            closeMenu={closeMenu}
+            navigateTo={navigateTo}
+          />
+        )
+      }}
+    </GetUser.Component>
+  )
 }
 
 export default NavBarContainer
