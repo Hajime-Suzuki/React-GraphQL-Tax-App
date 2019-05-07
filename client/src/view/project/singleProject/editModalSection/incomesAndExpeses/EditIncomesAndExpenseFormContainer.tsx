@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import { projectValidationSchemas } from 'src/view/project/helper/validationSchemas'
 import {
   ExpenseAndIncomeInput,
-  UpdateIncomesAndExpenses
+  UpdateIncomesAndExpensesComponent
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
 import { SingleProjectChildProps } from '../..'
@@ -13,12 +13,12 @@ import EditExpenseAndIncomeForm from './EditIncomesAndExpenseForm'
 const { editIncomesSchema, editExpensesSchema } = projectValidationSchemas
 
 export type EditExpenseAndIncomesChildProps = {
-  type: 'incomes' | 'expenses';
-  selectedModal?: Props['selectedModal'];
-  values: FormValues;
-  error?: ApolloError;
-  loading: boolean;
-  handleCloseModal: Props['handleCloseModal'];
+  type: 'incomes' | 'expenses'
+  selectedModal?: Props['selectedModal']
+  values: FormValues
+  error?: ApolloError
+  loading: boolean
+  handleCloseModal: Props['handleCloseModal']
 } & FormikProps<FormValues>
 
 interface Props {
@@ -46,7 +46,7 @@ class EditExpenseAndIncomeFormContainer extends React.Component<
 
     if (!incomes && !expenses) return null
     return (
-      <UpdateIncomesAndExpenses.Component>
+      <UpdateIncomesAndExpensesComponent>
         {(updateProject, { error, loading }) => (
           <Formik
             initialValues={{ incomes, expenses }}
@@ -76,7 +76,7 @@ class EditExpenseAndIncomeFormContainer extends React.Component<
             }}
           />
         )}
-      </UpdateIncomesAndExpenses.Component>
+      </UpdateIncomesAndExpensesComponent>
     )
   }
 }

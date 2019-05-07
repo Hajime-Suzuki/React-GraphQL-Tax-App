@@ -8,9 +8,11 @@ import { ProjectActions } from 'src/graphql/actions/projects'
 import { GetClientsList } from 'src/graphql/components/clients'
 import {
   DeleteProject,
-  GetSingleProject,
+  // GetSingleProject,
   ProjectInput,
-  UpdateBasicInfo
+  UpdateBasicInfo,
+  UpdateBasicInfoComponent,
+  GetSingleProjectDocument
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
 import { SingleProjectChildProps } from '../..'
@@ -25,10 +27,10 @@ interface OwnProps {
 }
 
 export type EditBasicInfoChildProps = {
-  updateError?: ApolloError;
-  loading: boolean;
-  values: ProjectInput;
-  openDeleteDialog: any;
+  updateError?: ApolloError
+  loading: boolean
+  values: ProjectInput
+  openDeleteDialog: any
 } & Pick<OwnProps, 'selectedModal' | 'handleCloseModal'> &
   BasicInfo &
   FormikProps<ProjectInput>
@@ -84,10 +86,10 @@ class EditBasicInfoFormContainer extends React.Component<
     const { id: _, ...basicInfo } = basic
 
     return (
-      <UpdateBasicInfo.Component
+      <UpdateBasicInfoComponent
         refetchQueries={[
           {
-            query: GetSingleProject.Document,
+            query: GetSingleProjectDocument,
             variables: { id: this.props.match.params.id }
           }
         ]}
@@ -124,7 +126,7 @@ class EditBasicInfoFormContainer extends React.Component<
             </React.Fragment>
           )
         }}
-      </UpdateBasicInfo.Component>
+      </UpdateBasicInfoComponent>
     )
   }
 }

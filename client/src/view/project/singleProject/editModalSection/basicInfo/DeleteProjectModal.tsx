@@ -1,18 +1,14 @@
 import * as React from 'react'
 import EditFormModal from 'src/libs/forms/EditFormModal'
 import { Typography } from '@material-ui/core'
-import { DeleteProject } from 'src/graphql/components/projects'
+import { DeleteProjectComponent } from 'src/graphql/components/projects'
 import { DeleteProjectModalProps } from './EditBasicInfoFormContainer'
 
 class DeleteProjectModal extends React.Component<DeleteProjectModalProps> {
   render() {
-    const {
-      closeDeleteDialog,
-      confirmDelete,
-      isConfirmDialogOpen
-    } = this.props
+    const { closeDeleteDialog, confirmDelete, isConfirmDialogOpen } = this.props
     return (
-      <DeleteProject.Component>
+      <DeleteProjectComponent>
         {(
           deleteProject,
           { error: deleteProjectError, loading: deleteProjectLoading }
@@ -32,7 +28,7 @@ class DeleteProjectModal extends React.Component<DeleteProjectModalProps> {
             </EditFormModal>
           )
         }}
-      </DeleteProject.Component>
+      </DeleteProjectComponent>
     )
   }
 }

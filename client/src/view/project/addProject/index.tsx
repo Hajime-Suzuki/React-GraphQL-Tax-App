@@ -5,7 +5,11 @@ import { MutationFn, MutationResult, QueryResult } from 'react-apollo'
 import { ClientAction } from 'src/graphql/actions/client'
 import { ProjectActions } from 'src/graphql/actions/projects'
 import { GetClientsList } from 'src/graphql/components/clients'
-import { AddProject, ProjectInput } from 'src/graphql/components/projects'
+import {
+  AddProject,
+  ProjectInput,
+  AddProjectComponent
+} from 'src/graphql/components/projects'
 import { projectValidationSchemas } from '../helper/validationSchemas'
 import AddProjectForm from './AddProjectForm'
 import { getSelectedClient } from './selector'
@@ -61,7 +65,7 @@ const getClients = ({ render }: any) => (
 
 const addProject = ({ render }: any) => {
   return (
-    <AddProject.Component
+    <AddProjectComponent
       onCompleted={data => {
         if (!data.addProject) return null
         ProjectActions.addNewProjectToList(data)
@@ -71,7 +75,7 @@ const addProject = ({ render }: any) => {
       }}
     >
       {(mutation, result) => render({ mutation, result })}
-    </AddProject.Component>
+    </AddProjectComponent>
   )
 }
 

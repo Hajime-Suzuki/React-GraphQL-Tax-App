@@ -1,4 +1,4 @@
-export type Maybe<T> = T | null;
+export type Maybe<T> = T | null | undefined;
 
 export interface UpdateUserInput {
   firstName?: Maybe<string>;

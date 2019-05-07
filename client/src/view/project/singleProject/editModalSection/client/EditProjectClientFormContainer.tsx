@@ -7,10 +7,10 @@ import {
   RemoveClientFromProject,
   UpdateClientProject
 } from 'src/graphql/components/clients'
-import { GetSingleProject } from 'src/graphql/components/projects'
 import { ProjectRouterComponentProps } from 'src/routes/types'
 import { SingleProjectChildProps } from '../..'
 import EditProjectClientForm from './EditProjectClientForm'
+import { GetSingleProjectDocument } from 'src/graphql/components/projects'
 
 type Props = Pick<
   SingleProjectChildProps,
@@ -19,11 +19,11 @@ type Props = Pick<
   ProjectRouterComponentProps
 
 export type EditProjectClientChildProps = {
-  update: (id: string) => () => void;
-  removeFromProject: () => void;
-  removeFromProjectMutation: MutationResult<RemoveClientFromProject.Mutation>;
-  updateClientProjectMutation: MutationResult<UpdateClientProject.Mutation>;
-  clientsList?: GetClientsList.GetClientsByUser[] | null;
+  update: (id: string) => () => void
+  removeFromProject: () => void
+  removeFromProjectMutation: MutationResult<RemoveClientFromProject.Mutation>
+  updateClientProjectMutation: MutationResult<UpdateClientProject.Mutation>
+  clientsList?: GetClientsList.GetClientsByUser[] | null
 } & Props
 
 class EditProjectClientFormContainer extends React.Component<
@@ -33,7 +33,7 @@ class EditProjectClientFormContainer extends React.Component<
 
   refetchQueries = [
     {
-      query: GetSingleProject.Document,
+      query: GetSingleProjectDocument,
       variables: { id: this.props.match.params.id }
     }
   ]

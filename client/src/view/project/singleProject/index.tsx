@@ -1,7 +1,14 @@
 import * as React from 'react'
 import {
-  DownloadInvoice,
-  GetSingleProject
+  // DownloadInvoice,
+  // GetSingleProject,
+  DownloadInvoiceMutation,
+  DownloadInvoiceMutationVariables,
+  DownloadInvoiceComponent,
+  GetSingleProjectProps,
+  Project,
+  Client,
+  withGetSingleProject
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
 import { LoadingIcon } from '../../UI/LoadingIcon'
@@ -11,8 +18,8 @@ import { MutationFn } from 'react-apollo'
 export type ModalType = 'basic' | 'incomes' | 'expenses' | 'client'
 
 export interface SingleProjectChildProps {
-  project: GetSingleProject.Project
-  client?: GetSingleProject.Client | null
+  project: Project
+  client?: Client | null
   selectedModal?: ModalType
   handleOpenModal: (type: ModalType) => () => void
   handleCloseModal: () => void
@@ -21,12 +28,12 @@ export interface SingleProjectChildProps {
   pdfError?: string
 }
 
-type Props = GetSingleProject.Props<IRouterComponentProps>
+type Props = GetSingleProjectProps<IRouterComponentProps>
 
 class SingleProjectContainer extends React.Component<
   Props,
   {
-    selectedModal: SingleProjectChildProps['selectedModal'];
+    selectedModal: SingleProjectChildProps['selectedModal']
   }
 > {
   state = { selectedModal: undefined }
@@ -37,7 +44,10 @@ class SingleProjectContainer extends React.Component<
   handleCloseModal = () => this.setState({ selectedModal: undefined })
 
   downloadInvoice = (
-    download: MutationFn<DownloadInvoice.Mutation, DownloadInvoice.Variables>
+    download: MutationFn<
+      DownloadInvoiceMutation,
+      DownloadInvoiceMutationVariables
+    >
   ) => async () => {
     const res = await download({
       variables: { projectId: this.props.match.params.id }
@@ -69,7 +79,7 @@ class SingleProjectContainer extends React.Component<
     if (!project) return <p>Project not found</p>
 
     return (
-      <DownloadInvoice.Component>
+      <DownloadInvoiceComponent>
         {(mutate, { error: mutationError, loading: mutationLoading }) => {
           return (
             <SingleProject
@@ -84,12 +94,12 @@ class SingleProjectContainer extends React.Component<
             />
           )
         }}
-      </DownloadInvoice.Component>
+      </DownloadInvoiceComponent>
     )
   }
 }
 
-export default GetSingleProject.HOC<IRouterComponentProps>({
+export default withGetSingleProject<IRouterComponentProps>({
   options: props => {
     return {
       variables: { id: props.match.params.id }

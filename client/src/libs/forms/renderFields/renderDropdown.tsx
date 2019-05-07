@@ -1,7 +1,7 @@
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import * as React from 'react'
-import { InvoiceStatus } from 'src/graphql/components/projects'
+import { Invoice_Status } from 'src/graphql/components/projects'
 import InputLabel from '@material-ui/core/InputLabel'
 
 interface RenderStateMenuItemArgs {
@@ -41,9 +41,9 @@ export const renderStatusField = ({
     <div className="field-item select">
       {showLabel && <InputLabel shrink>Status</InputLabel>}
       <Select value={value} name={name} onChange={onChange} {...rest}>
-        <MenuItem value={InvoiceStatus.None || ''}>None</MenuItem>
-        <MenuItem value={InvoiceStatus.Invoice}>Invoice</MenuItem>
-        <MenuItem value={InvoiceStatus.Paid}>Paid</MenuItem>
+        <MenuItem value={Invoice_Status.None || ''}>None</MenuItem>
+        <MenuItem value={Invoice_Status.Invoice}>Invoice</MenuItem>
+        <MenuItem value={Invoice_Status.Paid}>Paid</MenuItem>
       </Select>
     </div>
   )

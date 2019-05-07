@@ -1,11 +1,14 @@
 import React, { FC, useState } from 'react'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import Typography from '@material-ui/core/Typography'
-import { GetProjectOverview } from 'src/graphql/components/projects'
+import {
+  GetProjectOverviewProps,
+  withGetProjectOverview
+} from 'src/graphql/components/projects'
 import DashBoard from './DashBoard'
 import { SelectedQuarterProvider } from './contexts'
 
-type Props = GetProjectOverview.Props<{}>
+type Props = GetProjectOverviewProps<{}>
 const DashBoardContainer: FC<Props> = props => {
   const { data } = props
   if (!data) return null
@@ -20,7 +23,7 @@ const DashBoardContainer: FC<Props> = props => {
   return <DashBoard projects={data.projects} />
 }
 
-export default GetProjectOverview.HOC({})(props => (
+export default withGetProjectOverview({})(props => (
   <SelectedQuarterProvider>
     <DashBoardContainer {...props} />
   </SelectedQuarterProvider>

@@ -2,9 +2,9 @@ import { DataProxy } from 'apollo-cache'
 import { differenceInDays } from 'date-fns'
 import { client } from '../client'
 import { GetToken } from '../components/client/login'
-import { AddProject, GetProjectOverview } from '../components/projects'
+import { AddProject,  GetProjectOverviewQuery, GetProjectOverviewDocument, Project, AddProjectMutation } from '../components/projects'
 
-type OverviewType = GetProjectOverview.Query
+type OverviewType = GetProjectOverviewQuery
 
 const getProjectOverview = () => {
   const { userId } = client.cache.readQuery<GetToken.Query>({
@@ -14,7 +14,7 @@ const getProjectOverview = () => {
   if (!userId) return {}
 
   const queryOption = {
-    query: GetProjectOverview.Document,
+    query: GetProjectOverviewDocument,
     variables: { userId }
   }
   try {
@@ -29,8 +29,9 @@ const getProjectOverview = () => {
 
 const writeData = (
   queryOption: DataProxy.Query<{ userId: string }>,
-  data: GetProjectOverview.Projects[]
+  data: Project[]
 ) => {
+
   client.writeQuery<OverviewType>({
     ...queryOption,
     data: {
@@ -65,7 +66,7 @@ const sortProjectsByInvoiceDate = (sort: '1' | '-1') => {
   writeData(queryOption, newData)
 }
 
-const addNewProjectToList = ({ addProject }: AddProject.Mutation) => {
+const addNewProjectToList = ({ addProject }: AddProjectMutation) => {
   const { projects, queryOption } = getProjectOverview()
   if (!projects || !queryOption) return
 

@@ -1,7 +1,11 @@
 import * as React from 'react'
 import { InvoiceStatus } from 'src/graphql/components/login'
 import { MutationFn, MutationResult } from 'react-apollo'
-import { UpdateStatus } from 'src/graphql/components/projects'
+import {
+  UpdateStatusComponent,
+  UpdateStatusMutation,
+  UpdateStatusMutationVariables
+} from 'src/graphql/components/projects'
 import { EditStatusDropdown } from './EditStatusDropDown'
 
 interface Props {
@@ -10,8 +14,8 @@ interface Props {
 }
 
 export type EditStatusChildProps = Props & {
-  onSubmit: MutationFn<UpdateStatus.Mutation, UpdateStatus.Variables>;
-  data?: MutationResult<UpdateStatus.Mutation>;
+  onSubmit: MutationFn<UpdateStatusMutation, UpdateStatusMutationVariables>
+  data?: MutationResult<UpdateStatusMutation>
 }
 
 class EditStatusContainer extends React.PureComponent<Props> {
@@ -19,7 +23,7 @@ class EditStatusContainer extends React.PureComponent<Props> {
     const { status, projectId } = this.props
 
     return (
-      <UpdateStatus.Component>
+      <UpdateStatusComponent>
         {(update, data) => (
           <EditStatusDropdown
             status={status}
@@ -28,7 +32,7 @@ class EditStatusContainer extends React.PureComponent<Props> {
             data={data}
           />
         )}
-      </UpdateStatus.Component>
+      </UpdateStatusComponent>
     )
   }
 }

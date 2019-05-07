@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ProjectActions } from 'src/graphql/actions/projects'
-import { GetProjectOverview } from 'src/graphql/components/projects'
+import { GetProjectOverviewComponent } from 'src/graphql/components/projects'
 import {
   IRouterComponentProps,
   PrivateRoutesChildProps
@@ -27,7 +27,7 @@ class ProjectsListContainer extends React.Component<Props> {
     const { userId } = this.props
     if (!userId) return null
     return (
-      <GetProjectOverview.Component variables={{ userId }}>
+      <GetProjectOverviewComponent variables={{ userId }}>
         {({ data, loading, error }) => {
           if (loading) return <LoadingIcon />
           if (error) return <p>{error.message}</p>
@@ -46,7 +46,7 @@ class ProjectsListContainer extends React.Component<Props> {
             />
           )
         }}
-      </GetProjectOverview.Component>
+      </GetProjectOverviewComponent>
     )
   }
 }
