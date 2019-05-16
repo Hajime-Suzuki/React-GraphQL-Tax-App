@@ -19,7 +19,7 @@ export const EditStatusDropdown: React.FunctionComponent<
         props.onSubmit({
           variables: {
             projectId: props.projectId,
-            data: values
+            data: values as any // TODO:fix
           }
         })
       }

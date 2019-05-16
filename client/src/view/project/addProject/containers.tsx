@@ -1,18 +1,22 @@
 import { Formik, FormikActions, FormikProps } from 'formik'
 import React from 'react'
 import { adopt } from 'react-adopt'
-import { MutationFn, MutationResult, QueryResult } from 'react-apollo'
+import { MutationResult, QueryResult } from 'react-apollo'
 import { ClientAction } from 'src/graphql/actions/client'
 import { ProjectActions } from 'src/graphql/actions/projects'
 import { GetClientsList } from 'src/graphql/components/clients'
-import { AddProject, ProjectInput } from 'src/graphql/components/projects'
+import {
+  AddProjectMutationFn,
+  ProjectInput,
+  AddProjectComponent
+} from 'src/graphql/components/projects'
 import { projectValidationSchemas } from '../helper/validationSchemas'
 
 export interface RenderProps {
   getClients: QueryResult<GetClientsList.Query, GetClientsList.Variables>
   addProject: {
-    mutation: MutationFn<AddProject.Mutation, AddProject.Variables>
-    result: MutationResult<AddProject.Mutation>
+    mutation: AddProjectMutationFn
+    result: any // MutationResult<AddProject.Mutation>
   }
   addProjectForm: FormikProps<ProjectInput>
 }
@@ -23,17 +27,17 @@ const getClients = ({ render }: any) => {
 
 const addProject = ({ render }: any) => {
   return (
-    <AddProject.Component
+    <AddProjectComponent
       onCompleted={data => {
         if (!data.addProject) return null
         ProjectActions.addNewProjectToList(data)
         ProjectActions.sortProjectsByProjectDate('-1')
         const client = data.addProject.client
-        if (client) ClientAction.addClient(client)
+        if (client) ClientAction.addClient(client as any) // TODO: fix
       }}
     >
       {(mutation, result) => render({ mutation, result })}
-    </AddProject.Component>
+    </AddProjectComponent>
   )
 }
 
