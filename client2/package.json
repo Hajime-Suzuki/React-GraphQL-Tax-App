@@ -1,0 +1,72 @@
+{
+  "name": "client2",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "24.0.12",
+    "@types/node": "12.0.0",
+    "@types/react": "16.8.17",
+    "@types/react-dom": "16.8.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1",
+    "typescript": "3.4.5",
+    "apollo": "^2.1.7",
+    "apollo-boost": "^0.1.22",
+    "date-fns": "2.0.0-alpha.21",
+    "graphql": "^14.3.0",
+    "graphql-import": "0.7.0",
+    "graphql-tag": "^2.10.0",
+    "material-ui-pickers": "^2.0.4",
+    "merge-graphql-schemas": "^1.5.8",
+    "react-adopt": "^0.6.0",
+    "react-apollo": "^2.5.5",
+    "react-apollo-hooks": "^0.4.5",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "reselect": "^4.0.0",
+    "styled-components": "^4.2.0",
+    "ts-lint": "^4.5.1",
+    "use-react-router": "^1.0.5",
+    "yup": "^0.26.6"
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^4.3.2",
+    "@types/yup": "^0.26.5",
+    "@graphql-codegen/cli": "^1.1.3",
+    "@graphql-codegen/typescript": "^1.1.3",
+    "@graphql-codegen/typescript-operations": "1.1.3",
+    "@graphql-codegen/typescript-react-apollo": "^1.1.3",
+    "@types/graphql": "^14.0.3",
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-router": "^4.4.5",
+    "@types/styled-components": "^4.1.14"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "gen:introspection": "apollo schema:download ./schema.json --endpoint=http://localhost:4000/graphql",
+    "gen:compile": "tsc ./src/graphql/typeDefs.ts --outDir ./_gql-gen/ --target ES5",
+    "gen": "gql-gen",
+    "gen:debug": "gql-gen DEBUG=true",
+    "addRedirects": "echo '/* /index.html 200' > ./build/_redirect"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

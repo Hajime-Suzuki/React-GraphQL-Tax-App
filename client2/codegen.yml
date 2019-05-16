@@ -1,0 +1,75 @@
+overwrite: false
+generates:
+  # ./src/graphql/@types/types.ts:
+  #   schema: http://localhost:4000/graphql
+  #   plugins:
+  #     - typescript-common
+  #     - typescript-server
+
+  # ./src/graphql/@types/resolvers.ts:
+  #   schema:
+  #     - http://localhost:4000/graphql
+  #     - ./_gql-gen/typeDefs.js
+  #   plugins:
+  #     - typescript-common
+  #     - typescript-server
+  #     - typescript-client
+  #     - typescript-resolvers
+
+  ##### components ######
+  ./src/graphql/components/login.tsx:
+    schema: http://localhost:4000/graphql
+    documents: ./src/graphql/queries/login.ts
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+
+  ./src/graphql/components/signup.tsx:
+    schema: http://localhost:4000/graphql
+    documents: ./src/graphql/queries/signup.ts
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+
+  ./src/graphql/components/projects.tsx:
+    overwrite: true
+    schema: http://localhost:4000/graphql
+    documents:
+      - ./src/graphql/queries/projects.ts
+      - ./src/graphql/fragments/fragments.ts
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+  ./src/graphql/components/userProfile.tsx:
+    schema: http://localhost:4000/graphql
+    documents:
+      - ./src/graphql/queries/userProfile.ts
+      - ./src/graphql/fragments/fragments.ts
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+  ./src/graphql/components/clients.tsx:
+    schema: http://localhost:4000/graphql
+    documents:
+      - ./src/graphql/queries/clients.ts
+      - ./src/graphql/fragments/fragments.ts
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+  ##### /components ######
+  ##### client components ######
+  ./src/graphql/components/client/login.tsx:
+    schema: ./_gql-gen/typeDefs.js
+    documents: ./src/graphql/queries/loginClient.ts
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+  #### /client components ######
