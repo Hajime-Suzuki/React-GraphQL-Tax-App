@@ -117,8 +117,6 @@
   "search.exclude": {
     "**/node_modules/*/**": true
   },
-  "cSpell.words": [
-    "Formik",
-    "virtuals"
-  ]
+  "cSpell.words": ["Formik", "virtuals"],
+  "tslint.exclude": "/Users/hajime/web/React-GraphQL-Tax-App/client/src/graphql/components/**"
 }

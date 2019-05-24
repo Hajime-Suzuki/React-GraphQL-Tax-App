@@ -6,25 +6,21 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { format } from 'date-fns'
 import React from 'react'
-import { GetProjectOverview } from 'src/graphql/components/projects'
 import styled from 'styled-components'
 import { RoutesNames } from '../../../routes/constants'
 import { Styles } from '../../../styles/sharedStyles'
 import { Calculations } from '../helper/calculations'
 import EditStatusContainer from './EditStatusContainer'
+import { Project } from 'src/graphql/components/projects'
+import { ProjectListChildProps } from '.'
 
-const StyledPaper: any = styled(Paper)`
-  overflow: "auto";
+const StyledPaper: any = styled(Paper as any)`
+  overflow: 'auto';
   width: ${(100 / 12) * 11}%;
   margin: auto;
 `
-interface Props {
-  projects: GetProjectOverview.Projects[]
-  sortProjectsByProjectDate: () => void
-  sortProjectByInvoiceDate: () => void
-}
 
-const ProjectsList: React.FunctionComponent<Props> = props => {
+const ProjectsList: React.FunctionComponent<ProjectListChildProps> = props => {
   const {
     projects,
     sortProjectsByProjectDate,
@@ -42,7 +38,7 @@ const ProjectsList: React.FunctionComponent<Props> = props => {
             <TableCell onClick={sortProjectByInvoiceDate}>
               Invoice Date
             </TableCell>
-            <TableCell>Price</TableCell>
+            <TableCell>Price(excl)</TableCell>
             <TableCell>Status</TableCell>
           </TableRow>
         </TableHead>
@@ -65,7 +61,7 @@ const ProjectsList: React.FunctionComponent<Props> = props => {
                   {p.invoiceDate ? format(p.invoiceDate, 'Y-MM-dd') : '-'}
                 </TableCell>
                 <TableCell>
-                  {Calculations.getGrandTotal(p.incomes || [])}
+                  {Calculations.getSubtotal(p.incomes || [])}
                 </TableCell>
                 <TableCell>
                   <EditStatusContainer status={p.status} projectId={p.id} />

@@ -12,7 +12,10 @@ interface Props {
   client: Partial<SingleClient.GetSingleClient & ClientFragment.Fragment>
   handleOpenModal?: () => void
 }
-const ClientCard: React.FunctionComponent<Props> = ({ client, handleOpenModal }) => {
+const ClientCard: React.FunctionComponent<Props> = ({
+  client,
+  handleOpenModal
+}) => {
   const {
     firstName,
     lastName,
@@ -46,7 +49,7 @@ const ClientCard: React.FunctionComponent<Props> = ({ client, handleOpenModal })
   )
 }
 
-const CustomPaper: any = styled(Paper)`
+const CustomPaper: any = styled(Paper as any)`
   padding: 2em;
   text-align: center;
 

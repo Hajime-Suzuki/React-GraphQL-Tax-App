@@ -1,18 +1,21 @@
+import Typography from '@material-ui/core/Typography'
 import * as React from 'react'
 import { ProjectActions } from 'src/graphql/actions/projects'
-import { GetProjectOverviewComponent } from 'src/graphql/components/projects'
+import {
+  GetProjectOverviewComponent,
+  GetProjectOverviewQuery
+} from 'src/graphql/components/projects'
 import {
   IRouterComponentProps,
   PrivateRoutesChildProps
 } from 'src/routes/types'
 import { LoadingIcon } from '../../UI/LoadingIcon'
 import ProjectsList from './ProjectsList'
-import Typography from '@material-ui/core/Typography'
 
 type Props = PrivateRoutesChildProps & IRouterComponentProps
 
 export interface ProjectListChildProps {
-  projects: GetProjectOverview.Projects[]
+  projects: GetProjectOverviewQuery['projects']
   sortProjectsByProjectDate: () => void
   sortProjectByInvoiceDate: () => void
 }

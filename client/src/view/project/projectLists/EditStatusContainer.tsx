@@ -1,15 +1,15 @@
 import * as React from 'react'
-import { InvoiceStatus } from 'src/graphql/components/login'
 import { MutationFn, MutationResult } from 'react-apollo'
 import {
   UpdateStatusComponent,
   UpdateStatusMutation,
-  UpdateStatusMutationVariables
+  UpdateStatusMutationVariables,
+  Invoice_Status
 } from 'src/graphql/components/projects'
 import { EditStatusDropdown } from './EditStatusDropDown'
 
 interface Props {
-  status: InvoiceStatus
+  status: Invoice_Status
   projectId: string
 }
 

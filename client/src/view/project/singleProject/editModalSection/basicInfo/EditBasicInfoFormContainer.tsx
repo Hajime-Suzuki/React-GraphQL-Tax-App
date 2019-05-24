@@ -7,12 +7,11 @@ import { projectValidationSchemas } from 'src/view/project/helper/validationSche
 import { ProjectActions } from 'src/graphql/actions/projects'
 import { GetClientsList } from 'src/graphql/components/clients'
 import {
-  DeleteProject,
-  // GetSingleProject,
   ProjectInput,
-  UpdateBasicInfo,
   UpdateBasicInfoComponent,
-  GetSingleProjectDocument
+  GetSingleProjectDocument,
+  DeleteProjectMutationFn,
+  UpdateBasicInfoMutationFn
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
 import { SingleProjectChildProps } from '../..'
@@ -50,9 +49,7 @@ class EditBasicInfoFormContainer extends React.Component<
 
   closeDeleteDialog = () => this.setState({ isConfirmDialogOpen: false })
 
-  confirmDelete = (
-    deleteProject: MutationFn<DeleteProject.Mutation, DeleteProject.Variables>
-  ) => async () => {
+  confirmDelete = (deleteProject: DeleteProjectMutationFn) => async () => {
     await deleteProject({
       variables: { projectId: this.props.match.params.id }
     })
@@ -65,12 +62,9 @@ class EditBasicInfoFormContainer extends React.Component<
     setFieldValue: FormikActions<ProjectInput>['setFieldValue']
   ) => () => setFieldValue('client.id', null)
 
-  updateProject = (
-    updateProject: MutationFn<
-      UpdateBasicInfo.Mutation,
-      UpdateBasicInfo.Variables
-    >
-  ) => async (values: ProjectInput) => {
+  updateProject = (updateProject: UpdateBasicInfoMutationFn) => async (
+    values: ProjectInput
+  ) => {
     console.log(values)
     await updateProject({
       variables: {
