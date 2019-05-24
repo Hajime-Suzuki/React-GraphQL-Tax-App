@@ -14,6 +14,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "outDir": "./dist",
+    "incremental": true,
     "typeRoots": ["node_modules/@types", "@types"]
   },
   "include": ["./src/**/*"],
