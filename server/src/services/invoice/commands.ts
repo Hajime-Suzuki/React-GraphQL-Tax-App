@@ -15,14 +15,17 @@ export const getInvoicePDF = async (projectId: string, token: string) => {
     }
   )
 
-  const pdfPath = `${__dirname}/generated/invoice_${projectId}.pdf`
-  const buffer = await page.pdf({
-    path: pdfPath,
-    format: 'A4'
+  const pdfFolder = `${__dirname}/generated`
+  fs.mkdir(pdfFolder, async () => {
+    const pdfPath = `${pdfFolder}/invoice_${projectId}.pdf`
+    const buffer = await page.pdf({
+      path: pdfPath,
+      format: 'A4'
+    })
+    fs.unlinkSync(pdfPath)
+    await browser.close()
+    return buffer
   })
-  fs.unlinkSync(pdfPath)
-  await browser.close()
-  return buffer
 }
 
 export const InvoiceCommands = {
