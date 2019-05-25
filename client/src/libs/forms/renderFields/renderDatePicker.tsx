@@ -1,5 +1,5 @@
 import Typography from '@material-ui/core/Typography'
-import { addYears, endOfYear, format, parseISO } from 'date-fns'
+import { addYears, endOfYear, format } from 'date-fns'
 import { FormikActions, FormikState } from 'formik'
 import { DatePicker } from 'material-ui-pickers'
 import React from 'react'
@@ -36,7 +36,7 @@ export const renderDatePicker = ({
         clearable
         format="dd/MM/yyyy"
         minDate="2016-01-01"
-        maxDate={format(endOf5YearsLater, 'YYYY-MM-dd')}
+        maxDate={format(endOf5YearsLater, 'yyyy-MM-dd')}
         className="field-item"
       />
       {error && <Typography color="error">{error}</Typography>}

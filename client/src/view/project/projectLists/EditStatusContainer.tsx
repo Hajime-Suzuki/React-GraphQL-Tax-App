@@ -21,7 +21,6 @@ export type EditStatusChildProps = Props & {
 class EditStatusContainer extends React.PureComponent<Props> {
   render() {
     const { status, projectId } = this.props
-
     return (
       <UpdateStatusComponent>
         {(update, data) => (
