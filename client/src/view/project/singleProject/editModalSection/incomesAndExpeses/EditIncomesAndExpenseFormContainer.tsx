@@ -51,7 +51,7 @@ class EditExpenseAndIncomeFormContainer extends React.Component<
           <Formik
             initialValues={{ incomes, expenses }}
             validateOnChange={false}
-            validationOnBlur={true}
+            validateOnBlur
             validationSchema={
               !!incomes ? editIncomesSchema : editExpensesSchema
             }

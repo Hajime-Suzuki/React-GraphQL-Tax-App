@@ -4,7 +4,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import React from 'react'
 import styled from 'styled-components'
 import { RoutesNames } from '../../../routes/constants'
@@ -55,10 +55,14 @@ const ProjectsList: React.FunctionComponent<ProjectListChildProps> = props => {
                   </Styles.StyledLink>
                 </TableCell>
                 <TableCell>
-                  {p.projectDate ? format(p.projectDate, 'Y-MM-dd') : '-'}
+                  {p.projectDate
+                    ? format(parseISO(p.projectDate), 'Y-MM-dd')
+                    : '-'}
                 </TableCell>
                 <TableCell>
-                  {p.invoiceDate ? format(p.invoiceDate, 'Y-MM-dd') : '-'}
+                  {p.invoiceDate
+                    ? format(parseISO(p.invoiceDate), 'Y-MM-dd')
+                    : '-'}
                 </TableCell>
                 <TableCell>
                   {Calculations.getSubtotal(p.incomes || [])}

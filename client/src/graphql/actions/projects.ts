@@ -1,5 +1,5 @@
 import { DataProxy } from 'apollo-cache'
-import { differenceInDays } from 'date-fns'
+import { differenceInDays, parseISO } from 'date-fns'
 import { client } from '../client'
 import { GetToken } from '../components/client/login'
 import {
@@ -53,7 +53,10 @@ const sortProjectsByProjectDate = (sort: '1' | '-1') => {
   if (!projects || !queryOption) return
 
   const newData = [...projects].sort((p1, p2) => {
-    const diff = differenceInDays(p1.projectDate || 0, p2.projectDate || 0)
+    const diff = differenceInDays(
+      parseISO(p1.projectDate) || 0,
+      parseISO(p2.projectDate) || 0
+    )
     return sort === '1' ? diff : -diff
   })
 
@@ -65,7 +68,10 @@ const sortProjectsByInvoiceDate = (sort: '1' | '-1') => {
   if (!projects || !queryOption) return
 
   const newData = [...projects].sort((p1, p2) => {
-    const diff = differenceInDays(p1.invoiceDate || 0, p2.invoiceDate || 0)
+    const diff = differenceInDays(
+      parseISO(p1.invoiceDate) || 0,
+      parseISO(p2.invoiceDate) || 0
+    )
     return sort === '1' ? diff : -diff
   })
 

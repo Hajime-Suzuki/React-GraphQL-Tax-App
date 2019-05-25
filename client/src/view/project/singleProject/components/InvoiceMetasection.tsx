@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import React from 'react'
 import { theme } from 'src/styles/theme'
 import styled from 'styled-components'
@@ -72,7 +72,7 @@ const InvoiceMetaSection: React.FunctionComponent<SingleProjectChildProps> = ({
         <Grid className="meta-item" item xs={3} md={10}>
           <Icon className="far fa-calendar-alt" />
           <Typography className="invoice-date">
-            {invoiceDate ? format(invoiceDate, 'Y-MM-dd') : '-'}
+            {invoiceDate ? format(parseISO(invoiceDate), 'Y-MM-dd') : '-'}
           </Typography>
         </Grid>
 
