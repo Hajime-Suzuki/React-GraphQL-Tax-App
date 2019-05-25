@@ -1,12 +1,12 @@
-import React, { FC, useContext } from 'react'
-import TaxOverview from './TaxOverview'
 import Typography from '@material-ui/core/Typography'
-import { currentQuarterProjectSelector as currentSemester } from './selectors/currentQuarter'
+import React, { FC, useContext } from 'react'
+import { GetProjectOverviewQuery } from 'src/graphql/components/projects'
 import { SelectedQuarterContext } from './contexts'
-import { Project } from 'src/graphql/components/projects'
+import { currentQuarterProjectSelector as currentSemester } from './selectors/currentQuarter'
+import TaxOverview from './TaxOverview'
 
 export interface DashBoardProps {
-  projects: Project[]
+  projects: GetProjectOverviewQuery['projects']
 }
 
 const DashBoard: FC<DashBoardProps> = props => {

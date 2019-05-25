@@ -7,8 +7,8 @@ import App from './App'
 import { client } from './graphql/client'
 import registerServiceWorker from './registerServiceWorker'
 import { theme } from './styles/theme'
-import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 
 ReactDOM.render(
   <ApolloProvider client={client}>
