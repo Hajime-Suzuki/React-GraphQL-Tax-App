@@ -7,7 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 interface RenderStateMenuItemArgs {
   value: string | number
   name: string
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  onChange: (e: any) => void
   id?: string
   showLabel?: boolean
 }

@@ -16,9 +16,7 @@ const DashBoardContainer: FC<Props> = props => {
   if (loading) return <LoadingIcon />
   if (error) return <Typography>{error.message}</Typography>
   if (!data.projects || (data.projects && !data.projects.length)) {
-    return (
-      <Typography variant="display1">You don't have a project yet</Typography>
-    )
+    return <Typography variant="h4">You don't have a project yet</Typography>
   }
   return <DashBoard projects={data.projects} />
 }

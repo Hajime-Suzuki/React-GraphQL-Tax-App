@@ -6,11 +6,20 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 import React from 'react'
-import { GetSingleProject } from 'src/graphql/components/projects'
+// import { GetSingleProject } from 'src/graphql/components/projects'
 import { Currency } from 'src/libs/currency'
+import { GetSingleProjectQuery } from 'src/graphql/components/projects'
+
+type GetSingleProjectIncomes = NonNullable<
+  NonNullable<GetSingleProjectQuery['project']>['incomes']
+>
+type GetSingleProjectExpenses = NonNullable<
+  NonNullable<GetSingleProjectQuery['project']>['expenses']
+>
 
 interface Props {
-  items: GetSingleProject.Incomes[] | GetSingleProject.Expenses[]
+  // items: GetSingleProject.Incomes[] | GetSingleProject.Expenses[]
+  items: GetSingleProjectIncomes | GetSingleProjectExpenses
   totalValues: {
     subtotal?: string
     tax: string
@@ -81,7 +90,7 @@ const renderTotalRows = (
   return (
     <TableRow>
       <TableCell>
-        <Typography variant="title">{text}</Typography>
+        <Typography variant="h6">{text}</Typography>
       </TableCell>
       <TableCell>{totalValue}</TableCell>
       <TableCell>-</TableCell>

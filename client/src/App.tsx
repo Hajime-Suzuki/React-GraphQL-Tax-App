@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import Routes from './routes/Routes'
 import { GetUser } from './graphql/components/login'
 import { LoadingIcon } from './view/UI/LoadingIcon'

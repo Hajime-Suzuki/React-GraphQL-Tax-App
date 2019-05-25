@@ -97,6 +97,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^1.2.0",
     "@graphql-codegen/typescript": "^1.2.0",
+    "@graphql-codegen/typescript-compatibility": "^1.2.0",
     "@graphql-codegen/typescript-operations": "^1.2.0",
     "@graphql-codegen/typescript-react-apollo": "^1.2.0",
     "@types/graphql": "^14.0.3",

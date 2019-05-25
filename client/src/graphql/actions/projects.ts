@@ -2,9 +2,16 @@ import { DataProxy } from 'apollo-cache'
 import { differenceInDays } from 'date-fns'
 import { client } from '../client'
 import { GetToken } from '../components/client/login'
-import { AddProject,  GetProjectOverviewQuery, GetProjectOverviewDocument, Project, AddProjectMutation } from '../components/projects'
+import {
+  GetProjectOverviewQuery,
+  GetProjectOverviewDocument,
+  Project,
+  AddProjectMutation
+} from '../components/projects'
 
-type OverviewType = GetProjectOverviewQuery
+// TODO: fix types
+type OverviewType = any
+// type OverviewType = GetProjectOverviewQuery
 
 const getProjectOverview = () => {
   const { userId } = client.cache.readQuery<GetToken.Query>({
@@ -31,7 +38,6 @@ const writeData = (
   queryOption: DataProxy.Query<{ userId: string }>,
   data: Project[]
 ) => {
-
   client.writeQuery<OverviewType>({
     ...queryOption,
     data: {

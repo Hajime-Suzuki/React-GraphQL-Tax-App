@@ -58,7 +58,7 @@ const InvoiceMetaSection: React.FunctionComponent<SingleProjectChildProps> = ({
       justify="center"
     >
       <Grid item xs={11} md={10}>
-        <Typography variant="display2" className="title">
+        <Typography variant="h3" className="title">
           {name}
         </Typography>
       </Grid>

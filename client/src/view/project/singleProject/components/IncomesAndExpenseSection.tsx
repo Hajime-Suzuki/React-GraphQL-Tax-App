@@ -24,13 +24,13 @@ const IncomesAndExpenseSection: React.FunctionComponent<
     }
   ]
   return (
-    <Grid container item xs={12} spacing={40} justify="space-evenly">
+    <Grid container item xs={12} spacing={5} justify="space-evenly">
       {settings.map(
         ({ type, title, totalValues }, i) =>
           project[type] && (
             <Grid item xs={11} lg={6} key={i}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="title" color="secondary">
+                <Typography variant="h6" color="secondary">
                   {title}
                 </Typography>
                 <EditIcon

@@ -37,9 +37,7 @@ class ProjectsListContainer extends React.Component<Props> {
           if (!data) return null
           if (!data.projects.length)
             return (
-              <Typography variant="display1">
-                You don't have a project yet
-              </Typography>
+              <Typography variant="h4">You don't have a project yet</Typography>
             )
           return (
             <ProjectsList

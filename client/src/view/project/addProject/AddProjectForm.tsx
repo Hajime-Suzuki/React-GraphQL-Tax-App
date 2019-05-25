@@ -1,6 +1,6 @@
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import * as React from 'react'
+import React from 'react'
 import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 import { Styles } from 'src/styles/sharedStyles'

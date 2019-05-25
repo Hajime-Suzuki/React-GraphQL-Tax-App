@@ -22,7 +22,7 @@ export default class SignupForm extends React.Component<
               container
               direction="column"
               alignItems="center"
-              spacing={40}
+              spacing={5}
             >
               <Grid item>
                 <Field

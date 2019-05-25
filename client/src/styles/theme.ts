@@ -15,7 +15,5 @@ export const theme = createMuiTheme({
       main: '#ef5350'
     }
   },
-  spacing: {
-    unit: 8
-  }
+  spacing: 8
 })

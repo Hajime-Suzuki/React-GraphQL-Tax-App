@@ -1,12 +1,12 @@
 import React, { FC, useContext } from 'react'
-import { GetProjectOverview } from 'src/graphql/components/projects'
 import TaxOverview from './TaxOverview'
 import Typography from '@material-ui/core/Typography'
 import { currentQuarterProjectSelector as currentSemester } from './selectors/currentQuarter'
 import { SelectedQuarterContext } from './contexts'
+import { Project } from 'src/graphql/components/projects'
 
 export interface DashBoardProps {
-  projects: GetProjectOverview.Projects[]
+  projects: Project[]
 }
 
 const DashBoard: FC<DashBoardProps> = props => {
@@ -15,10 +15,10 @@ const DashBoard: FC<DashBoardProps> = props => {
   return (
     <>
       <Typography variant="h4">Overview</Typography>
-      <Typography variant="subheading">Incomes and Tax</Typography>
+      <Typography variant="subtitle1">Incomes and Tax</Typography>
       <TaxOverview items={genTaxOverviewsItems({ projects })} type="incomes" />
       <div style={{ marginTop: '3em' }} />
-      <Typography variant="subheading">Expense</Typography>
+      <Typography variant="subtitle1">Expense</Typography>
       <TaxOverview
         items={genExpenseOverviewItems({ projects })}
         type="expenses"

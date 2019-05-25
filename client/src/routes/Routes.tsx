@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import LoginAndSignupFormContainer from 'src/view/loginAndSignup/LoginAndSignupFormContainer'
 import AddProjectContainer from 'src/view/project/addProject'

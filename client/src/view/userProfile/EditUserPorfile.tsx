@@ -36,12 +36,12 @@ const EditUserProfile: React.FunctionComponent<Props> = props => {
       </div>
       <div className="form-section">
         {data && data.updateUser.message && (
-          <Typography color="primary" variant="subheading" gutterBottom>
+          <Typography color="primary" variant="subtitle1" gutterBottom>
             {data.updateUser.message}
           </Typography>
         )}
         {mutationError && (
-          <Typography color="error" variant="subheading" gutterBottom>
+          <Typography color="error" variant="subtitle1" gutterBottom>
             {mutationError.message}
           </Typography>
         )}
