@@ -25,7 +25,7 @@ const TaxOverview: React.FunctionComponent<TaxOverviewsProps> = ({
       <TableHead>
         <TableRow>
           <TableCell>Tax Rate</TableCell>
-          <TableCell>{isIncomes ? 'Incomes' : 'Expenses'}</TableCell>
+          <TableCell>{isIncomes ? 'Incomes' : 'Expenses'} (excl)</TableCell>
           <TableCell>{isIncomes ? 'Tax to pay' : 'Tax to deduct'}</TableCell>
         </TableRow>
       </TableHead>

@@ -22,6 +22,7 @@ const useSelectedQuarter = () => {
 
   return {
     selectedQuarter,
+    selectedDate,
     selectedYear: getYear(selectedDate),
     previousQuarter,
     nextQuarter

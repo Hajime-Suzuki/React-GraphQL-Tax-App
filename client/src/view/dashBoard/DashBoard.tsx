@@ -1,26 +1,73 @@
+import Grid from '@material-ui/core/Grid'
+import Icon from '@material-ui/core/Icon'
+import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import React, { FC, useContext } from 'react'
-import { GetProjectOverviewQuery } from 'src/graphql/components/projects'
-import { SelectedQuarterContext } from './contexts'
+import {
+  GetProjectOverviewQuery,
+  useGetProjectOverviewQuery
+} from 'src/graphql/components/projects'
+import { JWT } from 'src/libs/jwt'
+import { LoadingIcon } from '../UI/LoadingIcon'
+import { SelectedQuarterContext, SelectedQuarterProvider } from './contexts'
 import { currentQuarterProjectSelector as currentSemester } from './selectors/currentQuarter'
 import TaxOverview from './TaxOverview'
 
-export interface DashBoardProps {
-  projects: GetProjectOverviewQuery['projects']
-}
+const DashBoard: FC<{}> = () => {
+  const userId = JWT.getUserId()
 
-const DashBoard: FC<DashBoardProps> = props => {
-  const { projects } = props
-  const { selectedQuarter } = useContext(SelectedQuarterContext)
+  const { data, loading, error } = useGetProjectOverviewQuery({
+    variables: { userId: userId || '' }
+  })
+
+  const {
+    selectedQuarter,
+    selectedYear,
+    previousQuarter,
+    nextQuarter,
+    selectedDate
+  } = useContext(SelectedQuarterContext)
+
+  if (!data) return null
+  if (loading) return <LoadingIcon />
+  if (error) return <Typography>{error.message}</Typography>
+
+  const projects = data.projects
+
+  if (!data.projects || (data.projects && !data.projects.length)) {
+    return <Typography variant="h4">You don't have a project yet</Typography>
+  }
+
   return (
     <>
+      <Grid container alignItems="center" spacing={2}>
+        <Grid item>
+          <IconButton onClick={previousQuarter} size="small">
+            <Icon className="fas fa-chevron-left" color="secondary" />
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <Typography>
+            {selectedYear} Q{selectedQuarter}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <IconButton onClick={nextQuarter} size="small">
+            <Icon className="fas fa-chevron-right" color="secondary" />
+          </IconButton>
+        </Grid>
+      </Grid>
+
       <Typography variant="h4">Overview</Typography>
       <Typography variant="subtitle1">Incomes and Tax</Typography>
-      <TaxOverview items={genTaxOverviewsItems({ projects })} type="incomes" />
+      <TaxOverview
+        items={genTaxOverviewsItems({ projects, date: selectedDate })}
+        type="incomes"
+      />
       <div style={{ marginTop: '3em' }} />
       <Typography variant="subtitle1">Expense</Typography>
       <TaxOverview
-        items={genExpenseOverviewItems({ projects })}
+        items={genExpenseOverviewItems({ projects, date: selectedDate })}
         type="expenses"
       />
     </>
@@ -28,12 +75,12 @@ const DashBoard: FC<DashBoardProps> = props => {
 }
 
 interface GetTableSettingsArgs {
-  projects: DashBoardProps['projects']
+  projects: GetProjectOverviewQuery['projects']
+  date: number | Date
 }
 
-const genTaxOverviewsItems = ({ projects }: GetTableSettingsArgs) => {
-  const grandTotalIncomes = currentSemester.getTotalIncomes(projects)
-
+const genTaxOverviewsItems = ({ projects, date }: GetTableSettingsArgs) => {
+  const grandTotalIncomes = currentSemester.getTotalIncomes({ date })(projects)
   return [
     {
       taxRate: '21%',
@@ -53,8 +100,10 @@ const genTaxOverviewsItems = ({ projects }: GetTableSettingsArgs) => {
   ]
 }
 
-const genExpenseOverviewItems = ({ projects }: GetTableSettingsArgs) => {
-  const { taxTotal, grandTotal } = currentSemester.getTotalExpenses(projects)
+const genExpenseOverviewItems = ({ projects, date }: GetTableSettingsArgs) => {
+  const { taxTotal, grandTotal } = currentSemester.getTotalExpenses({ date })(
+    projects
+  )
   return [
     {
       taxRate: 'all',
@@ -64,4 +113,8 @@ const genExpenseOverviewItems = ({ projects }: GetTableSettingsArgs) => {
   ]
 }
 
-export default DashBoard
+export default () => (
+  <SelectedQuarterProvider>
+    <DashBoard />
+  </SelectedQuarterProvider>
+)
