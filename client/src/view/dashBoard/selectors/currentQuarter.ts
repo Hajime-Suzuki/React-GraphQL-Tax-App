@@ -1,4 +1,10 @@
-import { endOfQuarter, isAfter, isBefore, startOfQuarter } from 'date-fns'
+import {
+  endOfQuarter,
+  isAfter,
+  isBefore,
+  startOfQuarter,
+  parseISO
+} from 'date-fns'
 import { createSelector } from 'reselect'
 import { Calculations } from 'src/view/project/helper/calculations'
 import { PriceFragment } from 'src/graphql/components/clients'
@@ -11,11 +17,11 @@ const getProjects = createSelector(
   [(projects: GetProjectOverviewQuery['projects']) => projects],
   projects => {
     const now = Date.now()
-    const quarterStart = startOfQuarter('2019-01-01')
-    const quarterEnd = endOfQuarter('2019-01-01')
+    const quarterStart = startOfQuarter(now)
+    const quarterEnd = endOfQuarter(now)
 
     const filteredProjects = projects.filter(project => {
-      const date = project.invoiceDate
+      const date = parseISO(project.invoiceDate)
       return isAfter(date, quarterStart) && isBefore(date, quarterEnd)
     })
 
@@ -65,7 +71,7 @@ const getTotalIncomes = createSelector(
     ) as TaxRate[]).reduce(
       (total, key) => {
         const incomes = categorizedIncomes[key]
-        const totalValue = Calculations.getGrandTotal(incomes)
+        const totalValue = Calculations.getSubtotal(incomes)
         const taxTotal = Calculations.getTaxTotal(incomes)
 
         total[key].incomes = totalValue
@@ -100,7 +106,7 @@ const getTotalExpenses = createSelector(
     ) as IncomeOrExpense[]
 
     const taxTotal = Calculations.getTaxTotal(expenses)
-    const grandTotal = Calculations.getGrandTotal(expenses)
+    const grandTotal = Calculations.getSubtotal(expenses)
     return {
       taxTotal,
       grandTotal

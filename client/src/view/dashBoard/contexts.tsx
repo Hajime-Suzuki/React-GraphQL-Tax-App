@@ -1,14 +1,30 @@
 import React, { createContext, useState, FC } from 'react'
+import { getQuarter, subQuarters, addQuarters } from 'date-fns'
+import { getYear } from 'date-fns/esm'
 
 const useSelectedQuarter = () => {
-  const [selectedQuarter, setSelectedQuarter] = useState<Date | number>(
-    Date.now()
+  const [selectedDate, setSelectedDate] = useState<Date | number>(new Date())
+  const [selectedQuarter, setSelectedQuarter] = useState<number>(
+    getQuarter(selectedDate)
   )
-  const selectQuarter = (date: Date | number) => setSelectedQuarter(date)
+
+  const selectQuarter = (date: Date | number) =>
+    setSelectedQuarter(getQuarter(date))
+
+  const previousQuarter = () => {
+    setSelectedDate(subQuarters(selectedDate, 1))
+    selectQuarter(subQuarters(selectedDate, 1))
+  }
+  const nextQuarter = () => {
+    setSelectedDate(addQuarters(selectedDate, 1))
+    selectQuarter(addQuarters(selectedDate, 1))
+  }
 
   return {
     selectedQuarter,
-    selectQuarter
+    selectedYear: getYear(selectedDate),
+    previousQuarter,
+    nextQuarter
   }
 }
 
