@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { MutationFn, WithApolloClient } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
-import { LoginUserMutationArgs } from 'src/graphql/@types/resolvers'
 import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'
 import { Login } from 'src/graphql/components/login'
@@ -10,6 +9,7 @@ import { IRouterComponentProps } from 'src/routes/types'
 import { RoutesNames } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
+import { LoginUserMutationArgs } from 'src/graphql/@types/types'
 
 type Props = WithApolloClient<GetToken.Props<IRouterComponentProps>>
 
@@ -25,11 +25,7 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
     const { data: localData } = this.props
 
     if (localData!.userId) return <Redirect to={RoutesNames.dashboard} />
-    return path === RoutesNames.login ? (
-      <this.LoginForm />
-    ) : (
-      <this.SignUpForm />
-    )
+    return path === RoutesNames.login ? <this.LoginForm /> : <this.SignUpForm />
   }
 
   handleLogin = (login: MutationFn<Login.Mutation, Login.Variables>) => async ({

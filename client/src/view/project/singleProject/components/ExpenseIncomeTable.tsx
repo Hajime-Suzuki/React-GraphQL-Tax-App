@@ -13,6 +13,7 @@ import { GetSingleProjectQuery } from 'src/graphql/components/projects'
 type GetSingleProjectIncomes = NonNullable<
   NonNullable<GetSingleProjectQuery['project']>['incomes']
 >
+
 type GetSingleProjectExpenses = NonNullable<
   NonNullable<GetSingleProjectQuery['project']>['expenses']
 >

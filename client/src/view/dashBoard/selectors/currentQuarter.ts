@@ -1,16 +1,14 @@
 import { endOfQuarter, isAfter, isBefore, startOfQuarter } from 'date-fns'
 import { createSelector } from 'reselect'
-import {
-  GetProjectOverview,
-  PriceFragment
-} from 'src/graphql/components/projects'
 import { Calculations } from 'src/view/project/helper/calculations'
+import { PriceFragment } from 'src/graphql/components/clients'
+import { GetProjectOverviewQuery } from 'src/graphql/components/projects'
 
 type TaxRate = '0' | '9' | '21'
 type IncomeOrExpense = PriceFragment.Fragment
 
 const getProjects = createSelector(
-  [(projects: GetProjectOverview.Projects[]) => projects],
+  [(projects: GetProjectOverviewQuery['projects']) => projects],
   projects => {
     const now = Date.now()
     const quarterStart = startOfQuarter('2019-01-01')
