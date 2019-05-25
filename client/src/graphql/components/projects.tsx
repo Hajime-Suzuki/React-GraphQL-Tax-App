@@ -1,471 +1,483 @@
-export type Maybe<T> = T | null | undefined
+import gql from "graphql-tag";
+import * as React from "react";
+import * as ReactApollo from "react-apollo";
+import * as ReactApolloHooks from "react-apollo-hooks";
+export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
-export interface Scalars {
-  ID: string
-  String: string
-  Boolean: boolean
-  Int: number
-  Float: number
-  Date: any
-  Blob: any
-}
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  Date: any;
+  Blob: any;
+};
 
-export interface AddGeneralExpensesResponse {
-  message?: Maybe<Scalars['String']>
-  generalExpense?: Maybe<GeneralExpense>
-}
+export type AddGeneralExpensesResponse = {
+  __typename?: "AddGeneralExpensesResponse";
+  message?: Maybe<Scalars["String"]>;
+  generalExpense?: Maybe<GeneralExpense>;
+};
 
-export interface Client {
-  id: Scalars['String']
-  firstName?: Maybe<Scalars['String']>
-  lastName?: Maybe<Scalars['String']>
-  email?: Maybe<Scalars['String']>
-  phone?: Maybe<Scalars['String']>
-  user?: Maybe<Scalars['String']>
-  projects?: Maybe<Array<Scalars['String']>>
-  streetAddress?: Maybe<Scalars['String']>
-  postalCode?: Maybe<Scalars['String']>
-  city?: Maybe<Scalars['String']>
-}
+export type Client = {
+  __typename?: "Client";
+  id: Scalars["String"];
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  user?: Maybe<Scalars["String"]>;
+  projects?: Maybe<Array<Scalars["String"]>>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  postalCode?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+};
 
-export interface ClientInput {
-  id?: Maybe<Scalars['String']>
-  firstName?: Maybe<Scalars['String']>
-  lastName?: Maybe<Scalars['String']>
-  email?: Maybe<Scalars['String']>
-  phone?: Maybe<Scalars['String']>
-  streetAddress?: Maybe<Scalars['String']>
-  postalCode?: Maybe<Scalars['String']>
-  city?: Maybe<Scalars['String']>
-}
+export type ClientInput = {
+  id?: Maybe<Scalars["String"]>;
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  postalCode?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+};
 
-export interface ClientMutationResponse {
-  message?: Maybe<Scalars['String']>
-  client?: Maybe<Client>
-}
+export type ClientMutationResponse = {
+  __typename?: "ClientMutationResponse";
+  message?: Maybe<Scalars["String"]>;
+  client?: Maybe<Client>;
+};
 
-export interface ExpenseAndIncome {
-  name?: Maybe<Scalars['String']>
-  price?: Maybe<Scalars['String']>
-  quantity?: Maybe<Scalars['Int']>
-  taxRate?: Maybe<Scalars['Int']>
-}
+export type ExpenseAndIncome = {
+  __typename?: "ExpenseAndIncome";
+  name?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Int"]>;
+  taxRate?: Maybe<Scalars["Int"]>;
+};
 
-export interface ExpenseAndIncomeInput {
-  name?: Maybe<Scalars['String']>
-  price?: Maybe<Scalars['String']>
-  quantity?: Maybe<Scalars['Int']>
-  taxRate?: Maybe<Scalars['Int']>
-}
+export type ExpenseAndIncomeInput = {
+  name?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Int"]>;
+  taxRate?: Maybe<Scalars["Int"]>;
+};
 
-export interface GeneralExpense {
-  name: Scalars['String']
-  price: Scalars['String']
-  quantity: Scalars['Int']
-  taxRate: Scalars['Int']
-  date: Scalars['String']
-  user: Scalars['String']
-}
+export type GeneralExpense = {
+  __typename?: "GeneralExpense";
+  name: Scalars["String"];
+  price: Scalars["String"];
+  quantity: Scalars["Int"];
+  taxRate: Scalars["Int"];
+  date: Scalars["String"];
+  user: Scalars["String"];
+};
 
-export interface GeneralExpenseInput {
-  name: Scalars['String']
-  price: Scalars['String']
-  quantity: Scalars['Int']
-  taxRate: Scalars['Int']
-  date: Scalars['String']
-}
+export type GeneralExpenseInput = {
+  name: Scalars["String"];
+  price: Scalars["String"];
+  quantity: Scalars["Int"];
+  taxRate: Scalars["Int"];
+  date: Scalars["String"];
+};
 
-export interface GenerateInvoiceResponse {
-  message?: Maybe<Scalars['String']>
-  data?: Maybe<Scalars['Blob']>
-}
+export type GenerateInvoiceResponse = {
+  __typename?: "GenerateInvoiceResponse";
+  message?: Maybe<Scalars["String"]>;
+  data?: Maybe<Scalars["Blob"]>;
+};
 
 export enum Invoice_Status {
-  None = 'none',
-  Invoice = 'invoice',
-  Paid = 'paid'
+  None = "none",
+  Invoice = "invoice",
+  Paid = "paid"
 }
 
-export interface Mutation {
-  registerUser: RegisterResponse
-  loginUser: RegisterResponse
-  updateUser: UpdateUserResponse
-  changePassword: RegisterResponse
-  updateProject: MutationProjectResponse
-  addProject?: Maybe<MutationProjectResponse>
-  deleteProject?: Maybe<MutationProjectResponse>
-  addGeneralExpense: AddGeneralExpensesResponse
-  addClient?: Maybe<ClientMutationResponse>
-  updateClient?: Maybe<ClientMutationResponse>
-  updateClientProject?: Maybe<ClientMutationResponse>
-  removeClientFromProject?: Maybe<ClientMutationResponse>
-  deleteClient?: Maybe<ClientMutationResponse>
-  downloadInvoice?: Maybe<GenerateInvoiceResponse>
-}
+export type Mutation = {
+  __typename?: "Mutation";
+  registerUser: RegisterResponse;
+  loginUser: RegisterResponse;
+  updateUser: UpdateUserResponse;
+  changePassword: RegisterResponse;
+  updateProject: MutationProjectResponse;
+  addProject?: Maybe<MutationProjectResponse>;
+  deleteProject?: Maybe<MutationProjectResponse>;
+  addGeneralExpense: AddGeneralExpensesResponse;
+  addClient?: Maybe<ClientMutationResponse>;
+  updateClient?: Maybe<ClientMutationResponse>;
+  updateClientProject?: Maybe<ClientMutationResponse>;
+  removeClientFromProject?: Maybe<ClientMutationResponse>;
+  deleteClient?: Maybe<ClientMutationResponse>;
+  downloadInvoice?: Maybe<GenerateInvoiceResponse>;
+};
 
-export interface MutationRegisterUserArgs {
-  firstName: Scalars['String']
-  lastName: Scalars['String']
-  email: Scalars['String']
-  password: Scalars['String']
-}
+export type MutationRegisterUserArgs = {
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
+};
 
-export interface MutationLoginUserArgs {
-  email: Scalars['String']
-  password: Scalars['String']
-}
+export type MutationLoginUserArgs = {
+  email: Scalars["String"];
+  password: Scalars["String"];
+};
 
-export interface MutationUpdateUserArgs {
-  data: UpdateUserInput
-}
+export type MutationUpdateUserArgs = {
+  data: UpdateUserInput;
+};
 
-export interface MutationChangePasswordArgs {
-  email: Scalars['String']
-  password: Scalars['String']
-}
+export type MutationChangePasswordArgs = {
+  email: Scalars["String"];
+  password: Scalars["String"];
+};
 
-export interface MutationUpdateProjectArgs {
-  projectId: Scalars['String']
-  data: ProjectInput
-}
+export type MutationUpdateProjectArgs = {
+  projectId: Scalars["String"];
+  data: ProjectInput;
+};
 
-export interface MutationAddProjectArgs {
-  data: ProjectInput
-}
+export type MutationAddProjectArgs = {
+  data: ProjectInput;
+};
 
-export interface MutationDeleteProjectArgs {
-  projectId: Scalars['String']
-}
+export type MutationDeleteProjectArgs = {
+  projectId: Scalars["String"];
+};
 
-export interface MutationAddGeneralExpenseArgs {
-  data: GeneralExpenseInput
-}
+export type MutationAddGeneralExpenseArgs = {
+  data: GeneralExpenseInput;
+};
 
-export interface MutationAddClientArgs {
-  data: ClientInput
-}
+export type MutationAddClientArgs = {
+  data: ClientInput;
+};
 
-export interface MutationUpdateClientArgs {
-  clientId: Scalars['String']
-  data: ClientInput
-}
+export type MutationUpdateClientArgs = {
+  clientId: Scalars["String"];
+  data: ClientInput;
+};
 
-export interface MutationUpdateClientProjectArgs {
-  projectId: Scalars['String']
-  clientId: Scalars['String']
-}
+export type MutationUpdateClientProjectArgs = {
+  projectId: Scalars["String"];
+  clientId: Scalars["String"];
+};
 
-export interface MutationRemoveClientFromProjectArgs {
-  projectId: Scalars['String']
-  clientId: Scalars['String']
-}
+export type MutationRemoveClientFromProjectArgs = {
+  projectId: Scalars["String"];
+  clientId: Scalars["String"];
+};
 
-export interface MutationDeleteClientArgs {
-  clientId: Scalars['String']
-}
+export type MutationDeleteClientArgs = {
+  clientId: Scalars["String"];
+};
 
-export interface MutationDownloadInvoiceArgs {
-  projectId: Scalars['String']
-}
+export type MutationDownloadInvoiceArgs = {
+  projectId: Scalars["String"];
+};
 
-export interface MutationProjectResponse {
-  success: Scalars['Boolean']
-  message?: Maybe<Scalars['String']>
-  project: Project
-  client?: Maybe<Client>
-}
+export type MutationProjectResponse = {
+  __typename?: "MutationProjectResponse";
+  success: Scalars["Boolean"];
+  message?: Maybe<Scalars["String"]>;
+  project: Project;
+  client?: Maybe<Client>;
+};
 
-export interface Project {
-  id: Scalars['String']
-  invoiceNumber: Scalars['String']
-  invoiceDate?: Maybe<Scalars['Date']>
-  name: Scalars['String']
-  projectDate?: Maybe<Scalars['Date']>
-  streetAddress?: Maybe<Scalars['String']>
-  city?: Maybe<Scalars['String']>
-  link?: Maybe<Scalars['String']>
-  status: Invoice_Status
-  user: Scalars['String']
-  expenses?: Maybe<Array<ExpenseAndIncome>>
-  incomes?: Maybe<Array<ExpenseAndIncome>>
-}
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["String"];
+  invoiceNumber: Scalars["String"];
+  invoiceDate?: Maybe<Scalars["Date"]>;
+  name: Scalars["String"];
+  projectDate?: Maybe<Scalars["Date"]>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+  link?: Maybe<Scalars["String"]>;
+  status: Invoice_Status;
+  user: Scalars["String"];
+  expenses?: Maybe<Array<ExpenseAndIncome>>;
+  incomes?: Maybe<Array<ExpenseAndIncome>>;
+};
 
-export interface ProjectInput {
-  invoiceNumber?: Maybe<Scalars['String']>
-  invoiceDate?: Maybe<Scalars['String']>
-  projectDate?: Maybe<Scalars['String']>
-  name?: Maybe<Scalars['String']>
-  date?: Maybe<Scalars['String']>
-  status?: Maybe<Invoice_Status>
-  client?: Maybe<ClientInput>
-  expenses?: Maybe<Array<ExpenseAndIncomeInput>>
-  incomes?: Maybe<Array<ExpenseAndIncomeInput>>
-}
+export type ProjectInput = {
+  invoiceNumber?: Maybe<Scalars["String"]>;
+  invoiceDate?: Maybe<Scalars["String"]>;
+  projectDate?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  date?: Maybe<Scalars["String"]>;
+  status?: Maybe<Invoice_Status>;
+  client?: Maybe<ClientInput>;
+  expenses?: Maybe<Array<ExpenseAndIncomeInput>>;
+  incomes?: Maybe<Array<ExpenseAndIncomeInput>>;
+};
 
-export interface Query {
-  getUser: User
-  getProjectsByUserId: Array<Project>
-  getSingleProject?: Maybe<Project>
-  getGeneralExpenses?: Maybe<Array<GeneralExpense>>
-  getClientsByUser?: Maybe<Array<Client>>
-  getClientByProject?: Maybe<Client>
-  getSingleClient?: Maybe<Client>
-  health?: Maybe<Scalars['String']>
-}
+export type Query = {
+  __typename?: "Query";
+  getUser: User;
+  getProjectsByUserId: Array<Project>;
+  getSingleProject?: Maybe<Project>;
+  getGeneralExpenses?: Maybe<Array<GeneralExpense>>;
+  getClientsByUser?: Maybe<Array<Client>>;
+  getClientByProject?: Maybe<Client>;
+  getSingleClient?: Maybe<Client>;
+  health?: Maybe<Scalars["String"]>;
+};
 
-export interface QueryGetProjectsByUserIdArgs {
-  userId: Scalars['String']
-}
+export type QueryGetProjectsByUserIdArgs = {
+  userId: Scalars["String"];
+};
 
-export interface QueryGetSingleProjectArgs {
-  projectId: Scalars['String']
-}
+export type QueryGetSingleProjectArgs = {
+  projectId: Scalars["String"];
+};
 
-export interface QueryGetClientByProjectArgs {
-  projectId: Scalars['String']
-}
+export type QueryGetClientByProjectArgs = {
+  projectId: Scalars["String"];
+};
 
-export interface QueryGetSingleClientArgs {
-  clientId: Scalars['String']
-}
+export type QueryGetSingleClientArgs = {
+  clientId: Scalars["String"];
+};
 
-export interface RegisterResponse {
-  success: Scalars['Boolean']
-  message?: Maybe<Scalars['String']>
-  token: Scalars['String']
-}
+export type RegisterResponse = {
+  __typename?: "RegisterResponse";
+  success: Scalars["Boolean"];
+  message?: Maybe<Scalars["String"]>;
+  token: Scalars["String"];
+};
 
-export interface UpdateUserInput {
-  firstName?: Maybe<Scalars['String']>
-  lastName?: Maybe<Scalars['String']>
-  email?: Maybe<Scalars['String']>
-  phone?: Maybe<Scalars['String']>
-  password?: Maybe<Scalars['String']>
-  btw?: Maybe<Scalars['String']>
-  kvk?: Maybe<Scalars['String']>
-  iban?: Maybe<Scalars['String']>
-  streetAddress?: Maybe<Scalars['String']>
-  postalCode?: Maybe<Scalars['String']>
-  city?: Maybe<Scalars['String']>
-}
+export type UpdateUserInput = {
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  password?: Maybe<Scalars["String"]>;
+  btw?: Maybe<Scalars["String"]>;
+  kvk?: Maybe<Scalars["String"]>;
+  iban?: Maybe<Scalars["String"]>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  postalCode?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+};
 
-export interface UpdateUserResponse {
-  message?: Maybe<Scalars['String']>
-  user: User
-}
+export type UpdateUserResponse = {
+  __typename?: "UpdateUserResponse";
+  message?: Maybe<Scalars["String"]>;
+  user: User;
+};
 
-export interface User {
-  id: Scalars['ID']
-  firstName: Scalars['String']
-  lastName: Scalars['String']
-  email: Scalars['String']
-  projects?: Maybe<Array<Project>>
-  expenses?: Maybe<Array<GeneralExpense>>
-  clients?: Maybe<Array<Client>>
-  btw?: Maybe<Scalars['String']>
-  kvk?: Maybe<Scalars['String']>
-  iban?: Maybe<Scalars['String']>
-  phone?: Maybe<Scalars['String']>
-  streetAddress?: Maybe<Scalars['String']>
-  postalCode?: Maybe<Scalars['String']>
-  city?: Maybe<Scalars['String']>
-  createdAt?: Maybe<Scalars['Date']>
-  updatedAt?: Maybe<Scalars['Date']>
-}
-export interface GetProjectOverviewQueryVariables {
-  userId: Scalars['String']
-}
+export type User = {
+  __typename?: "User";
+  id: Scalars["ID"];
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  email: Scalars["String"];
+  projects?: Maybe<Array<Project>>;
+  expenses?: Maybe<Array<GeneralExpense>>;
+  clients?: Maybe<Array<Client>>;
+  btw?: Maybe<Scalars["String"]>;
+  kvk?: Maybe<Scalars["String"]>;
+  iban?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  postalCode?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["Date"]>;
+  updatedAt?: Maybe<Scalars["Date"]>;
+};
+export type GetProjectOverviewQueryVariables = {
+  userId: Scalars["String"];
+};
 
-export type GetProjectOverviewQuery = { __typename?: 'Query' } & {
+export type GetProjectOverviewQuery = { __typename?: "Query" } & {
   projects: Array<
-    { __typename?: 'Project' } & {
+    { __typename?: "Project" } & {
       incomes: Maybe<
-        Array<{ __typename?: 'ExpenseAndIncome' } & PriceFragmentFragment>
-      >
+        Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+      >;
       expenses: Maybe<
-        Array<{ __typename?: 'ExpenseAndIncome' } & PriceFragmentFragment>
-      >
+        Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+      >;
     } & BasicInfoFragmentFragment
-  >
-}
+  >;
+};
 
-export interface GetSingleProjectQueryVariables {
-  id: Scalars['String']
-}
+export type GetSingleProjectQueryVariables = {
+  id: Scalars["String"];
+};
 
-export type GetSingleProjectQuery = { __typename?: 'Query' } & {
+export type GetSingleProjectQuery = { __typename?: "Query" } & {
   project: Maybe<
-    { __typename?: 'Project' } & Pick<Project, 'invoiceNumber'> & {
+    { __typename?: "Project" } & Pick<Project, "invoiceNumber"> & {
         incomes: Maybe<
           Array<
-            { __typename?: 'ExpenseAndIncome' } & Pick<
+            { __typename?: "ExpenseAndIncome" } & Pick<
               ExpenseAndIncome,
-              'name'
+              "name"
             > &
               PriceFragmentFragment
           >
-        >
+        >;
         expenses: Maybe<
           Array<
-            { __typename?: 'ExpenseAndIncome' } & Pick<
+            { __typename?: "ExpenseAndIncome" } & Pick<
               ExpenseAndIncome,
-              'name'
+              "name"
             > &
               PriceFragmentFragment
           >
-        >
+        >;
       } & BasicInfoFragmentFragment
-  >
+  >;
   client: Maybe<
-    { __typename?: 'Client' } & Pick<
+    { __typename?: "Client" } & Pick<
       Client,
-      'streetAddress' | 'postalCode' | 'city'
+      "streetAddress" | "postalCode" | "city"
     > &
       ClientFragmentFragment
-  >
-}
+  >;
+};
 
-export interface UpdateStatusMutationVariables {
-  projectId: Scalars['String']
-  data: ProjectInput
-}
+export type UpdateStatusMutationVariables = {
+  projectId: Scalars["String"];
+  data: ProjectInput;
+};
 
-export type UpdateStatusMutation = { __typename?: 'Mutation' } & {
-  updateProject: { __typename?: 'MutationProjectResponse' } & Pick<
+export type UpdateStatusMutation = { __typename?: "Mutation" } & {
+  updateProject: { __typename?: "MutationProjectResponse" } & Pick<
     MutationProjectResponse,
-    'success' | 'message'
-  > & { project: { __typename?: 'Project' } & Pick<Project, 'id' | 'status'> }
-}
+    "success" | "message"
+  > & { project: { __typename?: "Project" } & Pick<Project, "id" | "status"> };
+};
 
-export interface AddProjectMutationVariables {
-  data: ProjectInput
-}
+export type AddProjectMutationVariables = {
+  data: ProjectInput;
+};
 
-export type AddProjectMutation = { __typename?: 'Mutation' } & {
+export type AddProjectMutation = { __typename?: "Mutation" } & {
   addProject: Maybe<
-    { __typename?: 'MutationProjectResponse' } & Pick<
+    { __typename?: "MutationProjectResponse" } & Pick<
       MutationProjectResponse,
-      'success' | 'message'
+      "success" | "message"
     > & {
-        project: { __typename?: 'Project' } & Pick<Project, 'invoiceNumber'> & {
+        project: { __typename?: "Project" } & Pick<Project, "invoiceNumber"> & {
             incomes: Maybe<
               Array<
-                { __typename?: 'ExpenseAndIncome' } & Pick<
+                { __typename?: "ExpenseAndIncome" } & Pick<
                   ExpenseAndIncome,
-                  'name'
+                  "name"
                 > &
                   PriceFragmentFragment
               >
-            >
+            >;
             expenses: Maybe<
               Array<
-                { __typename?: 'ExpenseAndIncome' } & Pick<
+                { __typename?: "ExpenseAndIncome" } & Pick<
                   ExpenseAndIncome,
-                  'name'
+                  "name"
                 > &
                   PriceFragmentFragment
               >
-            >
-          } & BasicInfoFragmentFragment
-        client: Maybe<{ __typename?: 'Client' } & ClientFragmentFragment>
+            >;
+          } & BasicInfoFragmentFragment;
+        client: Maybe<{ __typename?: "Client" } & ClientFragmentFragment>;
       }
-  >
-}
+  >;
+};
 
-export interface UpdateIncomesAndExpensesMutationVariables {
-  projectId: Scalars['String']
-  data: ProjectInput
-}
+export type UpdateIncomesAndExpensesMutationVariables = {
+  projectId: Scalars["String"];
+  data: ProjectInput;
+};
 
-export type UpdateIncomesAndExpensesMutation = { __typename?: 'Mutation' } & {
-  updateProject: { __typename?: 'MutationProjectResponse' } & Pick<
+export type UpdateIncomesAndExpensesMutation = { __typename?: "Mutation" } & {
+  updateProject: { __typename?: "MutationProjectResponse" } & Pick<
     MutationProjectResponse,
-    'success' | 'message'
+    "success" | "message"
   > & {
-      project: { __typename?: 'Project' } & Pick<Project, 'id'> & {
+      project: { __typename?: "Project" } & Pick<Project, "id"> & {
           incomes: Maybe<
             Array<
-              { __typename?: 'ExpenseAndIncome' } & Pick<
+              { __typename?: "ExpenseAndIncome" } & Pick<
                 ExpenseAndIncome,
-                'name'
+                "name"
               > &
                 PriceFragmentFragment
             >
-          >
+          >;
           expenses: Maybe<
             Array<
-              { __typename?: 'ExpenseAndIncome' } & Pick<
+              { __typename?: "ExpenseAndIncome" } & Pick<
                 ExpenseAndIncome,
-                'name'
+                "name"
               > &
                 PriceFragmentFragment
             >
-          >
-        }
-    }
-}
+          >;
+        };
+    };
+};
 
-export interface UpdateBasicInfoMutationVariables {
-  projectId: Scalars['String']
-  data: ProjectInput
-}
+export type UpdateBasicInfoMutationVariables = {
+  projectId: Scalars["String"];
+  data: ProjectInput;
+};
 
-export type UpdateBasicInfoMutation = { __typename?: 'Mutation' } & {
-  updateProject: { __typename?: 'MutationProjectResponse' } & Pick<
+export type UpdateBasicInfoMutation = { __typename?: "Mutation" } & {
+  updateProject: { __typename?: "MutationProjectResponse" } & Pick<
     MutationProjectResponse,
-    'success' | 'message'
+    "success" | "message"
   > & {
-      project: { __typename?: 'Project' } & Pick<Project, 'invoiceNumber'> &
-        BasicInfoFragmentFragment
-    }
-}
+      project: { __typename?: "Project" } & Pick<Project, "invoiceNumber"> &
+        BasicInfoFragmentFragment;
+    };
+};
 
-export interface DeleteProjectMutationVariables {
-  projectId: Scalars['String']
-}
+export type DeleteProjectMutationVariables = {
+  projectId: Scalars["String"];
+};
 
-export type DeleteProjectMutation = { __typename?: 'Mutation' } & {
+export type DeleteProjectMutation = { __typename?: "Mutation" } & {
   deleteProject: Maybe<
-    { __typename?: 'MutationProjectResponse' } & Pick<
+    { __typename?: "MutationProjectResponse" } & Pick<
       MutationProjectResponse,
-      'message'
-    > & { project: { __typename?: 'Project' } & Pick<Project, 'id'> }
-  >
-}
+      "message"
+    > & { project: { __typename?: "Project" } & Pick<Project, "id"> }
+  >;
+};
 
-export interface DownloadInvoiceMutationVariables {
-  projectId: Scalars['String']
-}
+export type DownloadInvoiceMutationVariables = {
+  projectId: Scalars["String"];
+};
 
-export type DownloadInvoiceMutation = { __typename?: 'Mutation' } & {
+export type DownloadInvoiceMutation = { __typename?: "Mutation" } & {
   downloadInvoice: Maybe<
-    { __typename?: 'GenerateInvoiceResponse' } & Pick<
+    { __typename?: "GenerateInvoiceResponse" } & Pick<
       GenerateInvoiceResponse,
-      'message' | 'data'
+      "message" | "data"
     >
-  >
-}
+  >;
+};
 
-export type ClientFragmentFragment = { __typename?: 'Client' } & Pick<
+export type ClientFragmentFragment = { __typename?: "Client" } & Pick<
   Client,
-  'id' | 'firstName' | 'lastName' | 'email' | 'phone'
->
+  "id" | "firstName" | "lastName" | "email" | "phone"
+>;
 
-export type PriceFragmentFragment = { __typename?: 'ExpenseAndIncome' } & Pick<
+export type PriceFragmentFragment = { __typename?: "ExpenseAndIncome" } & Pick<
   ExpenseAndIncome,
-  'price' | 'quantity' | 'taxRate'
->
+  "price" | "quantity" | "taxRate"
+>;
 
-export type BasicInfoFragmentFragment = { __typename?: 'Project' } & Pick<
+export type BasicInfoFragmentFragment = { __typename?: "Project" } & Pick<
   Project,
-  'id' | 'name' | 'projectDate' | 'invoiceDate' | 'status'
->
-
-import gql from 'graphql-tag'
-import * as React from 'react'
-import * as ReactApollo from 'react-apollo'
-import * as ReactApolloHooks from 'react-apollo-hooks'
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+  "id" | "name" | "projectDate" | "invoiceDate" | "status"
+>;
 export const ClientFragmentFragmentDoc = gql`
   fragment ClientFragment on Client {
     id
@@ -474,14 +486,14 @@ export const ClientFragmentFragmentDoc = gql`
     email
     phone
   }
-`
+`;
 export const PriceFragmentFragmentDoc = gql`
   fragment PriceFragment on ExpenseAndIncome {
     price
     quantity
     taxRate
   }
-`
+`;
 export const BasicInfoFragmentFragmentDoc = gql`
   fragment BasicInfoFragment on Project {
     id
@@ -490,7 +502,7 @@ export const BasicInfoFragmentFragmentDoc = gql`
     invoiceDate
     status
   }
-`
+`;
 export const GetProjectOverviewDocument = gql`
   query getProjectOverview($userId: String!) {
     projects: getProjectsByUserId(userId: $userId) {
@@ -505,25 +517,26 @@ export const GetProjectOverviewDocument = gql`
   }
   ${BasicInfoFragmentFragmentDoc}
   ${PriceFragmentFragmentDoc}
-`
+`;
+export type GetProjectOverviewComponentProps = Omit<
+  Omit<
+    ReactApollo.QueryProps<
+      GetProjectOverviewQuery,
+      GetProjectOverviewQueryVariables
+    >,
+    "query"
+  >,
+  "variables"
+> & { variables: GetProjectOverviewQueryVariables };
 
 export const GetProjectOverviewComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.QueryProps<
-        GetProjectOverviewQuery,
-        GetProjectOverviewQueryVariables
-      >,
-      'query'
-    >,
-    'variables'
-  > & { variables: GetProjectOverviewQueryVariables }
+  props: GetProjectOverviewComponentProps
 ) => (
   <ReactApollo.Query<GetProjectOverviewQuery, GetProjectOverviewQueryVariables>
     query={GetProjectOverviewDocument}
     {...props}
   />
-)
+);
 
 export type GetProjectOverviewProps<TChildProps = {}> = Partial<
   ReactApollo.DataProps<
@@ -531,7 +544,7 @@ export type GetProjectOverviewProps<TChildProps = {}> = Partial<
     GetProjectOverviewQueryVariables
   >
 > &
-  TChildProps
+  TChildProps;
 export function withGetProjectOverview<TProps, TChildProps = {}>(
   operationOptions?: ReactApollo.OperationOption<
     TProps,
@@ -546,9 +559,9 @@ export function withGetProjectOverview<TProps, TChildProps = {}>(
     GetProjectOverviewQueryVariables,
     GetProjectOverviewProps<TChildProps>
   >(GetProjectOverviewDocument, {
-    alias: 'withGetProjectOverview',
+    alias: "withGetProjectOverview",
     ...operationOptions
-  })
+  });
 }
 
 export function useGetProjectOverviewQuery(
@@ -559,7 +572,7 @@ export function useGetProjectOverviewQuery(
   return ReactApolloHooks.useQuery<
     GetProjectOverviewQuery,
     GetProjectOverviewQueryVariables
-  >(GetProjectOverviewDocument, baseOptions)
+  >(GetProjectOverviewDocument, baseOptions);
 }
 export const GetSingleProjectDocument = gql`
   query getSingleProject($id: String!) {
@@ -585,30 +598,31 @@ export const GetSingleProjectDocument = gql`
   ${BasicInfoFragmentFragmentDoc}
   ${PriceFragmentFragmentDoc}
   ${ClientFragmentFragmentDoc}
-`
+`;
+export type GetSingleProjectComponentProps = Omit<
+  Omit<
+    ReactApollo.QueryProps<
+      GetSingleProjectQuery,
+      GetSingleProjectQueryVariables
+    >,
+    "query"
+  >,
+  "variables"
+> & { variables: GetSingleProjectQueryVariables };
 
 export const GetSingleProjectComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.QueryProps<
-        GetSingleProjectQuery,
-        GetSingleProjectQueryVariables
-      >,
-      'query'
-    >,
-    'variables'
-  > & { variables: GetSingleProjectQueryVariables }
+  props: GetSingleProjectComponentProps
 ) => (
   <ReactApollo.Query<GetSingleProjectQuery, GetSingleProjectQueryVariables>
     query={GetSingleProjectDocument}
     {...props}
   />
-)
+);
 
 export type GetSingleProjectProps<TChildProps = {}> = Partial<
   ReactApollo.DataProps<GetSingleProjectQuery, GetSingleProjectQueryVariables>
 > &
-  TChildProps
+  TChildProps;
 export function withGetSingleProject<TProps, TChildProps = {}>(
   operationOptions?: ReactApollo.OperationOption<
     TProps,
@@ -623,9 +637,9 @@ export function withGetSingleProject<TProps, TChildProps = {}>(
     GetSingleProjectQueryVariables,
     GetSingleProjectProps<TChildProps>
   >(GetSingleProjectDocument, {
-    alias: 'withGetSingleProject',
+    alias: "withGetSingleProject",
     ...operationOptions
-  })
+  });
 }
 
 export function useGetSingleProjectQuery(
@@ -636,7 +650,7 @@ export function useGetSingleProjectQuery(
   return ReactApolloHooks.useQuery<
     GetSingleProjectQuery,
     GetSingleProjectQueryVariables
-  >(GetSingleProjectDocument, baseOptions)
+  >(GetSingleProjectDocument, baseOptions);
 }
 export const UpdateStatusDocument = gql`
   mutation updateStatus($projectId: String!, $data: ProjectInput!) {
@@ -649,34 +663,33 @@ export const UpdateStatusDocument = gql`
       }
     }
   }
-`
+`;
 export type UpdateStatusMutationFn = ReactApollo.MutationFn<
   UpdateStatusMutation,
   UpdateStatusMutationVariables
->
-
-export const UpdateStatusComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        UpdateStatusMutation,
-        UpdateStatusMutationVariables
-      >,
-      'mutation'
+>;
+export type UpdateStatusComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      UpdateStatusMutation,
+      UpdateStatusMutationVariables
     >,
-    'variables'
-  > & { variables?: UpdateStatusMutationVariables }
-) => (
+    "mutation"
+  >,
+  "variables"
+> & { variables?: UpdateStatusMutationVariables };
+
+export const UpdateStatusComponent = (props: UpdateStatusComponentProps) => (
   <ReactApollo.Mutation<UpdateStatusMutation, UpdateStatusMutationVariables>
     mutation={UpdateStatusDocument}
     {...props}
   />
-)
+);
 
 export type UpdateStatusProps<TChildProps = {}> = Partial<
   ReactApollo.MutateProps<UpdateStatusMutation, UpdateStatusMutationVariables>
 > &
-  TChildProps
+  TChildProps;
 export function withUpdateStatus<TProps, TChildProps = {}>(
   operationOptions?: ReactApollo.OperationOption<
     TProps,
@@ -691,9 +704,9 @@ export function withUpdateStatus<TProps, TChildProps = {}>(
     UpdateStatusMutationVariables,
     UpdateStatusProps<TChildProps>
   >(UpdateStatusDocument, {
-    alias: 'withUpdateStatus',
+    alias: "withUpdateStatus",
     ...operationOptions
-  })
+  });
 }
 
 export function useUpdateStatusMutation(
@@ -705,7 +718,7 @@ export function useUpdateStatusMutation(
   return ReactApolloHooks.useMutation<
     UpdateStatusMutation,
     UpdateStatusMutationVariables
-  >(UpdateStatusDocument, baseOptions)
+  >(UpdateStatusDocument, baseOptions);
 }
 export const AddProjectDocument = gql`
   mutation addProject($data: ProjectInput!) {
@@ -732,34 +745,30 @@ export const AddProjectDocument = gql`
   ${BasicInfoFragmentFragmentDoc}
   ${PriceFragmentFragmentDoc}
   ${ClientFragmentFragmentDoc}
-`
+`;
 export type AddProjectMutationFn = ReactApollo.MutationFn<
   AddProjectMutation,
   AddProjectMutationVariables
->
+>;
+export type AddProjectComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<AddProjectMutation, AddProjectMutationVariables>,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: AddProjectMutationVariables };
 
-export const AddProjectComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        AddProjectMutation,
-        AddProjectMutationVariables
-      >,
-      'mutation'
-    >,
-    'variables'
-  > & { variables?: AddProjectMutationVariables }
-) => (
+export const AddProjectComponent = (props: AddProjectComponentProps) => (
   <ReactApollo.Mutation<AddProjectMutation, AddProjectMutationVariables>
     mutation={AddProjectDocument}
     {...props}
   />
-)
+);
 
 export type AddProjectProps<TChildProps = {}> = Partial<
   ReactApollo.MutateProps<AddProjectMutation, AddProjectMutationVariables>
 > &
-  TChildProps
+  TChildProps;
 export function withAddProject<TProps, TChildProps = {}>(
   operationOptions?: ReactApollo.OperationOption<
     TProps,
@@ -774,9 +783,9 @@ export function withAddProject<TProps, TChildProps = {}>(
     AddProjectMutationVariables,
     AddProjectProps<TChildProps>
   >(AddProjectDocument, {
-    alias: 'withAddProject',
+    alias: "withAddProject",
     ...operationOptions
-  })
+  });
 }
 
 export function useAddProjectMutation(
@@ -788,7 +797,7 @@ export function useAddProjectMutation(
   return ReactApolloHooks.useMutation<
     AddProjectMutation,
     AddProjectMutationVariables
-  >(AddProjectDocument, baseOptions)
+  >(AddProjectDocument, baseOptions);
 }
 export const UpdateIncomesAndExpensesDocument = gql`
   mutation updateIncomesAndExpenses($projectId: String!, $data: ProjectInput!) {
@@ -809,23 +818,24 @@ export const UpdateIncomesAndExpensesDocument = gql`
     }
   }
   ${PriceFragmentFragmentDoc}
-`
+`;
 export type UpdateIncomesAndExpensesMutationFn = ReactApollo.MutationFn<
   UpdateIncomesAndExpensesMutation,
   UpdateIncomesAndExpensesMutationVariables
->
+>;
+export type UpdateIncomesAndExpensesComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      UpdateIncomesAndExpensesMutation,
+      UpdateIncomesAndExpensesMutationVariables
+    >,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: UpdateIncomesAndExpensesMutationVariables };
 
 export const UpdateIncomesAndExpensesComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        UpdateIncomesAndExpensesMutation,
-        UpdateIncomesAndExpensesMutationVariables
-      >,
-      'mutation'
-    >,
-    'variables'
-  > & { variables?: UpdateIncomesAndExpensesMutationVariables }
+  props: UpdateIncomesAndExpensesComponentProps
 ) => (
   <ReactApollo.Mutation<
     UpdateIncomesAndExpensesMutation,
@@ -834,7 +844,7 @@ export const UpdateIncomesAndExpensesComponent = (
     mutation={UpdateIncomesAndExpensesDocument}
     {...props}
   />
-)
+);
 
 export type UpdateIncomesAndExpensesProps<TChildProps = {}> = Partial<
   ReactApollo.MutateProps<
@@ -842,7 +852,7 @@ export type UpdateIncomesAndExpensesProps<TChildProps = {}> = Partial<
     UpdateIncomesAndExpensesMutationVariables
   >
 > &
-  TChildProps
+  TChildProps;
 export function withUpdateIncomesAndExpenses<TProps, TChildProps = {}>(
   operationOptions?: ReactApollo.OperationOption<
     TProps,
@@ -857,9 +867,9 @@ export function withUpdateIncomesAndExpenses<TProps, TChildProps = {}>(
     UpdateIncomesAndExpensesMutationVariables,
     UpdateIncomesAndExpensesProps<TChildProps>
   >(UpdateIncomesAndExpensesDocument, {
-    alias: 'withUpdateIncomesAndExpenses',
+    alias: "withUpdateIncomesAndExpenses",
     ...operationOptions
-  })
+  });
 }
 
 export function useUpdateIncomesAndExpensesMutation(
@@ -871,7 +881,7 @@ export function useUpdateIncomesAndExpensesMutation(
   return ReactApolloHooks.useMutation<
     UpdateIncomesAndExpensesMutation,
     UpdateIncomesAndExpensesMutationVariables
-  >(UpdateIncomesAndExpensesDocument, baseOptions)
+  >(UpdateIncomesAndExpensesDocument, baseOptions);
 }
 export const UpdateBasicInfoDocument = gql`
   mutation updateBasicInfo($projectId: String!, $data: ProjectInput!) {
@@ -885,23 +895,24 @@ export const UpdateBasicInfoDocument = gql`
     }
   }
   ${BasicInfoFragmentFragmentDoc}
-`
+`;
 export type UpdateBasicInfoMutationFn = ReactApollo.MutationFn<
   UpdateBasicInfoMutation,
   UpdateBasicInfoMutationVariables
->
+>;
+export type UpdateBasicInfoComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      UpdateBasicInfoMutation,
+      UpdateBasicInfoMutationVariables
+    >,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: UpdateBasicInfoMutationVariables };
 
 export const UpdateBasicInfoComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        UpdateBasicInfoMutation,
-        UpdateBasicInfoMutationVariables
-      >,
-      'mutation'
-    >,
-    'variables'
-  > & { variables?: UpdateBasicInfoMutationVariables }
+  props: UpdateBasicInfoComponentProps
 ) => (
   <ReactApollo.Mutation<
     UpdateBasicInfoMutation,
@@ -910,7 +921,7 @@ export const UpdateBasicInfoComponent = (
     mutation={UpdateBasicInfoDocument}
     {...props}
   />
-)
+);
 
 export type UpdateBasicInfoProps<TChildProps = {}> = Partial<
   ReactApollo.MutateProps<
@@ -918,7 +929,7 @@ export type UpdateBasicInfoProps<TChildProps = {}> = Partial<
     UpdateBasicInfoMutationVariables
   >
 > &
-  TChildProps
+  TChildProps;
 export function withUpdateBasicInfo<TProps, TChildProps = {}>(
   operationOptions?: ReactApollo.OperationOption<
     TProps,
@@ -933,9 +944,9 @@ export function withUpdateBasicInfo<TProps, TChildProps = {}>(
     UpdateBasicInfoMutationVariables,
     UpdateBasicInfoProps<TChildProps>
   >(UpdateBasicInfoDocument, {
-    alias: 'withUpdateBasicInfo',
+    alias: "withUpdateBasicInfo",
     ...operationOptions
-  })
+  });
 }
 
 export function useUpdateBasicInfoMutation(
@@ -947,7 +958,7 @@ export function useUpdateBasicInfoMutation(
   return ReactApolloHooks.useMutation<
     UpdateBasicInfoMutation,
     UpdateBasicInfoMutationVariables
-  >(UpdateBasicInfoDocument, baseOptions)
+  >(UpdateBasicInfoDocument, baseOptions);
 }
 export const DeleteProjectDocument = gql`
   mutation deleteProject($projectId: String!) {
@@ -958,34 +969,33 @@ export const DeleteProjectDocument = gql`
       }
     }
   }
-`
+`;
 export type DeleteProjectMutationFn = ReactApollo.MutationFn<
   DeleteProjectMutation,
   DeleteProjectMutationVariables
->
-
-export const DeleteProjectComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        DeleteProjectMutation,
-        DeleteProjectMutationVariables
-      >,
-      'mutation'
+>;
+export type DeleteProjectComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      DeleteProjectMutation,
+      DeleteProjectMutationVariables
     >,
-    'variables'
-  > & { variables?: DeleteProjectMutationVariables }
-) => (
+    "mutation"
+  >,
+  "variables"
+> & { variables?: DeleteProjectMutationVariables };
+
+export const DeleteProjectComponent = (props: DeleteProjectComponentProps) => (
   <ReactApollo.Mutation<DeleteProjectMutation, DeleteProjectMutationVariables>
     mutation={DeleteProjectDocument}
     {...props}
   />
-)
+);
 
 export type DeleteProjectProps<TChildProps = {}> = Partial<
   ReactApollo.MutateProps<DeleteProjectMutation, DeleteProjectMutationVariables>
 > &
-  TChildProps
+  TChildProps;
 export function withDeleteProject<TProps, TChildProps = {}>(
   operationOptions?: ReactApollo.OperationOption<
     TProps,
@@ -1000,9 +1010,9 @@ export function withDeleteProject<TProps, TChildProps = {}>(
     DeleteProjectMutationVariables,
     DeleteProjectProps<TChildProps>
   >(DeleteProjectDocument, {
-    alias: 'withDeleteProject',
+    alias: "withDeleteProject",
     ...operationOptions
-  })
+  });
 }
 
 export function useDeleteProjectMutation(
@@ -1014,7 +1024,7 @@ export function useDeleteProjectMutation(
   return ReactApolloHooks.useMutation<
     DeleteProjectMutation,
     DeleteProjectMutationVariables
-  >(DeleteProjectDocument, baseOptions)
+  >(DeleteProjectDocument, baseOptions);
 }
 export const DownloadInvoiceDocument = gql`
   mutation downloadInvoice($projectId: String!) {
@@ -1023,23 +1033,24 @@ export const DownloadInvoiceDocument = gql`
       data
     }
   }
-`
+`;
 export type DownloadInvoiceMutationFn = ReactApollo.MutationFn<
   DownloadInvoiceMutation,
   DownloadInvoiceMutationVariables
->
+>;
+export type DownloadInvoiceComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      DownloadInvoiceMutation,
+      DownloadInvoiceMutationVariables
+    >,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: DownloadInvoiceMutationVariables };
 
 export const DownloadInvoiceComponent = (
-  props: Omit<
-    Omit<
-      ReactApollo.MutationProps<
-        DownloadInvoiceMutation,
-        DownloadInvoiceMutationVariables
-      >,
-      'mutation'
-    >,
-    'variables'
-  > & { variables?: DownloadInvoiceMutationVariables }
+  props: DownloadInvoiceComponentProps
 ) => (
   <ReactApollo.Mutation<
     DownloadInvoiceMutation,
@@ -1048,7 +1059,7 @@ export const DownloadInvoiceComponent = (
     mutation={DownloadInvoiceDocument}
     {...props}
   />
-)
+);
 
 export type DownloadInvoiceProps<TChildProps = {}> = Partial<
   ReactApollo.MutateProps<
@@ -1056,7 +1067,7 @@ export type DownloadInvoiceProps<TChildProps = {}> = Partial<
     DownloadInvoiceMutationVariables
   >
 > &
-  TChildProps
+  TChildProps;
 export function withDownloadInvoice<TProps, TChildProps = {}>(
   operationOptions?: ReactApollo.OperationOption<
     TProps,
@@ -1071,9 +1082,9 @@ export function withDownloadInvoice<TProps, TChildProps = {}>(
     DownloadInvoiceMutationVariables,
     DownloadInvoiceProps<TChildProps>
   >(DownloadInvoiceDocument, {
-    alias: 'withDownloadInvoice',
+    alias: "withDownloadInvoice",
     ...operationOptions
-  })
+  });
 }
 
 export function useDownloadInvoiceMutation(
@@ -1085,5 +1096,5 @@ export function useDownloadInvoiceMutation(
   return ReactApolloHooks.useMutation<
     DownloadInvoiceMutation,
     DownloadInvoiceMutationVariables
-  >(DownloadInvoiceDocument, baseOptions)
+  >(DownloadInvoiceDocument, baseOptions);
 }
