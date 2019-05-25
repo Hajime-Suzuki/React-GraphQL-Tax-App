@@ -1,5 +1,5 @@
 {
   "events": {
-    "restart": "tput reset"
+    "restart": "copyfiles -f ./src/services/invoice/src/* ./dist/services/invoice/src && mkdir ./dist/services/invoice/generated && tput reset"
   }
 }
