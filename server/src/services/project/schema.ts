@@ -18,7 +18,15 @@ export const projectSchema = gql`
 
   type Query {
     getProjectsByUserId(userId: String!): [Project!]!
+    getProjects(filter: GetProjectsFilter, sortOption: SortOption): [Project!]!
     getSingleProject(projectId: String!): Project
+  }
+
+  input GetProjectsFilter {
+    year: Int
+  }
+  input SortOption {
+    invoiceDate: Int
   }
 
   type Mutation {

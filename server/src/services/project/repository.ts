@@ -1,5 +1,10 @@
 import { Omit } from '../../helpers/types'
-import { GetSingleProjectQueryArgs, IProjectInput } from '../@types/types'
+import {
+  GetSingleProjectQueryArgs,
+  IProjectInput,
+  IGetProjectsFilter,
+  ISortOption
+} from '../@types/types'
 import { Project } from './model'
 
 const findByUserId = (userId: string) =>
@@ -7,6 +12,26 @@ const findByUserId = (userId: string) =>
 
 const findById = (projectId: GetSingleProjectQueryArgs['projectId']) =>
   Project.findById(projectId).populate('client')
+
+const find = async (
+  filter: IGetProjectsFilter = {},
+  sortOption?: ISortOption
+) => {
+  const condition = {
+    ...(filter.year && {
+      invoiceDate: {
+        $gte: new Date(filter.year, 1, 1),
+        $lte: new Date(filter.year, 12, 31)
+      }
+    })
+  }
+
+  const data = await Project.find(condition).sort({
+    createAt: -1,
+    ...sortOption
+  })
+  return data
+}
 
 const update = async (projectId: string, data: IProjectInput) => {
   const updatedProject = await Project.findByIdAndUpdate(projectId, data, {
@@ -24,6 +49,7 @@ const create = async (userId: string, data: Omit<IProjectInput, 'client'>) => {
 export const ProjectRepository = {
   findByUserId,
   findById,
+  find,
   update,
   create
 }

@@ -5,15 +5,21 @@ import { ProjectCommands } from './domain/commands'
 import { ProjectQueries } from './domain/queries'
 
 export const projectResolvers: {
-  Query: QueryResolvers.Resolvers<IContext>;
-  Mutation: MutationResolvers.Resolvers<IContext>;
+  Query: QueryResolvers.Resolvers<IContext>
+  Mutation: MutationResolvers.Resolvers<IContext>
 } = {
   Query: {
     getProjectsByUserId: async (_, __, { user }) => {
       AuthCheck.userExist(user)
       return ProjectQueries.getProjectsByUserId(user.id)
     },
-
+    getProjects: async (_, { filter, sortOption }, { user }) => {
+      AuthCheck.userExist(user)
+      return ProjectQueries.getProjects(
+        filter || undefined,
+        sortOption || undefined
+      )
+    },
     getSingleProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
       return ProjectQueries.getSingleProject(projectId)

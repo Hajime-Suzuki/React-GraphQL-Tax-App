@@ -1,7 +1,14 @@
 import React, { FC } from 'react'
+import useRouter from 'use-react-router'
+import { FiscalOverviewRouteProps } from 'src/routes/types'
 
 const FiscalOverview: FC<{}> = () => {
-  return <div>yes</div>
+  const {
+    match: {
+      params: { year }
+    }
+  } = useRouter<FiscalOverviewRouteProps>()
+  return <div>{year}</div>
 }
 
 export default FiscalOverview

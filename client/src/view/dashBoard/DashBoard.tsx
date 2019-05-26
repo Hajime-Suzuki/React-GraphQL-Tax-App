@@ -14,7 +14,6 @@ import { currentQuarterProjectSelector as currentSemester } from './selectors/cu
 import TaxOverview from './TaxOverview'
 import { Button } from '@material-ui/core'
 import useRouter from 'use-react-router'
-import { FiscalOverviewRouteProps } from 'src/routes/types'
 import { RoutesNames } from 'src/routes/constants'
 
 const DashBoard: FC<{}> = () => {
@@ -32,7 +31,7 @@ const DashBoard: FC<{}> = () => {
     selectedDate
   } = useContext(SelectedQuarterContext)
 
-  const { history } = useRouter<FiscalOverviewRouteProps>()
+  const { history } = useRouter()
 
   if (!data) return null
   if (loading) return <LoadingIcon />

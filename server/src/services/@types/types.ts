@@ -1,96 +1,104 @@
+export interface IGetProjectsFilter {
+  year?: number | null;
+}
+
+export interface ISortOption {
+  invoiceDate?: number | null;
+}
+
 export interface IUpdateUserInput {
-  firstName?: string | null
+  firstName?: string | null;
 
-  lastName?: string | null
+  lastName?: string | null;
 
-  email?: string | null
+  email?: string | null;
 
-  phone?: string | null
+  phone?: string | null;
 
-  password?: string | null
+  password?: string | null;
 
-  btw?: string | null
+  btw?: string | null;
 
-  kvk?: string | null
+  kvk?: string | null;
 
-  iban?: string | null
+  iban?: string | null;
 
-  streetAddress?: string | null
+  streetAddress?: string | null;
 
-  postalCode?: string | null
+  postalCode?: string | null;
 
-  city?: string | null
+  city?: string | null;
 }
 
 export interface IProjectInput {
-  invoiceNumber?: string | null
+  invoiceNumber?: string | null;
 
-  invoiceDate?: string | null
+  invoiceDate?: string | null;
 
-  projectDate?: string | null
+  projectDate?: string | null;
 
-  name?: string | null
+  name?: string | null;
 
-  date?: string | null
+  date?: string | null;
 
-  status?: IInvoiceStatus | null
+  status?: IInvoiceStatus | null;
 
-  client?: IClientInput | null
+  client?: IClientInput | null;
 
-  expenses?: IExpenseAndIncomeInput[] | null
+  expenses?: IExpenseAndIncomeInput[] | null;
 
-  incomes?: IExpenseAndIncomeInput[] | null
+  incomes?: IExpenseAndIncomeInput[] | null;
 }
 
 export interface IClientInput {
-  id?: string | null
+  id?: string | null;
 
-  firstName?: string | null
+  firstName?: string | null;
 
-  lastName?: string | null
+  lastName?: string | null;
 
-  email?: string | null
+  email?: string | null;
 
-  phone?: string | null
+  phone?: string | null;
 
-  streetAddress?: string | null
+  streetAddress?: string | null;
 
-  postalCode?: string | null
+  postalCode?: string | null;
 
-  city?: string | null
+  city?: string | null;
 }
 
 export interface IExpenseAndIncomeInput {
-  name?: string | null
+  name?: string | null;
 
-  price?: string | null
+  price?: string | null;
 
-  quantity?: number | null
+  quantity?: number | null;
 
-  taxRate?: number | null
+  taxRate?: number | null;
 }
 
 export interface IGeneralExpenseInput {
-  name: string
+  name: string;
 
-  price: string
+  price: string;
 
-  quantity: number
+  quantity: number;
 
-  taxRate: number
+  taxRate: number;
 
-  date: string
+  date: string;
 }
 
 export enum IInvoiceStatus {
-  None = 'none',
-  Invoice = 'invoice',
-  Paid = 'paid'
+  None = "none",
+  Invoice = "invoice",
+  Paid = "paid"
 }
 
-export type Date = any
+export type Date = any;
 
-export type Blob = any
+export type Blob = any;
 
 // ====================================================
 // Scalars
@@ -101,199 +109,201 @@ export type Blob = any
 // ====================================================
 
 export interface IQuery {
-  getUser: IUser
+  getUser: IUser;
 
-  getProjectsByUserId: IProject[]
+  getProjectsByUserId: IProject[];
 
-  getSingleProject?: IProject | null
+  getProjects: IProject[];
 
-  getGeneralExpenses?: IGeneralExpense[] | null
+  getSingleProject?: IProject | null;
 
-  getClientsByUser?: IClient[] | null
+  getGeneralExpenses?: IGeneralExpense[] | null;
 
-  getClientByProject?: IClient | null
+  getClientsByUser?: IClient[] | null;
 
-  getSingleClient?: IClient | null
+  getClientByProject?: IClient | null;
 
-  health?: string | null
+  getSingleClient?: IClient | null;
+
+  health?: string | null;
 }
 
 export interface IUser {
-  id: string
+  id: string;
 
-  firstName: string
+  firstName: string;
 
-  lastName: string
+  lastName: string;
 
-  email: string
+  email: string;
 
-  projects?: IProject[] | null
+  projects?: IProject[] | null;
 
-  expenses?: IGeneralExpense[] | null
+  expenses?: IGeneralExpense[] | null;
 
-  clients?: IClient[] | null
+  clients?: IClient[] | null;
 
-  btw?: string | null
+  btw?: string | null;
 
-  kvk?: string | null
+  kvk?: string | null;
 
-  iban?: string | null
+  iban?: string | null;
 
-  phone?: string | null
+  phone?: string | null;
 
-  streetAddress?: string | null
+  streetAddress?: string | null;
 
-  postalCode?: string | null
+  postalCode?: string | null;
 
-  city?: string | null
+  city?: string | null;
 
-  createdAt?: Date | null
+  createdAt?: Date | null;
 
-  updatedAt?: Date | null
+  updatedAt?: Date | null;
 }
 
 export interface IProject {
-  id: string
+  id: string;
 
-  invoiceNumber: string
+  invoiceNumber: string;
 
-  invoiceDate?: Date | null
+  invoiceDate?: Date | null;
 
-  name: string
+  name: string;
 
-  projectDate?: Date | null
+  projectDate?: Date | null;
 
-  streetAddress?: string | null
+  streetAddress?: string | null;
 
-  city?: string | null
+  city?: string | null;
 
-  link?: string | null
+  link?: string | null;
 
-  status: IInvoiceStatus
+  status: IInvoiceStatus;
 
-  user: string
+  user: string;
 
-  expenses?: IExpenseAndIncome[] | null
+  expenses?: IExpenseAndIncome[] | null;
 
-  incomes?: IExpenseAndIncome[] | null
+  incomes?: IExpenseAndIncome[] | null;
 }
 
 export interface IExpenseAndIncome {
-  name?: string | null
+  name?: string | null;
 
-  price?: string | null
+  price?: string | null;
 
-  quantity?: number | null
+  quantity?: number | null;
 
-  taxRate?: number | null
+  taxRate?: number | null;
 }
 
 export interface IGeneralExpense {
-  name: string
+  name: string;
 
-  price: string
+  price: string;
 
-  quantity: number
+  quantity: number;
 
-  taxRate: number
+  taxRate: number;
 
-  date: string
+  date: string;
 
-  user: string
+  user: string;
 }
 
 export interface IClient {
-  id: string
+  id: string;
 
-  firstName?: string | null
+  firstName?: string | null;
 
-  lastName?: string | null
+  lastName?: string | null;
 
-  email?: string | null
+  email?: string | null;
 
-  phone?: string | null
+  phone?: string | null;
 
-  user?: string | null
+  user?: string | null;
 
-  projects?: string[] | null
+  projects?: string[] | null;
 
-  streetAddress?: string | null
+  streetAddress?: string | null;
 
-  postalCode?: string | null
+  postalCode?: string | null;
 
-  city?: string | null
+  city?: string | null;
 }
 
 export interface IMutation {
-  registerUser: IRegisterResponse
+  registerUser: IRegisterResponse;
 
-  loginUser: IRegisterResponse
+  loginUser: IRegisterResponse;
 
-  updateUser: IUpdateUserResponse
+  updateUser: IUpdateUserResponse;
 
-  changePassword: IRegisterResponse
+  changePassword: IRegisterResponse;
 
-  updateProject: IMutationProjectResponse
+  updateProject: IMutationProjectResponse;
 
-  addProject?: IMutationProjectResponse | null
+  addProject?: IMutationProjectResponse | null;
 
-  deleteProject?: IMutationProjectResponse | null
+  deleteProject?: IMutationProjectResponse | null;
 
-  addGeneralExpense: IAddGeneralExpensesResponse
+  addGeneralExpense: IAddGeneralExpensesResponse;
 
-  addClient?: IClientMutationResponse | null
+  addClient?: IClientMutationResponse | null;
 
-  updateClient?: IClientMutationResponse | null
+  updateClient?: IClientMutationResponse | null;
 
-  updateClientProject?: IClientMutationResponse | null
+  updateClientProject?: IClientMutationResponse | null;
 
-  removeClientFromProject?: IClientMutationResponse | null
+  removeClientFromProject?: IClientMutationResponse | null;
 
-  deleteClient?: IClientMutationResponse | null
+  deleteClient?: IClientMutationResponse | null;
 
-  downloadInvoice?: IGenerateInvoiceResponse | null
+  downloadInvoice?: IGenerateInvoiceResponse | null;
 }
 
 export interface IRegisterResponse {
-  success: boolean
+  success: boolean;
 
-  message?: string | null
+  message?: string | null;
 
-  token: string
+  token: string;
 }
 
 export interface IUpdateUserResponse {
-  message?: string | null
+  message?: string | null;
 
-  user: IUser
+  user: IUser;
 }
 
 export interface IMutationProjectResponse {
-  success: boolean
+  success: boolean;
 
-  message?: string | null
+  message?: string | null;
 
-  project: IProject
+  project: IProject;
 
-  client?: IClient | null
+  client?: IClient | null;
 }
 
 export interface IAddGeneralExpensesResponse {
-  message?: string | null
+  message?: string | null;
 
-  generalExpense?: IGeneralExpense | null
+  generalExpense?: IGeneralExpense | null;
 }
 
 export interface IClientMutationResponse {
-  message?: string | null
+  message?: string | null;
 
-  client?: IClient | null
+  client?: IClient | null;
 }
 
 export interface IGenerateInvoiceResponse {
-  message?: string | null
+  message?: string | null;
 
-  data?: Blob | null
+  data?: Blob | null;
 }
 
 // ====================================================
@@ -301,86 +311,91 @@ export interface IGenerateInvoiceResponse {
 // ====================================================
 
 export interface GetProjectsByUserIdQueryArgs {
-  userId: string
+  userId: string;
+}
+export interface GetProjectsQueryArgs {
+  filter?: IGetProjectsFilter | null;
+
+  sortOption?: ISortOption | null;
 }
 export interface GetSingleProjectQueryArgs {
-  projectId: string
+  projectId: string;
 }
 export interface GetClientByProjectQueryArgs {
-  projectId: string
+  projectId: string;
 }
 export interface GetSingleClientQueryArgs {
-  clientId: string
+  clientId: string;
 }
 export interface RegisterUserMutationArgs {
-  firstName: string
+  firstName: string;
 
-  lastName: string
+  lastName: string;
 
-  email: string
+  email: string;
 
-  password: string
+  password: string;
 }
 export interface LoginUserMutationArgs {
-  email: string
+  email: string;
 
-  password: string
+  password: string;
 }
 export interface UpdateUserMutationArgs {
-  data: IUpdateUserInput
+  data: IUpdateUserInput;
 }
 export interface ChangePasswordMutationArgs {
-  email: string
+  email: string;
 
-  password: string
+  password: string;
 }
 export interface UpdateProjectMutationArgs {
-  projectId: string
+  projectId: string;
 
-  data: IProjectInput
+  data: IProjectInput;
 }
 export interface AddProjectMutationArgs {
-  data: IProjectInput
+  data: IProjectInput;
 }
 export interface DeleteProjectMutationArgs {
-  projectId: string
+  projectId: string;
 }
 export interface AddGeneralExpenseMutationArgs {
-  data: IGeneralExpenseInput
+  data: IGeneralExpenseInput;
 }
 export interface AddClientMutationArgs {
-  data: IClientInput
+  data: IClientInput;
 }
 export interface UpdateClientMutationArgs {
-  clientId: string
+  clientId: string;
 
-  data: IClientInput
+  data: IClientInput;
 }
 export interface UpdateClientProjectMutationArgs {
-  projectId: string
+  projectId: string;
 
-  clientId: string
+  clientId: string;
 }
 export interface RemoveClientFromProjectMutationArgs {
-  projectId: string
+  projectId: string;
 
-  clientId: string
+  clientId: string;
 }
 export interface DeleteClientMutationArgs {
-  clientId: string
+  clientId: string;
 }
 export interface DownloadInvoiceMutationArgs {
-  projectId: string
+  projectId: string;
 }
 
-import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from 'graphql'
+import { GraphQLResolveInfo, GraphQLScalarTypeConfig } from "graphql";
 
 export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
   parent: Parent,
   args: Args,
   context: Context,
   info: GraphQLResolveInfo
-) => Promise<Result> | Result
+) => Promise<Result> | Result;
 
 export interface ISubscriptionResolverObject<Result, Parent, Context, Args> {
   subscribe<R = Result, P = Parent>(
@@ -388,13 +403,13 @@ export interface ISubscriptionResolverObject<Result, Parent, Context, Args> {
     args: Args,
     context: Context,
     info: GraphQLResolveInfo
-  ): AsyncIterator<R | Result> | Promise<AsyncIterator<R | Result>>
+  ): AsyncIterator<R | Result> | Promise<AsyncIterator<R | Result>>;
   resolve?<R = Result, P = Parent>(
     parent: P,
     args: Args,
     context: Context,
     info: GraphQLResolveInfo
-  ): R | Result | Promise<R | Result>
+  ): R | Result | Promise<R | Result>;
 }
 
 export type SubscriptionResolver<
@@ -406,17 +421,17 @@ export type SubscriptionResolver<
   | ((
       ...args: any[]
     ) => ISubscriptionResolverObject<Result, Parent, Context, Args>)
-  | ISubscriptionResolverObject<Result, Parent, Context, Args>
+  | ISubscriptionResolverObject<Result, Parent, Context, Args>;
 
-type Maybe<T> = T | null | undefined
+type Maybe<T> = T | null | undefined;
 
 export type TypeResolveFn<Types, Parent = {}, Context = {}> = (
   parent: Parent,
   context: Context,
   info: GraphQLResolveInfo
-) => Maybe<Types>
+) => Maybe<Types>;
 
-export type NextResolverFn<T> = () => Promise<T>
+export type NextResolverFn<T> = () => Promise<T>;
 
 export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   next: NextResolverFn<TResult>,
@@ -424,733 +439,750 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => TResult | Promise<TResult>
+) => TResult | Promise<TResult>;
 
 export namespace QueryResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
-    getUser?: GetUserResolver<IUser, TypeParent, Context>
+    getUser?: GetUserResolver<IUser, TypeParent, Context>;
 
     getProjectsByUserId?: GetProjectsByUserIdResolver<
       IProject[],
       TypeParent,
       Context
-    >
+    >;
+
+    getProjects?: GetProjectsResolver<IProject[], TypeParent, Context>;
 
     getSingleProject?: GetSingleProjectResolver<
       IProject | null,
       TypeParent,
       Context
-    >
+    >;
 
     getGeneralExpenses?: GetGeneralExpensesResolver<
       IGeneralExpense[] | null,
       TypeParent,
       Context
-    >
+    >;
 
     getClientsByUser?: GetClientsByUserResolver<
       IClient[] | null,
       TypeParent,
       Context
-    >
+    >;
 
     getClientByProject?: GetClientByProjectResolver<
       IClient | null,
       TypeParent,
       Context
-    >
+    >;
 
     getSingleClient?: GetSingleClientResolver<
       IClient | null,
       TypeParent,
       Context
-    >
+    >;
 
-    health?: HealthResolver<string | null, TypeParent, Context>
+    health?: HealthResolver<string | null, TypeParent, Context>;
   }
 
   export type GetUserResolver<R = IUser, Parent = {}, Context = {}> = Resolver<
     R,
     Parent,
     Context
-  >
+  >;
   export type GetProjectsByUserIdResolver<
     R = IProject[],
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, GetProjectsByUserIdArgs>
+  > = Resolver<R, Parent, Context, GetProjectsByUserIdArgs>;
   export interface GetProjectsByUserIdArgs {
-    userId: string
+    userId: string;
+  }
+
+  export type GetProjectsResolver<
+    R = IProject[],
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetProjectsArgs>;
+  export interface GetProjectsArgs {
+    filter?: IGetProjectsFilter | null;
+
+    sortOption?: ISortOption | null;
   }
 
   export type GetSingleProjectResolver<
     R = IProject | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, GetSingleProjectArgs>
+  > = Resolver<R, Parent, Context, GetSingleProjectArgs>;
   export interface GetSingleProjectArgs {
-    projectId: string
+    projectId: string;
   }
 
   export type GetGeneralExpensesResolver<
     R = IGeneralExpense[] | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type GetClientsByUserResolver<
     R = IClient[] | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type GetClientByProjectResolver<
     R = IClient | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, GetClientByProjectArgs>
+  > = Resolver<R, Parent, Context, GetClientByProjectArgs>;
   export interface GetClientByProjectArgs {
-    projectId: string
+    projectId: string;
   }
 
   export type GetSingleClientResolver<
     R = IClient | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, GetSingleClientArgs>
+  > = Resolver<R, Parent, Context, GetSingleClientArgs>;
   export interface GetSingleClientArgs {
-    clientId: string
+    clientId: string;
   }
 
   export type HealthResolver<
     R = string | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace UserResolvers {
   export interface Resolvers<Context = {}, TypeParent = IUser> {
-    id?: IdResolver<string, TypeParent, Context>
+    id?: IdResolver<string, TypeParent, Context>;
 
-    firstName?: FirstNameResolver<string, TypeParent, Context>
+    firstName?: FirstNameResolver<string, TypeParent, Context>;
 
-    lastName?: LastNameResolver<string, TypeParent, Context>
+    lastName?: LastNameResolver<string, TypeParent, Context>;
 
-    email?: EmailResolver<string, TypeParent, Context>
+    email?: EmailResolver<string, TypeParent, Context>;
 
-    projects?: ProjectsResolver<IProject[] | null, TypeParent, Context>
+    projects?: ProjectsResolver<IProject[] | null, TypeParent, Context>;
 
-    expenses?: ExpensesResolver<IGeneralExpense[] | null, TypeParent, Context>
+    expenses?: ExpensesResolver<IGeneralExpense[] | null, TypeParent, Context>;
 
-    clients?: ClientsResolver<IClient[] | null, TypeParent, Context>
+    clients?: ClientsResolver<IClient[] | null, TypeParent, Context>;
 
-    btw?: BtwResolver<string | null, TypeParent, Context>
+    btw?: BtwResolver<string | null, TypeParent, Context>;
 
-    kvk?: KvkResolver<string | null, TypeParent, Context>
+    kvk?: KvkResolver<string | null, TypeParent, Context>;
 
-    iban?: IbanResolver<string | null, TypeParent, Context>
+    iban?: IbanResolver<string | null, TypeParent, Context>;
 
-    phone?: PhoneResolver<string | null, TypeParent, Context>
+    phone?: PhoneResolver<string | null, TypeParent, Context>;
 
-    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>
+    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
 
-    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>
+    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
 
-    city?: CityResolver<string | null, TypeParent, Context>
+    city?: CityResolver<string | null, TypeParent, Context>;
 
-    createdAt?: CreatedAtResolver<Date | null, TypeParent, Context>
+    createdAt?: CreatedAtResolver<Date | null, TypeParent, Context>;
 
-    updatedAt?: UpdatedAtResolver<Date | null, TypeParent, Context>
+    updatedAt?: UpdatedAtResolver<Date | null, TypeParent, Context>;
   }
 
   export type IdResolver<R = string, Parent = IUser, Context = {}> = Resolver<
     R,
     Parent,
     Context
-  >
+  >;
   export type FirstNameResolver<
     R = string,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type LastNameResolver<
     R = string,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type EmailResolver<
     R = string,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ProjectsResolver<
     R = IProject[] | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ExpensesResolver<
     R = IGeneralExpense[] | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ClientsResolver<
     R = IClient[] | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type BtwResolver<
     R = string | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type KvkResolver<
     R = string | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type IbanResolver<
     R = string | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type PhoneResolver<
     R = string | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type StreetAddressResolver<
     R = string | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type PostalCodeResolver<
     R = string | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type CityResolver<
     R = string | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type CreatedAtResolver<
     R = Date | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type UpdatedAtResolver<
     R = Date | null,
     Parent = IUser,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace ProjectResolvers {
   export interface Resolvers<Context = {}, TypeParent = IProject> {
-    id?: IdResolver<string, TypeParent, Context>
+    id?: IdResolver<string, TypeParent, Context>;
 
-    invoiceNumber?: InvoiceNumberResolver<string, TypeParent, Context>
+    invoiceNumber?: InvoiceNumberResolver<string, TypeParent, Context>;
 
-    invoiceDate?: InvoiceDateResolver<Date | null, TypeParent, Context>
+    invoiceDate?: InvoiceDateResolver<Date | null, TypeParent, Context>;
 
-    name?: NameResolver<string, TypeParent, Context>
+    name?: NameResolver<string, TypeParent, Context>;
 
-    projectDate?: ProjectDateResolver<Date | null, TypeParent, Context>
+    projectDate?: ProjectDateResolver<Date | null, TypeParent, Context>;
 
-    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>
+    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
 
-    city?: CityResolver<string | null, TypeParent, Context>
+    city?: CityResolver<string | null, TypeParent, Context>;
 
-    link?: LinkResolver<string | null, TypeParent, Context>
+    link?: LinkResolver<string | null, TypeParent, Context>;
 
-    status?: StatusResolver<IInvoiceStatus, TypeParent, Context>
+    status?: StatusResolver<IInvoiceStatus, TypeParent, Context>;
 
-    user?: UserResolver<string, TypeParent, Context>
+    user?: UserResolver<string, TypeParent, Context>;
 
-    expenses?: ExpensesResolver<IExpenseAndIncome[] | null, TypeParent, Context>
+    expenses?: ExpensesResolver<
+      IExpenseAndIncome[] | null,
+      TypeParent,
+      Context
+    >;
 
-    incomes?: IncomesResolver<IExpenseAndIncome[] | null, TypeParent, Context>
+    incomes?: IncomesResolver<IExpenseAndIncome[] | null, TypeParent, Context>;
   }
 
   export type IdResolver<
     R = string,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type InvoiceNumberResolver<
     R = string,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type InvoiceDateResolver<
     R = Date | null,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type NameResolver<
     R = string,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ProjectDateResolver<
     R = Date | null,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type StreetAddressResolver<
     R = string | null,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type CityResolver<
     R = string | null,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type LinkResolver<
     R = string | null,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type StatusResolver<
     R = IInvoiceStatus,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type UserResolver<
     R = string,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ExpensesResolver<
     R = IExpenseAndIncome[] | null,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type IncomesResolver<
     R = IExpenseAndIncome[] | null,
     Parent = IProject,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace ExpenseAndIncomeResolvers {
   export interface Resolvers<Context = {}, TypeParent = IExpenseAndIncome> {
-    name?: NameResolver<string | null, TypeParent, Context>
+    name?: NameResolver<string | null, TypeParent, Context>;
 
-    price?: PriceResolver<string | null, TypeParent, Context>
+    price?: PriceResolver<string | null, TypeParent, Context>;
 
-    quantity?: QuantityResolver<number | null, TypeParent, Context>
+    quantity?: QuantityResolver<number | null, TypeParent, Context>;
 
-    taxRate?: TaxRateResolver<number | null, TypeParent, Context>
+    taxRate?: TaxRateResolver<number | null, TypeParent, Context>;
   }
 
   export type NameResolver<
     R = string | null,
     Parent = IExpenseAndIncome,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type PriceResolver<
     R = string | null,
     Parent = IExpenseAndIncome,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type QuantityResolver<
     R = number | null,
     Parent = IExpenseAndIncome,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type TaxRateResolver<
     R = number | null,
     Parent = IExpenseAndIncome,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace GeneralExpenseResolvers {
   export interface Resolvers<Context = {}, TypeParent = IGeneralExpense> {
-    name?: NameResolver<string, TypeParent, Context>
+    name?: NameResolver<string, TypeParent, Context>;
 
-    price?: PriceResolver<string, TypeParent, Context>
+    price?: PriceResolver<string, TypeParent, Context>;
 
-    quantity?: QuantityResolver<number, TypeParent, Context>
+    quantity?: QuantityResolver<number, TypeParent, Context>;
 
-    taxRate?: TaxRateResolver<number, TypeParent, Context>
+    taxRate?: TaxRateResolver<number, TypeParent, Context>;
 
-    date?: DateResolver<string, TypeParent, Context>
+    date?: DateResolver<string, TypeParent, Context>;
 
-    user?: UserResolver<string, TypeParent, Context>
+    user?: UserResolver<string, TypeParent, Context>;
   }
 
   export type NameResolver<
     R = string,
     Parent = IGeneralExpense,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type PriceResolver<
     R = string,
     Parent = IGeneralExpense,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type QuantityResolver<
     R = number,
     Parent = IGeneralExpense,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type TaxRateResolver<
     R = number,
     Parent = IGeneralExpense,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type DateResolver<
     R = string,
     Parent = IGeneralExpense,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type UserResolver<
     R = string,
     Parent = IGeneralExpense,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace ClientResolvers {
   export interface Resolvers<Context = {}, TypeParent = IClient> {
-    id?: IdResolver<string, TypeParent, Context>
+    id?: IdResolver<string, TypeParent, Context>;
 
-    firstName?: FirstNameResolver<string | null, TypeParent, Context>
+    firstName?: FirstNameResolver<string | null, TypeParent, Context>;
 
-    lastName?: LastNameResolver<string | null, TypeParent, Context>
+    lastName?: LastNameResolver<string | null, TypeParent, Context>;
 
-    email?: EmailResolver<string | null, TypeParent, Context>
+    email?: EmailResolver<string | null, TypeParent, Context>;
 
-    phone?: PhoneResolver<string | null, TypeParent, Context>
+    phone?: PhoneResolver<string | null, TypeParent, Context>;
 
-    user?: UserResolver<string | null, TypeParent, Context>
+    user?: UserResolver<string | null, TypeParent, Context>;
 
-    projects?: ProjectsResolver<string[] | null, TypeParent, Context>
+    projects?: ProjectsResolver<string[] | null, TypeParent, Context>;
 
-    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>
+    streetAddress?: StreetAddressResolver<string | null, TypeParent, Context>;
 
-    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>
+    postalCode?: PostalCodeResolver<string | null, TypeParent, Context>;
 
-    city?: CityResolver<string | null, TypeParent, Context>
+    city?: CityResolver<string | null, TypeParent, Context>;
   }
 
   export type IdResolver<R = string, Parent = IClient, Context = {}> = Resolver<
     R,
     Parent,
     Context
-  >
+  >;
   export type FirstNameResolver<
     R = string | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type LastNameResolver<
     R = string | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type EmailResolver<
     R = string | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type PhoneResolver<
     R = string | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type UserResolver<
     R = string | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ProjectsResolver<
     R = string[] | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type StreetAddressResolver<
     R = string | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type PostalCodeResolver<
     R = string | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type CityResolver<
     R = string | null,
     Parent = IClient,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace MutationResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
-    registerUser?: RegisterUserResolver<IRegisterResponse, TypeParent, Context>
+    registerUser?: RegisterUserResolver<IRegisterResponse, TypeParent, Context>;
 
-    loginUser?: LoginUserResolver<IRegisterResponse, TypeParent, Context>
+    loginUser?: LoginUserResolver<IRegisterResponse, TypeParent, Context>;
 
-    updateUser?: UpdateUserResolver<IUpdateUserResponse, TypeParent, Context>
+    updateUser?: UpdateUserResolver<IUpdateUserResponse, TypeParent, Context>;
 
     changePassword?: ChangePasswordResolver<
       IRegisterResponse,
       TypeParent,
       Context
-    >
+    >;
 
     updateProject?: UpdateProjectResolver<
       IMutationProjectResponse,
       TypeParent,
       Context
-    >
+    >;
 
     addProject?: AddProjectResolver<
       IMutationProjectResponse | null,
       TypeParent,
       Context
-    >
+    >;
 
     deleteProject?: DeleteProjectResolver<
       IMutationProjectResponse | null,
       TypeParent,
       Context
-    >
+    >;
 
     addGeneralExpense?: AddGeneralExpenseResolver<
       IAddGeneralExpensesResponse,
       TypeParent,
       Context
-    >
+    >;
 
     addClient?: AddClientResolver<
       IClientMutationResponse | null,
       TypeParent,
       Context
-    >
+    >;
 
     updateClient?: UpdateClientResolver<
       IClientMutationResponse | null,
       TypeParent,
       Context
-    >
+    >;
 
     updateClientProject?: UpdateClientProjectResolver<
       IClientMutationResponse | null,
       TypeParent,
       Context
-    >
+    >;
 
     removeClientFromProject?: RemoveClientFromProjectResolver<
       IClientMutationResponse | null,
       TypeParent,
       Context
-    >
+    >;
 
     deleteClient?: DeleteClientResolver<
       IClientMutationResponse | null,
       TypeParent,
       Context
-    >
+    >;
 
     downloadInvoice?: DownloadInvoiceResolver<
       IGenerateInvoiceResponse | null,
       TypeParent,
       Context
-    >
+    >;
   }
 
   export type RegisterUserResolver<
     R = IRegisterResponse,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, RegisterUserArgs>
+  > = Resolver<R, Parent, Context, RegisterUserArgs>;
   export interface RegisterUserArgs {
-    firstName: string
+    firstName: string;
 
-    lastName: string
+    lastName: string;
 
-    email: string
+    email: string;
 
-    password: string
+    password: string;
   }
 
   export type LoginUserResolver<
     R = IRegisterResponse,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, LoginUserArgs>
+  > = Resolver<R, Parent, Context, LoginUserArgs>;
   export interface LoginUserArgs {
-    email: string
+    email: string;
 
-    password: string
+    password: string;
   }
 
   export type UpdateUserResolver<
     R = IUpdateUserResponse,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, UpdateUserArgs>
+  > = Resolver<R, Parent, Context, UpdateUserArgs>;
   export interface UpdateUserArgs {
-    data: IUpdateUserInput
+    data: IUpdateUserInput;
   }
 
   export type ChangePasswordResolver<
     R = IRegisterResponse,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, ChangePasswordArgs>
+  > = Resolver<R, Parent, Context, ChangePasswordArgs>;
   export interface ChangePasswordArgs {
-    email: string
+    email: string;
 
-    password: string
+    password: string;
   }
 
   export type UpdateProjectResolver<
     R = IMutationProjectResponse,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, UpdateProjectArgs>
+  > = Resolver<R, Parent, Context, UpdateProjectArgs>;
   export interface UpdateProjectArgs {
-    projectId: string
+    projectId: string;
 
-    data: IProjectInput
+    data: IProjectInput;
   }
 
   export type AddProjectResolver<
     R = IMutationProjectResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, AddProjectArgs>
+  > = Resolver<R, Parent, Context, AddProjectArgs>;
   export interface AddProjectArgs {
-    data: IProjectInput
+    data: IProjectInput;
   }
 
   export type DeleteProjectResolver<
     R = IMutationProjectResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, DeleteProjectArgs>
+  > = Resolver<R, Parent, Context, DeleteProjectArgs>;
   export interface DeleteProjectArgs {
-    projectId: string
+    projectId: string;
   }
 
   export type AddGeneralExpenseResolver<
     R = IAddGeneralExpensesResponse,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, AddGeneralExpenseArgs>
+  > = Resolver<R, Parent, Context, AddGeneralExpenseArgs>;
   export interface AddGeneralExpenseArgs {
-    data: IGeneralExpenseInput
+    data: IGeneralExpenseInput;
   }
 
   export type AddClientResolver<
     R = IClientMutationResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, AddClientArgs>
+  > = Resolver<R, Parent, Context, AddClientArgs>;
   export interface AddClientArgs {
-    data: IClientInput
+    data: IClientInput;
   }
 
   export type UpdateClientResolver<
     R = IClientMutationResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, UpdateClientArgs>
+  > = Resolver<R, Parent, Context, UpdateClientArgs>;
   export interface UpdateClientArgs {
-    clientId: string
+    clientId: string;
 
-    data: IClientInput
+    data: IClientInput;
   }
 
   export type UpdateClientProjectResolver<
     R = IClientMutationResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, UpdateClientProjectArgs>
+  > = Resolver<R, Parent, Context, UpdateClientProjectArgs>;
   export interface UpdateClientProjectArgs {
-    projectId: string
+    projectId: string;
 
-    clientId: string
+    clientId: string;
   }
 
   export type RemoveClientFromProjectResolver<
     R = IClientMutationResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, RemoveClientFromProjectArgs>
+  > = Resolver<R, Parent, Context, RemoveClientFromProjectArgs>;
   export interface RemoveClientFromProjectArgs {
-    projectId: string
+    projectId: string;
 
-    clientId: string
+    clientId: string;
   }
 
   export type DeleteClientResolver<
     R = IClientMutationResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, DeleteClientArgs>
+  > = Resolver<R, Parent, Context, DeleteClientArgs>;
   export interface DeleteClientArgs {
-    clientId: string
+    clientId: string;
   }
 
   export type DownloadInvoiceResolver<
     R = IGenerateInvoiceResponse | null,
     Parent = {},
     Context = {}
-  > = Resolver<R, Parent, Context, DownloadInvoiceArgs>
+  > = Resolver<R, Parent, Context, DownloadInvoiceArgs>;
   export interface DownloadInvoiceArgs {
-    projectId: string
+    projectId: string;
   }
 }
 
 export namespace RegisterResponseResolvers {
   export interface Resolvers<Context = {}, TypeParent = IRegisterResponse> {
-    success?: SuccessResolver<boolean, TypeParent, Context>
+    success?: SuccessResolver<boolean, TypeParent, Context>;
 
-    message?: MessageResolver<string | null, TypeParent, Context>
+    message?: MessageResolver<string | null, TypeParent, Context>;
 
-    token?: TokenResolver<string, TypeParent, Context>
+    token?: TokenResolver<string, TypeParent, Context>;
   }
 
   export type SuccessResolver<
     R = boolean,
     Parent = IRegisterResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type MessageResolver<
     R = string | null,
     Parent = IRegisterResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type TokenResolver<
     R = string,
     Parent = IRegisterResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace UpdateUserResponseResolvers {
   export interface Resolvers<Context = {}, TypeParent = IUpdateUserResponse> {
-    message?: MessageResolver<string | null, TypeParent, Context>
+    message?: MessageResolver<string | null, TypeParent, Context>;
 
-    user?: UserResolver<IUser, TypeParent, Context>
+    user?: UserResolver<IUser, TypeParent, Context>;
   }
 
   export type MessageResolver<
     R = string | null,
     Parent = IUpdateUserResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type UserResolver<
     R = IUser,
     Parent = IUpdateUserResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace MutationProjectResponseResolvers {
@@ -1158,35 +1190,35 @@ export namespace MutationProjectResponseResolvers {
     Context = {},
     TypeParent = IMutationProjectResponse
   > {
-    success?: SuccessResolver<boolean, TypeParent, Context>
+    success?: SuccessResolver<boolean, TypeParent, Context>;
 
-    message?: MessageResolver<string | null, TypeParent, Context>
+    message?: MessageResolver<string | null, TypeParent, Context>;
 
-    project?: ProjectResolver<IProject, TypeParent, Context>
+    project?: ProjectResolver<IProject, TypeParent, Context>;
 
-    client?: ClientResolver<IClient | null, TypeParent, Context>
+    client?: ClientResolver<IClient | null, TypeParent, Context>;
   }
 
   export type SuccessResolver<
     R = boolean,
     Parent = IMutationProjectResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type MessageResolver<
     R = string | null,
     Parent = IMutationProjectResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ProjectResolver<
     R = IProject,
     Parent = IMutationProjectResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ClientResolver<
     R = IClient | null,
     Parent = IMutationProjectResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace AddGeneralExpensesResponseResolvers {
@@ -1194,25 +1226,25 @@ export namespace AddGeneralExpensesResponseResolvers {
     Context = {},
     TypeParent = IAddGeneralExpensesResponse
   > {
-    message?: MessageResolver<string | null, TypeParent, Context>
+    message?: MessageResolver<string | null, TypeParent, Context>;
 
     generalExpense?: GeneralExpenseResolver<
       IGeneralExpense | null,
       TypeParent,
       Context
-    >
+    >;
   }
 
   export type MessageResolver<
     R = string | null,
     Parent = IAddGeneralExpensesResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type GeneralExpenseResolver<
     R = IGeneralExpense | null,
     Parent = IAddGeneralExpensesResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace ClientMutationResponseResolvers {
@@ -1220,21 +1252,21 @@ export namespace ClientMutationResponseResolvers {
     Context = {},
     TypeParent = IClientMutationResponse
   > {
-    message?: MessageResolver<string | null, TypeParent, Context>
+    message?: MessageResolver<string | null, TypeParent, Context>;
 
-    client?: ClientResolver<IClient | null, TypeParent, Context>
+    client?: ClientResolver<IClient | null, TypeParent, Context>;
   }
 
   export type MessageResolver<
     R = string | null,
     Parent = IClientMutationResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type ClientResolver<
     R = IClient | null,
     Parent = IClientMutationResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 export namespace GenerateInvoiceResponseResolvers {
@@ -1242,21 +1274,21 @@ export namespace GenerateInvoiceResponseResolvers {
     Context = {},
     TypeParent = IGenerateInvoiceResponse
   > {
-    message?: MessageResolver<string | null, TypeParent, Context>
+    message?: MessageResolver<string | null, TypeParent, Context>;
 
-    data?: DataResolver<Blob | null, TypeParent, Context>
+    data?: DataResolver<Blob | null, TypeParent, Context>;
   }
 
   export type MessageResolver<
     R = string | null,
     Parent = IGenerateInvoiceResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
   export type DataResolver<
     R = Blob | null,
     Parent = IGenerateInvoiceResponse,
     Context = {}
-  > = Resolver<R, Parent, Context>
+  > = Resolver<R, Parent, Context>;
 }
 
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
@@ -1264,10 +1296,10 @@ export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   SkipDirectiveArgs,
   {}
->
+>;
 export interface SkipDirectiveArgs {
   /** Skipped when true. */
-  if: boolean
+  if: boolean;
 }
 
 /** Directs the executor to include this field or fragment only when the `if` argument is true. */
@@ -1275,10 +1307,10 @@ export type IncludeDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   IncludeDirectiveArgs,
   {}
->
+>;
 export interface IncludeDirectiveArgs {
   /** Included when true. */
-  if: boolean
+  if: boolean;
 }
 
 /** Marks an element of a GraphQL schema as no longer supported. */
@@ -1286,15 +1318,15 @@ export type DeprecatedDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   DeprecatedDirectiveArgs,
   {}
->
+>;
 export interface DeprecatedDirectiveArgs {
   /** Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax (as specified by [CommonMark](https://commonmark.org/). */
-  reason?: string | null
+  reason?: string | null;
 }
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
-  name: 'Date'
+  name: "Date";
 }
 export interface BlobScalarConfig extends GraphQLScalarTypeConfig<Blob, any> {
-  name: 'Blob'
+  name: "Blob";
 }
