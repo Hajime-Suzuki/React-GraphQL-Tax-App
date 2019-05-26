@@ -3,6 +3,8 @@ const RoutesNames = {
   signup: '/signup',
   login: '/login',
   dashboard: '/dashboard',
+  fiscalOverview: (year?: string | number) =>
+    year ? `/fiscal-overview/${year}` : '/fiscal-overview/:year',
   projects: '/projects',
   singleProject: (id?: string) => (id ? `/projects/${id}` : '/projects/:id'),
   addProject: '/projects/new',

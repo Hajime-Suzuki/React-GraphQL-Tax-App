@@ -12,6 +12,10 @@ import { LoadingIcon } from '../UI/LoadingIcon'
 import { SelectedQuarterContext, SelectedQuarterProvider } from './contexts'
 import { currentQuarterProjectSelector as currentSemester } from './selectors/currentQuarter'
 import TaxOverview from './TaxOverview'
+import { Button } from '@material-ui/core'
+import useRouter from 'use-react-router'
+import { FiscalOverviewRouteProps } from 'src/routes/types'
+import { RoutesNames } from 'src/routes/constants'
 
 const DashBoard: FC<{}> = () => {
   const userId = JWT.getUserId()
@@ -27,6 +31,8 @@ const DashBoard: FC<{}> = () => {
     nextQuarter,
     selectedDate
   } = useContext(SelectedQuarterContext)
+
+  const { history } = useRouter<FiscalOverviewRouteProps>()
 
   if (!data) return null
   if (loading) return <LoadingIcon />
@@ -58,6 +64,10 @@ const DashBoard: FC<{}> = () => {
         </Grid>
       </Grid>
 
+      {/* TODO: make it dynamic */}
+      <Button onClick={() => history.push(RoutesNames.fiscalOverview(2019))}>
+        Fiscal 2019
+      </Button>
       <Typography variant="h4">Overview</Typography>
       <Typography variant="subtitle1">Incomes and Tax</Typography>
       <TaxOverview

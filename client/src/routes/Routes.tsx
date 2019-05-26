@@ -14,6 +14,7 @@ import ClientsListContainer from 'src/view/client/ClientsListContainer'
 import SingleClientContainer from 'src/view/client/SingleClientContainer'
 import AddClientFormContainer from 'src/view/client/AddClientFormContainer'
 import DashBoard from 'src/view/dashBoard/DashBoard'
+import FiscalOverview from 'src/view/fiscalOverview/FiscalOverview'
 
 class Routes extends React.Component {
   render() {
@@ -30,6 +31,11 @@ class Routes extends React.Component {
               path={RoutesNames.dashboard}
               exact
               component={DashBoard}
+            />
+            <PrivateRoutes
+              path={RoutesNames.fiscalOverview()}
+              exact
+              component={FiscalOverview}
             />
             <PrivateRoutes
               path={RoutesNames.projects}
