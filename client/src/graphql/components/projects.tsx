@@ -91,6 +91,10 @@ export type GenerateInvoiceResponse = {
   data?: Maybe<Scalars["Blob"]>;
 };
 
+export type GetProjectsFilter = {
+  year?: Maybe<Scalars["Int"]>;
+};
+
 export enum Invoice_Status {
   None = "none",
   Invoice = "invoice",
@@ -220,6 +224,7 @@ export type Query = {
   __typename?: "Query";
   getUser: User;
   getProjectsByUserId: Array<Project>;
+  getProjects: Array<Project>;
   getSingleProject?: Maybe<Project>;
   getGeneralExpenses?: Maybe<Array<GeneralExpense>>;
   getClientsByUser?: Maybe<Array<Client>>;
@@ -230,6 +235,11 @@ export type Query = {
 
 export type QueryGetProjectsByUserIdArgs = {
   userId: Scalars["String"];
+};
+
+export type QueryGetProjectsArgs = {
+  filter?: Maybe<GetProjectsFilter>;
+  sortOption?: Maybe<SortOption>;
 };
 
 export type QueryGetSingleProjectArgs = {
@@ -249,6 +259,10 @@ export type RegisterResponse = {
   success: Scalars["Boolean"];
   message?: Maybe<Scalars["String"]>;
   token: Scalars["String"];
+};
+
+export type SortOption = {
+  invoiceDate?: Maybe<Scalars["Int"]>;
 };
 
 export type UpdateUserInput = {
@@ -304,6 +318,26 @@ export type GetProjectOverviewQuery = { __typename?: "Query" } & {
         Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
       >;
     } & BasicInfoFragmentFragment
+  >;
+};
+
+export type GetFiscalProjectsQueryVariables = {
+  filter?: Maybe<GetProjectsFilter>;
+};
+
+export type GetFiscalProjectsQuery = { __typename?: "Query" } & {
+  projects: Array<
+    { __typename?: "Project" } & Pick<
+      Project,
+      "name" | "invoiceNumber" | "invoiceDate" | "projectDate"
+    > & {
+        incomes: Maybe<
+          Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+        >;
+        expenses: Maybe<
+          Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+        >;
+      }
   >;
 };
 
@@ -573,6 +607,76 @@ export function useGetProjectOverviewQuery(
     GetProjectOverviewQuery,
     GetProjectOverviewQueryVariables
   >(GetProjectOverviewDocument, baseOptions);
+}
+export const GetFiscalProjectsDocument = gql`
+  query getFiscalProjects($filter: GetProjectsFilter) {
+    projects: getProjects(filter: $filter, sortOption: { invoiceDate: 1 }) {
+      name
+      invoiceNumber
+      invoiceDate
+      projectDate
+      incomes {
+        ...PriceFragment
+      }
+      expenses {
+        ...PriceFragment
+      }
+    }
+  }
+  ${PriceFragmentFragmentDoc}
+`;
+export type GetFiscalProjectsComponentProps = Omit<
+  Omit<
+    ReactApollo.QueryProps<
+      GetFiscalProjectsQuery,
+      GetFiscalProjectsQueryVariables
+    >,
+    "query"
+  >,
+  "variables"
+> & { variables?: GetFiscalProjectsQueryVariables };
+
+export const GetFiscalProjectsComponent = (
+  props: GetFiscalProjectsComponentProps
+) => (
+  <ReactApollo.Query<GetFiscalProjectsQuery, GetFiscalProjectsQueryVariables>
+    query={GetFiscalProjectsDocument}
+    {...props}
+  />
+);
+
+export type GetFiscalProjectsProps<TChildProps = {}> = Partial<
+  ReactApollo.DataProps<GetFiscalProjectsQuery, GetFiscalProjectsQueryVariables>
+> &
+  TChildProps;
+export function withGetFiscalProjects<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    GetFiscalProjectsQuery,
+    GetFiscalProjectsQueryVariables,
+    GetFiscalProjectsProps<TChildProps>
+  >
+) {
+  return ReactApollo.withQuery<
+    TProps,
+    GetFiscalProjectsQuery,
+    GetFiscalProjectsQueryVariables,
+    GetFiscalProjectsProps<TChildProps>
+  >(GetFiscalProjectsDocument, {
+    alias: "withGetFiscalProjects",
+    ...operationOptions
+  });
+}
+
+export function useGetFiscalProjectsQuery(
+  baseOptions?: ReactApolloHooks.QueryHookOptions<
+    GetFiscalProjectsQueryVariables
+  >
+) {
+  return ReactApolloHooks.useQuery<
+    GetFiscalProjectsQuery,
+    GetFiscalProjectsQueryVariables
+  >(GetFiscalProjectsDocument, baseOptions);
 }
 export const GetSingleProjectDocument = gql`
   query getSingleProject($id: String!) {

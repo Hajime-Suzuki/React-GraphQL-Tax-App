@@ -17,6 +17,24 @@ const GET_PROJECT_OVERVIEW = gql`
   ${Fragments.BASIC_INFO_FRAGMENT}
 `
 
+const GET_FISCAL_PROJECTS = gql`
+  query getFiscalProjects($filter: GetProjectsFilter) {
+    projects: getProjects(filter: $filter, sortOption: { invoiceDate: 1 }) {
+      name
+      invoiceNumber
+      invoiceDate
+      projectDate
+      incomes {
+        ...PriceFragment
+      }
+      expenses {
+        ...PriceFragment
+      }
+    }
+  }
+  ${Fragments.PRICE_FRAGMENT}
+`
+
 const GET_SINGLE_PROJECT = gql`
   query getSingleProject($id: String!) {
     project: getSingleProject(projectId: $id) {
@@ -144,6 +162,7 @@ const GENERATE_INVOICE = gql`
 
 export const projectQueries = {
   GET_PROJECT_OVERVIEW,
+  GET_FISCAL_PROJECTS,
   GET_SINGLE_PROJECT,
   UPDATE_STATUS,
   ADD_PROJECT,
