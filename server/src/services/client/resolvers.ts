@@ -1,14 +1,13 @@
+import { ApolloError } from 'apollo-server-koa'
 import { AuthCheck } from '../../helpers/auth'
 import { IContext } from '../../server'
-import { MutationResolvers, QueryResolvers } from '../@types/types'
+import { IMutationResolvers, IQueryResolvers } from '../@types/types'
 import { ClientCommands } from './domain/commands'
-import { ApolloError } from 'apollo-server-koa'
-import { ClientRepository } from './repository'
 import { ClientQueries } from './domain/queries'
 
 export const clientResolvers: {
-  Query: QueryResolvers.Resolvers<IContext>;
-  Mutation: MutationResolvers.Resolvers<IContext>;
+  Query: IQueryResolvers<IContext>
+  Mutation: IMutationResolvers<IContext>
 } = {
   Query: {
     getClientsByUser: async (_, __, { user }) => {

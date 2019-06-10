@@ -2,7 +2,6 @@ import { ApolloServer, gql, makeExecutableSchema } from 'apollo-server-koa'
 import { Context } from 'koa'
 import { mergeTypes } from 'merge-graphql-schemas'
 import { AuthCheck } from './helpers/auth'
-import { IUser } from './services/@types/types'
 import { ClientRepository } from './services/client/repository'
 import { clientResolvers } from './services/client/resolvers'
 import { clientSchema } from './services/client/schema'
@@ -16,6 +15,7 @@ import { userResolvers } from './services/user/resolvers'
 import { userSchema } from './services/user/schema'
 import { generalExpenseSchema } from './services/generalExpense/schema'
 import { generalExpenseResolvers } from './services/generalExpense/resolvers'
+import { IUser } from './services/@types/types'
 
 const health = gql`
   type Query {

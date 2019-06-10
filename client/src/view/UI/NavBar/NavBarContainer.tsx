@@ -1,12 +1,11 @@
 import React, { FC, useState } from 'react'
+import { QUser } from 'src/graphql/@types/types'
 import { LoginActions } from 'src/graphql/actions/login'
-
+import { GetTokenProps } from 'src/graphql/components/client/login'
+import { Get_UserComponent } from 'src/graphql/components/login'
 import { RoutesNames } from 'src/routes/constants'
 import { IRouterComponentProps } from 'src/routes/types'
 import NavBar from './NavBar'
-import { Get_UserComponent, Get_UserQuery } from 'src/graphql/components/login'
-import { QUser } from 'src/graphql/@types/types'
-import { GetTokenProps } from 'src/graphql/components/client/login'
 
 type Props = GetTokenProps<IRouterComponentProps>
 

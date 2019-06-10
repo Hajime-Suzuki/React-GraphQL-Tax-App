@@ -1,6 +1,6 @@
 import { Omit } from '../../helpers/types'
 import {
-  GetSingleProjectQueryArgs,
+  IQueryGetSingleProjectArgs,
   IProjectInput,
   IGetProjectsFilter,
   ISortOption
@@ -10,7 +10,7 @@ import { Project } from './model'
 const findByUserId = (userId: string) =>
   Project.find({ user: userId }).sort({ createdAt: -1 })
 
-const findById = (projectId: GetSingleProjectQueryArgs['projectId']) =>
+const findById = (projectId: IQueryGetSingleProjectArgs['projectId']) =>
   Project.findById(projectId).populate('client')
 
 const find = async (

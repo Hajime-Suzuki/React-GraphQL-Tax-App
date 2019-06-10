@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@graphql-codegen/typescript-operations": "^1.2.1",
     "apollo-server-koa": "^2.0.0-rc.12",
     "bcryptjs": "^2.4.3",
     "currency-formatter": "^1.5.3",
@@ -30,6 +31,9 @@
     "validator": "^10.7.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.2.1",
+    "@graphql-codegen/typescript": "^1.2.1",
+    "@graphql-codegen/typescript-resolvers": "^1.2.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/currency-formatter": "^1.3.0",
     "@types/dotenv": "^4.0.3",
@@ -57,10 +61,6 @@
     "browser-sync": "^2.26.3",
     "copyfiles": "^2.1.0",
     "cross-env": "^5.2.0",
-    "graphql-code-generator": "^0.14.5",
-    "graphql-codegen-typescript-common": "^0.14.5",
-    "graphql-codegen-typescript-resolvers": "^0.14.5",
-    "graphql-codegen-typescript-server": "^0.14.5",
     "gulp": "^4.0.0",
     "gulp-pug": "^4.0.1",
     "gulp-sass": "^4.0.2",

@@ -1,7 +1,7 @@
 import { User } from './model'
 import {
-  RegisterUserMutationArgs,
-  UpdateUserMutationArgs
+  IMutationRegisterUserArgs,
+  IMutationUpdateUserArgs
 } from '../@types/types'
 
 const findById = async (id: string | number) => User.findById(id)
@@ -20,11 +20,11 @@ const findByCondition = async (
 
 const findByToken = async (token: string) => User.findByToken(token)
 
-const create = async (data: RegisterUserMutationArgs) => User.create(data)
+const create = async (data: IMutationRegisterUserArgs) => User.create(data)
 
 const update = async (
   id: string | number,
-  data: UpdateUserMutationArgs['data'],
+  data: IMutationUpdateUserArgs['data'],
   option: any = { new: true }
 ) => User.findOneAndUpdate(id, data, option)
 

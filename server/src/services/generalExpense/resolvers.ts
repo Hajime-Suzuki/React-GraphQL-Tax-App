@@ -1,12 +1,11 @@
-import { QueryResolvers, MutationResolvers } from '../@types/types'
-import { IContext } from '../../server'
 import { AuthCheck } from '../../helpers/auth'
+import { IContext } from '../../server'
+import { IMutationResolvers, IQueryResolvers } from '../@types/types'
 import { GeneralExpenseRepository } from './repository'
-import { GeneralExpense } from './model'
 
 export const generalExpenseResolvers: {
-  Query: QueryResolvers.Resolvers<IContext>
-  Mutation: MutationResolvers.Resolvers<IContext>
+  Query: IQueryResolvers<IContext>
+  Mutation: IMutationResolvers<IContext>
 } = {
   Query: {
     getGeneralExpenses: async (_, __, { user }) => {

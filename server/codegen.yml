@@ -5,8 +5,8 @@ require:
 generates:
   ./src/services/@types/types.ts:
     plugins:
-      - typescript-common
-      - typescript-server
+      - typescript
+      - typescript-operations
       - typescript-resolvers
     config:
-      interfacePrefix: I
+      typesPrefix: I

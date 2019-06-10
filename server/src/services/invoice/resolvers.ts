@@ -1,10 +1,10 @@
 import { AuthCheck } from '../../helpers/auth'
 import { IContext } from '../../server'
-import { MutationResolvers } from '../@types/types'
+import { IMutationResolvers } from '../@types/types'
 import { InvoiceCommands } from './commands'
 
 export const invoiceResolvers: {
-  Mutation: MutationResolvers.Resolvers<IContext>;
+  Mutation: IMutationResolvers<IContext>
 } = {
   Mutation: {
     downloadInvoice: async (_, { projectId }, { token, user }) => {

@@ -1,11 +1,11 @@
 import {
-  RegisterUserMutationArgs,
-  UpdateUserMutationArgs,
+  IMutationRegisterUserArgs,
+  IMutationUpdateUserArgs,
   IUser
 } from '../../@types/types'
 import { UserRepository } from '../repository'
 
-const registerUser = async (data: RegisterUserMutationArgs) => {
+const registerUser = async (data: IMutationRegisterUserArgs) => {
   try {
     const newUser = await UserRepository.create(data)
     return newUser.generateToken()
@@ -16,7 +16,7 @@ const registerUser = async (data: RegisterUserMutationArgs) => {
 
 const updateUser = async (
   userId: string,
-  data: UpdateUserMutationArgs['data']
+  data: IMutationUpdateUserArgs['data']
 ) => {
   try {
     const updatedUser = await UserRepository.update(userId, data, {

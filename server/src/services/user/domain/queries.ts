@@ -1,7 +1,7 @@
-import { LoginUserMutationArgs } from '../../@types/types'
+import { IMutationLoginUserArgs } from '../../@types/types'
 import { UserRepository } from '../repository'
 
-const loginUser = async ({ email, password }: LoginUserMutationArgs) => {
+const loginUser = async ({ email, password }: IMutationLoginUserArgs) => {
   try {
     const user = await UserRepository.findByCondition(
       { email },

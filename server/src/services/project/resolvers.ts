@@ -1,12 +1,12 @@
 import { AuthCheck } from '../../helpers/auth'
 import { IContext } from '../../server'
-import { MutationResolvers, QueryResolvers } from '../@types/types'
+import { IMutationResolvers, IQueryResolvers } from '../@types/types'
 import { ProjectCommands } from './domain/commands'
 import { ProjectQueries } from './domain/queries'
 
 export const projectResolvers: {
-  Query: QueryResolvers.Resolvers<IContext>
-  Mutation: MutationResolvers.Resolvers<IContext>
+  Query: IQueryResolvers<IContext>
+  Mutation: IMutationResolvers<IContext>
 } = {
   Query: {
     getProjectsByUserId: async (_, __, { user }) => {
@@ -56,7 +56,6 @@ export const projectResolvers: {
         client: updatedClient
       }
     },
-
     deleteProject: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
       const deletedProject = await ProjectCommands.deleteProject(projectId)
