@@ -49,3 +49,8 @@ If not, make `.env` file in the root directly and set `DB_STRING='mongodb_string
 
 **client**:
 Run `yarn start` in the client root directly
+
+## Todos:
+
+- use Hooks or MobX for local state management, instead of Apollo Cache.
+- rewrite containers with hooks to be able to split logics into smaller pieces.

@@ -1,7 +1,6 @@
-overwrite: false
+overwrite: true
 generates:
   ./src/graphql/components/login.tsx:
-    overwrite: true
     schema: http://localhost:4000/graphql
     documents: ./src/graphql/queries/login.ts
     plugins:
@@ -10,7 +9,6 @@ generates:
       - typescript-react-apollo
 
   ./src/graphql/components/signup.tsx:
-    overwrite: true
     schema: http://localhost:4000/graphql
     documents: ./src/graphql/queries/signup.ts
     plugins:
@@ -19,7 +17,6 @@ generates:
       - typescript-react-apollo
 
   ./src/graphql/components/projects.tsx:
-    overwrite: true
     schema: http://localhost:4000/graphql
     documents:
       - ./src/graphql/queries/projects.ts
@@ -32,7 +29,6 @@ generates:
       withHooks: true
 
   ./src/graphql/components/userProfile.tsx:
-    overwrite: true
     schema: http://localhost:4000/graphql
     documents:
       - ./src/graphql/queries/userProfile.ts
@@ -43,7 +39,6 @@ generates:
       - typescript-react-apollo
 
   ./src/graphql/components/clients.tsx:
-    overwrite: true
     schema: http://localhost:4000/graphql
     documents:
       - ./src/graphql/queries/clients.ts
@@ -55,7 +50,6 @@ generates:
 
   ##### client components ######
   ./src/graphql/components/client/login.tsx:
-    overwrite: true
     schema: ./_gql-gen/typeDefs.js
     documents: ./src/graphql/queries/loginClient.ts
     plugins:
