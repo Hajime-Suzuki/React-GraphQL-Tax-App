@@ -12,8 +12,8 @@ export const projectSchema = gql`
     link: String
     status: INVOICE_STATUS!
     user: String!
-    expenses: [ExpenseAndIncome!]
-    incomes: [ExpenseAndIncome!]
+    expenses: [ExpenseAndIncome!]!
+    incomes: [ExpenseAndIncome!]!
   }
 
   type Query {

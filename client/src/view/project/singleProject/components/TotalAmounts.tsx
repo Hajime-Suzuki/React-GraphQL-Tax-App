@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography'
 class TotalAmounts extends React.Component<SingleProjectChildProps> {
   render() {
     const { incomes, expenses } = this.props.project
-
     const incomesSubtotal = Calculations.getGrandTotal(incomes || [], {
       format: false
     })

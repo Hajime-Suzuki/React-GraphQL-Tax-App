@@ -204,8 +204,8 @@ export type Project = {
   link?: Maybe<Scalars["String"]>;
   status: Invoice_Status;
   user: Scalars["String"];
-  expenses?: Maybe<Array<ExpenseAndIncome>>;
-  incomes?: Maybe<Array<ExpenseAndIncome>>;
+  expenses: Array<ExpenseAndIncome>;
+  incomes: Array<ExpenseAndIncome>;
 };
 
 export type ProjectInput = {
@@ -311,11 +311,11 @@ export type GetProjectOverviewQueryVariables = {
 export type GetProjectOverviewQuery = { __typename?: "Query" } & {
   projects: Array<
     { __typename?: "Project" } & {
-      incomes: Maybe<
-        Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+      incomes: Array<
+        { __typename?: "ExpenseAndIncome" } & PriceFragmentFragment
       >;
-      expenses: Maybe<
-        Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+      expenses: Array<
+        { __typename?: "ExpenseAndIncome" } & PriceFragmentFragment
       >;
     } & BasicInfoFragmentFragment
   >;
@@ -331,11 +331,11 @@ export type GetFiscalProjectsQuery = { __typename?: "Query" } & {
       Project,
       "name" | "invoiceNumber" | "invoiceDate" | "projectDate"
     > & {
-        incomes: Maybe<
-          Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+        incomes: Array<
+          { __typename?: "ExpenseAndIncome" } & PriceFragmentFragment
         >;
-        expenses: Maybe<
-          Array<{ __typename?: "ExpenseAndIncome" } & PriceFragmentFragment>
+        expenses: Array<
+          { __typename?: "ExpenseAndIncome" } & PriceFragmentFragment
         >;
       }
   >;
@@ -348,23 +348,13 @@ export type GetSingleProjectQueryVariables = {
 export type GetSingleProjectQuery = { __typename?: "Query" } & {
   project: Maybe<
     { __typename?: "Project" } & Pick<Project, "invoiceNumber"> & {
-        incomes: Maybe<
-          Array<
-            { __typename?: "ExpenseAndIncome" } & Pick<
-              ExpenseAndIncome,
-              "name"
-            > &
-              PriceFragmentFragment
-          >
+        incomes: Array<
+          { __typename?: "ExpenseAndIncome" } & Pick<ExpenseAndIncome, "name"> &
+            PriceFragmentFragment
         >;
-        expenses: Maybe<
-          Array<
-            { __typename?: "ExpenseAndIncome" } & Pick<
-              ExpenseAndIncome,
-              "name"
-            > &
-              PriceFragmentFragment
-          >
+        expenses: Array<
+          { __typename?: "ExpenseAndIncome" } & Pick<ExpenseAndIncome, "name"> &
+            PriceFragmentFragment
         >;
       } & BasicInfoFragmentFragment
   >;
@@ -400,23 +390,19 @@ export type AddProjectMutation = { __typename?: "Mutation" } & {
       "success" | "message"
     > & {
         project: { __typename?: "Project" } & Pick<Project, "invoiceNumber"> & {
-            incomes: Maybe<
-              Array<
-                { __typename?: "ExpenseAndIncome" } & Pick<
-                  ExpenseAndIncome,
-                  "name"
-                > &
-                  PriceFragmentFragment
-              >
+            incomes: Array<
+              { __typename?: "ExpenseAndIncome" } & Pick<
+                ExpenseAndIncome,
+                "name"
+              > &
+                PriceFragmentFragment
             >;
-            expenses: Maybe<
-              Array<
-                { __typename?: "ExpenseAndIncome" } & Pick<
-                  ExpenseAndIncome,
-                  "name"
-                > &
-                  PriceFragmentFragment
-              >
+            expenses: Array<
+              { __typename?: "ExpenseAndIncome" } & Pick<
+                ExpenseAndIncome,
+                "name"
+              > &
+                PriceFragmentFragment
             >;
           } & BasicInfoFragmentFragment;
         client: Maybe<{ __typename?: "Client" } & ClientFragmentFragment>;
@@ -435,23 +421,19 @@ export type UpdateIncomesAndExpensesMutation = { __typename?: "Mutation" } & {
     "success" | "message"
   > & {
       project: { __typename?: "Project" } & Pick<Project, "id"> & {
-          incomes: Maybe<
-            Array<
-              { __typename?: "ExpenseAndIncome" } & Pick<
-                ExpenseAndIncome,
-                "name"
-              > &
-                PriceFragmentFragment
-            >
+          incomes: Array<
+            { __typename?: "ExpenseAndIncome" } & Pick<
+              ExpenseAndIncome,
+              "name"
+            > &
+              PriceFragmentFragment
           >;
-          expenses: Maybe<
-            Array<
-              { __typename?: "ExpenseAndIncome" } & Pick<
-                ExpenseAndIncome,
-                "name"
-              > &
-                PriceFragmentFragment
-            >
+          expenses: Array<
+            { __typename?: "ExpenseAndIncome" } & Pick<
+              ExpenseAndIncome,
+              "name"
+            > &
+              PriceFragmentFragment
           >;
         };
     };

@@ -183,9 +183,9 @@ export interface IProject {
 
   user: string;
 
-  expenses?: IExpenseAndIncome[] | null;
+  expenses: IExpenseAndIncome[];
 
-  incomes?: IExpenseAndIncome[] | null;
+  incomes: IExpenseAndIncome[];
 }
 
 export interface IExpenseAndIncome {
@@ -694,13 +694,9 @@ export namespace ProjectResolvers {
 
     user?: UserResolver<string, TypeParent, Context>;
 
-    expenses?: ExpensesResolver<
-      IExpenseAndIncome[] | null,
-      TypeParent,
-      Context
-    >;
+    expenses?: ExpensesResolver<IExpenseAndIncome[], TypeParent, Context>;
 
-    incomes?: IncomesResolver<IExpenseAndIncome[] | null, TypeParent, Context>;
+    incomes?: IncomesResolver<IExpenseAndIncome[], TypeParent, Context>;
   }
 
   export type IdResolver<
@@ -754,12 +750,12 @@ export namespace ProjectResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type ExpensesResolver<
-    R = IExpenseAndIncome[] | null,
+    R = IExpenseAndIncome[],
     Parent = IProject,
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type IncomesResolver<
-    R = IExpenseAndIncome[] | null,
+    R = IExpenseAndIncome[],
     Parent = IProject,
     Context = {}
   > = Resolver<R, Parent, Context>;

@@ -203,8 +203,8 @@ export type Project = {
   link?: Maybe<Scalars["String"]>;
   status: Invoice_Status;
   user: Scalars["String"];
-  expenses?: Maybe<Array<ExpenseAndIncome>>;
-  incomes?: Maybe<Array<ExpenseAndIncome>>;
+  expenses: Array<ExpenseAndIncome>;
+  incomes: Array<ExpenseAndIncome>;
 };
 
 export type ProjectInput = {

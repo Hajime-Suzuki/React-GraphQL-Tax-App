@@ -17,7 +17,7 @@ import { QSingleProject } from 'src/graphql/@types/types'
 export type ModalType = 'basic' | 'incomes' | 'expenses' | 'client'
 
 export interface SingleProjectChildProps {
-  project: QSingleProject
+  project: NonNullable<QSingleProject>
   client?: Client | null
   selectedModal?: ModalType
   handleOpenModal: (type: ModalType) => () => void
