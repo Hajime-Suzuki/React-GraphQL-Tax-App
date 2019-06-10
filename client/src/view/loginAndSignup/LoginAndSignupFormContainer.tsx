@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { MutationFn, WithApolloClient } from 'react-apollo'
+import { WithApolloClient } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
 import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'
@@ -8,7 +8,11 @@ import {
   LoginMutationFn,
   LoginMutationVariables
 } from 'src/graphql/components/login'
-import { SignUp } from 'src/graphql/components/signup'
+import {
+  SignUpComponent,
+  SignUpMutationFn,
+  SignUpMutationVariables
+} from 'src/graphql/components/signup'
 import { IRouterComponentProps } from 'src/routes/types'
 import { RoutesNames } from '../../routes/constants'
 import LoginForm from './LoginForm'
@@ -17,7 +21,7 @@ import SignupForm from './SignupForm'
 type Props = WithApolloClient<GetToken.Props<IRouterComponentProps>>
 
 export interface LoginSignupChildProps {
-  signup?: (value: SignUp.Variables) => void
+  signup?: (value: SignUpMutationVariables) => void
   login?: (values: LoginMutationVariables) => void
   loading: boolean
 }
@@ -42,9 +46,9 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
     }
   }
 
-  handleSignup = (
-    signup: MutationFn<SignUp.Mutation, SignUp.Variables>
-  ) => async (value: SignUp.Variables) => {
+  handleSignup = (signup: SignUpMutationFn) => async (
+    value: SignUpMutationVariables
+  ) => {
     const res = await signup({ variables: value })
     const token = res && res.data && res.data.registerUser.token
     if (token) {
@@ -54,13 +58,13 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
 
   SignUpForm = () => {
     return (
-      <SignUp.Component>
+      <SignUpComponent>
         {(signup, { loading }) => {
           return (
             <SignupForm signup={this.handleSignup(signup)} loading={loading} />
           )
         }}
-      </SignUp.Component>
+      </SignUpComponent>
     )
   }
 
