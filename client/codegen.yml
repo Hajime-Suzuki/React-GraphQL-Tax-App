@@ -1,11 +1,5 @@
 overwrite: false
 generates:
-  # ./src/graphql/@types/types.ts:
-  #   schema: http://localhost:4000/graphql
-  #   plugins:
-  #     - typescript-common
-  #     - typescript-server
-
   # ./src/graphql/@types/resolvers.ts:
   #   schema:
   #     - http://localhost:4000/graphql
@@ -18,6 +12,7 @@ generates:
 
   ##### components ######
   ./src/graphql/components/login.tsx:
+    overwrite: true
     schema: http://localhost:4000/graphql
     documents: ./src/graphql/queries/login.ts
     plugins:

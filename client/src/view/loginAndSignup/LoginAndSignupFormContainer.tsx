@@ -3,19 +3,22 @@ import { MutationFn, WithApolloClient } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
 import { LoginActions } from 'src/graphql/actions/login'
 import { GetToken } from 'src/graphql/components/client/login'
-import { Login } from 'src/graphql/components/login'
+import {
+  LoginComponent,
+  LoginMutationFn,
+  LoginMutationVariables
+} from 'src/graphql/components/login'
 import { SignUp } from 'src/graphql/components/signup'
 import { IRouterComponentProps } from 'src/routes/types'
 import { RoutesNames } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
-import { LoginUserMutationArgs } from 'src/graphql/@types/types'
 
 type Props = WithApolloClient<GetToken.Props<IRouterComponentProps>>
 
 export interface LoginSignupChildProps {
   signup?: (value: SignUp.Variables) => void
-  login?: (values: LoginUserMutationArgs) => void
+  login?: (values: LoginMutationVariables) => void
   loading: boolean
 }
 
@@ -28,10 +31,10 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
     return path === RoutesNames.login ? <this.LoginForm /> : <this.SignUpForm />
   }
 
-  handleLogin = (login: MutationFn<Login.Mutation, Login.Variables>) => async ({
+  handleLogin = (login: LoginMutationFn) => async ({
     email,
     password
-  }: LoginUserMutationArgs) => {
+  }: LoginMutationVariables) => {
     const res = await login({ variables: { email, password } })
     const token = res && res.data && res.data.loginUser.token
     if (token) {
@@ -63,7 +66,7 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
 
   LoginForm = () => {
     return (
-      <Login.Component>
+      <LoginComponent>
         {(login, { error, loading }) => {
           return (
             <div style={{ textAlign: 'center' }}>
@@ -72,7 +75,7 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
             </div>
           )
         }}
-      </Login.Component>
+      </LoginComponent>
     )
   }
 }

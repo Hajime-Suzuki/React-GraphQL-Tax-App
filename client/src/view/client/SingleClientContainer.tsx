@@ -2,12 +2,13 @@ import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
 import { MutationFn, MutationResult } from 'react-apollo'
 import { RouteComponentProps } from 'react-router'
-import { ClientInput } from 'src/graphql/@types/types'
+
 import {
   SingleClient as SingleC,
   UpdateClient,
   DeleteClient,
-  GetClientsList
+  GetClientsList,
+  ClientInput
 } from 'src/graphql/components/clients'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import SingleClient from './SingleClient'
@@ -19,17 +20,16 @@ type Client = SingleC.GetSingleClient
 type Props = SingleC.Props<RouteComponentProps<{ clientId: string }>>
 
 export type SingleClientChildProps = {
-  client: Client;
-  isModalOpen: boolean;
-  isDeleteModalOpen: boolean;
-  editMutationResult: MutationResult<UpdateClient.Mutation>;
-  deleteMutationResult: MutationResult<DeleteClient.Mutation>;
-  handleCloseModal: () => void;
-  handleOpenModal: () => void;
-
-  handleOpenDelete: () => void;
-  handleCloseDelete: () => void;
-  handleDelete: () => void;
+  client: Client
+  isModalOpen: boolean
+  isDeleteModalOpen: boolean
+  editMutationResult: MutationResult<UpdateClient.Mutation>
+  deleteMutationResult: MutationResult<DeleteClient.Mutation>
+  handleCloseModal: () => void
+  handleOpenModal: () => void
+  handleOpenDelete: () => void
+  handleCloseDelete: () => void
+  handleDelete: () => void
 } & RouteComponentProps<{ clientId: string }> &
   FormikProps<Client>
 

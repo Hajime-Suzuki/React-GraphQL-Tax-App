@@ -1,7 +1,5 @@
 import * as React from 'react'
 import {
-  // DownloadInvoice,
-  // GetSingleProject,
   DownloadInvoiceMutation,
   DownloadInvoiceMutationVariables,
   DownloadInvoiceComponent,
@@ -14,11 +12,12 @@ import { IRouterComponentProps } from 'src/routes/types'
 import { LoadingIcon } from '../../UI/LoadingIcon'
 import SingleProject from './SingleProject'
 import { MutationFn } from 'react-apollo'
+import { QSingleProject } from 'src/graphql/@types/types'
 
 export type ModalType = 'basic' | 'incomes' | 'expenses' | 'client'
 
 export interface SingleProjectChildProps {
-  project: Project
+  project: QSingleProject
   client?: Client | null
   selectedModal?: ModalType
   handleOpenModal: (type: ModalType) => () => void

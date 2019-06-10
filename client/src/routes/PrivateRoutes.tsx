@@ -5,10 +5,10 @@ import {
   RouteProps,
   withRouter
 } from 'react-router-dom'
-import { GetUser } from 'src/graphql/components/login'
+import { withGet_User, Get_UserProps } from 'src/graphql/components/login'
 import { LoginActions } from '../graphql/actions/login'
 
-type Props = GetUser.Props<RouteComponentProps & RouteProps>
+type Props = Get_UserProps<RouteComponentProps & RouteProps>
 class PrivateRoutes extends React.Component<Props> {
   logoutAndRedirect = () => {
     LoginActions.logout().then(() => {
@@ -47,4 +47,4 @@ class PrivateRoutes extends React.Component<Props> {
   }
 }
 
-export default withRouter(GetUser.HOC<Props>({})(PrivateRoutes))
+export default withRouter(withGet_User<Props>({})(PrivateRoutes))
