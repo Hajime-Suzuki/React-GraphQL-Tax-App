@@ -1,23 +1,26 @@
 import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
-import { MutationFn } from 'react-apollo'
-import { GetUserProfile, UpdateUser } from 'src/graphql/components/userProfile'
+import { QGetUserProfile } from 'src/graphql/@types/types'
+import {
+  GetUserProfileProps,
+  UpdateUserComponent,
+  UpdateUserMutationFn,
+  withGetUserProfile
+} from 'src/graphql/components/userProfile'
 import { Omit } from 'src/libs/types'
 import { PrivateRoutesChildProps } from 'src/routes/types'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import EditUserProfile from './EditUserPorfile'
 
-type Props = GetUserProfile.Props<PrivateRoutesChildProps>
+type Props = GetUserProfileProps<PrivateRoutesChildProps>
 
 export type EditUserInfoFormValues = Omit<
-  GetUserProfile.GetUser,
+  QGetUserProfile,
   '__typename' | 'clients' | 'id'
 >
 
 class EditUserProfileContainer extends React.Component<Props> {
-  handleSubmit = (
-    mutate: MutationFn<UpdateUser.Mutation, UpdateUser.Variables>
-  ) => async (
+  handleSubmit = (mutate: UpdateUserMutationFn) => async (
     values: EditUserInfoFormValues,
     { resetForm }: FormikActions<EditUserInfoFormValues>
   ) => {
@@ -37,7 +40,7 @@ class EditUserProfileContainer extends React.Component<Props> {
     if (!getUser) return 'user not found'
     const { __typename: _, id: __, clients, ...userInfo } = getUser
     return (
-      <UpdateUser.Component>
+      <UpdateUserComponent>
         {(updateUser, mutationResult) => {
           return (
             <Formik
@@ -57,9 +60,9 @@ class EditUserProfileContainer extends React.Component<Props> {
             />
           )
         }}
-      </UpdateUser.Component>
+      </UpdateUserComponent>
     )
   }
 }
 
-export default GetUserProfile.HOC<Props>({})(EditUserProfileContainer)
+export default withGetUserProfile<Props>({})(EditUserProfileContainer)

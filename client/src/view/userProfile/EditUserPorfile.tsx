@@ -1,12 +1,13 @@
-import * as React from 'react'
 import Button from '@material-ui/core/Button'
-import { GetUserProfile, UpdateUser } from 'src/graphql/components/userProfile'
-import { FormikProps } from 'formik'
-import { EditUserInfoFormValues } from './EditUserProfileContainer'
-import { Styles } from 'src/styles/sharedStyles'
-import { MutationResult } from 'react-apollo'
 import Typography from '@material-ui/core/Typography'
+import { FormikProps } from 'formik'
+import * as React from 'react'
+import { MutationResult } from 'react-apollo'
+import { QGetUserProfile } from 'src/graphql/@types/types'
+import { UpdateUserMutation } from 'src/graphql/components/userProfile'
 import { renderFields } from 'src/libs/forms/renderFields/renderFields'
+import { Styles } from 'src/styles/sharedStyles'
+import { EditUserInfoFormValues } from './EditUserProfileContainer'
 
 interface OwnProps {
   userInfo: EditUserInfoFormValues
@@ -14,9 +15,9 @@ interface OwnProps {
 
 type Props = OwnProps &
   FormikProps<EditUserInfoFormValues> &
-  MutationResult<UpdateUser.Mutation>
+  MutationResult<UpdateUserMutation>
 
-const EditUserProfile: React.FunctionComponent<Props> = props => {
+const EditUserProfile: React.FC<Props> = props => {
   const {
     userInfo,
     dirty,
@@ -60,11 +61,10 @@ const EditUserProfile: React.FunctionComponent<Props> = props => {
   )
 }
 
-const generateSettings = (userInfo: Partial<GetUserProfile.GetUser>) => {
+const generateSettings = (userInfo: Partial<QGetUserProfile>) => {
   return Object.keys(userInfo)
     .filter(key => key !== '__typename' && key !== 'id')
     .map(key => {
-      // if (key !== 'clients')
       return { name: key, label: key.charAt(0).toUpperCase() + key.slice(1) }
     })
 }
