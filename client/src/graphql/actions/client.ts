@@ -1,13 +1,18 @@
 import { client } from '../client'
-import { ClientFragment, GetClientsList } from '../components/clients'
+import {
+  GetClientsListQuery,
+  GetClientsListQueryVariables,
+  GetClientsListDocument,
+  ClientFragmentFragment
+} from '../components/clients'
 
 const readClientsList = () => {
   try {
     const { getClientsByUser } = client.readQuery<
-      GetClientsList.Query,
-      GetClientsList.Variables
+      GetClientsListQuery,
+      GetClientsListQueryVariables
     >({
-      query: GetClientsList.Document
+      query: GetClientsListDocument
     })!
 
     return getClientsByUser || []
@@ -16,16 +21,16 @@ const readClientsList = () => {
   }
 }
 
-const writeData = (data: GetClientsList.Query) => {
-  client.writeQuery<GetClientsList.Query>({
-    query: GetClientsList.Document,
+const writeData = (data: GetClientsListQuery) => {
+  client.writeQuery<GetClientsListQuery>({
+    query: GetClientsListDocument,
     data
   })
 }
 
 ////////////////////////////
 
-const addClient = (clientData: ClientFragment.Fragment) => {
+const addClient = (clientData: ClientFragmentFragment) => {
   const clientsList = readClientsList()
   writeData({ getClientsByUser: [...clientsList, clientData] })
 }

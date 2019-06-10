@@ -4,7 +4,6 @@ import { adopt } from 'react-adopt'
 import { QueryResult } from 'react-apollo'
 import { ClientAction } from 'src/graphql/actions/client'
 import { ProjectActions } from 'src/graphql/actions/projects'
-import { GetClientsList } from 'src/graphql/components/clients'
 import {
   AddProjectComponent,
   AddProjectMutationFn,
@@ -13,13 +12,20 @@ import {
 import { projectValidationSchemas } from '../helper/validationSchemas'
 import AddProjectForm from './AddProjectForm'
 import { getSelectedClient } from './selector'
+import { QGetClientsList } from 'src/graphql/@types/types'
+import {
+  GetClientsListQuery,
+  GetClientsListComponent,
+  GetClientsListQueryVariables,
+  Client
+} from 'src/graphql/components/clients'
 
 export type AddProjectChildProps = {
-  clients?: GetClientsList.GetClientsByUser[] | null
+  clients?: QGetClientsList
   mutationError?: string
   loading: boolean
   successMessage?: string | null
-  selectedClient?: GetClientsList.GetClientsByUser
+  selectedClient?: Client
 } & FormikProps<ProjectInput>
 
 export default class AddProjectContainer extends React.Component {
@@ -46,10 +52,12 @@ export default class AddProjectContainer extends React.Component {
               successMessage={
                 data && data.addProject && data.addProject.message
               }
-              selectedClient={getSelectedClient({
-                clientsList: clients,
-                clientFormInput: formProps.values.client
-              })}
+              selectedClient={
+                getSelectedClient({
+                  clientsList: clients,
+                  clientFormInput: formProps.values.client
+                })
+              }
               {...formProps}
             />
           )
@@ -60,7 +68,7 @@ export default class AddProjectContainer extends React.Component {
 }
 
 const getClients = ({ render }: any) => (
-  <GetClientsList.Component>{render}</GetClientsList.Component>
+  <GetClientsListComponent>{render}</GetClientsListComponent>
 )
 
 const addProject = ({ render }: any) => {
@@ -104,7 +112,7 @@ const addProjectForm = ({
 )
 
 interface RenderProps {
-  getClients: QueryResult<GetClientsList.Query, GetClientsList.Variables>
+  getClients: QueryResult<GetClientsListQuery, GetClientsListQueryVariables>
   addProject: {
     mutation: AddProjectMutationFn
     result: any // MutationResult<AddProject.Mutation>

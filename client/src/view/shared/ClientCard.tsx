@@ -1,15 +1,16 @@
 import { EditIcon } from '../UI/EditIcon'
 import * as React from 'react'
-import { SingleClient, ClientFragment } from 'src/graphql/components/clients'
 import styled from 'styled-components'
 import { theme } from 'src/styles/theme'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import Paper from '@material-ui/core/Paper'
+import { QSingleClient } from 'src/graphql/@types/types'
+import { ClientFragmentFragment } from 'src/graphql/components/clients'
 
 interface Props {
-  client: Partial<SingleClient.GetSingleClient & ClientFragment.Fragment>
+  client: Partial<QSingleClient & ClientFragmentFragment>
   handleOpenModal?: () => void
 }
 const ClientCard: React.FunctionComponent<Props> = ({

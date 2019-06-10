@@ -4,13 +4,13 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import * as React from 'react'
-import { GetClientsList } from 'src/graphql/components/clients'
+import { QGetClientsList } from 'src/graphql/@types/types'
 
 export interface SelectClientModalProps {
   isModalOpen: boolean
   handleCloseModal: () => void
   selectClient: (id: string) => () => void
-  clients: GetClientsList.GetClientsByUser[]
+  clients: NonNullable<QGetClientsList>
   maxWidth?: DialogProps['maxWidth']
   children?: JSX.Element
 }

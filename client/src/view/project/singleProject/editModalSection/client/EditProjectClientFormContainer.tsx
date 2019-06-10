@@ -1,16 +1,27 @@
 import * as React from 'react'
 import { MutationFn, MutationResult } from 'react-apollo'
 import { withRouter } from 'react-router'
-import { LoadingIcon } from 'src/view/UI/LoadingIcon'
 import {
-  GetClientsList,
-  RemoveClientFromProject,
-  UpdateClientProject
+  GetClientsListProps,
+  GetClientsListQuery,
+  MutationUpdateClientProjectArgs,
+  RemoveClientFromProjectComponent,
+  RemoveClientFromProjectMutation,
+  UpdateClientProjectComponent,
+  UpdateClientProjectMutation,
+  withGetClientsList,
+  MutationRemoveClientFromProjectArgs
 } from 'src/graphql/components/clients'
+import { GetSingleProjectDocument } from 'src/graphql/components/projects'
+// import {
+//   GetClientsList,
+//   RemoveClientFromProject,
+//   UpdateClientProject
+// } from 'src/graphql/components/clients'
 import { ProjectRouterComponentProps } from 'src/routes/types'
+import { LoadingIcon } from 'src/view/UI/LoadingIcon'
 import { SingleProjectChildProps } from '../..'
 import EditProjectClientForm from './EditProjectClientForm'
-import { GetSingleProjectDocument } from 'src/graphql/components/projects'
 
 type Props = Pick<
   SingleProjectChildProps,
@@ -21,13 +32,13 @@ type Props = Pick<
 export type EditProjectClientChildProps = {
   update: (id: string) => () => void
   removeFromProject: () => void
-  removeFromProjectMutation: MutationResult<RemoveClientFromProject.Mutation>
-  updateClientProjectMutation: MutationResult<UpdateClientProject.Mutation>
-  clientsList?: GetClientsList.GetClientsByUser[] | null
+  removeFromProjectMutation: MutationResult<RemoveClientFromProjectMutation>
+  updateClientProjectMutation: MutationResult<UpdateClientProjectMutation>
+  clientsList?: GetClientsListQuery['getClientsByUser']
 } & Props
 
 class EditProjectClientFormContainer extends React.Component<
-  GetClientsList.Props<Props>
+  GetClientsListProps<Props>
 > {
   state = { isModalOpen: false }
 
@@ -72,9 +83,9 @@ class EditProjectClientFormContainer extends React.Component<
     if (loading) return <LoadingIcon />
 
     return (
-      <RemoveClientFromProject.Component refetchQueries={this.refetchQueries}>
+      <RemoveClientFromProjectComponent refetchQueries={this.refetchQueries}>
         {(removeFromProject, removeMutationProps) => (
-          <UpdateClientProject.Component refetchQueries={this.refetchQueries}>
+          <UpdateClientProjectComponent refetchQueries={this.refetchQueries}>
             {(update, updateClientProjectMutation) => {
               return (
                 <EditProjectClientForm
@@ -87,22 +98,22 @@ class EditProjectClientFormContainer extends React.Component<
                 />
               )
             }}
-          </UpdateClientProject.Component>
+          </UpdateClientProjectComponent>
         )}
-      </RemoveClientFromProject.Component>
+      </RemoveClientFromProjectComponent>
     )
   }
 }
 
 export default withRouter(
-  GetClientsList.HOC<Props>({})(EditProjectClientFormContainer)
+  withGetClientsList<Props>({})(EditProjectClientFormContainer)
 )
 
 type UpdateProjectClientMutation = MutationFn<
-  UpdateClientProject.Mutation,
-  UpdateClientProject.Variables
+  UpdateClientProjectMutation,
+  MutationUpdateClientProjectArgs
 >
 type RemoveFromProjectMutation = MutationFn<
-  RemoveClientFromProject.Mutation,
-  RemoveClientFromProject.Variables
+  RemoveClientFromProjectMutation,
+  MutationRemoveClientFromProjectArgs
 >

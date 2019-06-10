@@ -1,667 +1,828 @@
-export type Maybe<T> = T | null | undefined;
+import gql from "graphql-tag";
+import * as React from "react";
+import * as ReactApollo from "react-apollo";
+export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  Date: any;
+  Blob: any;
+};
 
-export interface UpdateUserInput {
-  firstName?: Maybe<string>;
+export type AddGeneralExpensesResponse = {
+  __typename?: "AddGeneralExpensesResponse";
+  message?: Maybe<Scalars["String"]>;
+  generalExpense?: Maybe<GeneralExpense>;
+};
 
-  lastName?: Maybe<string>;
+export type Client = {
+  __typename?: "Client";
+  id: Scalars["String"];
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  user?: Maybe<Scalars["String"]>;
+  projects?: Maybe<Array<Scalars["String"]>>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  postalCode?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+};
 
-  email?: Maybe<string>;
+export type ClientInput = {
+  id?: Maybe<Scalars["String"]>;
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  postalCode?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+};
 
-  phone?: Maybe<string>;
+export type ClientMutationResponse = {
+  __typename?: "ClientMutationResponse";
+  message?: Maybe<Scalars["String"]>;
+  client?: Maybe<Client>;
+};
 
-  password?: Maybe<string>;
+export type ExpenseAndIncome = {
+  __typename?: "ExpenseAndIncome";
+  name?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Int"]>;
+  taxRate?: Maybe<Scalars["Int"]>;
+};
 
-  btw?: Maybe<string>;
+export type ExpenseAndIncomeInput = {
+  name?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Int"]>;
+  taxRate?: Maybe<Scalars["Int"]>;
+};
 
-  kvk?: Maybe<string>;
+export type GeneralExpense = {
+  __typename?: "GeneralExpense";
+  name: Scalars["String"];
+  price: Scalars["String"];
+  quantity: Scalars["Int"];
+  taxRate: Scalars["Int"];
+  date: Scalars["String"];
+  user: Scalars["String"];
+};
 
-  iban?: Maybe<string>;
+export type GeneralExpenseInput = {
+  name: Scalars["String"];
+  price: Scalars["String"];
+  quantity: Scalars["Int"];
+  taxRate: Scalars["Int"];
+  date: Scalars["String"];
+};
 
-  streetAddress?: Maybe<string>;
+export type GenerateInvoiceResponse = {
+  __typename?: "GenerateInvoiceResponse";
+  message?: Maybe<Scalars["String"]>;
+  data?: Maybe<Scalars["Blob"]>;
+};
 
-  postalCode?: Maybe<string>;
+export type GetProjectsFilter = {
+  year?: Maybe<Scalars["Int"]>;
+};
 
-  city?: Maybe<string>;
-}
-
-export interface ProjectInput {
-  invoiceNumber?: Maybe<string>;
-
-  invoiceDate?: Maybe<string>;
-
-  projectDate?: Maybe<string>;
-
-  name?: Maybe<string>;
-
-  date?: Maybe<string>;
-
-  status?: Maybe<InvoiceStatus>;
-
-  client?: Maybe<ClientInput>;
-
-  expenses?: Maybe<ExpenseAndIncomeInput[]>;
-
-  incomes?: Maybe<ExpenseAndIncomeInput[]>;
-}
-
-export interface ClientInput {
-  id?: Maybe<string>;
-
-  firstName?: Maybe<string>;
-
-  lastName?: Maybe<string>;
-
-  email?: Maybe<string>;
-
-  phone?: Maybe<string>;
-
-  streetAddress?: Maybe<string>;
-
-  postalCode?: Maybe<string>;
-
-  city?: Maybe<string>;
-}
-
-export interface ExpenseAndIncomeInput {
-  name?: Maybe<string>;
-
-  price?: Maybe<string>;
-
-  quantity?: Maybe<number>;
-
-  taxRate?: Maybe<number>;
-}
-
-export interface GeneralExpenseInput {
-  name: string;
-
-  price: string;
-
-  quantity: number;
-
-  taxRate: number;
-
-  date: string;
-}
-
-export enum InvoiceStatus {
+export enum Invoice_Status {
   None = "none",
   Invoice = "invoice",
   Paid = "paid"
 }
 
-export type Date = any;
-
-export type Blob = any;
-
-// ====================================================
-// Documents
-// ====================================================
-
-export namespace GetClientsList {
-  export type Variables = {};
-
-  export type Query = {
-    __typename?: "Query";
-
-    getClientsByUser: Maybe<GetClientsByUser[]>;
-  };
-
-  export type GetClientsByUser = ClientFragment.Fragment;
-}
-
-export namespace SingleClient {
-  export type Variables = {
-    id: string;
-  };
-
-  export type Query = {
-    __typename?: "Query";
-
-    getSingleClient: Maybe<GetSingleClient>;
-  };
-
-  export type GetSingleClient = {
-    __typename?: "Client";
-
-    streetAddress: Maybe<string>;
-
-    postalCode: Maybe<string>;
-
-    city: Maybe<string>;
-  } & ClientFragment.Fragment;
-}
-
-export namespace AddClient {
-  export type Variables = {
-    data: ClientInput;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    addClient: Maybe<AddClient>;
-  };
-
-  export type AddClient = {
-    __typename?: "ClientMutationResponse";
-
-    client: Maybe<Client>;
-  };
-
-  export type Client = ClientFragment.Fragment;
-}
-
-export namespace UpdateClient {
-  export type Variables = {
-    clientId: string;
-    data: ClientInput;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    updateClient: Maybe<UpdateClient>;
-  };
-
-  export type UpdateClient = {
-    __typename?: "ClientMutationResponse";
-
-    message: Maybe<string>;
-
-    client: Maybe<Client>;
-  };
-
-  export type Client = {
-    __typename?: "Client";
-
-    streetAddress: Maybe<string>;
-
-    postalCode: Maybe<string>;
-
-    city: Maybe<string>;
-  } & ClientFragment.Fragment;
-}
-
-export namespace UpdateClientProject {
-  export type Variables = {
-    clientId: string;
-    projectId: string;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    updateClientProject: Maybe<UpdateClientProject>;
-  };
-
-  export type UpdateClientProject = {
-    __typename?: "ClientMutationResponse";
-
-    client: Maybe<Client>;
-  };
-
-  export type Client = {
-    __typename?: "Client";
-
-    streetAddress: Maybe<string>;
-
-    postalCode: Maybe<string>;
-
-    city: Maybe<string>;
-  } & ClientFragment.Fragment;
-}
-
-export namespace DeleteClient {
-  export type Variables = {
-    clientId: string;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    deleteClient: Maybe<DeleteClient>;
-  };
-
-  export type DeleteClient = {
-    __typename?: "ClientMutationResponse";
-
-    client: Maybe<Client>;
-  };
-
-  export type Client = {
-    __typename?: "Client";
-
-    id: string;
-  };
-}
-
-export namespace RemoveClientFromProject {
-  export type Variables = {
-    clientId: string;
-    projectId: string;
-  };
-
-  export type Mutation = {
-    __typename?: "Mutation";
-
-    removeClientFromProject: Maybe<RemoveClientFromProject>;
-  };
-
-  export type RemoveClientFromProject = {
-    __typename?: "ClientMutationResponse";
-
-    client: Maybe<Client>;
-  };
-
-  export type Client = ClientFragment.Fragment;
-}
-
-export namespace ClientFragment {
-  export type Fragment = {
-    __typename?: "Client";
-
-    id: string;
-
-    firstName: Maybe<string>;
-
-    lastName: Maybe<string>;
-
-    email: Maybe<string>;
-
-    phone: Maybe<string>;
-  };
-}
-
-export namespace PriceFragment {
-  export type Fragment = {
-    __typename?: "ExpenseAndIncome";
-
-    price: Maybe<string>;
-
-    quantity: Maybe<number>;
-
-    taxRate: Maybe<number>;
-  };
-}
-
-export namespace BasicInfoFragment {
-  export type Fragment = {
-    __typename?: "Project";
-
-    id: string;
-
-    name: string;
-
-    projectDate: Maybe<Date>;
-
-    invoiceDate: Maybe<Date>;
-
-    status: InvoiceStatus;
-  };
-}
-
-import * as ReactApollo from "react-apollo";
-import * as React from "react";
-
-import gql from "graphql-tag";
-
-// ====================================================
-// Fragments
-// ====================================================
-
-export namespace ClientFragment {
-  export const FragmentDoc = gql`
-    fragment ClientFragment on Client {
-      id
-      firstName
-      lastName
-      email
-      phone
+export type Mutation = {
+  __typename?: "Mutation";
+  registerUser: RegisterResponse;
+  loginUser: RegisterResponse;
+  updateUser: UpdateUserResponse;
+  changePassword: RegisterResponse;
+  updateProject: MutationProjectResponse;
+  addProject?: Maybe<MutationProjectResponse>;
+  deleteProject?: Maybe<MutationProjectResponse>;
+  addGeneralExpense: AddGeneralExpensesResponse;
+  addClient?: Maybe<ClientMutationResponse>;
+  updateClient?: Maybe<ClientMutationResponse>;
+  updateClientProject?: Maybe<ClientMutationResponse>;
+  removeClientFromProject?: Maybe<ClientMutationResponse>;
+  deleteClient?: Maybe<ClientMutationResponse>;
+  downloadInvoice?: Maybe<GenerateInvoiceResponse>;
+};
+
+export type MutationRegisterUserArgs = {
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
+};
+
+export type MutationLoginUserArgs = {
+  email: Scalars["String"];
+  password: Scalars["String"];
+};
+
+export type MutationUpdateUserArgs = {
+  data: UpdateUserInput;
+};
+
+export type MutationChangePasswordArgs = {
+  email: Scalars["String"];
+  password: Scalars["String"];
+};
+
+export type MutationUpdateProjectArgs = {
+  projectId: Scalars["String"];
+  data: ProjectInput;
+};
+
+export type MutationAddProjectArgs = {
+  data: ProjectInput;
+};
+
+export type MutationDeleteProjectArgs = {
+  projectId: Scalars["String"];
+};
+
+export type MutationAddGeneralExpenseArgs = {
+  data: GeneralExpenseInput;
+};
+
+export type MutationAddClientArgs = {
+  data: ClientInput;
+};
+
+export type MutationUpdateClientArgs = {
+  clientId: Scalars["String"];
+  data: ClientInput;
+};
+
+export type MutationUpdateClientProjectArgs = {
+  projectId: Scalars["String"];
+  clientId: Scalars["String"];
+};
+
+export type MutationRemoveClientFromProjectArgs = {
+  projectId: Scalars["String"];
+  clientId: Scalars["String"];
+};
+
+export type MutationDeleteClientArgs = {
+  clientId: Scalars["String"];
+};
+
+export type MutationDownloadInvoiceArgs = {
+  projectId: Scalars["String"];
+};
+
+export type MutationProjectResponse = {
+  __typename?: "MutationProjectResponse";
+  success: Scalars["Boolean"];
+  message?: Maybe<Scalars["String"]>;
+  project: Project;
+  client?: Maybe<Client>;
+};
+
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["String"];
+  invoiceNumber: Scalars["String"];
+  invoiceDate?: Maybe<Scalars["Date"]>;
+  name: Scalars["String"];
+  projectDate?: Maybe<Scalars["Date"]>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+  link?: Maybe<Scalars["String"]>;
+  status: Invoice_Status;
+  user: Scalars["String"];
+  expenses: Array<ExpenseAndIncome>;
+  incomes: Array<ExpenseAndIncome>;
+};
+
+export type ProjectInput = {
+  invoiceNumber?: Maybe<Scalars["String"]>;
+  invoiceDate?: Maybe<Scalars["String"]>;
+  projectDate?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  date?: Maybe<Scalars["String"]>;
+  status?: Maybe<Invoice_Status>;
+  client?: Maybe<ClientInput>;
+  expenses?: Maybe<Array<ExpenseAndIncomeInput>>;
+  incomes?: Maybe<Array<ExpenseAndIncomeInput>>;
+};
+
+export type Query = {
+  __typename?: "Query";
+  getUser: User;
+  getProjectsByUserId: Array<Project>;
+  getProjects: Array<Project>;
+  getSingleProject?: Maybe<Project>;
+  getGeneralExpenses?: Maybe<Array<GeneralExpense>>;
+  getClientsByUser?: Maybe<Array<Client>>;
+  getClientByProject?: Maybe<Client>;
+  getSingleClient?: Maybe<Client>;
+  health?: Maybe<Scalars["String"]>;
+};
+
+export type QueryGetProjectsByUserIdArgs = {
+  userId: Scalars["String"];
+};
+
+export type QueryGetProjectsArgs = {
+  filter?: Maybe<GetProjectsFilter>;
+  sortOption?: Maybe<SortOption>;
+};
+
+export type QueryGetSingleProjectArgs = {
+  projectId: Scalars["String"];
+};
+
+export type QueryGetClientByProjectArgs = {
+  projectId: Scalars["String"];
+};
+
+export type QueryGetSingleClientArgs = {
+  clientId: Scalars["String"];
+};
+
+export type RegisterResponse = {
+  __typename?: "RegisterResponse";
+  success: Scalars["Boolean"];
+  message?: Maybe<Scalars["String"]>;
+  token: Scalars["String"];
+};
+
+export type SortOption = {
+  invoiceDate?: Maybe<Scalars["Int"]>;
+};
+
+export type UpdateUserInput = {
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  password?: Maybe<Scalars["String"]>;
+  btw?: Maybe<Scalars["String"]>;
+  kvk?: Maybe<Scalars["String"]>;
+  iban?: Maybe<Scalars["String"]>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  postalCode?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+};
+
+export type UpdateUserResponse = {
+  __typename?: "UpdateUserResponse";
+  message?: Maybe<Scalars["String"]>;
+  user: User;
+};
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["ID"];
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  email: Scalars["String"];
+  projects?: Maybe<Array<Project>>;
+  expenses?: Maybe<Array<GeneralExpense>>;
+  clients?: Maybe<Array<Client>>;
+  btw?: Maybe<Scalars["String"]>;
+  kvk?: Maybe<Scalars["String"]>;
+  iban?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  streetAddress?: Maybe<Scalars["String"]>;
+  postalCode?: Maybe<Scalars["String"]>;
+  city?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["Date"]>;
+  updatedAt?: Maybe<Scalars["Date"]>;
+};
+export type GetClientsListQueryVariables = {};
+
+export type GetClientsListQuery = { __typename?: "Query" } & {
+  getClientsByUser: Maybe<
+    Array<{ __typename?: "Client" } & ClientFragmentFragment>
+  >;
+};
+
+export type SingleClientQueryVariables = {
+  id: Scalars["String"];
+};
+
+export type SingleClientQuery = { __typename?: "Query" } & {
+  getSingleClient: Maybe<
+    { __typename?: "Client" } & Pick<
+      Client,
+      "streetAddress" | "postalCode" | "city"
+    > &
+      ClientFragmentFragment
+  >;
+};
+
+export type AddClientMutationVariables = {
+  data: ClientInput;
+};
+
+export type AddClientMutation = { __typename?: "Mutation" } & {
+  addClient: Maybe<
+    { __typename?: "ClientMutationResponse" } & {
+      client: Maybe<{ __typename?: "Client" } & ClientFragmentFragment>;
     }
-  `;
-}
+  >;
+};
 
-export namespace PriceFragment {
-  export const FragmentDoc = gql`
-    fragment PriceFragment on ExpenseAndIncome {
-      price
-      quantity
-      taxRate
+export type UpdateClientMutationVariables = {
+  clientId: Scalars["String"];
+  data: ClientInput;
+};
+
+export type UpdateClientMutation = { __typename?: "Mutation" } & {
+  updateClient: Maybe<
+    { __typename?: "ClientMutationResponse" } & Pick<
+      ClientMutationResponse,
+      "message"
+    > & {
+        client: Maybe<
+          { __typename?: "Client" } & Pick<
+            Client,
+            "streetAddress" | "postalCode" | "city"
+          > &
+            ClientFragmentFragment
+        >;
+      }
+  >;
+};
+
+export type UpdateClientProjectMutationVariables = {
+  clientId: Scalars["String"];
+  projectId: Scalars["String"];
+};
+
+export type UpdateClientProjectMutation = { __typename?: "Mutation" } & {
+  updateClientProject: Maybe<
+    { __typename?: "ClientMutationResponse" } & {
+      client: Maybe<
+        { __typename?: "Client" } & Pick<
+          Client,
+          "streetAddress" | "postalCode" | "city"
+        > &
+          ClientFragmentFragment
+      >;
     }
-  `;
-}
+  >;
+};
 
-export namespace BasicInfoFragment {
-  export const FragmentDoc = gql`
-    fragment BasicInfoFragment on Project {
-      id
-      name
-      projectDate
-      invoiceDate
-      status
+export type DeleteClientMutationVariables = {
+  clientId: Scalars["String"];
+};
+
+export type DeleteClientMutation = { __typename?: "Mutation" } & {
+  deleteClient: Maybe<
+    { __typename?: "ClientMutationResponse" } & {
+      client: Maybe<{ __typename?: "Client" } & Pick<Client, "id">>;
     }
-  `;
+  >;
+};
+
+export type RemoveClientFromProjectMutationVariables = {
+  clientId: Scalars["String"];
+  projectId: Scalars["String"];
+};
+
+export type RemoveClientFromProjectMutation = { __typename?: "Mutation" } & {
+  removeClientFromProject: Maybe<
+    { __typename?: "ClientMutationResponse" } & {
+      client: Maybe<{ __typename?: "Client" } & ClientFragmentFragment>;
+    }
+  >;
+};
+
+export type ClientFragmentFragment = { __typename?: "Client" } & Pick<
+  Client,
+  "id" | "firstName" | "lastName" | "email" | "phone"
+>;
+
+export type PriceFragmentFragment = { __typename?: "ExpenseAndIncome" } & Pick<
+  ExpenseAndIncome,
+  "price" | "quantity" | "taxRate"
+>;
+
+export type BasicInfoFragmentFragment = { __typename?: "Project" } & Pick<
+  Project,
+  "id" | "name" | "projectDate" | "invoiceDate" | "status"
+>;
+export const ClientFragmentFragmentDoc = gql`
+  fragment ClientFragment on Client {
+    id
+    firstName
+    lastName
+    email
+    phone
+  }
+`;
+export const PriceFragmentFragmentDoc = gql`
+  fragment PriceFragment on ExpenseAndIncome {
+    price
+    quantity
+    taxRate
+  }
+`;
+export const BasicInfoFragmentFragmentDoc = gql`
+  fragment BasicInfoFragment on Project {
+    id
+    name
+    projectDate
+    invoiceDate
+    status
+  }
+`;
+export const GetClientsListDocument = gql`
+  query getClientsList {
+    getClientsByUser {
+      ...ClientFragment
+    }
+  }
+  ${ClientFragmentFragmentDoc}
+`;
+export type GetClientsListComponentProps = Omit<
+  Omit<
+    ReactApollo.QueryProps<GetClientsListQuery, GetClientsListQueryVariables>,
+    "query"
+  >,
+  "variables"
+> & { variables?: GetClientsListQueryVariables };
+
+export const GetClientsListComponent = (
+  props: GetClientsListComponentProps
+) => (
+  <ReactApollo.Query<GetClientsListQuery, GetClientsListQueryVariables>
+    query={GetClientsListDocument}
+    {...props}
+  />
+);
+
+export type GetClientsListProps<TChildProps = {}> = Partial<
+  ReactApollo.DataProps<GetClientsListQuery, GetClientsListQueryVariables>
+> &
+  TChildProps;
+export function withGetClientsList<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    GetClientsListQuery,
+    GetClientsListQueryVariables,
+    GetClientsListProps<TChildProps>
+  >
+) {
+  return ReactApollo.withQuery<
+    TProps,
+    GetClientsListQuery,
+    GetClientsListQueryVariables,
+    GetClientsListProps<TChildProps>
+  >(GetClientsListDocument, {
+    alias: "withGetClientsList",
+    ...operationOptions
+  });
 }
+export const SingleClientDocument = gql`
+  query singleClient($id: String!) {
+    getSingleClient(clientId: $id) {
+      ...ClientFragment
+      streetAddress
+      postalCode
+      city
+    }
+  }
+  ${ClientFragmentFragmentDoc}
+`;
+export type SingleClientComponentProps = Omit<
+  Omit<
+    ReactApollo.QueryProps<SingleClientQuery, SingleClientQueryVariables>,
+    "query"
+  >,
+  "variables"
+> & { variables: SingleClientQueryVariables };
 
-// ====================================================
-// Components
-// ====================================================
+export const SingleClientComponent = (props: SingleClientComponentProps) => (
+  <ReactApollo.Query<SingleClientQuery, SingleClientQueryVariables>
+    query={SingleClientDocument}
+    {...props}
+  />
+);
 
-export namespace GetClientsList {
-  export const Document = gql`
-    query getClientsList {
-      getClientsByUser {
+export type SingleClientProps<TChildProps = {}> = Partial<
+  ReactApollo.DataProps<SingleClientQuery, SingleClientQueryVariables>
+> &
+  TChildProps;
+export function withSingleClient<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    SingleClientQuery,
+    SingleClientQueryVariables,
+    SingleClientProps<TChildProps>
+  >
+) {
+  return ReactApollo.withQuery<
+    TProps,
+    SingleClientQuery,
+    SingleClientQueryVariables,
+    SingleClientProps<TChildProps>
+  >(SingleClientDocument, {
+    alias: "withSingleClient",
+    ...operationOptions
+  });
+}
+export const AddClientDocument = gql`
+  mutation addClient($data: ClientInput!) {
+    addClient(data: $data) {
+      client {
         ...ClientFragment
       }
     }
+  }
+  ${ClientFragmentFragmentDoc}
+`;
+export type AddClientMutationFn = ReactApollo.MutationFn<
+  AddClientMutation,
+  AddClientMutationVariables
+>;
+export type AddClientComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<AddClientMutation, AddClientMutationVariables>,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: AddClientMutationVariables };
 
-    ${ClientFragment.FragmentDoc}
-  `;
-  export class Component extends React.Component<
-    Partial<ReactApollo.QueryProps<Query, Variables>>
-  > {
-    render() {
-      return (
-        <ReactApollo.Query<Query, Variables>
-          query={Document}
-          {...(this as any)["props"] as any}
-        />
-      );
-    }
-  }
-  export type Props<TChildProps = any> = Partial<
-    ReactApollo.DataProps<Query, Variables>
-  > &
-    TChildProps;
-  export function HOC<TProps, TChildProps = any>(
-    operationOptions:
-      | ReactApollo.OperationOption<
-          TProps,
-          Query,
-          Variables,
-          Props<TChildProps>
-        >
-      | undefined
-  ) {
-    return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
-      Document,
-      operationOptions
-    );
-  }
+export const AddClientComponent = (props: AddClientComponentProps) => (
+  <ReactApollo.Mutation<AddClientMutation, AddClientMutationVariables>
+    mutation={AddClientDocument}
+    {...props}
+  />
+);
+
+export type AddClientProps<TChildProps = {}> = Partial<
+  ReactApollo.MutateProps<AddClientMutation, AddClientMutationVariables>
+> &
+  TChildProps;
+export function withAddClient<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    AddClientMutation,
+    AddClientMutationVariables,
+    AddClientProps<TChildProps>
+  >
+) {
+  return ReactApollo.withMutation<
+    TProps,
+    AddClientMutation,
+    AddClientMutationVariables,
+    AddClientProps<TChildProps>
+  >(AddClientDocument, {
+    alias: "withAddClient",
+    ...operationOptions
+  });
 }
-export namespace SingleClient {
-  export const Document = gql`
-    query singleClient($id: String!) {
-      getSingleClient(clientId: $id) {
+export const UpdateClientDocument = gql`
+  mutation updateClient($clientId: String!, $data: ClientInput!) {
+    updateClient(clientId: $clientId, data: $data) {
+      message
+      client {
         ...ClientFragment
         streetAddress
         postalCode
         city
       }
     }
+  }
+  ${ClientFragmentFragmentDoc}
+`;
+export type UpdateClientMutationFn = ReactApollo.MutationFn<
+  UpdateClientMutation,
+  UpdateClientMutationVariables
+>;
+export type UpdateClientComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      UpdateClientMutation,
+      UpdateClientMutationVariables
+    >,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: UpdateClientMutationVariables };
 
-    ${ClientFragment.FragmentDoc}
-  `;
-  export class Component extends React.Component<
-    Partial<ReactApollo.QueryProps<Query, Variables>>
-  > {
-    render() {
-      return (
-        <ReactApollo.Query<Query, Variables>
-          query={Document}
-          {...(this as any)["props"] as any}
-        />
-      );
-    }
-  }
-  export type Props<TChildProps = any> = Partial<
-    ReactApollo.DataProps<Query, Variables>
-  > &
-    TChildProps;
-  export function HOC<TProps, TChildProps = any>(
-    operationOptions:
-      | ReactApollo.OperationOption<
-          TProps,
-          Query,
-          Variables,
-          Props<TChildProps>
-        >
-      | undefined
-  ) {
-    return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
-      Document,
-      operationOptions
-    );
-  }
+export const UpdateClientComponent = (props: UpdateClientComponentProps) => (
+  <ReactApollo.Mutation<UpdateClientMutation, UpdateClientMutationVariables>
+    mutation={UpdateClientDocument}
+    {...props}
+  />
+);
+
+export type UpdateClientProps<TChildProps = {}> = Partial<
+  ReactApollo.MutateProps<UpdateClientMutation, UpdateClientMutationVariables>
+> &
+  TChildProps;
+export function withUpdateClient<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    UpdateClientMutation,
+    UpdateClientMutationVariables,
+    UpdateClientProps<TChildProps>
+  >
+) {
+  return ReactApollo.withMutation<
+    TProps,
+    UpdateClientMutation,
+    UpdateClientMutationVariables,
+    UpdateClientProps<TChildProps>
+  >(UpdateClientDocument, {
+    alias: "withUpdateClient",
+    ...operationOptions
+  });
 }
-export namespace AddClient {
-  export const Document = gql`
-    mutation addClient($data: ClientInput!) {
-      addClient(data: $data) {
-        client {
-          ...ClientFragment
-        }
+export const UpdateClientProjectDocument = gql`
+  mutation updateClientProject($clientId: String!, $projectId: String!) {
+    updateClientProject(clientId: $clientId, projectId: $projectId) {
+      client {
+        ...ClientFragment
+        streetAddress
+        postalCode
+        city
       }
     }
+  }
+  ${ClientFragmentFragmentDoc}
+`;
+export type UpdateClientProjectMutationFn = ReactApollo.MutationFn<
+  UpdateClientProjectMutation,
+  UpdateClientProjectMutationVariables
+>;
+export type UpdateClientProjectComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      UpdateClientProjectMutation,
+      UpdateClientProjectMutationVariables
+    >,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: UpdateClientProjectMutationVariables };
 
-    ${ClientFragment.FragmentDoc}
-  `;
-  export class Component extends React.Component<
-    Partial<ReactApollo.MutationProps<Mutation, Variables>>
-  > {
-    render() {
-      return (
-        <ReactApollo.Mutation<Mutation, Variables>
-          mutation={Document}
-          {...(this as any)["props"] as any}
-        />
-      );
-    }
-  }
-  export type Props<TChildProps = any> = Partial<
-    ReactApollo.MutateProps<Mutation, Variables>
-  > &
-    TChildProps;
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
-  export function HOC<TProps, TChildProps = any>(
-    operationOptions:
-      | ReactApollo.OperationOption<
-          TProps,
-          Mutation,
-          Variables,
-          Props<TChildProps>
-        >
-      | undefined
-  ) {
-    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
-      Document,
-      operationOptions
-    );
-  }
+export const UpdateClientProjectComponent = (
+  props: UpdateClientProjectComponentProps
+) => (
+  <ReactApollo.Mutation<
+    UpdateClientProjectMutation,
+    UpdateClientProjectMutationVariables
+  >
+    mutation={UpdateClientProjectDocument}
+    {...props}
+  />
+);
+
+export type UpdateClientProjectProps<TChildProps = {}> = Partial<
+  ReactApollo.MutateProps<
+    UpdateClientProjectMutation,
+    UpdateClientProjectMutationVariables
+  >
+> &
+  TChildProps;
+export function withUpdateClientProject<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    UpdateClientProjectMutation,
+    UpdateClientProjectMutationVariables,
+    UpdateClientProjectProps<TChildProps>
+  >
+) {
+  return ReactApollo.withMutation<
+    TProps,
+    UpdateClientProjectMutation,
+    UpdateClientProjectMutationVariables,
+    UpdateClientProjectProps<TChildProps>
+  >(UpdateClientProjectDocument, {
+    alias: "withUpdateClientProject",
+    ...operationOptions
+  });
 }
-export namespace UpdateClient {
-  export const Document = gql`
-    mutation updateClient($clientId: String!, $data: ClientInput!) {
-      updateClient(clientId: $clientId, data: $data) {
-        message
-        client {
-          ...ClientFragment
-          streetAddress
-          postalCode
-          city
-        }
+export const DeleteClientDocument = gql`
+  mutation deleteClient($clientId: String!) {
+    deleteClient(clientId: $clientId) {
+      client {
+        id
       }
     }
+  }
+`;
+export type DeleteClientMutationFn = ReactApollo.MutationFn<
+  DeleteClientMutation,
+  DeleteClientMutationVariables
+>;
+export type DeleteClientComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      DeleteClientMutation,
+      DeleteClientMutationVariables
+    >,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: DeleteClientMutationVariables };
 
-    ${ClientFragment.FragmentDoc}
-  `;
-  export class Component extends React.Component<
-    Partial<ReactApollo.MutationProps<Mutation, Variables>>
-  > {
-    render() {
-      return (
-        <ReactApollo.Mutation<Mutation, Variables>
-          mutation={Document}
-          {...(this as any)["props"] as any}
-        />
-      );
-    }
-  }
-  export type Props<TChildProps = any> = Partial<
-    ReactApollo.MutateProps<Mutation, Variables>
-  > &
-    TChildProps;
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
-  export function HOC<TProps, TChildProps = any>(
-    operationOptions:
-      | ReactApollo.OperationOption<
-          TProps,
-          Mutation,
-          Variables,
-          Props<TChildProps>
-        >
-      | undefined
-  ) {
-    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
-      Document,
-      operationOptions
-    );
-  }
+export const DeleteClientComponent = (props: DeleteClientComponentProps) => (
+  <ReactApollo.Mutation<DeleteClientMutation, DeleteClientMutationVariables>
+    mutation={DeleteClientDocument}
+    {...props}
+  />
+);
+
+export type DeleteClientProps<TChildProps = {}> = Partial<
+  ReactApollo.MutateProps<DeleteClientMutation, DeleteClientMutationVariables>
+> &
+  TChildProps;
+export function withDeleteClient<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    DeleteClientMutation,
+    DeleteClientMutationVariables,
+    DeleteClientProps<TChildProps>
+  >
+) {
+  return ReactApollo.withMutation<
+    TProps,
+    DeleteClientMutation,
+    DeleteClientMutationVariables,
+    DeleteClientProps<TChildProps>
+  >(DeleteClientDocument, {
+    alias: "withDeleteClient",
+    ...operationOptions
+  });
 }
-export namespace UpdateClientProject {
-  export const Document = gql`
-    mutation updateClientProject($clientId: String!, $projectId: String!) {
-      updateClientProject(clientId: $clientId, projectId: $projectId) {
-        client {
-          ...ClientFragment
-          streetAddress
-          postalCode
-          city
-        }
+export const RemoveClientFromProjectDocument = gql`
+  mutation removeClientFromProject($clientId: String!, $projectId: String!) {
+    removeClientFromProject(clientId: $clientId, projectId: $projectId) {
+      client {
+        ...ClientFragment
       }
     }
+  }
+  ${ClientFragmentFragmentDoc}
+`;
+export type RemoveClientFromProjectMutationFn = ReactApollo.MutationFn<
+  RemoveClientFromProjectMutation,
+  RemoveClientFromProjectMutationVariables
+>;
+export type RemoveClientFromProjectComponentProps = Omit<
+  Omit<
+    ReactApollo.MutationProps<
+      RemoveClientFromProjectMutation,
+      RemoveClientFromProjectMutationVariables
+    >,
+    "mutation"
+  >,
+  "variables"
+> & { variables?: RemoveClientFromProjectMutationVariables };
 
-    ${ClientFragment.FragmentDoc}
-  `;
-  export class Component extends React.Component<
-    Partial<ReactApollo.MutationProps<Mutation, Variables>>
-  > {
-    render() {
-      return (
-        <ReactApollo.Mutation<Mutation, Variables>
-          mutation={Document}
-          {...(this as any)["props"] as any}
-        />
-      );
-    }
-  }
-  export type Props<TChildProps = any> = Partial<
-    ReactApollo.MutateProps<Mutation, Variables>
-  > &
-    TChildProps;
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
-  export function HOC<TProps, TChildProps = any>(
-    operationOptions:
-      | ReactApollo.OperationOption<
-          TProps,
-          Mutation,
-          Variables,
-          Props<TChildProps>
-        >
-      | undefined
-  ) {
-    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
-      Document,
-      operationOptions
-    );
-  }
-}
-export namespace DeleteClient {
-  export const Document = gql`
-    mutation deleteClient($clientId: String!) {
-      deleteClient(clientId: $clientId) {
-        client {
-          id
-        }
-      }
-    }
-  `;
-  export class Component extends React.Component<
-    Partial<ReactApollo.MutationProps<Mutation, Variables>>
-  > {
-    render() {
-      return (
-        <ReactApollo.Mutation<Mutation, Variables>
-          mutation={Document}
-          {...(this as any)["props"] as any}
-        />
-      );
-    }
-  }
-  export type Props<TChildProps = any> = Partial<
-    ReactApollo.MutateProps<Mutation, Variables>
-  > &
-    TChildProps;
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
-  export function HOC<TProps, TChildProps = any>(
-    operationOptions:
-      | ReactApollo.OperationOption<
-          TProps,
-          Mutation,
-          Variables,
-          Props<TChildProps>
-        >
-      | undefined
-  ) {
-    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
-      Document,
-      operationOptions
-    );
-  }
-}
-export namespace RemoveClientFromProject {
-  export const Document = gql`
-    mutation removeClientFromProject($clientId: String!, $projectId: String!) {
-      removeClientFromProject(clientId: $clientId, projectId: $projectId) {
-        client {
-          ...ClientFragment
-        }
-      }
-    }
+export const RemoveClientFromProjectComponent = (
+  props: RemoveClientFromProjectComponentProps
+) => (
+  <ReactApollo.Mutation<
+    RemoveClientFromProjectMutation,
+    RemoveClientFromProjectMutationVariables
+  >
+    mutation={RemoveClientFromProjectDocument}
+    {...props}
+  />
+);
 
-    ${ClientFragment.FragmentDoc}
-  `;
-  export class Component extends React.Component<
-    Partial<ReactApollo.MutationProps<Mutation, Variables>>
-  > {
-    render() {
-      return (
-        <ReactApollo.Mutation<Mutation, Variables>
-          mutation={Document}
-          {...(this as any)["props"] as any}
-        />
-      );
-    }
-  }
-  export type Props<TChildProps = any> = Partial<
-    ReactApollo.MutateProps<Mutation, Variables>
-  > &
-    TChildProps;
-  export type MutationFn = ReactApollo.MutationFn<Mutation, Variables>;
-  export function HOC<TProps, TChildProps = any>(
-    operationOptions:
-      | ReactApollo.OperationOption<
-          TProps,
-          Mutation,
-          Variables,
-          Props<TChildProps>
-        >
-      | undefined
-  ) {
-    return ReactApollo.graphql<TProps, Mutation, Variables, Props<TChildProps>>(
-      Document,
-      operationOptions
-    );
-  }
+export type RemoveClientFromProjectProps<TChildProps = {}> = Partial<
+  ReactApollo.MutateProps<
+    RemoveClientFromProjectMutation,
+    RemoveClientFromProjectMutationVariables
+  >
+> &
+  TChildProps;
+export function withRemoveClientFromProject<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    RemoveClientFromProjectMutation,
+    RemoveClientFromProjectMutationVariables,
+    RemoveClientFromProjectProps<TChildProps>
+  >
+) {
+  return ReactApollo.withMutation<
+    TProps,
+    RemoveClientFromProjectMutation,
+    RemoveClientFromProjectMutationVariables,
+    RemoveClientFromProjectProps<TChildProps>
+  >(RemoveClientFromProjectDocument, {
+    alias: "withRemoveClientFromProject",
+    ...operationOptions
+  });
 }

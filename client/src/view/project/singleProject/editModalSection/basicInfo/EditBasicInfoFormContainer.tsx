@@ -1,19 +1,21 @@
 import { ApolloError } from 'apollo-client'
 import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
-import { MutationFn } from 'react-apollo'
 import { Omit, withRouter } from 'react-router'
-import { projectValidationSchemas } from 'src/view/project/helper/validationSchemas'
 import { ProjectActions } from 'src/graphql/actions/projects'
-import { GetClientsList } from 'src/graphql/components/clients'
 import {
+  GetClientsListProps,
+  withGetClientsList
+} from 'src/graphql/components/clients'
+import {
+  DeleteProjectMutationFn,
+  GetSingleProjectDocument,
   ProjectInput,
   UpdateBasicInfoComponent,
-  GetSingleProjectDocument,
-  DeleteProjectMutationFn,
   UpdateBasicInfoMutationFn
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
+import { projectValidationSchemas } from 'src/view/project/helper/validationSchemas'
 import { SingleProjectChildProps } from '../..'
 import DeleteProjectModal from './DeleteProjectModal'
 import EditBasicInfoForm from './EditBasicInfoForm'
@@ -41,7 +43,7 @@ export interface DeleteProjectModalProps {
 }
 
 class EditBasicInfoFormContainer extends React.Component<
-  GetClientsList.Props<OwnProps & IRouterComponentProps>
+  GetClientsListProps<OwnProps & IRouterComponentProps>
 > {
   state = { isConfirmDialogOpen: false }
 
@@ -126,7 +128,7 @@ class EditBasicInfoFormContainer extends React.Component<
 }
 
 export default withRouter(
-  GetClientsList.HOC<OwnProps & IRouterComponentProps>({})(
+  withGetClientsList<OwnProps & IRouterComponentProps>({})(
     EditBasicInfoFormContainer
   )
 )

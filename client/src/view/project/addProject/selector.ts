@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
-import { GetClientsList } from 'src/graphql/components/clients'
 import { ProjectInput } from 'src/graphql/components/projects'
+import { AddProjectChildProps } from '.'
 
 interface GetSelectedClientSelectorArgs {
-  clientsList?: GetClientsList.GetClientsByUser[] | null
+  clientsList: AddProjectChildProps['clients']
   clientFormInput?: ProjectInput['client']
 }
 export const getSelectedClient = createSelector(

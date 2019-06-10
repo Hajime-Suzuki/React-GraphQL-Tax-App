@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { ClientFragment } from 'src/graphql/components/clients'
 import ClientCard from 'src/view/shared/ClientCard'
 import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 import styled from 'styled-components'
+import { ClientFragmentFragment } from 'src/graphql/components/clients'
 
 const StyledCardWrapper: any = styled.div`
   width: 90%;
@@ -24,7 +24,7 @@ const StyledCardWrapper: any = styled.div`
   }
 `
 interface Props {
-  selectedClient?: ClientFragment.Fragment
+  selectedClient?: ClientFragmentFragment
   unselectClient: () => void
 }
 const SelectedClientCard: React.FunctionComponent<Props> = ({

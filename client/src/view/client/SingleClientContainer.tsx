@@ -1,30 +1,35 @@
 import { Formik, FormikActions, FormikProps } from 'formik'
 import * as React from 'react'
-import { MutationFn, MutationResult } from 'react-apollo'
+import { MutationResult } from 'react-apollo'
 import { RouteComponentProps } from 'react-router'
-
+import { QSingleClient } from 'src/graphql/@types/types'
 import {
-  SingleClient as SingleC,
-  UpdateClient,
-  DeleteClient,
-  GetClientsList,
-  ClientInput
+  ClientInput,
+  DeleteClientComponent,
+  DeleteClientMutation,
+  DeleteClientMutationFn,
+  GetClientsListDocument,
+  SingleClientProps,
+  UpdateClientComponent,
+  UpdateClientMutation,
+  UpdateClientMutationFn,
+  withSingleClient
 } from 'src/graphql/components/clients'
-import { LoadingIcon } from '../UI/LoadingIcon'
-import SingleClient from './SingleClient'
 import { RoutesNames } from 'src/routes/constants'
+import { LoadingIcon } from '../UI/LoadingIcon'
 import { clientValidationSchemas } from './helpers/validation'
+import SingleClient from './SingleClient'
 
-type Client = SingleC.GetSingleClient
+type Client = QSingleClient
 
-type Props = SingleC.Props<RouteComponentProps<{ clientId: string }>>
+type Props = SingleClientProps<RouteComponentProps<{ clientId: string }>>
 
 export type SingleClientChildProps = {
-  client: Client
+  client: NonNullable<QSingleClient>
   isModalOpen: boolean
   isDeleteModalOpen: boolean
-  editMutationResult: MutationResult<UpdateClient.Mutation>
-  deleteMutationResult: MutationResult<DeleteClient.Mutation>
+  editMutationResult: MutationResult<UpdateClientMutation>
+  deleteMutationResult: MutationResult<DeleteClientMutation>
   handleCloseModal: () => void
   handleOpenModal: () => void
   handleOpenDelete: () => void
@@ -47,9 +52,7 @@ class SingleClientContainer extends React.Component<Props> {
     this.setState({ isModalOpen: true })
   }
 
-  handleSubmit = (
-    update: MutationFn<UpdateClient.Mutation, UpdateClient.Variables>
-  ) => async (
+  handleSubmit = (update: UpdateClientMutationFn) => async (
     values: ClientInput & { id: string },
     { resetForm }: FormikActions<Client>
   ) => {
@@ -68,9 +71,7 @@ class SingleClientContainer extends React.Component<Props> {
 
   handleCloseDelete = () => this.setState({ isDeleteModalOpen: false })
 
-  handleDelete = (
-    deleteClient: MutationFn<DeleteClient.Mutation, DeleteClient.Variables>
-  ) => async () => {
+  handleDelete = (deleteClient: DeleteClientMutationFn) => async () => {
     await deleteClient({
       variables: { clientId: this.props.match.params.clientId }
     })
@@ -85,10 +86,10 @@ class SingleClientContainer extends React.Component<Props> {
     if (loading) return <LoadingIcon />
     if (!client) return 'No client found'
     return (
-      <UpdateClient.Component>
+      <UpdateClientComponent>
         {(edit, editMutationResult) => (
-          <DeleteClient.Component
-            refetchQueries={[{ query: GetClientsList.Document }]}
+          <DeleteClientComponent
+            refetchQueries={[{ query: GetClientsListDocument }]}
           >
             {(deleteClient, deleteMutationResult) => (
               <Formik
@@ -96,7 +97,7 @@ class SingleClientContainer extends React.Component<Props> {
                 validateOnChange={false}
                 validationSchema={clientValidationSchemas.editClientSchema}
                 initialValues={client}
-                render={(formProps: FormikProps<SingleC.GetSingleClient>) => (
+                render={(formProps: FormikProps<QSingleClient>) => (
                   <SingleClient
                     client={client}
                     editMutationResult={editMutationResult}
@@ -114,13 +115,13 @@ class SingleClientContainer extends React.Component<Props> {
                 )}
               />
             )}
-          </DeleteClient.Component>
+          </DeleteClientComponent>
         )}
-      </UpdateClient.Component>
+      </UpdateClientComponent>
     )
   }
 }
 
-export default SingleC.HOC<Props>({
+export default withSingleClient<Props>({
   options: ({ match }) => ({ variables: { id: match.params.clientId } })
 })(SingleClientContainer)

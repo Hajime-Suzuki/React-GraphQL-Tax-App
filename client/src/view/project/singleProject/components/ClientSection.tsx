@@ -4,14 +4,17 @@ import * as React from 'react'
 import { EditIcon } from 'src/view/UI/EditIcon'
 import { SingleProjectChildProps } from '..'
 import Button from '@material-ui/core/Button'
-import { GetClientsList } from 'src/graphql/components/clients'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { RoutesNames } from 'src/routes/constants'
+import {
+  GetClientsListProps,
+  withGetClientsList
+} from 'src/graphql/components/clients'
 
 type OwnProps = Pick<SingleProjectChildProps, 'client' | 'handleOpenModal'> &
   RouteComponentProps
 
-type Props = GetClientsList.Props<OwnProps>
+type Props = GetClientsListProps<OwnProps>
 
 const ClientSection: React.FunctionComponent<Props> = (props: Props) => {
   const { client, handleOpenModal, data } = props
@@ -66,4 +69,4 @@ const ClientSection: React.FunctionComponent<Props> = (props: Props) => {
   )
 }
 
-export default withRouter(GetClientsList.HOC<OwnProps>({})(ClientSection))
+export default withRouter(withGetClientsList<OwnProps>({})(ClientSection))

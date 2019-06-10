@@ -7,11 +7,10 @@ import {
 } from 'date-fns'
 import { createSelector } from 'reselect'
 import { Calculations } from 'src/view/project/helper/calculations'
-import { PriceFragment } from 'src/graphql/components/clients'
-import { GetProjectOverviewQuery } from 'src/graphql/components/projects'
+import { GetProjectOverviewQuery, PriceFragmentFragment } from 'src/graphql/components/projects'
 
 type TaxRate = '0' | '9' | '21'
-type IncomeOrExpense = PriceFragment.Fragment
+type IncomeOrExpense = PriceFragmentFragment
 interface GetProjectsArg {
   date: number | Date
 }

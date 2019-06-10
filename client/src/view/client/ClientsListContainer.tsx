@@ -1,13 +1,17 @@
 import * as React from 'react'
-import { GetClientsList } from 'src/graphql/components/clients'
+import { QGetClientsList } from 'src/graphql/@types/types'
+import {
+  GetClientsListProps,
+  withGetClientsList
+} from 'src/graphql/components/clients'
 import { PrivateRoutesChildProps } from 'src/routes/types'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import ClientsList from './ClientsList'
 
-type Props = GetClientsList.Props<PrivateRoutesChildProps>
+type Props = GetClientsListProps<PrivateRoutesChildProps>
 
 export interface ClientsListChildProps {
-  clients: GetClientsList.GetClientsByUser[]
+  clients: NonNullable<QGetClientsList>
 }
 
 class ClientsListContainer extends React.Component<Props> {
@@ -24,4 +28,4 @@ class ClientsListContainer extends React.Component<Props> {
   }
 }
 
-export default GetClientsList.HOC({})(ClientsListContainer)
+export default withGetClientsList<Props>({})(ClientsListContainer)

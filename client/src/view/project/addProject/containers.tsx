@@ -1,19 +1,23 @@
 import { Formik, FormikActions, FormikProps } from 'formik'
 import React from 'react'
 import { adopt } from 'react-adopt'
-import { MutationResult, QueryResult } from 'react-apollo'
+import { QueryResult } from 'react-apollo'
 import { ClientAction } from 'src/graphql/actions/client'
 import { ProjectActions } from 'src/graphql/actions/projects'
-import { GetClientsList } from 'src/graphql/components/clients'
 import {
+  GetClientsListComponent,
+  GetClientsListQuery,
+  GetClientsListQueryVariables
+} from 'src/graphql/components/clients'
+import {
+  AddProjectComponent,
   AddProjectMutationFn,
-  ProjectInput,
-  AddProjectComponent
+  ProjectInput
 } from 'src/graphql/components/projects'
 import { projectValidationSchemas } from '../helper/validationSchemas'
 
 export interface RenderProps {
-  getClients: QueryResult<GetClientsList.Query, GetClientsList.Variables>
+  getClients: QueryResult<GetClientsListQuery, GetClientsListQueryVariables>
   addProject: {
     mutation: AddProjectMutationFn
     result: any // MutationResult<AddProject.Mutation>
@@ -22,7 +26,7 @@ export interface RenderProps {
 }
 
 const getClients = ({ render }: any) => {
-  return <GetClientsList.Component>{render}</GetClientsList.Component>
+  return <GetClientsListComponent>{render}</GetClientsListComponent>
 }
 
 const addProject = ({ render }: any) => {
