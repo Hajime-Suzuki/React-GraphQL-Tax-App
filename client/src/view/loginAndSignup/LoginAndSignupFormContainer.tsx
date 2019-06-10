@@ -2,7 +2,6 @@ import * as React from 'react'
 import { WithApolloClient } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
 import { LoginActions } from 'src/graphql/actions/login'
-import { GetToken } from 'src/graphql/components/client/login'
 import {
   LoginComponent,
   LoginMutationFn,
@@ -17,8 +16,12 @@ import { IRouterComponentProps } from 'src/routes/types'
 import { RoutesNames } from '../../routes/constants'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
+import {
+  GetTokenProps,
+  withGetToken
+} from 'src/graphql/components/client/login'
 
-type Props = WithApolloClient<GetToken.Props<IRouterComponentProps>>
+type Props = WithApolloClient<GetTokenProps<IRouterComponentProps>>
 
 export interface LoginSignupChildProps {
   signup?: (value: SignUpMutationVariables) => void
@@ -84,4 +87,4 @@ class LoginAndSignupFormContainer extends React.Component<Props> {
   }
 }
 
-export default GetToken.HOC({})(LoginAndSignupFormContainer)
+export default withGetToken<Props>({})(LoginAndSignupFormContainer)

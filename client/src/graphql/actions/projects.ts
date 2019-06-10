@@ -1,12 +1,11 @@
 import { DataProxy } from 'apollo-cache'
 import { differenceInDays, parseISO } from 'date-fns'
 import { client } from '../client'
-import { GetToken } from '../components/client/login'
+import { GetTokenDocument, GetTokenQuery } from '../components/client/login'
 import {
-  GetProjectOverviewQuery,
+  AddProjectMutation,
   GetProjectOverviewDocument,
-  Project,
-  AddProjectMutation
+  Project
 } from '../components/projects'
 
 // TODO: fix types
@@ -14,8 +13,8 @@ type OverviewType = any
 // type OverviewType = GetProjectOverviewQuery
 
 const getProjectOverview = () => {
-  const { userId } = client.cache.readQuery<GetToken.Query>({
-    query: GetToken.Document
+  const { userId } = client.cache.readQuery<GetTokenQuery>({
+    query: GetTokenDocument
   })!
 
   if (!userId) return {}

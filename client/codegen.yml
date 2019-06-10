@@ -55,6 +55,7 @@ generates:
 
   ##### client components ######
   ./src/graphql/components/client/login.tsx:
+    overwrite: true
     schema: ./_gql-gen/typeDefs.js
     documents: ./src/graphql/queries/loginClient.ts
     plugins:

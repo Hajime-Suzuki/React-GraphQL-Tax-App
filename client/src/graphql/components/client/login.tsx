@@ -1,63 +1,67 @@
-export type Maybe<T> = T | null;
-
-// ====================================================
-// Documents
-// ====================================================
-
-export namespace GetToken {
-  export type Variables = {};
-
-  export type Query = {
-    __typename?: "Query";
-
-    userId: Maybe<string>;
-  };
-}
-
-import * as ReactApollo from "react-apollo";
-import * as React from "react";
-
 import gql from "graphql-tag";
+import * as React from "react";
+import * as ReactApollo from "react-apollo";
+export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+};
 
-// ====================================================
-// Components
-// ====================================================
+export type Project = {
+  __typename?: "Project";
+  id: Scalars["String"];
+};
 
-export namespace GetToken {
-  export const Document = gql`
-    query getToken {
-      userId @client
-    }
-  `;
-  export class Component extends React.Component<
-    Partial<ReactApollo.QueryProps<Query, Variables>>
-  > {
-    render() {
-      return (
-        <ReactApollo.Query<Query, Variables>
-          query={Document}
-          {...(this as any)["props"] as any}
-        />
-      );
-    }
+export type Query = {
+  __typename?: "Query";
+  token: Scalars["String"];
+  userId?: Maybe<Scalars["String"]>;
+};
+export type GetTokenQueryVariables = {};
+
+export type GetTokenQuery = { __typename?: "Query" } & Pick<Query, "userId">;
+
+export const GetTokenDocument = gql`
+  query getToken {
+    userId @client
   }
-  export type Props<TChildProps = any> = Partial<
-    ReactApollo.DataProps<Query, Variables>
-  > &
-    TChildProps;
-  export function HOC<TProps, TChildProps = any>(
-    operationOptions:
-      | ReactApollo.OperationOption<
-          TProps,
-          Query,
-          Variables,
-          Props<TChildProps>
-        >
-      | undefined
-  ) {
-    return ReactApollo.graphql<TProps, Query, Variables, Props<TChildProps>>(
-      Document,
-      operationOptions
-    );
-  }
+`;
+export type GetTokenComponentProps = Omit<
+  Omit<ReactApollo.QueryProps<GetTokenQuery, GetTokenQueryVariables>, "query">,
+  "variables"
+> & { variables?: GetTokenQueryVariables };
+
+export const GetTokenComponent = (props: GetTokenComponentProps) => (
+  <ReactApollo.Query<GetTokenQuery, GetTokenQueryVariables>
+    query={GetTokenDocument}
+    {...props}
+  />
+);
+
+export type GetTokenProps<TChildProps = {}> = Partial<
+  ReactApollo.DataProps<GetTokenQuery, GetTokenQueryVariables>
+> &
+  TChildProps;
+export function withGetToken<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    GetTokenQuery,
+    GetTokenQueryVariables,
+    GetTokenProps<TChildProps>
+  >
+) {
+  return ReactApollo.withQuery<
+    TProps,
+    GetTokenQuery,
+    GetTokenQueryVariables,
+    GetTokenProps<TChildProps>
+  >(GetTokenDocument, {
+    alias: "withGetToken",
+    ...operationOptions
+  });
 }
