@@ -2,6 +2,7 @@ import { Document, model, Model, Schema, models } from 'mongoose'
 import * as validator from 'validator'
 import { IClient } from '../@types/types'
 import { SchemaDef, Omit } from '../../helpers/types'
+import { Constants } from '../../constants'
 
 type IClientDocument = IClient & Document
 
@@ -32,7 +33,7 @@ const schemaDefinition: SchemaDef<Omit<IClient, 'id'>> = {
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: Constants.documentNames.user
   },
   projects: {
     type: [Schema.Types.ObjectId]
@@ -58,6 +59,10 @@ clientSchema.set('toJSON', {
 })
 
 const Client: Model<IClientDocument> =
-  models.Client || model<IClientDocument, IClientModel>('Client', clientSchema)
+  models.Client ||
+  model<IClientDocument, IClientModel>(
+    Constants.documentNames.client,
+    clientSchema
+  )
 
 export { Client }

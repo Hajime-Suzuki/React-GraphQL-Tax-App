@@ -5,6 +5,7 @@ import * as validator from 'validator'
 import { secret } from '../../jwt/jwt'
 import { SchemaDef, Omit } from '../../helpers/types'
 import { IUser } from '../@types/types'
+import { Constants } from '../../constants'
 
 interface IUserMethods {
   generateToken: () => string
@@ -54,7 +55,7 @@ const schemaDef: SchemaDef<
   projects: [
     {
       type: [Schema.Types.ObjectId],
-      ref: 'Project'
+      ref: Constants.documentNames.project
     }
   ],
   expenses: [
@@ -90,7 +91,7 @@ const schemaDef: SchemaDef<
   },
   clients: {
     type: [Schema.Types.ObjectId],
-    ref: 'Client'
+    ref: Constants.documentNames.client
   }
 }
 const userSchema = new Schema(schemaDef)
@@ -130,6 +131,7 @@ userSchema.pre<IUserDocument>('save', async function() {
 })
 
 const User: IUserModel =
-  (models.User as any) || model<IUserDocument, IUserModel>('User', userSchema)
+  (models.User as any) ||
+  model<IUserDocument, IUserModel>(Constants.documentNames.user, userSchema)
 
 export { User }

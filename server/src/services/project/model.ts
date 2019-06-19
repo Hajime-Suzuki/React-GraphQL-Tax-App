@@ -1,6 +1,7 @@
-import { Document, model, Model, Schema, models } from 'mongoose'
-import { IProject, IExpenseAndIncome } from '../@types/types'
-import { SchemaDef, Omit } from '../../helpers/types'
+import { Document, model, Model, models, Schema } from 'mongoose'
+import { Constants } from '../../constants'
+import { Omit, SchemaDef } from '../../helpers/types'
+import { IExpenseAndIncome, IProject } from '../@types/types'
 
 const expenseSchemaDef: SchemaDef<IExpenseAndIncome> = {
   name: {
@@ -52,7 +53,7 @@ const schemaDef: SchemaDef<Omit<IProject, 'id'> & { createdAt: any }> = {
   incomes: [expenseSchema],
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: Constants.documentNames.user
   },
   createdAt: {
     type: Date,
@@ -67,4 +68,5 @@ projectSchema.set('toJSON', {
 
 type ProjectDocument = Document & IProject
 export const Project: Model<ProjectDocument> =
-  models.Project || model<ProjectDocument>('Project', projectSchema)
+  models.Project ||
+  model<ProjectDocument>(Constants.documentNames.project, projectSchema)
