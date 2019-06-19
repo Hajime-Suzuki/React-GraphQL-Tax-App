@@ -1,7 +1,9 @@
 import { AuthCheck } from '../../helpers/auth'
 import { IContext } from '../../server'
 import { IMutationResolvers, IQueryResolvers } from '../@types/types'
-import { UserExpenseRepository } from './repository'
+import { UserCommands } from '../user/domain/commands'
+import { UserExpenseCommands } from './domain/commands'
+import { UserExpenseQueries } from './domain/queries'
 
 export const userExpenseResolvers: {
   Query: IQueryResolvers<IContext>
@@ -10,19 +12,22 @@ export const userExpenseResolvers: {
   Query: {
     getUserExpenses: async (_, __, { user }) => {
       AuthCheck.userExist(user)
-      return UserExpenseRepository.findByUserId(user.id)
+      return UserExpenseQueries.getExpenses(user.id)
     }
   },
   Mutation: {
     addUserExpense: async (_, { data }, { user }) => {
       AuthCheck.userExist(user)
-      const newGenExp = await UserExpenseRepository.add({
-        data,
-        userId: user.id
+
+      const newUserExp = await UserExpenseCommands.add(user.id, data)
+
+      await UserCommands.updateUser(user.id, {
+        $push: { expenses: newUserExp._id }
       })
+
       return {
         message: 'success',
-        userExpense: newGenExp
+        userExpense: newUserExp
       }
     }
   }

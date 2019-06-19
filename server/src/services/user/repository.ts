@@ -1,8 +1,5 @@
+import { IMutationRegisterUserArgs } from '../@types/types'
 import { User } from './model'
-import {
-  IMutationRegisterUserArgs,
-  IMutationUpdateUserArgs
-} from '../@types/types'
 
 const findById = async (id: string | number) => User.findById(id)
 
@@ -24,7 +21,7 @@ const create = async (data: IMutationRegisterUserArgs) => User.create(data)
 
 const update = async (
   id: string | number,
-  data: IMutationUpdateUserArgs['data'],
+  data: any, // for now
   option: any = { new: true }
 ) => User.findOneAndUpdate(id, data, option)
 

@@ -7,8 +7,8 @@ export const userExist = (user?: IUser) => {
 }
 
 export const extractIdAndToken = async (headers: {
-  [key: string]: any;
-  jwt: string;
+  [key: string]: any
+  jwt: string
 }) => {
   try {
     const user = await UserRepository.findByToken(headers.jwt)

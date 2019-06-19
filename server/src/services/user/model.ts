@@ -22,7 +22,7 @@ interface IUserModel extends Model<IUserDocument> {
 }
 
 const schemaDef: SchemaDef<
-  Omit<IUser, 'id'> & { password: any; phone: any }
+  Omit<IUser, 'id'> & { password: any; phone: any; expenses: any }
 > = {
   firstName: {
     type: String,
@@ -61,7 +61,7 @@ const schemaDef: SchemaDef<
   expenses: [
     {
       type: [Schema.Types.ObjectId],
-      ref: 'Expense'
+      ref: Constants.documentNames.userExpense
     }
   ],
   btw: {

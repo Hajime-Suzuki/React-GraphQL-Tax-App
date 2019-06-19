@@ -275,7 +275,6 @@ export type IUser = {
   lastName: Scalars["String"];
   email: Scalars["String"];
   projects?: Maybe<Array<IProject>>;
-  expenses?: Maybe<Array<IUserExpense>>;
   clients?: Maybe<Array<IClient>>;
   btw?: Maybe<Scalars["String"]>;
   kvk?: Maybe<Scalars["String"]>;
@@ -384,10 +383,10 @@ export type IResolversTypes = {
   INVOICE_STATUS: IInvoice_Status;
   ExpenseAndIncome: IExpenseAndIncome;
   Int: Scalars["Int"];
-  UserExpense: IUserExpense;
   Client: IClient;
   GetProjectsFilter: IGetProjectsFilter;
   SortOption: ISortOption;
+  UserExpense: IUserExpense;
   Mutation: {};
   RegisterResponse: IRegisterResponse;
   Boolean: Scalars["Boolean"];
@@ -701,11 +700,6 @@ export type IUserResolvers<
   email?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
   projects?: Resolver<
     Maybe<Array<IResolversTypes["Project"]>>,
-    ParentType,
-    ContextType
-  >;
-  expenses?: Resolver<
-    Maybe<Array<IResolversTypes["UserExpense"]>>,
     ParentType,
     ContextType
   >;

@@ -28,6 +28,10 @@ const userExpensesSchema = new Schema({
   }
 })
 
+userExpensesSchema.set('toJSON', {
+  virtuals: true
+})
+
 export const UserExpense: Model<ExpenseDocument> = model<ExpenseDocument>(
   Constants.documentNames.userExpense,
   userExpensesSchema

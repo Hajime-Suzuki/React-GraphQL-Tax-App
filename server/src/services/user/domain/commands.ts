@@ -1,8 +1,4 @@
-import {
-  IMutationRegisterUserArgs,
-  IMutationUpdateUserArgs,
-  IUser
-} from '../../@types/types'
+import { IMutationRegisterUserArgs, IUser } from '../../@types/types'
 import { UserRepository } from '../repository'
 
 const registerUser = async (data: IMutationRegisterUserArgs) => {
@@ -16,7 +12,7 @@ const registerUser = async (data: IMutationRegisterUserArgs) => {
 
 const updateUser = async (
   userId: string,
-  data: IMutationUpdateUserArgs['data']
+  data: any // for now
 ) => {
   try {
     const updatedUser = await UserRepository.update(userId, data, {
@@ -35,6 +31,10 @@ const changePassword = async (email: IUser['email'], newPassword: string) => {
   user.password = newPassword
   await user.save()
   return user.generateToken()
+}
+
+const addExpense = async (userId: string, expenseId: string) => {
+  UserRepository.update(userId, { $push: { expenses: expenseId } })
 }
 
 export const UserCommands = {
