@@ -16,10 +16,10 @@ export type Scalars = {
   Blob: any;
 };
 
-export type IAddGeneralExpensesResponse = {
-  __typename?: "AddGeneralExpensesResponse";
+export type IAddUserExpensesResponse = {
+  __typename?: "AddUserExpensesResponse";
   message?: Maybe<Scalars["String"]>;
-  generalExpense?: Maybe<IGeneralExpense>;
+  userExpense?: Maybe<IUserExpense>;
 };
 
 export type IClient = {
@@ -68,24 +68,6 @@ export type IExpenseAndIncomeInput = {
   taxRate?: Maybe<Scalars["Int"]>;
 };
 
-export type IGeneralExpense = {
-  __typename?: "GeneralExpense";
-  name: Scalars["String"];
-  price: Scalars["String"];
-  quantity: Scalars["Int"];
-  taxRate: Scalars["Int"];
-  date: Scalars["String"];
-  user: Scalars["String"];
-};
-
-export type IGeneralExpenseInput = {
-  name: Scalars["String"];
-  price: Scalars["String"];
-  quantity: Scalars["Int"];
-  taxRate: Scalars["Int"];
-  date: Scalars["String"];
-};
-
 export type IGenerateInvoiceResponse = {
   __typename?: "GenerateInvoiceResponse";
   message?: Maybe<Scalars["String"]>;
@@ -111,7 +93,7 @@ export type IMutation = {
   updateProject: IMutationProjectResponse;
   addProject?: Maybe<IMutationProjectResponse>;
   deleteProject?: Maybe<IMutationProjectResponse>;
-  addGeneralExpense: IAddGeneralExpensesResponse;
+  addUserExpense: IAddUserExpensesResponse;
   addClient?: Maybe<IClientMutationResponse>;
   updateClient?: Maybe<IClientMutationResponse>;
   updateClientProject?: Maybe<IClientMutationResponse>;
@@ -154,8 +136,8 @@ export type IMutationDeleteProjectArgs = {
   projectId: Scalars["String"];
 };
 
-export type IMutationAddGeneralExpenseArgs = {
-  data: IGeneralExpenseInput;
+export type IMutationAddUserExpenseArgs = {
+  data: IUserExpenseInput;
 };
 
 export type IMutationAddClientArgs = {
@@ -227,7 +209,7 @@ export type IQuery = {
   getProjectsByUserId: Array<IProject>;
   getProjects: Array<IProject>;
   getSingleProject?: Maybe<IProject>;
-  getGeneralExpenses?: Maybe<Array<IGeneralExpense>>;
+  getUserExpenses?: Maybe<Array<IUserExpense>>;
   getClientsByUser?: Maybe<Array<IClient>>;
   getClientByProject?: Maybe<IClient>;
   getSingleClient?: Maybe<IClient>;
@@ -293,7 +275,7 @@ export type IUser = {
   lastName: Scalars["String"];
   email: Scalars["String"];
   projects?: Maybe<Array<IProject>>;
-  expenses?: Maybe<Array<IGeneralExpense>>;
+  expenses?: Maybe<Array<IUserExpense>>;
   clients?: Maybe<Array<IClient>>;
   btw?: Maybe<Scalars["String"]>;
   kvk?: Maybe<Scalars["String"]>;
@@ -304,6 +286,24 @@ export type IUser = {
   city?: Maybe<Scalars["String"]>;
   createdAt?: Maybe<Scalars["Date"]>;
   updatedAt?: Maybe<Scalars["Date"]>;
+};
+
+export type IUserExpense = {
+  __typename?: "UserExpense";
+  name: Scalars["String"];
+  price: Scalars["String"];
+  quantity: Scalars["Int"];
+  taxRate: Scalars["Int"];
+  date: Scalars["String"];
+  user: Scalars["String"];
+};
+
+export type IUserExpenseInput = {
+  name: Scalars["String"];
+  price: Scalars["String"];
+  quantity: Scalars["Int"];
+  taxRate: Scalars["Int"];
+  date: Scalars["String"];
 };
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
@@ -384,7 +384,7 @@ export type IResolversTypes = {
   INVOICE_STATUS: IInvoice_Status;
   ExpenseAndIncome: IExpenseAndIncome;
   Int: Scalars["Int"];
-  GeneralExpense: IGeneralExpense;
+  UserExpense: IUserExpense;
   Client: IClient;
   GetProjectsFilter: IGetProjectsFilter;
   SortOption: ISortOption;
@@ -397,20 +397,20 @@ export type IResolversTypes = {
   ClientInput: IClientInput;
   ExpenseAndIncomeInput: IExpenseAndIncomeInput;
   MutationProjectResponse: IMutationProjectResponse;
-  GeneralExpenseInput: IGeneralExpenseInput;
-  AddGeneralExpensesResponse: IAddGeneralExpensesResponse;
+  UserExpenseInput: IUserExpenseInput;
+  AddUserExpensesResponse: IAddUserExpensesResponse;
   ClientMutationResponse: IClientMutationResponse;
   GenerateInvoiceResponse: IGenerateInvoiceResponse;
   Blob: Scalars["Blob"];
 };
 
-export type IAddGeneralExpensesResponseResolvers<
+export type IAddUserExpensesResponseResolvers<
   ContextType = any,
-  ParentType = IResolversTypes["AddGeneralExpensesResponse"]
+  ParentType = IResolversTypes["AddUserExpensesResponse"]
 > = {
   message?: Resolver<Maybe<IResolversTypes["String"]>, ParentType, ContextType>;
-  generalExpense?: Resolver<
-    Maybe<IResolversTypes["GeneralExpense"]>,
+  userExpense?: Resolver<
+    Maybe<IResolversTypes["UserExpense"]>,
     ParentType,
     ContextType
   >;
@@ -480,18 +480,6 @@ export type IExpenseAndIncomeResolvers<
   taxRate?: Resolver<Maybe<IResolversTypes["Int"]>, ParentType, ContextType>;
 };
 
-export type IGeneralExpenseResolvers<
-  ContextType = any,
-  ParentType = IResolversTypes["GeneralExpense"]
-> = {
-  name?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-  price?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-  quantity?: Resolver<IResolversTypes["Int"], ParentType, ContextType>;
-  taxRate?: Resolver<IResolversTypes["Int"], ParentType, ContextType>;
-  date?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-  user?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
-};
-
 export type IGenerateInvoiceResponseResolvers<
   ContextType = any,
   ParentType = IResolversTypes["GenerateInvoiceResponse"]
@@ -546,11 +534,11 @@ export type IMutationResolvers<
     ContextType,
     IMutationDeleteProjectArgs
   >;
-  addGeneralExpense?: Resolver<
-    IResolversTypes["AddGeneralExpensesResponse"],
+  addUserExpense?: Resolver<
+    IResolversTypes["AddUserExpensesResponse"],
     ParentType,
     ContextType,
-    IMutationAddGeneralExpenseArgs
+    IMutationAddUserExpenseArgs
   >;
   addClient?: Resolver<
     Maybe<IResolversTypes["ClientMutationResponse"]>,
@@ -661,8 +649,8 @@ export type IQueryResolvers<
     ContextType,
     IQueryGetSingleProjectArgs
   >;
-  getGeneralExpenses?: Resolver<
-    Maybe<Array<IResolversTypes["GeneralExpense"]>>,
+  getUserExpenses?: Resolver<
+    Maybe<Array<IResolversTypes["UserExpense"]>>,
     ParentType,
     ContextType
   >;
@@ -717,7 +705,7 @@ export type IUserResolvers<
     ContextType
   >;
   expenses?: Resolver<
-    Maybe<Array<IResolversTypes["GeneralExpense"]>>,
+    Maybe<Array<IResolversTypes["UserExpense"]>>,
     ParentType,
     ContextType
   >;
@@ -745,16 +733,25 @@ export type IUserResolvers<
   updatedAt?: Resolver<Maybe<IResolversTypes["Date"]>, ParentType, ContextType>;
 };
 
+export type IUserExpenseResolvers<
+  ContextType = any,
+  ParentType = IResolversTypes["UserExpense"]
+> = {
+  name?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  price?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  quantity?: Resolver<IResolversTypes["Int"], ParentType, ContextType>;
+  taxRate?: Resolver<IResolversTypes["Int"], ParentType, ContextType>;
+  date?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+  user?: Resolver<IResolversTypes["String"], ParentType, ContextType>;
+};
+
 export type IResolvers<ContextType = any> = {
-  AddGeneralExpensesResponse?: IAddGeneralExpensesResponseResolvers<
-    ContextType
-  >;
+  AddUserExpensesResponse?: IAddUserExpensesResponseResolvers<ContextType>;
   Blob?: GraphQLScalarType;
   Client?: IClientResolvers<ContextType>;
   ClientMutationResponse?: IClientMutationResponseResolvers<ContextType>;
   Date?: GraphQLScalarType;
   ExpenseAndIncome?: IExpenseAndIncomeResolvers<ContextType>;
-  GeneralExpense?: IGeneralExpenseResolvers<ContextType>;
   GenerateInvoiceResponse?: IGenerateInvoiceResponseResolvers<ContextType>;
   Mutation?: IMutationResolvers<ContextType>;
   MutationProjectResponse?: IMutationProjectResponseResolvers<ContextType>;
@@ -763,4 +760,5 @@ export type IResolvers<ContextType = any> = {
   RegisterResponse?: IRegisterResponseResolvers<ContextType>;
   UpdateUserResponse?: IUpdateUserResponseResolvers<ContextType>;
   User?: IUserResolvers<ContextType>;
+  UserExpense?: IUserExpenseResolvers<ContextType>;
 };

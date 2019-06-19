@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-koa'
 
-export const generalExpenseSchema = gql`
-  type GeneralExpense {
+export const userExpenseSchema = gql`
+  type UserExpense {
     name: String!
     price: String!
     quantity: Int!
@@ -11,14 +11,14 @@ export const generalExpenseSchema = gql`
   }
 
   type Query {
-    getGeneralExpenses: [GeneralExpense!]
+    getUserExpenses: [UserExpense!]
   }
 
   type Mutation {
-    addGeneralExpense(data: GeneralExpenseInput!): AddGeneralExpensesResponse!
+    addUserExpense(data: UserExpenseInput!): AddUserExpensesResponse!
   }
 
-  input GeneralExpenseInput {
+  input UserExpenseInput {
     name: String!
     price: String!
     quantity: Int!
@@ -26,8 +26,8 @@ export const generalExpenseSchema = gql`
     date: String!
   }
 
-  type AddGeneralExpensesResponse {
+  type AddUserExpensesResponse {
     message: String
-    generalExpense: GeneralExpense
+    userExpense: UserExpense
   }
 `

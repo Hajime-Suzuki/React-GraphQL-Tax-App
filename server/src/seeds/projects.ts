@@ -4,7 +4,7 @@ import * as Router from 'koa-router'
 import { Project } from '../services/project/model'
 import { UserRepository } from '../services/user/repository'
 import { User } from '../services/user/model'
-import { userExpense } from '../services/generalExpense/model'
+import { UserExpense } from '../services/userExpense/model'
 
 const router = new Router({
   prefix: '/projects'
@@ -12,7 +12,7 @@ const router = new Router({
 
 router.post('/populate', async ctx => {
   await Project.deleteMany({})
-  await userExpense.deleteMany({})
+  await UserExpense.deleteMany({})
 
   const email = (ctx as any).request.body.email
 
@@ -89,7 +89,7 @@ router.post('/populate', async ctx => {
   const expenses = Array(nonProjectExpensesAomunt)
     .fill('')
     .map(_ => {
-      return new userExpense({
+      return new UserExpense({
         name: faker.commerce.productName(),
         price: faker.finance.amount(10, 300, 2),
         quantity: faker.random.number({ min: 1, max: 3 }),
@@ -103,7 +103,7 @@ router.post('/populate', async ctx => {
     })
 
   const savedProjects = await Project.insertMany(projects)
-  const savedExpenses = await userExpense.insertMany(expenses)
+  const savedExpenses = await UserExpense.insertMany(expenses)
 
     // tslint:disable-next-line:align
   ; (newUser as any).expenses = savedExpenses

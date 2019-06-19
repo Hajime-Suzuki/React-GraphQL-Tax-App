@@ -7,7 +7,7 @@ export const userSchema = gql`
     lastName: String!
     email: String!
     projects: [Project!]
-    expenses: [GeneralExpense!]
+    expenses: [UserExpense!]
     clients: [Client!]
     btw: String
     kvk: String

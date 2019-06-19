@@ -1,8 +1,8 @@
 import { Document, model, Model, Schema } from 'mongoose'
-import { IGeneralExpense } from '../@types/types'
 import { Constants } from '../../constants'
+import { IUserExpense } from '../@types/types'
 
-type ExpenseDocument = IGeneralExpense & Document
+type ExpenseDocument = IUserExpense & Document
 
 const userExpensesSchema = new Schema({
   name: {
@@ -28,7 +28,7 @@ const userExpensesSchema = new Schema({
   }
 })
 
-export const userExpense: Model<ExpenseDocument> = model<ExpenseDocument>(
+export const UserExpense: Model<ExpenseDocument> = model<ExpenseDocument>(
   Constants.documentNames.userExpense,
   userExpensesSchema
 )
