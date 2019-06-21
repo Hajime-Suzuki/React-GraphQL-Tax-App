@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-koa'
 
 export const userExpenseSchema = gql`
   type UserExpense {
+    id: ID!
     name: String!
     price: String!
     quantity: Int!
@@ -15,7 +16,11 @@ export const userExpenseSchema = gql`
   }
 
   type Mutation {
-    addUserExpense(data: UserExpenseInput!): AddUserExpensesResponse!
+    addUserExpense(data: UserExpenseInput!): MutationUserExpensesResponse!
+    updateUserExpense(
+      id: ID!
+      data: UpdateUserExpenseInput!
+    ): MutationUserExpensesResponse!
   }
 
   input UserExpenseInput {
@@ -26,7 +31,15 @@ export const userExpenseSchema = gql`
     date: String!
   }
 
-  type AddUserExpensesResponse {
+  input UpdateUserExpenseInput {
+    name: String
+    price: String
+    quantity: Int
+    taxRate: Int
+    date: String
+  }
+
+  type MutationUserExpensesResponse {
     message: String
     userExpense: UserExpense
   }
