@@ -34,8 +34,15 @@ const update = async ({
   return updated
 }
 
+const remove = async ({ id }: { id: IUserExpense['id'] }) => {
+  const expense = await UserExpense.findById(id)
+  if (!expense) throw new Error('item not found')
+  return expense.remove()
+}
+
 export const UserExpenseRepository = {
   findByUserId,
   add,
-  update
+  update,
+  remove
 }

@@ -4,7 +4,6 @@ import { IMutationResolvers, IQueryResolvers } from '../@types/types'
 import { UserCommands } from '../user/domain/commands'
 import { UserExpenseCommands } from './domain/commands'
 import { UserExpenseQueries } from './domain/queries'
-import { UserExpenseRepository } from './repository'
 
 export const userExpenseResolvers: {
   Query: IQueryResolvers<IContext>
@@ -38,6 +37,12 @@ export const userExpenseResolvers: {
         message: 'success',
         userExpense: updated
       }
+    },
+    deleteUserExpense: async (_, { id }, { user }) => {
+      AuthCheck.userExist(user)
+      await UserExpenseCommands.remove(id)
+      await UserCommands.updateUser(user.id, { $pull: { expenses: id } })
+      return true
     }
   }
 }

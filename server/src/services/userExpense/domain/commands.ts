@@ -1,6 +1,7 @@
 import {
   IMutationAddUserExpenseArgs,
-  IUpdateUserExpenseInput
+  IUpdateUserExpenseInput,
+  IUserExpense
 } from '../../@types/types'
 import { UserExpenseRepository } from '../repository'
 
@@ -11,11 +12,16 @@ const add = (userId: string, data: IMutationAddUserExpenseArgs['data']) => {
   })
 }
 
-const update = (id: string, data: IUpdateUserExpenseInput) => {
+const update = (id: IUserExpense['id'], data: IUpdateUserExpenseInput) => {
   return UserExpenseRepository.update({ id, data })
+}
+
+const remove = (id: IUserExpense['id']) => {
+  return UserExpenseRepository.remove({ id })
 }
 
 export const UserExpenseCommands = {
   add,
-  update
+  update,
+  remove
 }

@@ -89,6 +89,7 @@ export type IMutation = {
   deleteProject?: Maybe<IMutationProjectResponse>;
   addUserExpense: IMutationUserExpensesResponse;
   updateUserExpense: IMutationUserExpensesResponse;
+  deleteUserExpense?: Maybe<Scalars["Boolean"]>;
   addClient?: Maybe<IClientMutationResponse>;
   updateClient?: Maybe<IClientMutationResponse>;
   updateClientProject?: Maybe<IClientMutationResponse>;
@@ -138,6 +139,10 @@ export type IMutationAddUserExpenseArgs = {
 export type IMutationUpdateUserExpenseArgs = {
   id: Scalars["ID"];
   data: IUpdateUserExpenseInput;
+};
+
+export type IMutationDeleteUserExpenseArgs = {
+  id: Scalars["ID"];
 };
 
 export type IMutationAddClientArgs = {
@@ -548,6 +553,12 @@ export type IMutationResolvers<
     ParentType,
     ContextType,
     IMutationUpdateUserExpenseArgs
+  >;
+  deleteUserExpense?: Resolver<
+    Maybe<IResolversTypes["Boolean"]>,
+    ParentType,
+    ContextType,
+    IMutationDeleteUserExpenseArgs
   >;
   addClient?: Resolver<
     Maybe<IResolversTypes["ClientMutationResponse"]>,

@@ -21,6 +21,7 @@ export const userExpenseSchema = gql`
       id: ID!
       data: UpdateUserExpenseInput!
     ): MutationUserExpensesResponse!
+    deleteUserExpense(id: ID!): Boolean
   }
 
   input UserExpenseInput {
