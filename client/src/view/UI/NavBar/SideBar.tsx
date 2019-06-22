@@ -6,8 +6,9 @@ import { NavBarChildProp } from './NavBarContainer'
 import React from 'react'
 
 const menuItems = [
-  { path: RoutesNames.projects, title: 'Projects' },
   { path: RoutesNames.dashboard, title: 'Dashboard' },
+  { path: RoutesNames.projects, title: 'Projects' },
+  { path: RoutesNames.userExpenses, title: 'Expenses' },
   { path: RoutesNames.clientsList, title: 'Clients' }
 ]
 

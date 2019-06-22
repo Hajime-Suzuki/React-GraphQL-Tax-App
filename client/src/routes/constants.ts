@@ -13,7 +13,8 @@ const RoutesNames = {
   singleClient: (clientId?: string) =>
     clientId ? `/clients/${clientId}` : '/clients/:clientId',
 
-  addClient: '/clients/new'
+  addClient: '/clients/new',
+  userExpenses: '/user-expenses'
 }
 
 export { RoutesNames }
