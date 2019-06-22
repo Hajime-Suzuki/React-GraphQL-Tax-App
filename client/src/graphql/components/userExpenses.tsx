@@ -216,7 +216,7 @@ export type Query = {
   getProjectsByUserId: Array<Project>;
   getProjects: Array<Project>;
   getSingleProject?: Maybe<Project>;
-  getUserExpenses?: Maybe<Array<UserExpense>>;
+  getUserExpenses: Array<UserExpense>;
   getClientsByUser?: Maybe<Array<Client>>;
   getClientByProject?: Maybe<Client>;
   getSingleClient?: Maybe<Client>;
@@ -323,12 +323,10 @@ export type UserExpenseInput = {
 export type GetUserExpensesQueryVariables = {};
 
 export type GetUserExpensesQuery = { __typename?: "Query" } & {
-  getUserExpenses: Maybe<
-    Array<
-      { __typename?: "UserExpense" } & Pick<
-        UserExpense,
-        "id" | "name" | "price" | "quantity" | "date"
-      >
+  getUserExpenses: Array<
+    { __typename?: "UserExpense" } & Pick<
+      UserExpense,
+      "id" | "name" | "price" | "quantity" | "date" | "taxRate"
     >
   >;
 };
@@ -341,6 +339,7 @@ export const GetUserExpensesDocument = gql`
       price
       quantity
       date
+      taxRate
     }
   }
 `;

@@ -5,5 +5,6 @@ query getUserExpenses {
     price
     quantity
     date
+    taxRate
   }
 }

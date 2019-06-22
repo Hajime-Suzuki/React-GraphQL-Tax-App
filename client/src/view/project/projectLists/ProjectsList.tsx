@@ -7,12 +7,11 @@ import TableRow from '@material-ui/core/TableRow'
 import { format, parseISO } from 'date-fns'
 import React from 'react'
 import styled from 'styled-components'
+import { ProjectListChildProps } from '.'
 import { RoutesNames } from '../../../routes/constants'
 import { Styles } from '../../../styles/sharedStyles'
 import { Calculations } from '../helper/calculations'
 import EditStatusContainer from './EditStatusContainer'
-import { Project } from 'src/graphql/components/projects'
-import { ProjectListChildProps } from '.'
 
 const StyledPaper: any = styled(Paper as any)`
   overflow: 'auto';

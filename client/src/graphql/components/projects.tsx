@@ -219,7 +219,7 @@ export type Query = {
   getProjectsByUserId: Array<Project>;
   getProjects: Array<Project>;
   getSingleProject?: Maybe<Project>;
-  getUserExpenses?: Maybe<Array<UserExpense>>;
+  getUserExpenses: Array<UserExpense>;
   getClientsByUser?: Maybe<Array<Client>>;
   getClientByProject?: Maybe<Client>;
   getSingleClient?: Maybe<Client>;

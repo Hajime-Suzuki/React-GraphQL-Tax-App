@@ -12,7 +12,7 @@ export const userExpenseSchema = gql`
   }
 
   type Query {
-    getUserExpenses: [UserExpense!]
+    getUserExpenses: [UserExpense!]!
   }
 
   type Mutation {
