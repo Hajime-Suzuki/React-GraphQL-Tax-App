@@ -48,6 +48,19 @@ generates:
       - typescript-operations
       - typescript-react-apollo
 
+  ./src/graphql/components/userExpenses.tsx:
+    schema: http://localhost:4000/graphql
+    documents:
+      - ./src/graphql/queries/userExpenses.graphql
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+      withHOC: false
+      withComponent: false
+
   ##### client components ######
   ./src/graphql/components/client/login.tsx:
     schema: ./_gql-gen/typeDefs.js

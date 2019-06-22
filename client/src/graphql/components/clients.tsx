@@ -14,12 +14,6 @@ export type Scalars = {
   Blob: any;
 };
 
-export type AddGeneralExpensesResponse = {
-  __typename?: "AddGeneralExpensesResponse";
-  message?: Maybe<Scalars["String"]>;
-  generalExpense?: Maybe<GeneralExpense>;
-};
-
 export type Client = {
   __typename?: "Client";
   id: Scalars["String"];
@@ -66,24 +60,6 @@ export type ExpenseAndIncomeInput = {
   taxRate?: Maybe<Scalars["Int"]>;
 };
 
-export type GeneralExpense = {
-  __typename?: "GeneralExpense";
-  name: Scalars["String"];
-  price: Scalars["String"];
-  quantity: Scalars["Int"];
-  taxRate: Scalars["Int"];
-  date: Scalars["String"];
-  user: Scalars["String"];
-};
-
-export type GeneralExpenseInput = {
-  name: Scalars["String"];
-  price: Scalars["String"];
-  quantity: Scalars["Int"];
-  taxRate: Scalars["Int"];
-  date: Scalars["String"];
-};
-
 export type GenerateInvoiceResponse = {
   __typename?: "GenerateInvoiceResponse";
   message?: Maybe<Scalars["String"]>;
@@ -109,7 +85,9 @@ export type Mutation = {
   updateProject: MutationProjectResponse;
   addProject?: Maybe<MutationProjectResponse>;
   deleteProject?: Maybe<MutationProjectResponse>;
-  addGeneralExpense: AddGeneralExpensesResponse;
+  addUserExpense: MutationUserExpensesResponse;
+  updateUserExpense: MutationUserExpensesResponse;
+  deleteUserExpense?: Maybe<Scalars["Boolean"]>;
   addClient?: Maybe<ClientMutationResponse>;
   updateClient?: Maybe<ClientMutationResponse>;
   updateClientProject?: Maybe<ClientMutationResponse>;
@@ -152,8 +130,17 @@ export type MutationDeleteProjectArgs = {
   projectId: Scalars["String"];
 };
 
-export type MutationAddGeneralExpenseArgs = {
-  data: GeneralExpenseInput;
+export type MutationAddUserExpenseArgs = {
+  data: UserExpenseInput;
+};
+
+export type MutationUpdateUserExpenseArgs = {
+  id: Scalars["ID"];
+  data: UpdateUserExpenseInput;
+};
+
+export type MutationDeleteUserExpenseArgs = {
+  id: Scalars["ID"];
 };
 
 export type MutationAddClientArgs = {
@@ -191,6 +178,12 @@ export type MutationProjectResponse = {
   client?: Maybe<Client>;
 };
 
+export type MutationUserExpensesResponse = {
+  __typename?: "MutationUserExpensesResponse";
+  message?: Maybe<Scalars["String"]>;
+  userExpense?: Maybe<UserExpense>;
+};
+
 export type Project = {
   __typename?: "Project";
   id: Scalars["String"];
@@ -225,7 +218,7 @@ export type Query = {
   getProjectsByUserId: Array<Project>;
   getProjects: Array<Project>;
   getSingleProject?: Maybe<Project>;
-  getGeneralExpenses?: Maybe<Array<GeneralExpense>>;
+  getUserExpenses?: Maybe<Array<UserExpense>>;
   getClientsByUser?: Maybe<Array<Client>>;
   getClientByProject?: Maybe<Client>;
   getSingleClient?: Maybe<Client>;
@@ -264,6 +257,14 @@ export type SortOption = {
   invoiceDate?: Maybe<Scalars["Int"]>;
 };
 
+export type UpdateUserExpenseInput = {
+  name?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Int"]>;
+  taxRate?: Maybe<Scalars["Int"]>;
+  date?: Maybe<Scalars["String"]>;
+};
+
 export type UpdateUserInput = {
   firstName?: Maybe<Scalars["String"]>;
   lastName?: Maybe<Scalars["String"]>;
@@ -291,7 +292,6 @@ export type User = {
   lastName: Scalars["String"];
   email: Scalars["String"];
   projects?: Maybe<Array<Project>>;
-  expenses?: Maybe<Array<GeneralExpense>>;
   clients?: Maybe<Array<Client>>;
   btw?: Maybe<Scalars["String"]>;
   kvk?: Maybe<Scalars["String"]>;
@@ -302,6 +302,25 @@ export type User = {
   city?: Maybe<Scalars["String"]>;
   createdAt?: Maybe<Scalars["Date"]>;
   updatedAt?: Maybe<Scalars["Date"]>;
+};
+
+export type UserExpense = {
+  __typename?: "UserExpense";
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  price: Scalars["String"];
+  quantity: Scalars["Int"];
+  taxRate: Scalars["Int"];
+  date: Scalars["String"];
+  user: Scalars["String"];
+};
+
+export type UserExpenseInput = {
+  name: Scalars["String"];
+  price: Scalars["String"];
+  quantity: Scalars["Int"];
+  taxRate: Scalars["Int"];
+  date: Scalars["String"];
 };
 export type GetClientsListQueryVariables = {};
 

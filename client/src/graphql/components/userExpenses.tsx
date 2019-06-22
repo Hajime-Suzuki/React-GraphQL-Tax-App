@@ -1,8 +1,6 @@
 import gql from "graphql-tag";
-import * as ReactApollo from "react-apollo";
-import * as React from "react";
+import * as ReactApolloHooks from "react-apollo-hooks";
 export type Maybe<T> = T | null;
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -322,212 +320,36 @@ export type UserExpenseInput = {
   taxRate: Scalars["Int"];
   date: Scalars["String"];
 };
-export type UserFragmentsFragment = { __typename?: "User" } & Pick<
-  User,
-  | "id"
-  | "firstName"
-  | "lastName"
-  | "phone"
-  | "btw"
-  | "kvk"
-  | "iban"
-  | "streetAddress"
-  | "postalCode"
-  | "city"
-> & {
-    clients: Maybe<
-      Array<
-        { __typename?: "Client" } & Pick<
-          Client,
-          | "id"
-          | "firstName"
-          | "lastName"
-          | "email"
-          | "phone"
-          | "streetAddress"
-          | "postalCode"
-          | "city"
-        >
+export type GetUserExpensesQueryVariables = {};
+
+export type GetUserExpensesQuery = { __typename?: "Query" } & {
+  getUserExpenses: Maybe<
+    Array<
+      { __typename?: "UserExpense" } & Pick<
+        UserExpense,
+        "id" | "name" | "price" | "quantity" | "date"
       >
-    >;
-  };
-
-export type UpdateUserMutationVariables = {
-  data: UpdateUserInput;
+    >
+  >;
 };
 
-export type UpdateUserMutation = { __typename?: "Mutation" } & {
-  updateUser: { __typename?: "UpdateUserResponse" } & Pick<
-    UpdateUserResponse,
-    "message"
-  > & { user: { __typename?: "User" } & UserFragmentsFragment };
-};
-
-export type GetUserProfileQueryVariables = {};
-
-export type GetUserProfileQuery = { __typename?: "Query" } & {
-  getUser: { __typename?: "User" } & UserFragmentsFragment;
-};
-
-export type ClientFragmentFragment = { __typename?: "Client" } & Pick<
-  Client,
-  "id" | "firstName" | "lastName" | "email" | "phone"
->;
-
-export type PriceFragmentFragment = { __typename?: "ExpenseAndIncome" } & Pick<
-  ExpenseAndIncome,
-  "price" | "quantity" | "taxRate"
->;
-
-export type BasicInfoFragmentFragment = { __typename?: "Project" } & Pick<
-  Project,
-  "id" | "name" | "projectDate" | "invoiceDate" | "status"
->;
-export const UserFragmentsFragmentDoc = gql`
-  fragment UserFragments on User {
-    id
-    firstName
-    lastName
-    clients {
+export const GetUserExpensesDocument = gql`
+  query getUserExpenses {
+    getUserExpenses {
       id
-      firstName
-      lastName
-      email
-      phone
-      streetAddress
-      postalCode
-      city
-    }
-    phone
-    btw
-    kvk
-    iban
-    streetAddress
-    postalCode
-    city
-  }
-`;
-export const ClientFragmentFragmentDoc = gql`
-  fragment ClientFragment on Client {
-    id
-    firstName
-    lastName
-    email
-    phone
-  }
-`;
-export const PriceFragmentFragmentDoc = gql`
-  fragment PriceFragment on ExpenseAndIncome {
-    price
-    quantity
-    taxRate
-  }
-`;
-export const BasicInfoFragmentFragmentDoc = gql`
-  fragment BasicInfoFragment on Project {
-    id
-    name
-    projectDate
-    invoiceDate
-    status
-  }
-`;
-export const UpdateUserDocument = gql`
-  mutation updateUser($data: UpdateUserInput!) {
-    updateUser(data: $data) {
-      message
-      user {
-        ...UserFragments
-      }
+      name
+      price
+      quantity
+      date
     }
   }
-  ${UserFragmentsFragmentDoc}
 `;
-export type UpdateUserMutationFn = ReactApollo.MutationFn<
-  UpdateUserMutation,
-  UpdateUserMutationVariables
->;
-export type UpdateUserComponentProps = Omit<
-  Omit<
-    ReactApollo.MutationProps<UpdateUserMutation, UpdateUserMutationVariables>,
-    "mutation"
-  >,
-  "variables"
-> & { variables?: UpdateUserMutationVariables };
 
-export const UpdateUserComponent = (props: UpdateUserComponentProps) => (
-  <ReactApollo.Mutation<UpdateUserMutation, UpdateUserMutationVariables>
-    mutation={UpdateUserDocument}
-    {...props}
-  />
-);
-
-export type UpdateUserProps<TChildProps = {}> = Partial<
-  ReactApollo.MutateProps<UpdateUserMutation, UpdateUserMutationVariables>
-> &
-  TChildProps;
-export function withUpdateUser<TProps, TChildProps = {}>(
-  operationOptions?: ReactApollo.OperationOption<
-    TProps,
-    UpdateUserMutation,
-    UpdateUserMutationVariables,
-    UpdateUserProps<TChildProps>
-  >
+export function useGetUserExpensesQuery(
+  baseOptions?: ReactApolloHooks.QueryHookOptions<GetUserExpensesQueryVariables>
 ) {
-  return ReactApollo.withMutation<
-    TProps,
-    UpdateUserMutation,
-    UpdateUserMutationVariables,
-    UpdateUserProps<TChildProps>
-  >(UpdateUserDocument, {
-    alias: "withUpdateUser",
-    ...operationOptions
-  });
-}
-export const GetUserProfileDocument = gql`
-  query getUserProfile {
-    getUser {
-      ...UserFragments
-    }
-  }
-  ${UserFragmentsFragmentDoc}
-`;
-export type GetUserProfileComponentProps = Omit<
-  Omit<
-    ReactApollo.QueryProps<GetUserProfileQuery, GetUserProfileQueryVariables>,
-    "query"
-  >,
-  "variables"
-> & { variables?: GetUserProfileQueryVariables };
-
-export const GetUserProfileComponent = (
-  props: GetUserProfileComponentProps
-) => (
-  <ReactApollo.Query<GetUserProfileQuery, GetUserProfileQueryVariables>
-    query={GetUserProfileDocument}
-    {...props}
-  />
-);
-
-export type GetUserProfileProps<TChildProps = {}> = Partial<
-  ReactApollo.DataProps<GetUserProfileQuery, GetUserProfileQueryVariables>
-> &
-  TChildProps;
-export function withGetUserProfile<TProps, TChildProps = {}>(
-  operationOptions?: ReactApollo.OperationOption<
-    TProps,
-    GetUserProfileQuery,
-    GetUserProfileQueryVariables,
-    GetUserProfileProps<TChildProps>
-  >
-) {
-  return ReactApollo.withQuery<
-    TProps,
-    GetUserProfileQuery,
-    GetUserProfileQueryVariables,
-    GetUserProfileProps<TChildProps>
-  >(GetUserProfileDocument, {
-    alias: "withGetUserProfile",
-    ...operationOptions
-  });
+  return ReactApolloHooks.useQuery<
+    GetUserExpensesQuery,
+    GetUserExpensesQueryVariables
+  >(GetUserExpensesDocument, baseOptions);
 }

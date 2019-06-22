@@ -1,0 +1,9 @@
+query getUserExpenses {
+  getUserExpenses {
+    id
+    name
+    price
+    quantity
+    date
+  }
+}
