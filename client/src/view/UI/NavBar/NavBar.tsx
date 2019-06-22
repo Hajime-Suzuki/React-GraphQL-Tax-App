@@ -82,8 +82,15 @@ const NavBar: React.FunctionComponent<
                   <Icon className="fas fa-plus" />
                 </IconButton>
               )}
+
               {user && path.startsWith(RoutesNames.clientsList) && (
                 <IconButton onClick={navigateTo(RoutesNames.addClient)}>
+                  <Icon className="fas fa-plus" />
+                </IconButton>
+              )}
+
+              {user && path.startsWith(RoutesNames.userExpenses()) && (
+                <IconButton onClick={navigateTo(RoutesNames.addUserExpenses())}>
                   <Icon className="fas fa-plus" />
                 </IconButton>
               )}

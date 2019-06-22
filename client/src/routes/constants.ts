@@ -1,4 +1,8 @@
-const RoutesNames = {
+const userExpenses = () => '/user-expenses'
+const addUserExpenses = () => userExpenses() + '/new'
+
+// TODO: change from string to function so that they are consistent
+export const RoutesNames = {
   top: '/',
   signup: '/signup',
   login: '/login',
@@ -14,7 +18,6 @@ const RoutesNames = {
     clientId ? `/clients/${clientId}` : '/clients/:clientId',
 
   addClient: '/clients/new',
-  userExpenses: '/user-expenses'
+  userExpenses,
+  addUserExpenses
 }
-
-export { RoutesNames }

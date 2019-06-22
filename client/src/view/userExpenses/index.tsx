@@ -4,12 +4,12 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { format } from 'date-fns'
-import React from 'react'
+import React, { FC } from 'react'
 import { useGetUserExpensesQuery } from 'src/graphql/components/userExpenses'
 import { Currency } from 'src/libs/currency'
 import { LoadingIcon } from '../UI/LoadingIcon'
 
-const UserExpenses = () => {
+const UserExpenses: FC<{}> = () => {
   const { data, loading, error } = useGetUserExpensesQuery()
 
   if (loading) return <LoadingIcon />

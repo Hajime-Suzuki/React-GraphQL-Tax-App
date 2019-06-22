@@ -16,6 +16,7 @@ import AddClientFormContainer from 'src/view/client/AddClientFormContainer'
 import DashBoard from 'src/view/dashBoard/DashBoard'
 import FiscalOverview from 'src/view/fiscalOverview'
 import UserExpenses from 'src/view/userExpenses'
+import NewUserExpense from 'src/view/userExpenses/new-expenses'
 
 class Routes extends React.Component {
   render() {
@@ -74,9 +75,14 @@ class Routes extends React.Component {
               component={SingleClientContainer}
             />
             <PrivateRoutes
-              path={RoutesNames.userExpenses}
+              path={RoutesNames.userExpenses()}
               exact
               component={UserExpenses}
+            />
+            <PrivateRoutes
+              path={RoutesNames.addUserExpenses()}
+              exact
+              component={NewUserExpense}
             />
             <Route
               path={RoutesNames.login}
