@@ -1,9 +1,17 @@
 import Drawer from '@material-ui/core/Drawer'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import { RoutesNames } from 'src/routes/constants'
-import { NavBarChildProp } from './NavBarContainer'
 import React from 'react'
+import { RoutesNames } from 'src/routes/constants'
+import { theme } from 'src/styles/theme'
+import styled from 'styled-components'
+import { NavBarChildProp } from './NavBarContainer'
+
+const ListMenuItem = styled.a`
+  text-decoration: none;
+  cursor: pointer;
+  color: ${theme.palette.text.primary};
+`
 
 const menuItems = [
   { path: RoutesNames.dashboard, title: 'Dashboard' },
@@ -19,8 +27,21 @@ const SideBar: React.FunctionComponent<NavBarChildProp> = props => {
       {menuItems.map(menu => {
         return (
           user && (
-            <ListItem key={menu.path} button onClick={navigateTo(menu.path)}>
-              <ListItemText primary={menu.title} />
+            <ListItem key={menu.path}>
+              <ListItemText
+                primary={
+                  <ListMenuItem
+                    style={{
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                      color: theme.palette.text.primary
+                    }}
+                    onClick={navigateTo(menu.path)}
+                  >
+                    {menu.title}
+                  </ListMenuItem>
+                }
+              />
             </ListItem>
           )
         )

@@ -21,8 +21,8 @@ const UserExpenses: FC<{}> = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
+            <TableCell>Date</TableCell>
             <TableCell>Price</TableCell>
             <TableCell>Quantity</TableCell>
             <TableCell>Tax Rate</TableCell>
