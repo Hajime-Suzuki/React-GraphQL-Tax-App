@@ -2,6 +2,7 @@ import React from 'react'
 import Routes from './routes'
 import { Get_UserComponent } from './graphql/components/login'
 import { LoadingIcon } from './view/UI/LoadingIcon'
+import NavBarContainer from './view/UI/NavBar/NavBarContainer'
 
 class App extends React.Component {
   public render() {
@@ -9,7 +10,13 @@ class App extends React.Component {
       <Get_UserComponent>
         {({ loading }) => {
           if (loading) return <LoadingIcon />
-          return <Routes />
+
+          return (
+            <>
+              <NavBarContainer />
+              <Routes />
+            </>
+          )
         }}
       </Get_UserComponent>
     )

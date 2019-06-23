@@ -7,7 +7,10 @@ import {
 } from 'date-fns'
 import { createSelector } from 'reselect'
 import { Calculations } from 'src/view/project/helper/calculations'
-import { GetProjectOverviewQuery, PriceFragmentFragment } from 'src/graphql/components/projects'
+import {
+  GetProjectOverviewQuery,
+  PriceFragmentFragment
+} from 'src/graphql/components/projects'
 
 type TaxRate = '0' | '9' | '21'
 type IncomeOrExpense = PriceFragmentFragment
@@ -21,8 +24,6 @@ const getProjects = ({ date }: GetProjectsArg) =>
   createSelector(
     [(projects: GetProjectOverviewQuery['projects']) => projects],
     projects => {
-      console.log(date)
-
       const quarterStart = startOfQuarter(date)
       const quarterEnd = endOfQuarter(date)
 

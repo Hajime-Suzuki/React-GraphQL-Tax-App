@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import * as ReactApolloHooks from "react-apollo-hooks";
+import * as ReactApollo from "react-apollo";
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -331,6 +332,21 @@ export type GetUserExpensesQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type AddUserExpenseMutationVariables = {
+  data: UserExpenseInput;
+};
+
+export type AddUserExpenseMutation = { __typename?: "Mutation" } & {
+  addUserExpense: { __typename?: "MutationUserExpensesResponse" } & {
+    userExpense: Maybe<
+      { __typename?: "UserExpense" } & Pick<
+        UserExpense,
+        "id" | "name" | "price" | "quantity" | "date" | "taxRate"
+      >
+    >;
+  };
+};
+
 export const GetUserExpensesDocument = gql`
   query getUserExpenses {
     getUserExpenses {
@@ -351,4 +367,34 @@ export function useGetUserExpensesQuery(
     GetUserExpensesQuery,
     GetUserExpensesQueryVariables
   >(GetUserExpensesDocument, baseOptions);
+}
+export const AddUserExpenseDocument = gql`
+  mutation addUserExpense($data: UserExpenseInput!) {
+    addUserExpense(data: $data) {
+      userExpense {
+        id
+        name
+        price
+        quantity
+        date
+        taxRate
+      }
+    }
+  }
+`;
+export type AddUserExpenseMutationFn = ReactApollo.MutationFn<
+  AddUserExpenseMutation,
+  AddUserExpenseMutationVariables
+>;
+
+export function useAddUserExpenseMutation(
+  baseOptions?: ReactApolloHooks.MutationHookOptions<
+    AddUserExpenseMutation,
+    AddUserExpenseMutationVariables
+  >
+) {
+  return ReactApolloHooks.useMutation<
+    AddUserExpenseMutation,
+    AddUserExpenseMutationVariables
+  >(AddUserExpenseDocument, baseOptions);
 }

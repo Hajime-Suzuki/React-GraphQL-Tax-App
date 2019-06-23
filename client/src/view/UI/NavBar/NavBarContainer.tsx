@@ -6,8 +6,9 @@ import { Get_UserComponent } from 'src/graphql/components/login'
 import { RoutesNames } from 'src/routes/route-names'
 import { IRouterComponentProps } from 'src/routes/types'
 import NavBar from './NavBar'
+import useRouter from 'use-react-router'
 
-type Props = GetTokenProps<IRouterComponentProps>
+type Props = GetTokenProps<{}>
 
 export interface NavBarChildProp {
   loading: boolean
@@ -26,11 +27,12 @@ export interface NavBarChildProp {
   navigateTo: (url: string) => () => void
 }
 
-const NavBarContainer: FC<Props> = props => {
+const NavBarContainer: FC<Props> = () => {
   const [isSideBarOpen, setSideBarOpen] = useState(false)
   const [menuAnchor, setMenuAnchor] = useState<
     EventTarget & HTMLElement | null
   >(null)
+  const { location, history } = useRouter()
 
   const openSideBar = () => setSideBarOpen(true)
   const closeSideBar = () => setSideBarOpen(false)
@@ -40,7 +42,7 @@ const NavBarContainer: FC<Props> = props => {
   const closeMenu = () => setMenuAnchor(null)
 
   const navigateTo = (url: string) => () => {
-    props.history.push(url)
+    history.push(url)
     closeMenu()
     closeSideBar()
   }
@@ -48,7 +50,7 @@ const NavBarContainer: FC<Props> = props => {
   const handleLogout = async () => {
     closeMenu()
     await LoginActions.logout()
-    props.history.replace(RoutesNames.top)
+    history.replace(RoutesNames.top)
   }
 
   return (
@@ -59,7 +61,7 @@ const NavBarContainer: FC<Props> = props => {
           <NavBar
             loading={loading}
             user={user}
-            path={props.location.pathname}
+            path={location.pathname}
             logout={handleLogout}
             isSideBarOpen={isSideBarOpen}
             openSideBar={openSideBar}

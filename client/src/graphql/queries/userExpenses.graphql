@@ -8,3 +8,16 @@ query getUserExpenses {
     taxRate
   }
 }
+
+mutation addUserExpense($data: UserExpenseInput!) {
+  addUserExpense(data: $data) {
+    userExpense {
+      id
+      name
+      price
+      quantity
+      date
+      taxRate
+    }
+  }
+}
