@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { Field, Form, Formik, FormikProps } from 'formik'
-import React, { FC } from 'react'
+import React, { FC, useState, Fragment } from 'react'
 import {
   useAddUserExpenseMutation,
   UserExpenseInput
@@ -9,17 +9,14 @@ import {
 import { renderTaxRateField } from 'src/libs/forms/renderFields/renderDropdown'
 import { renderFormikTextField } from 'src/libs/forms/renderFields/renderTextField'
 import { StyledGridFormItem } from 'src/styles/forms'
-
-const fields = [
-  { name: 'name' },
-  { name: 'date' },
-  { name: 'price' },
-  { name: 'taxRate', label: 'tax rate', type: 'number' },
-  { name: 'quantity', type: 'number' }
-]
+import Typography from '@material-ui/core/Typography'
+import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
+import { GenerateFieldSettings } from 'src/view/project/helper/genrateFieldSettings'
 
 const NewUserExpense: FC<{}> = () => {
+  const [error, setError] = useState('')
   const mutation = useAddUserExpenseMutation()
+
   return (
     <Formik
       initialValues={{
@@ -30,48 +27,66 @@ const NewUserExpense: FC<{}> = () => {
         taxRate: 0
       }}
       onSubmit={async values => {
-        console.log(values)
-        const res = await mutation({ variables: { data: values } })
-        console.log({ res })
+        try {
+          await mutation({ variables: { data: values } })
+        } catch (e) {
+          setError(e.message)
+        }
       }}
     >
       {(props: FormikProps<UserExpenseInput>) => {
         return (
           <Form>
             <StyledGridFormItem justify="center" container>
-              {fields.map((form, i) => (
-                <Grid item key={i} style={{ width: 180 }}>
-                  {form.name !== 'taxRate' ? (
-                    <Field
-                      name={form.name}
-                      label={form.label || form.name}
-                      type={form.type || 'text'}
-                      component={renderFormikTextField}
-                    />
-                  ) : (
-                    renderTaxRateField({
-                      value: props.values.taxRate || 0,
-                      name: form.name,
-                      showLabel: true,
-                      onChange: props.handleChange
-                    })
+              {GenerateFieldSettings.userExpenseFiled.map((form, i) => (
+                <Fragment key={i}>
+                  {form.name === 'taxRate' && (
+                    <Grid item>
+                      {renderTaxRateField({
+                        value: props.values.taxRate || 0,
+                        name: form.name,
+                        showLabel: true,
+                        onChange: props.handleChange
+                      })}
+                    </Grid>
                   )}
-                </Grid>
+                  {form.name === 'date' && (
+                    <Fragment>
+                      {renderDatePicker({
+                        field: form,
+                        values: props.values,
+                        setFieldValue: props.setFieldValue,
+                        error: ''
+                      })}
+                    </Fragment>
+                  )}
+                  {!form.name.match(/(date|taxRate)/) && (
+                    <Grid item style={{ width: 180 }}>
+                      <Field
+                        name={form.name}
+                        label={form.label || form.name}
+                        type={form.type || 'text'}
+                        component={renderFormikTextField}
+                      />
+                    </Grid>
+                  )}
+                </Fragment>
               ))}
-              <Grid
-                item
-                xs={12}
-                style={{ textAlign: 'center', marginTop: '4em' }}
-              >
+              <Grid item xs={12} style={{ textAlign: 'center' }}>
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
-                  style={{ margin: 'auto' }}
+                  style={{ margin: '4em auto 2em' }}
                 >
                   Submit
                 </Button>
               </Grid>
+              {error && (
+                <Grid item>
+                  <Typography color="error">{error}</Typography>
+                </Grid>
+              )}
             </StyledGridFormItem>
           </Form>
         )

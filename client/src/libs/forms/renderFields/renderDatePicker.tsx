@@ -11,8 +11,9 @@ interface DatePickerProps {
     label: string
     type?: string
   }
-  values: FormikState<ProjectInput>['values']
-  setFieldValue: FormikActions<ProjectInput>['setFieldValue']
+  values: Record<string, any>
+  // values: FormikState<ProjectInput>['values']
+  setFieldValue: FormikActions<{}>['setFieldValue']
   error: string
 }
 
@@ -26,7 +27,7 @@ export const renderDatePicker = ({
   return (
     <div style={{ textAlign: 'center' }}>
       <DatePicker
-        label={field.name}
+        label={field.label}
         name={field.name}
         value={values[field.name] || null}
         onChange={(date: string) => {

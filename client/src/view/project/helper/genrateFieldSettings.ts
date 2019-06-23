@@ -26,8 +26,17 @@ const generateArrayFields = (type: 'incomes' | 'expenses', index: number) => [
   }
 ]
 
+const userExpenseFiled = [
+  { name: 'name', label: 'Name' },
+  { name: 'date', label: 'Date' },
+  { name: 'price', label: 'Price' },
+  { name: 'quantity', label: 'Quantity', type: 'number' },
+  { name: 'taxRate', label: 'Tax Rate', type: 'number' }
+]
+
 export const GenerateFieldSettings = {
   generalFields,
   clientFields,
-  generateArrayFields
+  generateArrayFields,
+  userExpenseFiled
 }
