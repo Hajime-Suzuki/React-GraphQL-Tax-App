@@ -3,7 +3,7 @@ import { QUser } from 'src/graphql/@types/types'
 import { LoginActions } from 'src/graphql/actions/login'
 import { GetTokenProps } from 'src/graphql/components/client/login'
 import { Get_UserComponent } from 'src/graphql/components/login'
-import { RoutesNames } from 'src/routes/constants'
+import { RoutesNames } from 'src/routes/route-names'
 import { IRouterComponentProps } from 'src/routes/types'
 import NavBar from './NavBar'
 

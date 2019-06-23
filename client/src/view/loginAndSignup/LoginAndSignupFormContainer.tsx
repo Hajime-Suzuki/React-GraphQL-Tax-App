@@ -13,7 +13,7 @@ import {
   SignUpMutationVariables
 } from 'src/graphql/components/signup'
 import { IRouterComponentProps } from 'src/routes/types'
-import { RoutesNames } from '../../routes/constants'
+import { RoutesNames } from '../../routes/route-names'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import {

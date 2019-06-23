@@ -15,7 +15,7 @@ import {
   UpdateClientMutationFn,
   withSingleClient
 } from 'src/graphql/components/clients'
-import { RoutesNames } from 'src/routes/constants'
+import { RoutesNames } from 'src/routes/route-names'
 import { LoadingIcon } from '../UI/LoadingIcon'
 import { clientValidationSchemas } from './helpers/validation'
 import SingleClient from './SingleClient'

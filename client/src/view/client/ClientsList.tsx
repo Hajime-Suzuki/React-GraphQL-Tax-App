@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import * as React from 'react'
-import { RoutesNames } from 'src/routes/constants'
+import { RoutesNames } from 'src/routes/route-names'
 import { Styles } from 'src/styles/sharedStyles'
 import { ClientsListChildProps } from './ClientsListContainer'
 

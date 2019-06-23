@@ -10,7 +10,7 @@ import {
   GetClientsListDocument
 } from 'src/graphql/components/clients'
 import { ClientInput } from 'src/graphql/components/login'
-import { RoutesNames } from 'src/routes/constants'
+import { RoutesNames } from 'src/routes/route-names'
 import AddClientForm from './AddClientForm'
 import { clientValidationSchemas } from './helpers/validation'
 

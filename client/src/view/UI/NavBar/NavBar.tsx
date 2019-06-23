@@ -4,12 +4,11 @@ import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { RoutesNames } from '../../../routes/constants'
+import { RoutesNames } from '../../../routes/route-names'
 import { NavBarChildProp } from './NavBarContainer'
 import SideBar from './SideBar'
 
@@ -29,19 +28,7 @@ const StyledAppBar: any = styled(AppBar)`
   }
 `
 
-const styles = theme =>
-  createStyles({
-    menuItem: {
-      // display: 'none',
-      // [theme.breakpoints.up('sm')]: {
-      //   display: 'inline-block'
-      // }
-    }
-  })
-
-const NavBar: React.FunctionComponent<
-  NavBarChildProp & WithStyles<typeof styles>
-> = props => {
+const NavBar: React.FunctionComponent<NavBarChildProp> = props => {
   const {
     loading,
     navigateTo,
@@ -51,8 +38,7 @@ const NavBar: React.FunctionComponent<
     openMenu,
     path,
     user,
-    logout,
-    classes
+    logout
   } = props
   return (
     <StyledAppBar position="static">
@@ -67,12 +53,12 @@ const NavBar: React.FunctionComponent<
               }}
             >
               {!user && (
-                <Link to={RoutesNames.signup} className={classes.menuItem}>
+                <Link to={RoutesNames.signup}>
                   <Button>Signup</Button>
                 </Link>
               )}
               {!user && (
-                <Link to={RoutesNames.login} className={classes.menuItem}>
+                <Link to={RoutesNames.login}>
                   <Button>Login</Button>
                 </Link>
               )}
@@ -134,4 +120,4 @@ const NavBar: React.FunctionComponent<
   )
 }
 
-export default withStyles(styles)(NavBar)
+export default NavBar

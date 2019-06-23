@@ -5,7 +5,7 @@ import { EditIcon } from 'src/view/UI/EditIcon'
 import { SingleProjectChildProps } from '..'
 import Button from '@material-ui/core/Button'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { RoutesNames } from 'src/routes/constants'
+import { RoutesNames } from 'src/routes/route-names'
 import {
   GetClientsListProps,
   withGetClientsList

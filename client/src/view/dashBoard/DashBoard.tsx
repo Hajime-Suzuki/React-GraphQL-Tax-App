@@ -14,7 +14,7 @@ import { currentQuarterProjectSelector as currentSemester } from './selectors/cu
 import TaxOverview from './TaxOverview'
 import { Button } from '@material-ui/core'
 import useRouter from 'use-react-router'
-import { RoutesNames } from 'src/routes/constants'
+import { RoutesNames } from 'src/routes/route-names'
 
 const DashBoard: FC<{}> = () => {
   const userId = JWT.getUserId()

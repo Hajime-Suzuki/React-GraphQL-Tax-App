@@ -1,5 +1,5 @@
 import React from 'react'
-import Routes from './routes/Routes'
+import Routes from './routes'
 import { Get_UserComponent } from './graphql/components/login'
 import { LoadingIcon } from './view/UI/LoadingIcon'
 
