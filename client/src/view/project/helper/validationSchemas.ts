@@ -1,8 +1,8 @@
 import * as yup from 'yup'
 
 export const requiredMessage = 'This is required'
-const positiveMessage = 'This should be positive value'
-const numberMessage = 'This should be number'
+export const positiveMessage = 'This should be positive value'
+export const numberMessage = 'This should be number'
 export const emailMessage = 'This should be valid email'
 
 const incomesExpensesBase = {

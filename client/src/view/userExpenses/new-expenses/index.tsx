@@ -12,13 +12,17 @@ import { StyledGridFormItem } from 'src/styles/forms'
 import Typography from '@material-ui/core/Typography'
 import { renderDatePicker } from 'src/libs/forms/renderFields/renderDatePicker'
 import { GenerateFieldSettings } from 'src/view/project/helper/genrateFieldSettings'
+import { userExpenseValidation } from '../validation-schemas'
+import { renderFields } from 'src/libs/forms/renderFields/renderFields'
 
 const NewUserExpense: FC<{}> = () => {
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
   const mutation = useAddUserExpenseMutation()
 
   return (
     <Formik
+      validationSchema={userExpenseValidation}
       initialValues={{
         name: '',
         date: '',
@@ -29,6 +33,7 @@ const NewUserExpense: FC<{}> = () => {
       onSubmit={async values => {
         try {
           await mutation({ variables: { data: values } })
+          setSuccess(true)
         } catch (e) {
           setError(e.message)
         }
@@ -62,12 +67,7 @@ const NewUserExpense: FC<{}> = () => {
                   )}
                   {!form.name.match(/(date|taxRate)/) && (
                     <Grid item style={{ width: 180 }}>
-                      <Field
-                        name={form.name}
-                        label={form.label || form.name}
-                        type={form.type || 'text'}
-                        component={renderFormikTextField}
-                      />
+                      {renderFields(form)}
                     </Grid>
                   )}
                 </Fragment>
@@ -82,11 +82,10 @@ const NewUserExpense: FC<{}> = () => {
                   Submit
                 </Button>
               </Grid>
-              {error && (
-                <Grid item>
-                  <Typography color="error">{error}</Typography>
-                </Grid>
-              )}
+              <Grid item>
+                {error && <Typography color="error">{error}</Typography>}
+                {success && <Typography color="primary">Saved!</Typography>}
+              </Grid>
             </StyledGridFormItem>
           </Form>
         )
