@@ -24,6 +24,7 @@ class PrivateRoutes extends React.Component<Props> {
     const isNetworkError = data.error && data.error.networkError
     const isAuthError =
       isNetworkError &&
+      (isNetworkError as any).result &&
       (isNetworkError as any).result.errors
         .map((e: any) => e.extensions.code)
         .includes('UNAUTHENTICATED')
