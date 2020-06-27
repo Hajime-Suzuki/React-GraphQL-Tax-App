@@ -6,7 +6,7 @@ import {
   GetSingleProjectProps,
   Project,
   Client,
-  withGetSingleProject
+  withGetSingleProject,
 } from 'src/graphql/components/projects'
 import { IRouterComponentProps } from 'src/routes/types'
 import { LoadingIcon } from '../../UI/LoadingIcon'
@@ -37,35 +37,19 @@ class SingleProjectContainer extends React.Component<
 > {
   state = { selectedModal: undefined }
 
-  handleOpenModal = (type: ModalType) => () =>
-    this.setState({ selectedModal: type })
+  handleOpenModal = (type: ModalType) => () => this.setState({ selectedModal: type })
 
   handleCloseModal = () => this.setState({ selectedModal: undefined })
 
   downloadInvoice = (
-    download: MutationFn<
-      DownloadInvoiceMutation,
-      DownloadInvoiceMutationVariables
-    >
+    download: MutationFn<DownloadInvoiceMutation, DownloadInvoiceMutationVariables>,
   ) => async () => {
     const res = await download({
-      variables: { projectId: this.props.match.params.id }
+      variables: { projectId: this.props.match.params.id },
     })
     if (!res || !res.data || !res.data.downloadInvoice) return
 
-    const buffer = res.data.downloadInvoice.data.data
-    const file = new Blob([new Uint8Array(buffer)], {
-      type: 'application/pdf'
-    })
-    const fileUrl = URL.createObjectURL(file)
-
-    const invoiceNumber = this.props.data!.project!.invoiceNumber
-
-    const a = document.createElement('a')
-    a.href = fileUrl
-    a.download = `invoice-${invoiceNumber}.pdf`
-    a.click()
-    URL.revokeObjectURL(fileUrl)
+    window.open(res.data.downloadInvoice.data)
   }
 
   render() {
@@ -101,7 +85,7 @@ class SingleProjectContainer extends React.Component<
 export default withGetSingleProject<IRouterComponentProps>({
   options: props => {
     return {
-      variables: { id: props.match.params.id }
+      variables: { id: props.match.params.id },
     }
-  }
+  },
 })(SingleProjectContainer)

@@ -7,13 +7,13 @@ export const invoiceResolvers: {
   Mutation: IMutationResolvers<IContext>
 } = {
   Mutation: {
-    downloadInvoice: async (_, { projectId }, { token, user }) => {
+    downloadInvoice: async (_, { projectId }, { user }) => {
       AuthCheck.userExist(user)
-      const pdf = await InvoiceCommands.getInvoicePDF(projectId, token)
+      const pdf = await InvoiceCommands.getInvoicePDF(projectId, user.id)
       return {
         message: 'test',
-        data: pdf
+        data: pdf,
       }
-    }
-  }
+    },
+  },
 }

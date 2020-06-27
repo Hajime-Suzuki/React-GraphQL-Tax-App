@@ -6,7 +6,6 @@ import * as Router from 'koa-router'
 import * as serve from 'koa-static'
 import passport from './passport/passport'
 import server from './server'
-import pdfRoutes from './services/invoice/routes'
 import projectRoutes from './seeds/projects'
 
 const app = new Koa()
@@ -17,7 +16,7 @@ app.use(bodyParser())
 app.use(passport.initialize())
 
 const pug = new Pug({
-  viewPath: `${__dirname}/services/invoice`
+  viewPath: `${__dirname}/services/invoice`,
 })
 pug.use(app)
 
@@ -40,7 +39,6 @@ router.get('/', async ctx => {
 
 app.use(router.routes())
 app.use(projectRoutes.routes())
-app.use(pdfRoutes.routes())
 
 server.applyMiddleware({ app })
 
