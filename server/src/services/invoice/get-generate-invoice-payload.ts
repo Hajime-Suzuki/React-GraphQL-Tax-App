@@ -113,7 +113,7 @@ export const getGenerateInvoicePayload = async (
         },
       },
     },
-    key: `${`${client.firstName} ${client.lastName || ''}`.trim()}/${project.invoiceDate}/invoice-${
+    key: `${`${client.firstName} ${client.lastName || ''}`.trim()}/invoice-${
       project.invoiceNumber
     }.pdf`,
   }
