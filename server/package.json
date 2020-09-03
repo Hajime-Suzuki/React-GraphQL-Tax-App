@@ -26,7 +26,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "puppeteer": "^1.11.0",
+    "puppeteer": "^1.13.0",
     "typescript": "^3.4.5",
     "validator": "^10.7.1"
   },
