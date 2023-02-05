@@ -86,5 +86,8 @@
     "test-u": "cross-env NODE_ENV=test jest ./test/user.test.ts",
     "test-e": "cross-env NODE_ENV=test jest ./test/expense.test.ts --watch",
     "pdf": "gulp"
+  },
+  "volta": {
+    "node": "12.22.12"
   }
 }
