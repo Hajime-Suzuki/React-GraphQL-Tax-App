@@ -11,7 +11,10 @@ const findByUserId = (userId: string) =>
   Project.find({ user: userId }).sort({ createdAt: -1 })
 
 const findById = (projectId: IQueryGetSingleProjectArgs['projectId']) =>
-  Project.findById(projectId).populate('client')
+  Project.findById(projectId).populate({
+    path: 'client',
+    strictPopulate: false
+  }) 
 
 const find = async (
   filter: IGetProjectsFilter = {},
